@@ -1,0 +1,92 @@
+#pragma once
+
+/// <summary>
+/// マウスの色々を楽にする
+/// ・シングルトン
+/// </summary>
+class MouseSupporter
+{
+	static MouseSupporter* m_instance;
+public:
+	MouseSupporter();
+	~MouseSupporter();
+
+	//カーソルの状態
+	enum mouse_state {
+		Not_Push,	//押されていない
+		Now_Pushing,	//押されている
+		New_Push,	//新規に押された
+		Release_Push,	//押していた状態から離された
+	};
+	//キーの種類
+	enum mouse_key {
+		Left_Key,
+		Right_ker,
+	};
+
+	void MouseSupporter::MouseUpdate();
+
+	/// <summary>
+	/// マウスの状態を返す
+	/// </summary>
+	/// <param name="key">取得したいキーの種類</param>
+	/// <returns>キーの状態</returns>
+	mouse_state MouseSupporter::GetMouseKey(mouse_key key) {
+		mouse_state re;
+		switch (key)
+		{
+		case MouseSupporter::Left_Key:
+			re = m_leftMouse;
+			break;
+		case MouseSupporter::Right_ker:
+			re = m_rightMouse;
+			break;
+		}
+		return re;
+	}
+
+	/// <summary>
+	/// マウスを長押ししていたフレーム数を返す
+	/// </summary>
+	/// <param name="key">取得したいキーの種類</param>
+	/// <returns>フレーム数</returns>
+	int MouseSupporter::GetMouseTimer(mouse_key key) {
+		int re;
+		switch (key)
+		{
+		case MouseSupporter::Left_Key:
+			re = m_lestPushTimer;
+			break;
+		case MouseSupporter::Right_ker:
+			re = m_rightPushTimer;
+			break;
+		}
+		return re;
+	}
+
+	CVector2 MouseSupporter::GetMousePos();
+	CVector3 MouseSupporter::GetMousePos_3D();
+	CVector2 MouseSupporter::GetBeforeMouse();
+
+	/// <summary>
+	/// インスタンスを取得！
+	/// </summary>
+	/// <returns>インスタンスです</returns>
+	static MouseSupporter* MouseSupporter::GetInstance() {
+		return m_instance;
+	}
+
+private:
+	//カーソルの押された状態を保存する
+	mouse_state m_leftMouse = Not_Push;
+	mouse_state m_rightMouse = Not_Push;
+	//カーソルの押されていた時間を保存する
+	int m_lestPushTimer = 0;
+	int m_rightPushTimer = 0;
+	//ホイールの移動数を保存する
+	int m_wheelMove = 0;
+	//前回のマウス座標を保存する
+	CVector2 m_beforeMouse = { 0.0f,0.0f };
+
+};
+

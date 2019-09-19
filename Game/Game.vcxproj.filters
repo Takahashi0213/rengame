@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{aa2dff80-cc46-4aaa-9c9e-7784c2a0cdf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData">
+      <UniqueIdentifier>{a27dfd5d-af93-4623-b084-aad00b7739c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="character">
+      <UniqueIdentifier>{c57b7107-f9f3-4b72-8f3e-8644593ed533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics">
+      <UniqueIdentifier>{b7a9a0ab-a792-43fe-a5a7-760b8c976aca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\animation">
+      <UniqueIdentifier>{d83ac002-5cd8-4ff4-977a-e7b5ebce5263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="level">
+      <UniqueIdentifier>{73eacaf4-a5db-4539-ab55-83b9c5d4807c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HID">
+      <UniqueIdentifier>{bbdeed04-d9d3-4ff9-bb44-9d888be6899a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{39e7f303-3dac-4bde-bedf-33a5497f262e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics">
+      <UniqueIdentifier>{1eed4cab-11aa-4e90-960a-a01360c5a392}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system">
+      <UniqueIdentifier>{48b58c60-bbe2-40d8-9d2f-e81d065b6820}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{c2afa707-0ea6-40af-a0f6-9ebf926a9619}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\Light">
+      <UniqueIdentifier>{871a5d09-4eec-48c7-86f7-2b314a7cb242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\Camera">
+      <UniqueIdentifier>{4be12c57-adcf-4072-bdc7-6e0a828c76ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\Sprite">
+      <UniqueIdentifier>{8b5789e2-7153-4c23-8b7d-1f5bce580476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\sprite">
+      <UniqueIdentifier>{56c2d48c-abfd-437c-8bf6-e03a9c4db68e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\SkinModel">
+      <UniqueIdentifier>{47cbe10d-94d6-492f-a801-710cb156d543}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="math\Vector.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\kMath.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Matrix.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\GraphicsEngine.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Skeleton.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Shader.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\ShaderResources.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\animation\Animation.cpp">
+      <Filter>graphics\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\animation\AnimationClip.cpp">
+      <Filter>graphics\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\animation\AnimationPlayController.cpp">
+      <Filter>graphics\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="HID\Pad.cpp">
+      <Filter>HID</Filter>
+    </ClCompile>
+    <ClCompile Include="system\system.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\RigidBody.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\Physics.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\MeshCollider.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\CapsuleCollider.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\PhysicsStaticObject.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="character\CharacterController.cpp">
+      <Filter>character</Filter>
+    </ClCompile>
+    <ClCompile Include="level\Level.cpp">
+      <Filter>level</Filter>
+    </ClCompile>
+    <ClCompile Include="level\MapChip.cpp">
+      <Filter>level</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="system\CGameObjectManager.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="system\IGameObject.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugLog.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectionLight.cpp">
+      <Filter>graphics\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="LightMaker.cpp">
+      <Filter>graphics\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Camera.cpp">
+      <Filter>graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraSupporter.cpp">
+      <Filter>graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseSupporter.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRender.cpp">
+      <Filter>graphics\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>graphics\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteStandby.cpp">
+      <Filter>graphics\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="CCamera2D.cpp">
+      <Filter>graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="SpriteSupporter.cpp">
+      <Filter>graphics\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\SkinModel.cpp">
+      <Filter>graphics\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\SkinModelDataManager.cpp">
+      <Filter>graphics\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\SkinModelEffect.cpp">
+      <Filter>graphics\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinModelRender.cpp">
+      <Filter>graphics\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinModelSupporter.cpp">
+      <Filter>graphics\SkinModel</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="math\Vector.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\kMath.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Matrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\GraphicsEngine.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Skeleton.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Shader.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\ShaderResources.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\animation\Animation.h">
+      <Filter>graphics\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\animation\AnimationClip.h">
+      <Filter>graphics\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\animation\AnimationPlayController.h">
+      <Filter>graphics\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="HID\Pad.h">
+      <Filter>HID</Filter>
+    </ClInclude>
+    <ClInclude Include="system\system.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\RigidBody.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\Physics.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\ICollider.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\MeshCollider.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\CapsuleCollider.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\CollisionAttr.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\PhysicsStaticObject.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="character\CharacterController.h">
+      <Filter>character</Filter>
+    </ClInclude>
+    <ClInclude Include="level\Level.h">
+      <Filter>level</Filter>
+    </ClInclude>
+    <ClInclude Include="level\MapChip.h">
+      <Filter>level</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="system\IGameObject.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="system\CGameObjectManager.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugLog.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionLight.h">
+      <Filter>graphics\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="LightMaker.h">
+      <Filter>graphics\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Camera.h">
+      <Filter>graphics\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraSupporter.h">
+      <Filter>graphics\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseSupporter.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRender.h">
+      <Filter>graphics\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>graphics\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteStandby.h">
+      <Filter>graphics\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="CCamera2D.h">
+      <Filter>graphics\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="SpriteSupporter.h">
+      <Filter>graphics\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModel.h">
+      <Filter>graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModelDataManager.h">
+      <Filter>graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModelEffect.h">
+      <Filter>graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModelShaderConst.h">
+      <Filter>graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinModelRender.h">
+      <Filter>graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinModelSupporter.h">
+      <Filter>graphics\SkinModel</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="Assets\modelData\unityChan.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\map.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\mikyan.jpg">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+  </ItemGroup>
+</Project>
