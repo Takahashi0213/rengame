@@ -36,6 +36,7 @@ private:
 	void SpriteRotationUpdate();
 	void SpriteScaleUpdate();
 	void SpriteColorUpdate();
+	void SpriteShakeUpdate();
 
 	//ƒƒ“ƒo•Ï”
 	class SpriteRender* m_spriteRender;

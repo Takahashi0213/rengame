@@ -113,7 +113,14 @@ CVector2 MouseSupporter::GetMousePos() {
 CVector3 MouseSupporter::GetMousePos_3D() {
 
 	CVector3 m_pointPos = CVector3().Zero();
-	g_camera3D.CalcWorldPositionFromScrenPosition(m_pointPos, GetMousePos(), 0.95f);
+	CVector2 m_mousePos = GetMousePos();
+	float half_w = FRAME_BUFFER_W * 0.5f;
+	float half_h = FRAME_BUFFER_H * 0.5f;
+
+	m_mousePos.x -= half_w;
+	m_mousePos.y -= half_h;
+	m_mousePos.y *= -1.0f;
+	g_camera3D.CalcWorldPositionFromScrenPosition(m_pointPos, m_mousePos, 1.0f);
 
 	return m_pointPos;
 }
@@ -121,16 +128,17 @@ CVector3 MouseSupporter::GetMousePos_3D() {
 /// <summary>
 /// 実行する度に前回の座標と今回の座標の差（ベクトル）を返す
 /// </summary>
+/// <param name="p">取得する位置</param>
 /// <returns>差</returns>
-CVector2 MouseSupporter::GetBeforeMouse() {
+CVector2 MouseSupporter::GetBeforeMouse(int p) {
 	CVector2 pos = GetMousePos();
 	CVector2 return_pos = { 0.0f,0.0f };
 
-	return_pos.x = pos.x - m_beforeMouse.x;
-	return_pos.y = pos.y - m_beforeMouse.y;
+	return_pos.x = pos.x - m_beforeMouse[p].x;
+	return_pos.y = pos.y - m_beforeMouse[p].y;
 
-	m_beforeMouse.x = pos.x;
-	m_beforeMouse.y = pos.y;
+	m_beforeMouse[p].x = pos.x;
+	m_beforeMouse[p].y = pos.y;
 
 	return return_pos;
 }

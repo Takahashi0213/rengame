@@ -21,7 +21,7 @@ public:
 	//キーの種類
 	enum mouse_key {
 		Left_Key,
-		Right_ker,
+		Right_Key,
 	};
 
 	void MouseSupporter::MouseUpdate();
@@ -38,7 +38,7 @@ public:
 		case MouseSupporter::Left_Key:
 			re = m_leftMouse;
 			break;
-		case MouseSupporter::Right_ker:
+		case MouseSupporter::Right_Key:
 			re = m_rightMouse;
 			break;
 		}
@@ -57,7 +57,7 @@ public:
 		case MouseSupporter::Left_Key:
 			re = m_lestPushTimer;
 			break;
-		case MouseSupporter::Right_ker:
+		case MouseSupporter::Right_Key:
 			re = m_rightPushTimer;
 			break;
 		}
@@ -66,7 +66,7 @@ public:
 
 	CVector2 MouseSupporter::GetMousePos();
 	CVector3 MouseSupporter::GetMousePos_3D();
-	CVector2 MouseSupporter::GetBeforeMouse();
+	CVector2 MouseSupporter::GetBeforeMouse(int p = 0);
 
 	/// <summary>
 	/// インスタンスを取得！
@@ -86,7 +86,7 @@ private:
 	//ホイールの移動数を保存する
 	int m_wheelMove = 0;
 	//前回のマウス座標を保存する
-	CVector2 m_beforeMouse = { 0.0f,0.0f };
+	CVector2 m_beforeMouse[2] = { {0.0f,0.0f},{0.0f,0.0f} };
 
 };
 

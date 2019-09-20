@@ -22,6 +22,7 @@ void SpriteSupporter::SpriteSupporter_Update() {
 	SpriteRotationUpdate();
 	SpriteScaleUpdate();
 	SpriteColorUpdate();
+	SpriteShakeUpdate();
 
 	//最後に更新したデータを返す
 	SpriteDataReturn();
@@ -297,5 +298,12 @@ void SpriteSupporter::SpriteColorUpdate() {
 			m_spriteColorTimer = -1;
 		}
 	}
+
+}
+
+/// <summary>
+/// スプライトのシェイクを実行
+/// </summary>
+void SpriteSupporter::SpriteShakeUpdate() {
 
 }

@@ -27,6 +27,8 @@ Player::Player()
 	r->m_spriteSupporter.SpriteScale({ 0.5f,0.5f,0.5f }, 60, 60);
 	r->m_spriteSupporter.SpriteColor({ 1.0f,0.5f,0.5f,0.5f }, 180, 60);
 
+	//PhysicsStaticObject‚Ì‰Šú‰»
+	m_physicsStaticObject.CreateMeshObject(m_model2, CVector3::Zero(), CQuaternion().Identity());
 }
 
 
@@ -45,7 +47,8 @@ void Player::Update()
 	//	Player* p = CGameObjectManager::GetInstance()->FindGO<Player>(a,false);
 	//}
 
-	CVector2 a = MouseSupporter::GetInstance()->GetMousePos();
+	//CVector2 a = MouseSupporter::GetInstance()->GetMousePos();
+
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
 
 	if (key == MouseSupporter::Release_Push) {
@@ -55,9 +58,14 @@ void Player::Update()
 
 			btCollisionWorld::ClosestRayResultCallback ResultCallback();
 			btDiscreteDynamicsWorld* dw = g_physics.GetDynamicWorld();
-			btCollisionWorld::ClosestRayResultCallback CRR_Callback(m_position, m_nextPos);
-			dw->rayTest((btVector3)m_position, m_nextPos, CRR_Callback);
-			//m_nextPos = CRR_Callback.m_hitPointWorld;
+			btCollisionWorld::ClosestRayResultCallback CRR_Callback(g_camera3D.GetPosition(), m_nextPos);
+			dw->rayTest((btVector3)g_camera3D.GetPosition(), m_nextPos, CRR_Callback);
+			if (CRR_Callback.hasHit()) {
+				m_nextPos = CRR_Callback.m_hitPointWorld;
+			}
+			else {
+				m_nextPos = m_position;
+			}
 
 		}
 	}

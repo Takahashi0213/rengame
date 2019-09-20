@@ -19,12 +19,10 @@ GameCamera::~GameCamera()
 
 void GameCamera::Update() {
 
-	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
+	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Right_Key);
 	if (key == MouseSupporter::Now_Pushing) {
-		if (MouseSupporter::GetInstance()->GetMouseTimer(MouseSupporter::Left_Key) >= 12) {
-
 			//カメラ操作
-			CVector2 move_c = MouseSupporter::GetInstance()->GetBeforeMouse();
+			CVector2 move_c = MouseSupporter::GetInstance()->GetBeforeMouse(1);
 			CVector3 move_cc = CVector3().Zero();
 			move_cc.x = move_c.x;
 			move_cc.y = move_c.y;
@@ -38,13 +36,13 @@ void GameCamera::Update() {
 			y *= 2.0f;
 			//Y軸周りの回転
 			CQuaternion qRot;
-			qRot.SetRotationDeg(CVector3().AxisY(), 2.0f * x);
+			qRot.SetRotationDeg(CVector3().AxisY(), 3.0f * x);
 			qRot.Multiply(m_cameraHosei);
 			//X軸周りの回転。
 			CVector3 axisX;
 			axisX.Cross(CVector3().AxisY(), m_cameraHosei);
 			axisX.Normalize();
-			qRot.SetRotationDeg(axisX, 2.0f * y);
+			qRot.SetRotationDeg(axisX, 3.0f * y);
 			qRot.Multiply(m_cameraHosei);
 
 			//カメラの回転の上限をチェックする。
@@ -54,12 +52,11 @@ void GameCamera::Update() {
 				//カメラが上向きすぎ。
 				m_cameraHosei = toCameraPosOld;
 			}
-			else if (toPosDir.y > 0.95f) {
+			else if (toPosDir.y > 0.98f) {
 				//カメラが下向きすぎ。
 				m_cameraHosei = toCameraPosOld;
 			}
 
-		}
 	}
 
 	CVector3 P_Position = m_player->Getm_Position();

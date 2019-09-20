@@ -1,6 +1,7 @@
 #pragma once
 #include "character/CharacterController.h"
 #include "system/CGameObjectManager.h"
+#include "physics/PhysicsStaticObject.h"
 
 class Player : public IGameObject
 {
@@ -28,6 +29,8 @@ public:
 private:
 	SkinModel m_model;	//スキンモデル。
 	SkinModel m_model2;	//スキンモデル。
+
+	PhysicsStaticObject m_physicsStaticObject;				//静的物理オブジェクト。
 
 	void Move();
 

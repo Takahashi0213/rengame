@@ -4,9 +4,7 @@
 #include "level/Level.h"
 
 #include "GameCamera.h"
-
-Sprite g_sprite;		//スプライト。
-CVector3 g_spritePos = CVector3::Zero();	//スプライトの座標。
+#include "Game.h"
 
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
@@ -49,8 +47,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	//ライトの生成テスト
 	LightMaker::GetInstance()->D_LightMake({ 1.0f, 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f });
-
-	g_sprite.Sprite_Init(L"Assets/sprite/mikyan.dds", 240.0f, 240.0f);
 
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
