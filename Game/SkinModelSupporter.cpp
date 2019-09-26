@@ -63,4 +63,59 @@ void SkinModelSupporter::SkinModelMove(CVector3 move, int moveTime, int moveDela
 /// </summary>
 void SkinModelSupporter::SkinModelMoveUpdate() {
 
+	//リスト分ループ
+	for (auto go = m_skinModelMoveList.begin();
+		go != m_skinModelMoveList.end();
+		go++) {
+		//タイマーが0以上なら実行中
+		if (go->m_skinModelMoveTimer >= 0) {
+
+			if (go->m_skinModelMoveTimer >= go->m_skinModelMoveDelay) { //ディレイを考慮
+
+				//移動距離を計算
+				if (go->m_skinModelMoveTimer == go->m_skinModelMoveDelay) {
+					if (go->m_skinModelMoveRelative == false) { //指定された座標へ移動
+						go->m_skinModelMoveSpeed.x = go->m_skinModelMovePos.x - m_position.x;
+						go->m_skinModelMoveSpeed.y = go->m_skinModelMovePos.y - m_position.y;
+						go->m_skinModelMoveSpeed.z = go->m_skinModelMovePos.z - m_position.z;
+					}
+					else { //相対移動
+						go->m_skinModelMoveSpeed.x = go->m_skinModelMovePos.x;
+						go->m_skinModelMoveSpeed.y = go->m_skinModelMovePos.y;
+						go->m_skinModelMoveSpeed.z = go->m_skinModelMovePos.z;
+					}
+					go->m_skinModelMoveSpeed.x /= (float)go->m_skinModelMoveLimit;
+					go->m_skinModelMoveSpeed.y /= (float)go->m_skinModelMoveLimit;
+					go->m_skinModelMoveSpeed.z /= (float)go->m_skinModelMoveLimit;
+				}
+
+				m_position.x += go->m_skinModelMoveSpeed.x;
+				m_position.y += go->m_skinModelMoveSpeed.y;
+				m_position.z += go->m_skinModelMoveSpeed.z;
+
+			}
+
+			go->m_skinModelMoveTimer++;
+
+			if (go->m_skinModelMoveTimer >= go->m_skinModelMoveLimit + go->m_skinModelMoveDelay) {
+				//おしまひ
+				go->m_skinModelMoveDeleteFlag = true;
+				go->m_skinModelMoveTimer = -1;
+				//go = m_spriteMoveList.erase(go);
+			}
+		}
+	}
+
+	//削除処理
+	std::list<SkinModelMoveSet>::iterator it;
+	it = m_skinModelMoveList.begin();
+	while (it != m_skinModelMoveList.end()) {
+		if (it->m_skinModelMoveDeleteFlag == true) {
+			it = m_skinModelMoveList.erase(it); //erase関数は削除されたイテレータの次を返してくるので、eraseの戻り値を使う。
+		}
+		else {
+			it++; //それ以外は次へ。
+		}
+	}
+
 }

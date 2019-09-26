@@ -79,7 +79,7 @@ public:
 	/// <param name="color">自己発光色</param>
 	void SetEmissionColor(CVector3 color)
 	{
-		m_emissionColor = color;
+		//m_emissionColor = color;
 	}
 	/*!
 	*@brief	SRVのレジスタ番号。
@@ -103,13 +103,16 @@ private:
 	*/
 	void InitSkeleton(const wchar_t* filePath);
 	
+	//ディレクションライトをセット
+	void D_LightUpdate();
+
 private:
 	//定数バッファ。
 	struct SVSConstantBuffer {
 		CMatrix mWorld;
 		CMatrix mView;
 		CMatrix mProj;
-		CVector3 emissionColor;
+		//CVector3 emissionColor;
 	};
 
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
@@ -121,6 +124,6 @@ private:
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
 	CVector3 m_emissionColor = CVector3().Zero();		//!<自己発光カラー。
-
+	ID3D11ShaderResourceView* m_albedoTextureSRV = nullptr;	//!<アルベドテクスチャのSRV
 };
 

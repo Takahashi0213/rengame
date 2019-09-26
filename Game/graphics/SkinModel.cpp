@@ -17,6 +17,14 @@ SkinModel::~SkinModel()
 		m_samplerState->Release();
 	}
 }
+
+/// <summary>
+/// ディレクションライトを更新する
+/// </summary>
+void SkinModel::D_LightUpdate() {
+
+}
+
 void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 {
 	//スケルトンのデータを読み込む。
@@ -24,19 +32,23 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 
 	//定数バッファの作成。
 	InitConstantBuffer();
-
+	
 	//サンプラステートの初期化。
 	InitSamplerState();
 
 	//ディレクションライトの初期化。
-	m_dirLight.direction = { 1.0f, 0.0f, 0.0f, 0.0f };
-	m_dirLight.color = { 1.0f, 1.0f, 1.0f, 1.0f };
+	for (int i = 0; i < MAX_DIRECTION_LIGHT; i++) {
+		m_dirLight.direction[i] = { 0.0f, -1.0f, 0.0f, 0.0f };
+		m_dirLight.direction[i].Normalize();	//正規化。
+		m_dirLight.color[i] = { 0.2f,0.2f, 0.2f, 1.0f };
+	}
 
 	//SkinModelDataManagerを使用してCMOファイルのロード。
 	m_modelDx = g_skinModelDataManager.Load(filePath, m_skeleton);
 
 	m_enFbxUpAxis = enFbxUpAxis;
 }
+
 void SkinModel::InitSkeleton(const wchar_t* filePath)
 {
 	//スケルトンのデータを読み込む。
@@ -117,12 +129,12 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 
 	//スケルトンの更新。
 	m_skeleton.Update(m_worldMatrix);
+	//ライトの更新！
+	D_LightUpdate();
 }
 void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 {
-	auto deviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
-
 	ID3D11DeviceContext* d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 
 	//定数バッファの内容を更新。
@@ -130,19 +142,20 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	vsCb.mWorld = m_worldMatrix;
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
-	vsCb.emissionColor = m_emissionColor;
-	//ライト用の定数バッファを更新。
-	deviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_dirLight, 0, 0);
-
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
+	//ライト用の定数バッファを更新。
+	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_dirLight, 0, 0);
 	//定数バッファをGPUに転送。
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
 	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
+	//定数バッファをシェーダースロットに設定。
+	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
 	//ボーン行列をGPUに転送。
 	m_skeleton.SendBoneMatrixArrayToGPU();
-
+	//アルベドテクスチャを設定する。
+	d3dDeviceContext->PSSetShaderResources(0, 1, &m_albedoTextureSRV);
 	//描画。
 	m_modelDx->Draw(
 		d3dDeviceContext,

@@ -29,34 +29,24 @@ void LightMaker::Render() {
 /// <summary>
 /// ディレクションライトを生成する
 /// </summary>
+/// <param name="lightNo">ライトの番号</param>
 /// <param name="dir">ライトの方向</param>
 /// <param name="col">ライトの色</param>
 /// <returns>作成したライトのポインタ</returns>
-SDirectionLight* LightMaker::D_LightMake(CVector4 dir,CVector4 col) {
+void LightMaker::D_LightMake(int lightNo,CVector4 dir,CVector4 col) {
 
-	//ディレクションライトを生成する
-	SDirectionLight*d = new SDirectionLight;
-	
-	//生成したインスタンスを可変長配列に追加する
-	m_dLightList.push_back(d);
+	m_light.direction[lightNo] = dir;
+	m_light.color[lightNo] = col;
 
-	return d;
 }
 
 /// <summary>
 /// ディレクションライトを消去する
 /// </summary>
-/// <param name="light">削除するディレクションライトのポインタ</param>
-void LightMaker::D_LightDelete(SDirectionLight* light) {
+/// <param name="lightNo">削除するディレクションライトの場所</param>
+void LightMaker::D_LightDelete(int lightNo) {
 
-	//リストを検索して一致したものを消す
-	for (auto it = m_dLightList.begin();
-		it != m_dLightList.end();
-		it++) {
-		if (*it == light) {
-			delete *it;
-			m_dLightList.erase(it); //可変長配列からも除去
-		}
-	}
+	m_light.direction[lightNo] = { 0.0f, -1.0f, 0.0f, 0.0f };
+	m_light.color[lightNo] = { 0.2f,0.2f, 0.2f, 1.0f };
 
 }

@@ -170,6 +170,7 @@
       <Filter>graphics\SkinModel</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="BackGround.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -305,6 +306,7 @@
       <Filter>graphics\SkinModel</Filter>
     </ClInclude>
     <ClInclude Include="Game.h" />
+    <ClInclude Include="BackGround.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">

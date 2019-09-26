@@ -17,26 +17,42 @@ public:
 	void Update()override;
 	void Render()override;
 
-	SDirectionLight* LightMaker::D_LightMake(CVector4 dir, CVector4 col);
+	void LightMaker::D_LightMake(int lightNo, CVector4 dir, CVector4 col);
 
-	void LightMaker::D_LightDelete(SDirectionLight* light);
+	void LightMaker::D_LightDelete(int lightNo);
 
 	/// <summary>
 	/// 引数に設定したライトの方向を変更する
 	/// </summary>
-	/// <param name="light">変更するライトのポインタ</param>
+	/// <param name="light">変更するライトの場所</param>
 	/// <param name="dir">ライトの方向</param>
-	void LightMaker::D_Light_SetDirection(SDirectionLight* light, CVector4 dir) {
-		light->direction = dir;
-	}	
+	void LightMaker::D_Light_SetDirection(int lightNo, CVector4 dir) {
+		m_light.direction[lightNo] = dir;
+	}
 
 	/// <summary>
 	/// 引数に設定したライトの色を変更する
 	/// </summary>
-	/// <param name="light">変更するライトのポインタ</param>
+	/// <param name="light">変更するライトの場所</param>
 	/// <param name="col">ライトの色</param>
-	void LightMaker::D_Light_SetColer(SDirectionLight* light, CVector4 col) {
-		light->color = col;
+	void LightMaker::D_Light_SetColer(int lightNo, CVector4 col) {
+		m_light.color[lightNo] = col;
+	}
+
+	/// <summary>
+	/// ディレクションライト有効フラグを返す
+	/// </summary>
+	/// <returns>フラグ</returns>
+	bool Get_D_LightFlag() {
+		return m_lightFlag_D;
+	}
+
+	/// <summary>
+	/// ディレクションライト有効フラグをセット
+	/// </summary>
+	/// <param name="flag">フラグ</param>
+	void Set_D_LightFlag(bool flag) {
+		m_lightFlag_D = flag;
 	}
 
 	/// <summary>
@@ -48,8 +64,8 @@ public:
 	}
 
 private:
-	std::list<SDirectionLight*> m_dLightList; //ディレクションライトのリスト
-
+	SDirectionLight m_light;
+	bool m_lightFlag_D = false;
 
 };
 

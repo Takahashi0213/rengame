@@ -40,13 +40,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera2D.SetFar(1000.0f);
 
 	//CameraSupporter::GetInstance()->CameraMove_Zoom(30.0f, 20.0f, 60.0f, true);
+	Game main_game;
 
-	//プレイヤー
-	goMgr.NewGO<Player>("Player");
 	goMgr.NewGO<GameCamera>("GameCamera");
-
-	//ライトの生成テスト
-	LightMaker::GetInstance()->D_LightMake({ 1.0f, 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f });
 
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)

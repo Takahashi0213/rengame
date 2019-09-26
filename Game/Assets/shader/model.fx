@@ -19,6 +19,9 @@ sampler Sampler : register(s0);
 /////////////////////////////////////////////////////////////
 // 定数バッファ。
 /////////////////////////////////////////////////////////////
+/// 
+static const int MAX_DIRECTION_LIGHT = 5;	//!<ディレクションライトの最大数。
+
 /*!
  * @brief	頂点シェーダーとピクセルシェーダー用の定数バッファ。
  */
@@ -26,16 +29,17 @@ cbuffer VSPSCb : register(b0){
 	float4x4 mWorld;
 	float4x4 mView;
 	float4x4 mProj;
+	//CVector3 emissionColor;
 };
 /*!
 *@brief	ライト用の定数バッファ。
 */
-cbuffer LightCb : register(b0) {
-	float3 dligDirection[10];
-	float4 dligColor[10];
+cbuffer LightCb : register(b1){
+	float3 dligDirection[MAX_DIRECTION_LIGHT];
+	float4 dligColor[MAX_DIRECTION_LIGHT];
 };
 
-/////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////
 //各種構造体
 /////////////////////////////////////////////////////////////
 /*!
@@ -146,17 +150,20 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 //--------------------------------------------------------------------------------------
 // ピクセルシェーダーのエントリ関数。
 //--------------------------------------------------------------------------------------
-float4 PSMain( PSInput In ) : SV_Target0
+float4 PSMain(PSInput In) : SV_Target0
 {
-	return albedoTexture.Sample(Sampler, In.TexCoord);
+	//albedoテクスチャからカラーをフェッチする。
+	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
+	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 
-	////albedoテクスチャからカラーをフェッチする。
-	//float4 albedoColor = g_albedoTexture.Sample(Sampler, In.TexCoord);
-	//for (int i = 0; i < 10; i++) {
-	//	//ディレクションライトの拡散反射光を計算する。
-	//	float3 lig = max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) * dligColor[i];
-	//	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
-	//	finalColor.xyz = albedoColor.xyz * lig;
-	//}
-	//return finalColor;
+	//ディレクションライトの拡散反射光を計算する。
+	float3 lig = 0;
+	for (int i = 0; i < MAX_DIRECTION_LIGHT; i++) {
+		lig += max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) * dligColor[i];
+	}
+	finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
+
+	finalColor.xyz = albedoColor.xyz * lig;
+	return finalColor;
+
 }

@@ -101,6 +101,7 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="CameraSupporter.cpp" />
     <ClCompile Include="CCamera2D.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
@@ -149,6 +150,7 @@
     <ClCompile Include="system\system.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BackGround.h" />
     <ClInclude Include="CameraSupporter.h" />
     <ClInclude Include="CCamera2D.h" />
     <ClInclude Include="character\CharacterController.h" />

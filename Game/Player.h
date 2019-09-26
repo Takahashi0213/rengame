@@ -28,17 +28,16 @@ public:
 
 private:
 	SkinModel m_model;	//スキンモデル。
-	SkinModel m_model2;	//スキンモデル。
-
-	PhysicsStaticObject m_physicsStaticObject;				//静的物理オブジェクト。
+	CharacterController m_charaCon;		//キャラクターコントローラー。
 
 	void Move();
+	void Jump();
 
 	//プレイヤー
 	CVector3 m_position = CVector3().Zero();
 	CQuaternion m_rotation = CQuaternion().Identity();
 	CVector3 m_scale = CVector3().One(); //拡大率
-
+	CVector3 m_moveSpeed = CVector3().Zero();
 	CVector3 m_nextPos = CVector3().Zero();
 
 };

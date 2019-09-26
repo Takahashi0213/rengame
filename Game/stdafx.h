@@ -23,6 +23,9 @@
 #include "DirectXTK/Inc/SpriteFont.h"
 #include "DirectXTK/Inc/DDSTextureLoader.h"
 
+static const int MAX_BONE = 512;	//!<ボーンの最大数。
+static const int MAX_DIRECTION_LIGHT = 5;	//!<ディレクションライトの最大数。
+
 #include "physics/Physics.h"
 #include "HID/Pad.h"
 
@@ -53,8 +56,7 @@
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
 
-static const int MAX_BONE = 512;	//!<ボーンの最大数。
-static const int MAX_DIRECTION_LIGHT = 10;	//!<ディレクションライトの最大数。
+
 
 extern SpriteRender spRen;
 extern CGameObjectManager goMgr;
