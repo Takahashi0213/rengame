@@ -56,6 +56,22 @@ public:
 	}
 
 	/// <summary>
+	/// 環境光をセットする
+	/// </summary>
+	/// <param name="color">環境光</param>
+	void SetAmbientColor(CVector3 color) {
+		m_ambientColor = color;
+	}
+
+	/// <summary>
+	/// 環境光を返す
+	/// </summary>
+	/// <returns>環境光</returns>
+	CVector3 GetAmbientColor() {
+		return m_ambientColor;
+	}
+
+	/// <summary>
 	/// インスタンスを取得！
 	/// </summary>
 	/// <returns>インスタンスです</returns>
@@ -66,6 +82,8 @@ public:
 private:
 	SDirectionLight m_light;
 	bool m_lightFlag_D = false;
+
+	CVector3 m_ambientColor = { 0.2f,0.2f,0.2f };	//環境光の色
 
 };
 

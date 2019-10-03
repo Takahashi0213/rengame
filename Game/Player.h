@@ -40,5 +40,10 @@ private:
 	CVector3 m_moveSpeed = CVector3().Zero();
 	CVector3 m_nextPos = CVector3().Zero();
 
+	//ジャンプ
+	bool m_jumpNow = false;
+	const float m_jumpPower = 16.0f;	//ジャンプﾊﾟｩﾜｧ
+	const float m_gravity = 0.6f;		//重力ﾊﾟｩﾜｧ
+
 };
 

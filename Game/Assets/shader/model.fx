@@ -34,9 +34,27 @@ cbuffer VSPSCb : register(b0){
 /*!
 *@brief	ライト用の定数バッファ。
 */
-cbuffer LightCb : register(b1){
-	float3 dligDirection[MAX_DIRECTION_LIGHT];
-	float4 dligColor[MAX_DIRECTION_LIGHT];
+struct SDirectionLight{
+	float3 direction[MAX_DIRECTION_LIGHT];
+	float4 color[MAX_DIRECTION_LIGHT];
+};
+
+/*!
+*@brief	環境光用の定数バッファ。
+*/
+cbuffer Ambient_LightCb : register(b2) {
+	float Ambient_R;
+	float Ambient_G;
+	float Ambient_B;
+};
+
+/*!
+*@brief	ライト用の定数バッファ。
+*/
+cbuffer LightCb : register(b3) {
+	SDirectionLight		directionLight;		//ディレクションライト。
+	float3				eyePos;				//カメラの視点。
+	float				specPow;			//スペキュラライトの絞り。
 };
 
 /// /////////////////////////////////////////////////////////////
@@ -73,6 +91,7 @@ struct PSInput{
 	float3 Normal		: NORMAL;
 	float3 Tangent		: TANGENT;
 	float2 TexCoord 	: TEXCOORD0;
+	float3 worldPos		: TEXCOORD1;
 };
 /*!
  *@brief	スキン行列を計算。
@@ -98,12 +117,17 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 {
 	PSInput psInput = (PSInput)0;
 	float4 pos = mul(mWorld, In.Position);
+
+	psInput.worldPos = pos;
+
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
+
 	psInput.TexCoord = In.TexCoord;
 	psInput.Normal = normalize(mul(mWorld, In.Normal));
 	psInput.Tangent = normalize(mul(mWorld, In.Tangent));
+
 	return psInput;
 }
 
@@ -124,6 +148,7 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	{
 	
 		float w = 0.0f;
+
 	    for (int i = 0; i < 3; i++)
 	    {
 			//boneMatrixにボーン行列が設定されていて、
@@ -156,14 +181,34 @@ float4 PSMain(PSInput In) : SV_Target0
 	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 
+	//float3 hoge = float3(0.0f, -1.0f, 0.0f);
+	//float4 hoge2 = float4( 0.0f,0.8f, 0.0f, 1.0f );
+
 	//ディレクションライトの拡散反射光を計算する。
 	float3 lig = 0;
 	for (int i = 0; i < MAX_DIRECTION_LIGHT; i++) {
-		lig += max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) * dligColor[i];
-	}
-	finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 
-	finalColor.xyz = albedoColor.xyz * lig;
+		//lig += max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) * dligColor[i];
+		lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction[i])) * directionLight.color[i].xyz;
+
+		//ディレクションライトの鏡面反射光を計算する。
+		{
+			float3 R = directionLight.direction[i] + (2 * dot(In.Normal, -directionLight.direction[i]))*In.Normal;
+
+			float3 E = normalize(In.worldPos - eyePos);
+
+			float specPower = max(0, dot(R, -E));
+
+			finalColor = float4(directionLight.color[i].xyz*pow(specPower, specPow), 1);
+
+		}
+
+	}
+
+	//環境光をあてる。
+	lig += float3(Ambient_R, Ambient_G, Ambient_B);
+
+	finalColor.xyz += albedoColor.xyz * lig;
 	return finalColor;
 
 }

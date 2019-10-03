@@ -171,6 +171,7 @@
     </ClCompile>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="BoxMaker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -307,6 +308,7 @@
     </ClInclude>
     <ClInclude Include="Game.h" />
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="BoxMaker.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">

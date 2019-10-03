@@ -26,7 +26,7 @@ Player::Player()
 	r->m_spriteSupporter.SpriteColor({ 1.0f,0.5f,0.5f,0.5f }, 180, 60);
 
 	//キャラクターコントローラーを初期化。
-	m_charaCon.Init(30, 100, m_position);
+	m_charaCon.Init(25, 30, m_position);
 
 }
 
@@ -49,9 +49,21 @@ void Player::Update()
 	//CVector2 a = MouseSupporter::GetInstance()->GetMousePos();
 
 	Move();
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+		if (m_jumpNow == false) {
+			Jump();
+		}
+		m_jumpNow = true;
+	}
+	else {
+		m_jumpNow = false;
+	}
 
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+
+	//重力
+	m_moveSpeed.y -= m_gravity;
 
 	m_position = m_charaCon.Execute(1.0f, m_moveSpeed);
 
@@ -67,6 +79,7 @@ void Player::Render()
 
 void Player::Move() {
 
+	//左クリックの状態を判定
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
 
 	if (key == MouseSupporter::Release_Push) {
@@ -89,17 +102,18 @@ void Player::Move() {
 
 	m_nextPos.y = m_position.y;
 
-	m_moveSpeed = m_nextPos - m_position;
-	m_moveSpeed /= 20.0f;
-	m_position += m_moveSpeed;
+	m_moveSpeed.x = m_nextPos.x - m_position.x;
+	m_moveSpeed.z = m_nextPos.z - m_position.z;
+	m_moveSpeed.x /= 20.0f;
+	m_moveSpeed.z /= 20.0f;
 
 	float angle = atan2(m_moveSpeed.x, m_moveSpeed.z);
 	m_rotation.SetRotation(CVector3().AxisY(), angle);
 
-	m_position.y -= 1.0f;
-
 }
 
 void Player::Jump() {
-	;
+	
+	m_moveSpeed.y = m_jumpPower;
+
 }

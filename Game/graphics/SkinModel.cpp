@@ -12,10 +12,24 @@ SkinModel::~SkinModel()
 	if (m_lightCb != nullptr) {
 		m_lightCb->Release();
 	}
+	//環境光用の定数バッファの解放。
+	if (m_ambientlightCb != nullptr) {
+		m_ambientlightCb->Release();
+	}
 	if (m_samplerState != nullptr) {
 		//サンプラステートを解放。
 		m_samplerState->Release();
 	}
+}
+
+/// <summary>
+/// 環境光の初期化
+/// </summary>
+void SkinModel::LoadAmbientLight() {
+	CVector3 a_color = LightMaker::GetInstance()->GetAmbientColor();
+	m_AmbientLight.Ambient_R = a_color.x;
+	m_AmbientLight.Ambient_G = a_color.y;
+	m_AmbientLight.Ambient_B = a_color.z;
 }
 
 /// <summary>
@@ -38,10 +52,13 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 
 	//ディレクションライトの初期化。
 	for (int i = 0; i < MAX_DIRECTION_LIGHT; i++) {
-		m_dirLight.direction[i] = { 0.0f, -1.0f, 0.0f, 0.0f };
-		m_dirLight.direction[i].Normalize();	//正規化。
-		m_dirLight.color[i] = { 0.2f,0.2f, 0.2f, 1.0f };
+		m_light.directionLight.direction[i] = { 0.5f, -1.0f, 0.0f, 0.0f };
+		m_light.directionLight.direction[i].Normalize();	//正規化。
+		m_light.directionLight.color[i] = { 0.4f, 0.4f, 0.4f, 1.0f };
+		m_light.specPow = 4.0f;
 	}
+
+	LoadAmbientLight();
 
 	//SkinModelDataManagerを使用してCMOファイルのロード。
 	m_modelDx = g_skinModelDataManager.Load(filePath, m_skeleton);
@@ -90,8 +107,12 @@ void SkinModel::InitConstantBuffer()
 
 	//続いて、ライト用の定数バッファを作成。
 	//作成するバッファのサイズを変更するだけ。
-	bufferDesc.ByteWidth = sizeof(SDirectionLight);				//SDirectionLightは16byteの倍数になっているので、切り上げはやらない。
-	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_lightCb);
+	bufferDesc.ByteWidth = Raundup16(sizeof(SLight));
+	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_lightCb2);
+
+	//環境光用の定数バッファを作成。
+	bufferDesc.ByteWidth = Raundup16(sizeof(AmbientLight));
+	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_ambientlightCb);
 
 }
 void SkinModel::InitSamplerState()
@@ -131,6 +152,8 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	m_skeleton.Update(m_worldMatrix);
 	//ライトの更新！
 	D_LightUpdate();
+	//環境光の更新！
+	LoadAmbientLight();
 }
 void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 {
@@ -143,17 +166,27 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
+
 	//ライト用の定数バッファを更新。
-	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_dirLight, 0, 0);
+	m_light.eyePos = g_camera3D.GetPosition();
+	//d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_dirLight, 0, 0);
+	d3dDeviceContext->UpdateSubresource(m_lightCb2, 0, nullptr, &m_light, 0, 0);
+	d3dDeviceContext->UpdateSubresource(m_ambientlightCb, 0, nullptr, &m_AmbientLight, 0, 0);
+
 	//定数バッファをGPUに転送。
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
-	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
+
 	//定数バッファをシェーダースロットに設定。
-	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
+	//d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
+	d3dDeviceContext->PSSetConstantBuffers(2, 1, &m_ambientlightCb);
+	d3dDeviceContext->PSSetConstantBuffers(3, 1, &m_lightCb2);
+
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
+
 	//ボーン行列をGPUに転送。
 	m_skeleton.SendBoneMatrixArrayToGPU();
+
 	//アルベドテクスチャを設定する。
 	d3dDeviceContext->PSSetShaderResources(0, 1, &m_albedoTextureSRV);
 	//描画。

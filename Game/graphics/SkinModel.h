@@ -115,10 +115,44 @@ private:
 		//CVector3 emissionColor;
 	};
 
+	//環境光の定数バッファ
+	struct AmbientLight {
+		float Ambient_R;
+		float Ambient_G;
+		float Ambient_B;
+	};
+
+	/*!
+	*@brief	ライト構造体。
+	*/
+	struct SLight {
+		SDirectionLight		directionLight;		//ディレクションライト
+		CVector3			eyePos;				//視点の座標。
+		float				specPow;			//鏡面反射の絞り。
+	};
+
+	/// <summary>
+	/// 環境光の初期化
+	/// </summary>
+	void LoadAmbientLight();
+
+	/// <summary>
+	/// 16の倍数に切り上げる処理
+	/// </summary>
+	/// <param name="n">切り上げたい整数</param>
+	/// <returns>16の倍数に切り上げた値</returns>
+	int Raundup16(int n)
+	{
+		return (((n - 1) / 16) + 1) * 16;
+	}
+
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
 	ID3D11Buffer*		m_cb = nullptr;					//!<定数バッファ。
 	ID3D11Buffer*		m_lightCb = nullptr;			//!<ライト用の定数バッファ。
-	SDirectionLight		m_dirLight;						//!<ディレクションライト。
+	ID3D11Buffer*		m_lightCb2 = nullptr;			//!<ライト用の定数バッファ2。
+	ID3D11Buffer*		m_ambientlightCb = nullptr;		//!<ライト用の定数バッファ。
+	AmbientLight		m_AmbientLight;					//!<ライト構造体。
+	SLight				m_light;						//!<ライト構造体。
 	Skeleton			m_skeleton;						//!<スケルトン。
 	CMatrix				m_worldMatrix;					//!<ワールド行列。
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
