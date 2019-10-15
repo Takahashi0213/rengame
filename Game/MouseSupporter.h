@@ -22,6 +22,7 @@ public:
 	enum mouse_key {
 		Left_Key,
 		Right_Key,
+		Center_Key,
 	};
 
 	void MouseSupporter::MouseUpdate();
@@ -80,9 +81,11 @@ private:
 	//カーソルの押された状態を保存する
 	mouse_state m_leftMouse = Not_Push;
 	mouse_state m_rightMouse = Not_Push;
+	mouse_state m_centerMouse = Not_Push;
 	//カーソルの押されていた時間を保存する
 	int m_lestPushTimer = 0;
 	int m_rightPushTimer = 0;
+	int m_centerPushTimer = 0;
 	//ホイールの移動数を保存する
 	int m_wheelMove = 0;
 	//前回のマウス座標を保存する

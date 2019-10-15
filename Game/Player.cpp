@@ -49,8 +49,11 @@ void Player::Update()
 	//CVector2 a = MouseSupporter::GetInstance()->GetMousePos();
 
 	Move();
+
+	bool OnG_Flag = m_charaCon.IsOnGround();
+
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
-		if (m_jumpNow == false) {
+		if (m_jumpNow == false && OnG_Flag == true) {
 			Jump();
 		}
 		m_jumpNow = true;
@@ -81,8 +84,9 @@ void Player::Move() {
 
 	//¶ƒNƒŠƒbƒN‚Ìó‘Ô‚ð”»’è
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
+	bool OnG_Flag = m_charaCon.IsOnGround();
 
-	if (key == MouseSupporter::Release_Push) {
+	if (key == MouseSupporter::Release_Push && OnG_Flag == true) {
 		if (MouseSupporter::GetInstance()->GetMouseTimer(MouseSupporter::Left_Key) < 12) {
 			m_nextPos = MouseSupporter::GetInstance()->GetMousePos_3D();
 

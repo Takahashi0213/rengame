@@ -43,7 +43,7 @@ private:
 	//ジャンプ
 	bool m_jumpNow = false;
 	const float m_jumpPower = 16.0f;	//ジャンプﾊﾟｩﾜｧ
-	const float m_gravity = 0.6f;		//重力ﾊﾟｩﾜｧ
+	const float m_gravity = 0.8f;		//重力ﾊﾟｩﾜｧ
 
 };
 

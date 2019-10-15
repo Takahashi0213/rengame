@@ -9,4 +9,12 @@ BoxMaker::BoxMaker()
 
 BoxMaker::~BoxMaker()
 {
+}	
+
+void BoxMaker::Update() {
+
+}
+
+void BoxMaker::Render() {
+
 }

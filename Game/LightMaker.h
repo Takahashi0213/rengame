@@ -83,7 +83,7 @@ private:
 	SDirectionLight m_light;
 	bool m_lightFlag_D = false;
 
-	CVector3 m_ambientColor = { 0.2f,0.2f,0.2f };	//ŠÂ‹«Œõ‚ÌF
+	CVector3 m_ambientColor = { 0.4f,0.4f,0.4f };	//ŠÂ‹«Œõ‚ÌF
 
 };
 

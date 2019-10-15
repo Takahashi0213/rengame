@@ -80,6 +80,33 @@ void MouseSupporter::MouseUpdate() {
 		}
 	}
 
+	if (GetAsyncKeyState(VK_MBUTTON)) {
+		//中央が押された
+		m_centerPushTimer++;
+		if (m_centerMouse == New_Push) {
+			//さっき押された瞬間だったので押されている状態に変更
+			m_centerMouse = Now_Pushing;
+		}
+
+		if (m_centerMouse == Not_Push || m_centerMouse == Release_Push) {
+			//押された瞬間！
+			m_centerMouse = New_Push;
+			m_centerPushTimer = 0;
+		}
+	}
+	else {
+		//中央が押されていない
+		if (m_centerMouse == Release_Push) {
+			//さっき離された瞬間だったので離されている状態に変更
+			m_centerMouse = Not_Push;
+		}
+
+		if (m_centerMouse == Now_Pushing || m_centerMouse == New_Push) {
+			//離された瞬間！
+			m_centerMouse = Release_Push;
+		}
+	}
+
 	//ホイールの移動数を格納
 	m_wheelMove = GetAsyncKeyState(WM_MOUSEWHEEL);
 
