@@ -9,6 +9,11 @@
 class SkinModelRender : public IGameObject
 {
 public:
+	enum RenderMode {
+		Default, //普通
+		Silhouette, //シルエット！
+	};
+
 	SkinModelRender();
 	~SkinModelRender();
 	void Update()override;
@@ -67,6 +72,22 @@ public:
 	}
 
 	/// <summary>
+	/// レンダーモードを設定する
+	/// </summary>
+	/// <param name="mode">モードです。</param>
+	void SetRenderMode(RenderMode mode) {
+		m_renderMode = mode;
+		m_skinModel.SetRenderMode(mode);
+	}
+	/// <summary>
+	/// レンダーモードを返す
+	/// </summary>
+	/// <returns>こいつに設定されてるレンダーモードだ</returns>
+	RenderMode GetRenderMode() {
+		return m_renderMode;
+	}
+	
+	/// <summary>
 	/// モデルを楽に動かすクラスを呼び出せるぞ
 	/// </summary>
 	/// <remarks>
@@ -82,6 +103,6 @@ private:
 	CVector3 m_position = CVector3::Zero();		//!<座標。
 	CQuaternion m_rotation = CQuaternion().Identity();		//!<回転。
 	CVector3 m_scale = CVector3().One();		//!<拡大率。
-
+	RenderMode m_renderMode = Default;			//描画モード
 };
 

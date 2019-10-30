@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SkinModel.h"
 #include "SkinModelDataManager.h"
+#include "SkinModelEffect.h"
 
 SkinModel::~SkinModel()
 {
@@ -183,6 +184,12 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
+
+	//エフェクトにクエリを行う。
+	m_modelDx->UpdateEffects([&](DirectX::IEffect* material) {
+		auto modelMaterial = reinterpret_cast<SkinModelEffect*>(material);
+		modelMaterial->SetRenderMode(m_renderMode);
+		});
 
 	//ボーン行列をGPUに転送。
 	m_skeleton.SendBoneMatrixArrayToGPU();

@@ -37,7 +37,10 @@ void CameraSupporter::Update() {
 	if (m_cameraMoveFlag_Zoom == true) {
 		CameraMoveUpdate_Zoom();
 	}
-
+	//注視点移動フラグを確認
+	if (m_cameraTargetMoveFlag == true) {
+		CameraTargetMoveUpdate();
+	}
 }
 
 void CameraSupporter::Render() {
@@ -124,6 +127,25 @@ void CameraSupporter::CameraMove_Zoom(const float angle, float moveTime, float m
 	m_cameraMoveTime_Zoom = moveTime;
 	m_cameraMoveDelay_Zoom = moveDelay;
 	m_cameraZoomBound = boundFlag;
+
+}
+
+/// <summary>
+/// カメラの注視点を移動する準備
+/// </summary>
+/// <param name="move">移動する分のベクトル</param>
+/// <param name="moveTime">移動時間</param>
+/// <param name="moveDelay">移動ディレイ</param>
+void CameraSupporter::CameraTargetMove(CVector3 move, float moveTime, float moveDelay) {
+
+	//メンバ変数リセット
+	m_cameraTargetMoveFlag = true;
+	m_cameraTargetMoveTimer = 0.0f;
+
+	//色々セット
+	m_cameraTargetMoveSpeed = move;
+	m_cameraTargetMoveTime = moveTime;
+	m_cameraTargetMoveDelay = moveDelay;
 
 }
 
@@ -303,5 +325,25 @@ void CameraSupporter::CameraMoveUpdate_Zoom() {
 	}
 
 	m_cameraMoveTimer_Zoom += 1.0f;
+
+}
+
+void CameraSupporter::CameraTargetMoveUpdate() {
+
+	if (m_cameraTargetMoveTimer >= m_cameraTargetMoveDelay) {
+
+		//1フレームの移動距離を計算
+		CVector3 move = m_cameraTargetMoveSpeed / m_cameraTargetMoveTime;
+		CVector3 cameraPos = g_camera3D.GetTarget();
+		cameraPos += move;
+		g_camera3D.SetPosition(cameraPos);
+
+		if (m_cameraTargetMoveTimer >= m_cameraTargetMoveTime + m_cameraTargetMoveDelay) {
+			//処理終了
+			m_cameraTargetMoveFlag = false;
+		}
+	}
+
+	m_cameraTargetMoveTimer += 1.0f;
 
 }

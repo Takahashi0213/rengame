@@ -21,6 +21,7 @@ public:
 	void CameraSupporter::CameraMove_Rot(float move, float moveTime, float moveDelay);
 	void CameraSupporter::CameraMove_Bure(CVector2 bure, float speed, float moveTime, float moveDelay);
 	void CameraSupporter::CameraMove_Zoom(const float angle, float moveTime, float moveDelay, bool boundFlag);
+	void CameraSupporter::CameraTargetMove(CVector3 move, float moveTime, float moveDelay);
 
 	/// <summary>
 	/// カメラのブレを停止
@@ -43,6 +44,7 @@ private:
 	void CameraSupporter::CameraMoveUpdate_Rot();
 	void CameraSupporter::CameraMoveUpdate_Bure();
 	void CameraSupporter::CameraMoveUpdate_Zoom();
+	void CameraSupporter::CameraTargetMoveUpdate();
 
 	//メンバ変数 普通に移動
 	bool m_cameraMoveFlag = false; //カメラは移動中？
@@ -76,6 +78,12 @@ private:
 	float m_cameraMoveSpeed_ZoomBound = 0.0f; //バウンド時の1フレームの移動距離
 	const float m_cameraZoomOverLimit = 2.0f; //カメラをバウンドさせて戻るまでの時間
 	const float m_zoomHosei = 1.1f; //ズームバウンド時の補正
+	//メンバ変数 注視点移動
+	bool m_cameraTargetMoveFlag = false; //注視点は移動中？
+	CVector3 m_cameraTargetMoveSpeed = CVector3().Zero(); //注視点の移動速度
+	float m_cameraTargetMoveTime = 0.0f; //注視点の移動時間
+	float m_cameraTargetMoveDelay = 0.0f; //注視点の移動ウェイト
+	float m_cameraTargetMoveTimer = 0.0f; //注視点の移動タイマー
 
 };
 

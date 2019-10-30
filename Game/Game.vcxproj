@@ -109,6 +109,7 @@
     <ClCompile Include="DebugLog.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameBox.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp" />
     <ClCompile Include="graphics\animation\AnimationClip.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="DebugLog.h" />
     <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameBox.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="graphics\animation\Animation.h" />
@@ -202,6 +204,7 @@
     <ClInclude Include="system\system.h" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Assets\modelData\box.fbx" />
     <MeshContentTask Include="Assets\modelData\map.fbx" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>

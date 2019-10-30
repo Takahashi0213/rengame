@@ -10,6 +10,10 @@ enum EnFbxUpAxis {
 	enFbxUpAxisY,		//Y-up
 	enFbxUpAxisZ,		//Z-up
 };
+enum RenderMode {
+	Default=0,			//普通
+	Silhouette=1,		//シルエット
+};
 /*!
 *@brief	スキンモデルクラス。
 */
@@ -53,7 +57,7 @@ public:
 	*@param[in]	projMatrix		プロジェクション行列。
 	*  カメラ座標系の3Dモデルをスクリーン座標系に変換する行列です。
 	*/
-	void Draw( CMatrix viewMatrix, CMatrix projMatrix );
+	void Draw(CMatrix viewMatrix, CMatrix projMatrix);
 	/*!
 	*@brief	スケルトンの取得。
 	*/
@@ -88,6 +92,15 @@ public:
 		enSkinModelSRVReg_DiffuseTexture = 0,		//!<ディフューズテクスチャ。
 		enSkinModelSRVReg_BoneMatrix,				//!<ボーン行列。
 	};
+
+	/// <summary>
+	/// レンダーモードを変更
+	/// </summary>
+	/// <param name="mode">モード</param>
+	void SetRenderMode(int mode) {
+		m_renderMode = mode;
+	}
+
 private:
 	/*!
 	*@brief	サンプラステートの初期化。
@@ -159,5 +172,6 @@ private:
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
 	CVector3 m_emissionColor = CVector3().Zero();		//!<自己発光カラー。
 	ID3D11ShaderResourceView* m_albedoTextureSRV = nullptr;	//!<アルベドテクスチャのSRV
+	int					m_renderMode = 0;				//!<レンダーモード
 };
 

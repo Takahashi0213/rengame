@@ -8,9 +8,12 @@ Player::Player()
 {
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/unityChan.cmo");
+	m_model_Sl.Init(L"Assets/modelData/unityChan.cmo");
 	//m_model.SetEmissionColor({ 100.0f,1.0f,1.0f });
+	m_model_Sl.SetRenderMode(RenderMode::Silhouette);
 
 	//ワールド行列の更新。
+	m_model_Sl.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 
 	SpriteRender* r = NewGO<SpriteRender>("Obj");
@@ -63,6 +66,7 @@ void Player::Update()
 	}
 
 	//ワールド行列の更新。
+	m_model_Sl.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 
 	//重力
@@ -74,6 +78,10 @@ void Player::Update()
 
 void Player::Render()
 {
+	m_model_Sl.Draw(
+		g_camera3D.GetViewMatrix(),
+		g_camera3D.GetProjectionMatrix()
+	);
 	m_model.Draw(
 		g_camera3D.GetViewMatrix(), 
 		g_camera3D.GetProjectionMatrix()

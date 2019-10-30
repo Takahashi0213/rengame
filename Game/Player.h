@@ -28,6 +28,7 @@ public:
 
 private:
 	SkinModel m_model;	//スキンモデル。
+	SkinModel m_model_Sl;	//スキンモデル（シルエット）
 	CharacterController m_charaCon;		//キャラクターコントローラー。
 
 	void Move();

@@ -62,7 +62,7 @@
 		/// </remarks>
 		/// <returns>見つかったオブジェクトのアドレス</returns>
 		template<class T>
-		T* FindGO(const int objkey,bool queryflag) {
+		T* FindGO(const int objkey,bool queryflag = false) {
 			
 			bool m_findFlag = false; //発見したらtrueにする
 			bool m_getFlag = false; //返すのがこのオブジェクトのアドレスで本当にOKならtrue

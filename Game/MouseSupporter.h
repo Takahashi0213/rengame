@@ -42,6 +42,9 @@ public:
 		case MouseSupporter::Right_Key:
 			re = m_rightMouse;
 			break;
+		case MouseSupporter::Center_Key:
+			re = m_centerMouse;
+			break;
 		}
 		return re;
 	}
