@@ -58,3 +58,4 @@ const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
 
 extern SpriteRender spRen;
 extern CGameObjectManager goMgr;
+

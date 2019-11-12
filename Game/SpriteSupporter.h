@@ -80,5 +80,7 @@ private:
 	int m_spriteShakeCounter = -1;	//スプライトのシェイク回数カウンター
 	int m_spriteShakeTimer = -1;	//スプライトのシェイクタイマー
 
+
+
 };
 

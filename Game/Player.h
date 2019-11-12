@@ -2,6 +2,7 @@
 #include "character/CharacterController.h"
 #include "system/CGameObjectManager.h"
 #include "physics/PhysicsStaticObject.h"
+#include "Game.h"
 
 class Player : public IGameObject
 {
@@ -26,10 +27,18 @@ public:
 		return m_rotation;
 	}
 
+	void SetGame(Game* game) {
+		m_gameObj = game;
+	}
+
 private:
 	SkinModel m_model;	//スキンモデル。
 	SkinModel m_model_Sl;	//スキンモデル（シルエット）
 	CharacterController m_charaCon;		//キャラクターコントローラー。
+	Game* m_gameObj;
+
+	//モノクロフラグ
+	bool m_monochromeFlag = false;
 
 	void Move();
 	void Jump();

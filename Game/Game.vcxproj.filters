@@ -52,6 +52,9 @@
     <Filter Include="graphics\GameBox">
       <UniqueIdentifier>{7bc2d564-c6fe-4bd9-9578-099020b909fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{d7991004-bffa-45f5-a76f-fafb6edcbdeb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -111,7 +114,6 @@
     <ClCompile Include="level\MapChip.cpp">
       <Filter>level</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="system\CGameObjectManager.cpp">
@@ -177,6 +179,9 @@
     </ClCompile>
     <ClCompile Include="GameBox.cpp">
       <Filter>graphics\GameBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -246,7 +251,6 @@
     <ClInclude Include="level\MapChip.h">
       <Filter>level</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\IGameObject.h">
       <Filter>system</Filter>
@@ -317,6 +321,9 @@
     <ClInclude Include="BoxMaker.h" />
     <ClInclude Include="GameBox.h">
       <Filter>graphics\GameBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

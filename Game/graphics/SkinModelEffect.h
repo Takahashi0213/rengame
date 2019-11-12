@@ -12,11 +12,14 @@ protected:
 	Shader* m_pPSShader = nullptr;
 	Shader* m_pPSSilhouetteShader = nullptr;
 	Shader m_psSilhouette;		//シルエット描画用のピクセルシェーダー。
+	Shader* m_pPSMonochromeShader = nullptr;
+	Shader m_psMonochrome;		//モノクロ描画用のピクセルシェーダー。
+
 	Shader m_vsShader;
 	Shader m_psShader;
 	bool isSkining;
 	ID3D11ShaderResourceView* m_albedoTex = nullptr;
-	bool m_renderMode = 0;
+	int m_renderMode = 0;
 	ID3D11DepthStencilState* m_silhouettoDepthStepsilState = nullptr;	//シルエット描画用のデプスステンシルステート。
 
 public:

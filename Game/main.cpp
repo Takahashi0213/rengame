@@ -45,12 +45,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//スプライトレンダー
 	SpriteRender spRen;
 
-	//ライトメーカーの生成
-	goMgr.NewGO<LightMaker>("LightMaker");
-	
-	//カメラサポーターの生成
-	goMgr.NewGO<CameraSupporter>("CameraSupporter");
-
 	//カメラを初期化。
 	g_camera3D.SetPosition({ 0.0f, 100.0f, 300.0f });
 	g_camera3D.SetTarget({ 0.0f, 100.0f, 0.0f });
@@ -62,7 +56,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera2D.SetFar(1000.0f);
 
 	//CameraSupporter::GetInstance()->CameraMove_Zoom(30.0f, 20.0f, 60.0f, true);
-	Game main_game;
+	CGameObjectManager::GetInstance()->NewGO<Game>("main_Game");
 
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)

@@ -12,6 +12,7 @@ public:
 	enum RenderMode {
 		Default, //普通
 		Silhouette, //シルエット！
+		Monochrome, //シロクロ
 	};
 
 	SkinModelRender();

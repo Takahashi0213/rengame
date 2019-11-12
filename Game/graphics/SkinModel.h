@@ -12,7 +12,8 @@ enum EnFbxUpAxis {
 };
 enum RenderMode {
 	Default=0,			//普通
-	Silhouette=1,		//シルエット
+	Silhouette = 1,		//シルエット
+	Monochrome = 2,		//モノクロ
 };
 /*!
 *@brief	スキンモデルクラス。

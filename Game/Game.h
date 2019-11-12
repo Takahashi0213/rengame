@@ -1,5 +1,6 @@
 #pragma once
-class Game
+
+class Game : public IGameObject
 {
 public:
 	enum GameMode {
@@ -11,6 +12,8 @@ public:
 
 	Game();
 	~Game();
+	void Update()override;
+	void Render()override;
 
 	/// <summary>
 	/// ゲームモードをセット

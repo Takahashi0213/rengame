@@ -85,10 +85,13 @@
 		/// <summary>
 		/// 優先度を設定
 		/// </summary>
-		/// <param name="priority">優先度（最大はMAX_PRIORITY）</param>
+		/// <param name="priority">優先度（最小は0、最大はMAX_PRIORITY）</param>
 		void SetPriority(int priority) {
 			if (priority > MAX_PRIORITY) {
 				priority = MAX_PRIORITY;
+			}
+			if (priority < 0) {
+				priority = 0;
 			}
 			m_priority = priority;
 		}
@@ -96,17 +99,17 @@
 		/// <summary>
 		/// 優先度を取得
 		/// </summary>
-		/// <returns>優先度（最大はMAX_PRIORITY）</returns>
+		/// <returns>優先度（最小は0、最大はMAX_PRIORITY）</returns>
 		int GetPriority() {
 			return m_priority;
 		}
 
 	private:
-		int m_nameKey = 0; //ネームキー
-		int m_priority = 0; //優先度
-		bool m_activeFlag = true; //アクティブフラグ
-		bool m_queryFlag = false; //クエリ用フラグ
+		int m_nameKey = 0;						//ネームキー
+		int m_priority = 0;						//優先度
+		bool m_activeFlag = true;				//アクティブフラグ
+		bool m_queryFlag = false;				//クエリ用フラグ
 
-		objectTag m_tag = t_Other; //オブジェクトタグ
+		objectTag m_tag = t_Other;				//オブジェクトタグ
 	};
 

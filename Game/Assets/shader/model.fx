@@ -220,3 +220,17 @@ float4 PSMain_Silhouette(PSInput In) : SV_Target0
 {
 	return float4(0.5f, 0.5f, 0.5f, 1.0f);
 }
+
+//--------------------------------------------------------------------------------------
+// モノクロ描画用のピクセルシェーダーのエントリ関数。
+//--------------------------------------------------------------------------------------
+float4 PSMain_Monochrome(PSInput In) : SV_Target0
+{
+	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
+	float P = (albedoColor.r + albedoColor.g + albedoColor.b) / 3.0f;
+	albedoColor.r = P;
+	albedoColor.g = P;
+	albedoColor.b = P;
+
+	return albedoColor;
+}

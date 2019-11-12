@@ -328,6 +328,9 @@ void CameraSupporter::CameraMoveUpdate_Zoom() {
 
 }
 
+/// <summary>
+/// ’‹“_ˆÚ“®‚ğÀs
+/// </summary>
 void CameraSupporter::CameraTargetMoveUpdate() {
 
 	if (m_cameraTargetMoveTimer >= m_cameraTargetMoveDelay) {

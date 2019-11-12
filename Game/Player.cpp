@@ -51,6 +51,17 @@ void Player::Update()
 
 	//CVector2 a = MouseSupporter::GetInstance()->GetMousePos();
 
+	if (m_gameObj != nullptr) {
+		if (m_gameObj->GetGameMode() == Game::CreateMode && m_monochromeFlag == false) {
+			m_model.SetRenderMode(RenderMode::Monochrome);
+			m_monochromeFlag = true;
+		}
+		else if (m_gameObj->GetGameMode() != Game::CreateMode && m_monochromeFlag == true) {
+			m_model.SetRenderMode(RenderMode::Default);
+			m_monochromeFlag = false;
+		}
+	}
+
 	Move();
 
 	bool OnG_Flag = m_charaCon.IsOnGround();
@@ -69,10 +80,14 @@ void Player::Update()
 	m_model_Sl.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 
-	//重力
-	m_moveSpeed.y -= m_gravity;
+	if (m_gameObj->GetGameMode() == Game::ActionMode){ //アクションモードでなければ更新しない！
 
-	m_position = m_charaCon.Execute(1.0f, m_moveSpeed);
+		//重力
+		m_moveSpeed.y -= m_gravity;
+		//キャラコン移動
+		m_position = m_charaCon.Execute(1.0f, m_moveSpeed);
+
+	}
 
 }
 
@@ -94,7 +109,7 @@ void Player::Move() {
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
 	bool OnG_Flag = m_charaCon.IsOnGround();
 
-	if (key == MouseSupporter::Release_Push && OnG_Flag == true) {
+	if (key == MouseSupporter::Release_Push && OnG_Flag == true && m_gameObj->GetGameMode() == Game::ActionMode) {
 		if (MouseSupporter::GetInstance()->GetMouseTimer(MouseSupporter::Left_Key) < 12) {
 			m_nextPos = MouseSupporter::GetInstance()->GetMousePos_3D();
 

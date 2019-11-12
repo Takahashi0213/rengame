@@ -18,6 +18,18 @@ BackGround::~BackGround()
 }
 
 void BackGround::Update() {
+
+	if (m_game != nullptr) {
+		if (m_game->GetGameMode() == Game::CreateMode && m_monochromeFlag == false) {
+			m_model.SetRenderMode(RenderMode::Monochrome);
+			m_monochromeFlag = true;
+		}
+		else if (m_game->GetGameMode() != Game::CreateMode && m_monochromeFlag == true) {
+			m_model.SetRenderMode(RenderMode::Default);
+			m_monochromeFlag = false;
+		}
+	}
+
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 
 }

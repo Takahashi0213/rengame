@@ -38,6 +38,10 @@ private:
 	//箱リスト
 	std::list<GameBox*> m_boxList;
 	GameBox* m_nowBox = nullptr;		//現在見ているボックスさん
+	std::list<GameBox*> m_nowBoxList;
+
+	//座標
+	CVector3 m_boxPoint[4];
 
 	//定数
 	const float PosHoseiY = 200.0f;		//レイがヒットしなかった時の補正

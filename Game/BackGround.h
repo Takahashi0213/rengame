@@ -1,6 +1,7 @@
 #pragma once
 #include "physics/PhysicsStaticObject.h"
 #include "system/CGameObjectManager.h"
+#include "Game.h"
 
 class BackGround : public IGameObject
 {
@@ -10,8 +11,18 @@ public:
 	void Update()override;
 	void Render()override;
 
+	/// <summary>
+	/// ゲームのポインタをほぞんぬ
+	/// </summary>
+	/// <param name="game">アドレス</param>
+	void SetGame(Game* game) {
+		m_game = game;
+	}
+
 private:
 	SkinModel m_model;	//スキンモデル。
+	Game* m_game;
+	bool m_monochromeFlag = false;
 
 	PhysicsStaticObject m_physicsStaticObject;				//静的物理オブジェクト。
 

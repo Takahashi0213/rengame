@@ -6,9 +6,11 @@ ModelEffect::ModelEffect()
 {
 	m_psShader.Load("Assets/shader/model.fx", "PSMain", Shader::EnType::PS);
 	m_psSilhouette.Load("Assets/shader/model.fx", "PSMain_Silhouette", Shader::EnType::PS);
+	m_psMonochrome.Load("Assets/shader/model.fx", "PSMain_Monochrome", Shader::EnType::PS);
 
 	m_pPSShader = &m_psShader;
 	m_pPSSilhouetteShader = &m_psSilhouette;
+	m_pPSMonochromeShader = &m_psMonochrome;
 
 	//デプスステンシルの初期化。
 	InitSilhouettoDepthStepsilState();
@@ -43,6 +45,11 @@ void __cdecl ModelEffect::Apply(ID3D11DeviceContext* deviceContext)
 		deviceContext->PSSetShader((ID3D11PixelShader*)m_pPSSilhouetteShader->GetBody(), NULL, 0);
 		//デプスステンシルステートを切り替える。
 		deviceContext->OMSetDepthStencilState(m_silhouettoDepthStepsilState, 0);
+		break;
+	case 2:
+		//モノクロ描画。
+		deviceContext->PSSetShader((ID3D11PixelShader*)m_pPSMonochromeShader->GetBody(), NULL, 0);
+		deviceContext->PSSetShaderResources(0, 1, &m_albedoTex);
 		break;
 	}
 
