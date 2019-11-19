@@ -31,6 +31,13 @@ Player::Player()
 	//キャラクターコントローラーを初期化。
 	m_charaCon.Init(25, 30, m_position);
 
+	//ライトメーカーの取得
+	int a = Hash::MakeHash("LightMaker");
+	m_lightMaker = CGameObjectManager::GetInstance()->FindGO<LightMaker>(a);
+
+	//シャドウレシーバーにする。
+	m_model.SetShadowReciever(true);
+
 }
 
 
@@ -89,6 +96,19 @@ void Player::Update()
 
 	}
 
+	//シャドウキャスターを登録。
+	ShadowMap::GetInstance()->RegistShadowCaster(&m_model);
+	ShadowMap::GetInstance()->Update(m_lightMaker->GetLightCameraPosition(), m_lightMaker->GetLightCameraTarget());
+
+	//ライトカメラを更新
+	CVector3 LC_Pos = LightMaker::GetInstance()->GetLightCameraPosition();
+	LC_Pos = m_position;
+	LC_Pos.y += 1000.0f;
+	LightMaker::GetInstance()->SetLightCameraPosition(LC_Pos);
+	//ターゲットも！
+	LC_Pos = LightMaker::GetInstance()->GetLightCameraTarget();
+	LC_Pos = m_position;
+	LightMaker::GetInstance()->SetLightCameraTarget(LC_Pos);
 }
 
 void Player::Render()

@@ -114,6 +114,10 @@ void MouseSupporter::MouseUpdate() {
 		int a = 0;
 	}
 
+	CVector2 move = GetBeforeMouse(0);
+	m_mouseMove.x = move.x;
+	m_mouseMove.y = move.y;
+
 }
 
 /// <summary>
@@ -155,7 +159,7 @@ CVector3 MouseSupporter::GetMousePos_3D() {
 /// <summary>
 /// 実行する度に前回の座標と今回の座標の差（ベクトル）を返す
 /// </summary>
-/// <param name="p">取得する位置</param>
+/// <param name="p">取得する位置（0は常時実行、1はｶｧﾒｨﾗｧ）</param>
 /// <returns>差</returns>
 CVector2 MouseSupporter::GetBeforeMouse(int p) {
 	CVector2 pos = GetMousePos();

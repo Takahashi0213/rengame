@@ -151,13 +151,15 @@ void GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* b
 					m_vPos_1 = vPos_1;
 					m_vPos_2 = vPos_2;
 
+					int polyNo_Yobi = polyNo;
+
 					//再検査
-					for (int polyNo = 0; polyNo < numPoly; polyNo++) {
+					for (int polyNo2 = polyNo_Yobi; polyNo2 < numPoly; polyNo2++) {
 
 						CVector3 vPos_0, vPos_1, vPos_2, N;
 
 						GetTrianglePositionAndNormal(
-							polyNo,
+							polyNo2,
 							indexBuffer,
 							vertexBuffer,
 							mWorld,
@@ -176,18 +178,27 @@ void GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* b
 							boxPos[2] = m_vPos_2;
 
 							CVector3 m_vPos_3;
+							bool GetFlag = false;
 
 							//vPos_0がさっき渡した座標全てと違うかチェック
 							if (VectorHikaku(m_vPos_0, vPos_0) == true && VectorHikaku(m_vPos_1, vPos_0) == true && VectorHikaku(m_vPos_2, vPos_0) == true) {
 								m_vPos_3 = vPos_0;	//どことも一致しないのでお前
+								GetFlag = true;
 							}
 							//vPos_1がさっき渡した座標全てと違うかチェック
 							if (VectorHikaku(m_vPos_0, vPos_1) == true && VectorHikaku(m_vPos_1, vPos_1) == true && VectorHikaku(m_vPos_2, vPos_1) == true) {
 								m_vPos_3 = vPos_1;	//どことも一致しないのでお前
+								GetFlag = true;
 							}
 							//vPos_2がさっき渡した座標全てと違うかチェック
 							if (VectorHikaku(m_vPos_0, vPos_2) == true && VectorHikaku(m_vPos_1, vPos_2) == true && VectorHikaku(m_vPos_2, vPos_2) == true) {
 								m_vPos_3 = vPos_2;	//どことも一致しないのでお前
+								GetFlag = true;
+							}
+
+							//フラグチェック
+							if (GetFlag == false) {
+								std::abort(); //おかしいのでクラッシュ
 							}
 
 							boxPos[3] = m_vPos_3;

@@ -72,6 +72,49 @@ public:
 	}
 
 	/// <summary>
+	/// ライトカメラの座標を指定
+	/// </summary>
+	/// <param name="pos">座標</param>
+	void SetLightCameraPosition(CVector3 pos) {
+		m_lightCameraPosition = pos;
+	}
+
+	/// <summary>
+	/// ライトカメラの座標を返す
+	/// </summary>
+	/// <returns>座標</returns>
+	CVector3 GetLightCameraPosition() {
+		return m_lightCameraPosition;
+	}
+
+	/// <summary>
+	/// ライトカメラの注視点を指定
+	/// </summary>
+	/// <param name="pos">注視点</param>
+	void SetLightCameraTarget(CVector3 pos) {
+		m_lightCameraTarget = pos;
+	}
+
+	/// <summary>
+	/// ライトカメラの注視点を返す
+	/// </summary>
+	/// <returns>注視点</returns>
+	CVector3 GetLightCameraTarget() {
+		return m_lightCameraTarget;
+	}
+
+	/// <summary>
+	/// ライトカメラの取得
+	/// （参照Ver)
+	/// </summary>
+	/// <param name="m_pos">座標</param>
+	/// <param name="m_tgt">注視点</param>
+	void GetLightCamera(CVector3& m_pos, CVector3& m_tgt) {
+		m_pos = m_lightCameraPosition;
+		m_tgt = m_lightCameraTarget;
+	}
+
+	/// <summary>
 	/// インスタンスを取得！
 	/// </summary>
 	/// <returns>インスタンスです</returns>
@@ -84,6 +127,9 @@ private:
 	bool m_lightFlag_D = false;
 
 	CVector3 m_ambientColor = { 0.4f,0.4f,0.4f };	//環境光の色
+
+	CVector3 m_lightCameraPosition;				//ライトカメラの視点。
+	CVector3 m_lightCameraTarget;				//ライトカメラの注視点。
 
 };
 

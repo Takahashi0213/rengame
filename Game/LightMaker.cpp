@@ -11,6 +11,10 @@ LightMaker::LightMaker()
 
 	//このインスタンスを唯一のインスタンスとして記録する
 	m_instance = this;
+
+	SetLightCameraPosition({ 0.0f, 1000.0f, 0.0f });
+	SetLightCameraTarget({ 0.0f, 0.0f, 0.0f });
+
 }
 
 LightMaker::~LightMaker()

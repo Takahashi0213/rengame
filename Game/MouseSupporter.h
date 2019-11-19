@@ -68,6 +68,14 @@ public:
 		return re;
 	}
 
+	/// <summary>
+	/// 前フレームと比較したマウスの移動量を返す！！
+	/// </summary>
+	/// <returns>移動量</returns>
+	CVector2 MouseSupporter::GetMouseMove() {
+		return m_mouseMove;
+	}
+
 	CVector2 MouseSupporter::GetMousePos();
 	CVector3 MouseSupporter::GetMousePos_3D();
 	CVector2 MouseSupporter::GetBeforeMouse(int p = 0);
@@ -93,6 +101,6 @@ private:
 	int m_wheelMove = 0;
 	//前回のマウス座標を保存する
 	CVector2 m_beforeMouse[2] = { {0.0f,0.0f},{0.0f,0.0f} };
-
+	CVector2 m_mouseMove = { 0.0f,0.0f };
 };
 

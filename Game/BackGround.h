@@ -23,6 +23,7 @@ private:
 	SkinModel m_model;	//スキンモデル。
 	Game* m_game;
 	bool m_monochromeFlag = false;
+	LightMaker* m_lightMaker;
 
 	PhysicsStaticObject m_physicsStaticObject;				//静的物理オブジェクト。
 

@@ -58,7 +58,7 @@ public:
 	*@param[in]	projMatrix		プロジェクション行列。
 	*  カメラ座標系の3Dモデルをスクリーン座標系に変換する行列です。
 	*/
-	void Draw(CMatrix viewMatrix, CMatrix projMatrix);
+	void Draw(CMatrix viewMatrix, CMatrix projMatrix, EnRenderMode renderMode = enRenderMode_Normal);
 	/*!
 	*@brief	スケルトンの取得。
 	*/
@@ -102,6 +102,21 @@ public:
 		m_renderMode = mode;
 	}
 
+	/// <summary>
+	/// シャドウレシーバーのフラグを設定する。
+	/// </summary>
+	/// <param name="flag">trueを渡すとシャドウレシーバーになる</param>
+	/// <remarks>
+	/// シャドウレシーバーとは影を落とされるオブジェクトのことです。
+	/// シャドウキャスターによって生成された、シャドウマップを利用して
+	/// 自身に影を落とします。
+	/// オブジェクトがシャドウレシーバーかつシャドウキャスターになっている場合は
+	/// セルフシャドウ(自分の影が自分に落ちる)を行うことができます。
+	/// </remarks>
+	void SetShadowReciever(bool flag)
+	{
+		m_isShadowReciever = flag;
+	}
 private:
 	/*!
 	*@brief	サンプラステートの初期化。
@@ -126,6 +141,9 @@ private:
 		CMatrix mWorld;
 		CMatrix mView;
 		CMatrix mProj;
+		CMatrix mLightView;		//todo ライトビュー行列。
+		CMatrix mLightProj;		//todo ライトプロジェクション行列。
+		int isShadowReciever;	//todo シャドウレシーバーのフラグ。
 		//CVector3 emissionColor;
 	};
 
@@ -174,5 +192,6 @@ private:
 	CVector3 m_emissionColor = CVector3().Zero();		//!<自己発光カラー。
 	ID3D11ShaderResourceView* m_albedoTextureSRV = nullptr;	//!<アルベドテクスチャのSRV
 	int					m_renderMode = 0;				//!<レンダーモード
+	bool m_isShadowReciever = false;						//シャドウレシーバーのフラグ。
 };
 

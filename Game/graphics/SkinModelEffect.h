@@ -8,18 +8,26 @@
 class ModelEffect : public DirectX::IEffect {
 protected:
 	std::wstring m_materialName;	//!<マテリアル名。
-	Shader* m_pVSShader = nullptr;
-	Shader* m_pPSShader = nullptr;
-	Shader* m_pPSSilhouetteShader = nullptr;
-	Shader m_psSilhouette;		//シルエット描画用のピクセルシェーダー。
-	Shader* m_pPSMonochromeShader = nullptr;
-	Shader m_psMonochrome;		//モノクロ描画用のピクセルシェーダー。
 
 	Shader m_vsShader;
 	Shader m_psShader;
+	Shader m_psSilhouette;		//シルエット描画用のピクセルシェーダー。
+	Shader m_psMonochrome;		//モノクロ描画用のピクセルシェーダー。
+	Shader m_vsShadowMap;		//シャドウマップ生成用の頂点シェーダー。
+	Shader m_psShadowMap;		//シャドウマップ生成用のピクセルシェーダー。
+
+	Shader* m_pVSShader = nullptr;
+	Shader* m_pPSShader = nullptr;
+	Shader* m_pPSSilhouetteShader = nullptr;
+	Shader* m_pPSMonochromeShader = nullptr;
+	Shader* m_vsShadowMapShader = nullptr;
+	Shader* m_psShadowMapShader = nullptr;
+
+	int m_renderMode = 0;
+	int m_renderMode_Shadow = 0;
+
 	bool isSkining;
 	ID3D11ShaderResourceView* m_albedoTex = nullptr;
-	int m_renderMode = 0;
 	ID3D11DepthStencilState* m_silhouettoDepthStepsilState = nullptr;	//シルエット描画用のデプスステンシルステート。
 
 public:
@@ -55,10 +63,15 @@ public:
 	{
 		return wcscmp(name, m_materialName.c_str()) == 0;
 	}
-	//レンダーモードを設定。
-	void SetRenderMode(int renderMode)
+	/// <summary>
+	/// レンダーモードを２つ設定。
+	/// </summary>
+	/// <param name="renderMode">普通のレンダーモード</param>
+	/// <param name="renderMode2">シャドウマップ用のレンダーモード</param>
+	void SetRenderMode(int renderMode,int renderModeShadow)
 	{
 		m_renderMode = renderMode;
+		m_renderMode_Shadow = renderModeShadow;
 	}
 
 private:

@@ -33,6 +33,22 @@ public:
 		m_boxList.push_back(box);
 	}
 
+	/// <summary>
+	/// 箱の拡大率を変更する
+	/// </summary>
+	/// <param name="scl">拡大率！</param>
+	void SetScale(CVector3 scl) {
+		m_scale = scl;
+	}
+
+	/// <summary>
+	/// 箱の拡大率を返す
+	/// </summary>
+	/// <returns>拡大率！！！！！！</returns>
+	CVector3 GetScale() {
+		return m_scale;
+	}
+
 private:
 	void GetTrianglePositionAndNormal(
 		int polyNo,

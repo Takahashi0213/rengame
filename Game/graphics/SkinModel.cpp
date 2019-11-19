@@ -13,6 +13,9 @@ SkinModel::~SkinModel()
 	if (m_lightCb != nullptr) {
 		m_lightCb->Release();
 	}
+	if (m_lightCb2 != nullptr) {
+		m_lightCb2->Release();
+	}
 	//環境光用の定数バッファの解放。
 	if (m_ambientlightCb != nullptr) {
 		m_ambientlightCb->Release();
@@ -156,16 +159,26 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//環境光の更新！
 	LoadAmbientLight();
 }
-void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
+void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix ,EnRenderMode renderMode)
 {
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 	ID3D11DeviceContext* d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
+	auto shadowMap = ShadowMap::GetInstance();
 
 	//定数バッファの内容を更新。
 	SVSConstantBuffer vsCb;
 	vsCb.mWorld = m_worldMatrix;
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
+	//todo ライトカメラのビュー、プロジェクション行列を送る。
+	vsCb.mLightProj = shadowMap->GetLightProjMatrix();
+	vsCb.mLightView = shadowMap->GetLighViewMatrix();
+	if (m_isShadowReciever == true) {
+		vsCb.isShadowReciever = 1;
+	}
+	else {
+		vsCb.isShadowReciever = 0;
+	}
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 
 	//ライト用の定数バッファを更新。
@@ -176,9 +189,11 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 
 	//定数バッファをGPUに転送。
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
+	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
 
 	//定数バッファをシェーダースロットに設定。
 	//d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
+	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb2);
 	d3dDeviceContext->PSSetConstantBuffers(2, 1, &m_ambientlightCb);
 	d3dDeviceContext->PSSetConstantBuffers(3, 1, &m_lightCb2);
 
@@ -186,16 +201,19 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
 
 	//エフェクトにクエリを行う。
-	m_modelDx->UpdateEffects([&](DirectX::IEffect* material) {
-		auto modelMaterial = reinterpret_cast<SkinModelEffect*>(material);
-		modelMaterial->SetRenderMode(m_renderMode);
-		});
+		m_modelDx->UpdateEffects([&](DirectX::IEffect* material) {
+			auto modelMaterial = reinterpret_cast<SkinModelEffect*>(material);
+			modelMaterial->SetRenderMode(m_renderMode, renderMode);
+			});
 
 	//ボーン行列をGPUに転送。
 	m_skeleton.SendBoneMatrixArrayToGPU();
 
 	//アルベドテクスチャを設定する。
+	ID3D11ShaderResourceView* SRV = ShadowMap::GetInstance()->GetShadowMapSRV();
 	d3dDeviceContext->PSSetShaderResources(0, 1, &m_albedoTextureSRV);
+	d3dDeviceContext->PSSetShaderResources(2, 1, &SRV);
+
 	//描画。
 	m_modelDx->Draw(
 		d3dDeviceContext,

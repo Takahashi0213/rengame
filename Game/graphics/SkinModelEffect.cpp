@@ -7,10 +7,14 @@ ModelEffect::ModelEffect()
 	m_psShader.Load("Assets/shader/model.fx", "PSMain", Shader::EnType::PS);
 	m_psSilhouette.Load("Assets/shader/model.fx", "PSMain_Silhouette", Shader::EnType::PS);
 	m_psMonochrome.Load("Assets/shader/model.fx", "PSMain_Monochrome", Shader::EnType::PS);
+	m_psShadowMap.Load("Assets/shader/model.fx", "PSMain_ShadowMap", Shader::EnType::PS);
+	m_vsShadowMap.Load("Assets/shader/model.fx", "VSMain_ShadowMap", Shader::EnType::VS);
 
 	m_pPSShader = &m_psShader;
 	m_pPSSilhouetteShader = &m_psSilhouette;
 	m_pPSMonochromeShader = &m_psMonochrome;
+	m_vsShadowMapShader = &m_vsShadowMap;
+	m_psShadowMapShader = &m_psShadowMap;
 
 	//デプスステンシルの初期化。
 	InitSilhouettoDepthStepsilState();
@@ -18,6 +22,7 @@ ModelEffect::ModelEffect()
 }
 
 void ModelEffect::InitSilhouettoDepthStepsilState() {
+
 	//D3Dデバイスを取得。
 	auto pd3d = g_graphicsEngine->GetD3DDevice();
 	//作成する深度ステンシルステートの定義を設定していく。
@@ -33,23 +38,36 @@ void ModelEffect::InitSilhouettoDepthStepsilState() {
 void __cdecl ModelEffect::Apply(ID3D11DeviceContext* deviceContext)
 {
 	//シェーダーを適用する。
-	deviceContext->VSSetShader((ID3D11VertexShader*)m_vsShader.GetBody(), NULL, 0);
-	switch (m_renderMode) {
-	case 0:
+	switch (m_renderMode_Shadow) {
+	case enRenderMode_Normal:
 		//通常描画。
-		deviceContext->PSSetShader((ID3D11PixelShader*)m_psShader.GetBody(), NULL, 0);
-		deviceContext->PSSetShaderResources(0, 1, &m_albedoTex);
+
+		deviceContext->VSSetShader((ID3D11VertexShader*)m_vsShader.GetBody(), NULL, 0);
+		switch (m_renderMode) {
+		case 0:
+			//通常描画。
+			deviceContext->PSSetShader((ID3D11PixelShader*)m_psShader.GetBody(), NULL, 0);
+			deviceContext->PSSetShaderResources(0, 1, &m_albedoTex);
+			break;
+		case 1:
+			//シルエット描画。
+			deviceContext->PSSetShader((ID3D11PixelShader*)m_pPSSilhouetteShader->GetBody(), NULL, 0);
+			//デプスステンシルステートを切り替える。
+			deviceContext->OMSetDepthStencilState(m_silhouettoDepthStepsilState, 0);
+			break;
+		case 2:
+			//モノクロ描画。
+			deviceContext->PSSetShader((ID3D11PixelShader*)m_pPSMonochromeShader->GetBody(), NULL, 0);
+			deviceContext->PSSetShaderResources(0, 1, &m_albedoTex);
+			break;
+		}
+
 		break;
-	case 1:
-		//シルエット描画。
-		deviceContext->PSSetShader((ID3D11PixelShader*)m_pPSSilhouetteShader->GetBody(), NULL, 0);
-		//デプスステンシルステートを切り替える。
-		deviceContext->OMSetDepthStencilState(m_silhouettoDepthStepsilState, 0);
-		break;
-	case 2:
-		//モノクロ描画。
-		deviceContext->PSSetShader((ID3D11PixelShader*)m_pPSMonochromeShader->GetBody(), NULL, 0);
-		deviceContext->PSSetShaderResources(0, 1, &m_albedoTex);
+	case enRenderMode_CreateShadowMap:
+		//todo シャドウマップ生成用のシェーダーを設定。
+		//シャドウマップ生成。
+		deviceContext->VSSetShader((ID3D11VertexShader*)m_vsShadowMapShader->GetBody(), NULL, 0);
+		deviceContext->PSSetShader((ID3D11PixelShader*)m_psShadowMapShader->GetBody(), NULL, 0);
 		break;
 	}
 

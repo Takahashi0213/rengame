@@ -36,6 +36,7 @@ private:
 	SkinModel m_model_Sl;	//スキンモデル（シルエット）
 	CharacterController m_charaCon;		//キャラクターコントローラー。
 	Game* m_gameObj;
+	LightMaker* m_lightMaker;
 
 	//モノクロフラグ
 	bool m_monochromeFlag = false;

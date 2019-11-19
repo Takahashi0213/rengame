@@ -42,6 +42,41 @@
 				}
 			}
 		}
+
+		///////////////////////////////////////////////
+		//シャドウマップにレンダリング
+		///////////////////////////////////////////////
+		auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
+		//現在のレンダリングターゲットをバックアップしておく。
+		ID3D11RenderTargetView* oldRenderTargetView;
+		ID3D11DepthStencilView* oldDepthStencilView;
+		d3dDeviceContext->OMGetRenderTargets(
+			1,
+			&oldRenderTargetView,
+			&oldDepthStencilView
+		);
+		//ビューポートもバックアップを取っておく。
+		unsigned int numViewport = 1;
+		D3D11_VIEWPORT oldViewports;
+		d3dDeviceContext->RSGetViewports(&numViewport, &oldViewports);
+
+		ShadowMap::GetInstance()->RenderToShadowMap();
+
+		//元に戻す。
+		d3dDeviceContext->OMSetRenderTargets(
+			1,
+			&oldRenderTargetView,
+			oldDepthStencilView
+		);
+		d3dDeviceContext->RSSetViewports(numViewport, &oldViewports);
+		//レンダリングターゲットとデプスステンシルの参照カウンタを下す。
+		oldRenderTargetView->Release();
+		oldDepthStencilView->Release();
+
+		///////////////////////////////////////////////
+		//ここから通常レンダリング。
+		///////////////////////////////////////////////
+
 		//登録されているゲームオブジェクトの描画関数を呼び出す
 		for (int i = 0; i < MAX_PRIORITY; i++) { //優先度
 			for (auto go : m_goList) {

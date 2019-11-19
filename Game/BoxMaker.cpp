@@ -1,12 +1,22 @@
 #include "stdafx.h"
 #include "BoxMaker.h"
 
+BoxMaker* BoxMaker::m_instance = nullptr;
+
 BoxMaker::BoxMaker()
 {
+	if (m_instance != nullptr) {
+		std::abort(); //すでに出ているためクラッシュ
+	}
+
+	//このインスタンスを唯一のインスタンスとして記録する
+	m_instance = this;
 }
 
 BoxMaker::~BoxMaker()
 {
+	//インスタンスが破棄されたので、nullptrを代入
+	m_instance = nullptr;
 }	
 
 void BoxMaker::Update() {
@@ -54,7 +64,8 @@ void BoxMaker::Update() {
 
 	//箱の追加処理
 	key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
-	if (key == MouseSupporter::New_Push && NowGameMode == Game::CreateMode) {	//左クリックされた瞬間かつクリエイトモード
+	if (key == MouseSupporter::New_Push && NowGameMode == Game::CreateMode 
+		&& m_boxMakerMode == NomalMode) {	//左クリックされた瞬間かつクリエイトモードかつ箱拡大中でない
 
 		//選択中の箱だけ実行する
 		if (m_nowBox != nullptr) {
@@ -94,7 +105,59 @@ void BoxMaker::Update() {
 			m_boxList.push_back(m_box);
 			m_nowBoxList.push_back(m_box);
 			m_nowBox->SetBox(m_box);
+
+			//ポインタを変更
+			m_nowBox_Stock = m_nowBox;
+			m_nowBox = m_box;
+
+			//マウス移動量を初期化
+			m_mouseMove.x = 0.0f;
+			m_mouseMove.y = 0.0f;
+			//箱のデフォルトサイズも保存
+			m_boxScaleDef = m_nowBox->GetScale();
+
+			//モードを拡大モードに変更
+			m_boxMakerMode = FocusMode;
 		}
+	}
+
+	//フォーカスモード用の処理～～～～～～～
+	if (NowGameMode == Game::CreateMode && m_boxMakerMode == FocusMode) {
+		
+		key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
+		
+		if (key == MouseSupporter::Now_Pushing) {	//押されてるやん
+
+			CVector2 mouseMove = MouseSupporter::GetInstance()->GetMouseMove();
+			m_boxScale = m_nowBox->GetScale();
+
+			mouseMove.x /= 2.0f;
+			mouseMove.y /= 2.0f;
+
+			m_boxScale.x += mouseMove.x;
+			m_boxScale.y += mouseMove.y;
+
+			//小さくなりすぎるとバグるので
+			if (m_boxScale.x < m_boxScaleDef.x) {
+				m_boxScale.x = m_boxScaleDef.x;
+			}
+			if (m_boxScale.y < m_boxScaleDef.y) {
+				m_boxScale.y = m_boxScaleDef.y;
+			}
+
+			m_nowBox->SetScale(m_boxScale);
+
+
+		}else if (key == MouseSupporter::Release_Push) {	//離された！！！
+
+			//ポインタを変更
+			m_nowBox = m_nowBox_Stock;
+
+			//モードを通常モードに変更
+			m_boxMakerMode = NomalMode;
+
+		}
+
 	}
 
 	BoxUpdate();
