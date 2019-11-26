@@ -19,7 +19,7 @@ public:
 		m_rotation = rot;
 	}
 
-	void CheckHitRayToPlane(CVector3 startPos, CVector3 endPos,CVector3* boxPos);
+	void CheckHitRayToPlane(CVector3 startPos, CVector3 endPos,CVector3* boxPos,CVector3& box_N);
 	
 	CVector3 GetPosition() {
 		return m_position;
@@ -49,6 +49,22 @@ public:
 		return m_scale;
 	}
 
+	/// <summary>
+	/// ‰ñ“]‚ğİ’è
+	/// </summary>
+	/// <param name="rot">‰ñ“]</param>
+	void SetRotation(CQuaternion rot) {
+		m_rotation = rot;
+	}
+	/// <summary>
+	/// ‰ñ“]‚ğæ“¾
+	/// </summary>
+	/// <returns>‰ñ“]</returns>
+	CQuaternion GetRotation() {
+		return m_rotation;
+	}
+
+
 private:
 	void GetTrianglePositionAndNormal(
 		int polyNo,
@@ -68,13 +84,13 @@ private:
 	/// <returns>false‚È‚çŠ®‘Sˆê’vAtrue‚È‚ç‚Ç‚±‚©1—v‘fˆá‚¤</returns>
 	bool VectorHikaku(CVector3 a, CVector3 b) {
 		bool Flag = false;
-		if (fabsf(a.x - b.x) < 0.02f) {
+		if (fabsf(a.x - b.x) > 0.02f) {
 			Flag = true;
 		}
-		if (fabsf(a.y - b.y) < 0.02f) {
+		if (fabsf(a.y - b.y) > 0.02f) {
 			Flag = true;
 		}	
-		if (fabsf(a.z - b.z) < 0.02f) {
+		if (fabsf(a.z - b.z) > 0.02f) {
 			Flag = true;
 		}
 		return Flag;

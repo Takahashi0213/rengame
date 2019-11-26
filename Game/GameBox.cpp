@@ -76,7 +76,7 @@ void GameBox::GameBox_Render() {
 /// </summary>
 /// <param name="startPos">始点</param>
 /// <param name="endPos">終点</param>
-void GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* boxPos) {
+void GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* boxPos, CVector3& box_N) {
 
 	m_N = CVector3::Zero();
 
@@ -147,6 +147,7 @@ void GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* b
 				if (N1 > 0 && N2 > 0 && (m_N.x == 0.0f && m_N.y == 0.0f && m_N.z == 0.0f)) {
 					//衝突しているので衝突面の座標と法線を保存
 					m_N = N;
+					box_N = N;			//これは返す用の法線
 					m_vPos_0 = vPos_0;
 					m_vPos_1 = vPos_1;
 					m_vPos_2 = vPos_2;
@@ -154,7 +155,7 @@ void GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* b
 					int polyNo_Yobi = polyNo;
 
 					//再検査
-					for (int polyNo2 = polyNo_Yobi; polyNo2 < numPoly; polyNo2++) {
+					for (int polyNo2 = 0; polyNo2 < numPoly; polyNo2++) {
 
 						CVector3 vPos_0, vPos_1, vPos_2, N;
 
@@ -170,7 +171,7 @@ void GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* b
 							N);
 
 						//法線が同じならひっかかる場所
-						if (m_N.Dot(N) > 0.998f && m_N.Dot(N) < 1.01f) {
+						if (m_N.Dot(N) > 0.998f && m_N.Dot(N) < 1.01f && polyNo2 != polyNo_Yobi) {
 
 							//座標を参照渡しで返す
 							boxPos[0] = m_vPos_0;
@@ -215,8 +216,6 @@ void GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* b
 
 
 	}
-
-
 
 }
 
