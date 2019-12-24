@@ -105,12 +105,21 @@ struct PSInput{
 	float2 TexCoord 	: TEXCOORD0;
 	float3 worldPos		: TEXCOORD1;
 	float4 posInLVP		: TEXCOORD2;	//ライトビュープロジェクション空間での座標。
+	float4 posInView	: TEXCOORD3;	//カメラ空間での座標。
 };
 /// <summary>
 /// シャドウマップ用のピクセルシェーダへの入力構造体。
 /// </summary>
 struct PSInput_ShadowMap {
 	float4 Position 			: SV_POSITION;	//座標。
+};
+///複数のレンダリングターゲットに出力するために、構造体を用意。
+/// <summary>
+/// ピクセルシェーダーからの出力構造体。
+/// </summary>
+struct PSOutput {
+	float4 color		: SV_Target0;	//0番目のレンダリングターゲットに出力される。
+	float depthInView : SV_Target1;	//1番目のレンダリングターゲットに出力される。
 };
 /*!
  *@brief	スキン行列を計算。
@@ -138,8 +147,10 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 	float4 pos = mul(mWorld, In.Position);
 
 	psInput.worldPos = pos;
-
 	pos = mul(mView, pos);
+	//カメラ空間での座標をピクセルシェーダーで使うので、保存しておく。
+	psInput.posInView = pos;
+
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
 	float4 worldPos_ = mul(mWorld, In.Position);
@@ -193,6 +204,10 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	psInput.Tangent = normalize( mul(skinning, In.Tangent) );
 	
 	pos = mul(mView, pos);
+	//カメラ空間での座標をピクセルシェーダーで使うので、保存しておく。
+	psInput.posInView = pos;
+
+
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
 	psInput.TexCoord = In.TexCoord;
@@ -201,8 +216,10 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 //--------------------------------------------------------------------------------------
 // ピクセルシェーダーのエントリ関数。
 //--------------------------------------------------------------------------------------
-float4 PSMain(PSInput In) : SV_Target0
+PSOutput PSMain(PSInput In)
 {
+	PSOutput psOut = (PSOutput)0;
+
 	//albedoテクスチャからカラーをフェッチする。
 	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
@@ -258,7 +275,13 @@ float4 PSMain(PSInput In) : SV_Target0
 	}
 
 	finalColor.xyz += albedoColor.xyz * lig;
-	return finalColor;
+	//return finalColor;
+
+	//カラーを出力。
+	psOut.color = finalColor;
+	//カメラ座標系でのZ値を出力。
+	psOut.depthInView = In.posInView.z;
+	return psOut;
 
 }
 

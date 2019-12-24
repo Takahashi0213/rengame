@@ -102,15 +102,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="BoxMaker.cpp" />
     <ClCompile Include="CameraSupporter.cpp" />
     <ClCompile Include="CCamera2D.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
+    <ClCompile Include="ConstantBufferGPU.cpp" />
     <ClCompile Include="DebugLog.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
+    <ClCompile Include="Dof.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameBox.cpp" />
     <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp" />
     <ClCompile Include="graphics\animation\AnimationClip.cpp" />
     <ClCompile Include="graphics\animation\AnimationPlayController.cpp" />
@@ -137,6 +141,7 @@
     <ClCompile Include="physics\CapsuleCollider.cpp" />
     <ClCompile Include="physics\PhysicsStaticObject.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PostEffect.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="SkinModelRender.cpp" />
@@ -155,16 +160,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="Bloom.h" />
     <ClInclude Include="BoxMaker.h" />
     <ClInclude Include="CameraSupporter.h" />
     <ClInclude Include="CCamera2D.h" />
     <ClInclude Include="character\CharacterController.h" />
+    <ClInclude Include="ConstantBufferGPU.h" />
     <ClInclude Include="DebugLog.h" />
     <ClInclude Include="DirectionLight.h" />
+    <ClInclude Include="Dof.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameBox.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="graphics\animation\Animation.h" />
     <ClInclude Include="graphics\animation\AnimationClip.h" />
     <ClInclude Include="graphics\animation\AnimationPlayController.h" />
@@ -194,6 +203,7 @@
     <ClInclude Include="physics\CollisionAttr.h" />
     <ClInclude Include="physics\PhysicsStaticObject.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PostEffect.h" />
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="SkinModelRender.h" />

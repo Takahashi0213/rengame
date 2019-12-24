@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GameBox.h"
-
+#include "Game.h"
 
 void GameBox::GetTrianglePositionAndNormal(
 	int polyNo,
@@ -30,21 +30,21 @@ void GameBox::GetTrianglePositionAndNormal(
 	CVector3 v2 = vPos_2 - vPos_0;
 	CVector3 v3 = CVector3().Zero();
 	
-	N.Cross(v1, v2);
+	N.Cross(v2, v1);
 	N.Normalize();	//法線
-	mRot.Mul(N);
 
 }
 GameBox::GameBox()
 {
 	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/box.cmo");
+	m_model.Init(L"Assets/modelData/box.cmo", enFbxUpAxisY);
 	m_scale = BoxDefScale;
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 
 	//メッシュ
 	MeshStandBy();
+
 }
 
 
@@ -58,7 +58,11 @@ GameBox::~GameBox()
 /// 更新
 /// </summary>
 void GameBox::GameBox_Update() {
+
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+	//シャドウキャスターを登録。
+	ShadowMap::GetInstance()->RegistShadowCaster(&m_model);
+
 }
 
 /// <summary>
@@ -71,12 +75,42 @@ void GameBox::GameBox_Render() {
 	);
 }
 
+void GameBox::GameBoxUpdate_Colli() {
+
+	if (m_colli_InitFlag == false) {
+
+		////コライダーを作成。
+		//m_meshColli.CreateFromSkinModel(m_model, &m_World);
+		////剛体の情報を作成。
+		//RigidBodyInfo rbInfo;
+		//rbInfo.mass = 5.0f;		//質量。
+		//rbInfo.pos = m_position;	//座標。
+		//rbInfo.rot = m_rotation;	//回転。
+		//rbInfo.collider = &m_meshColli;	//形状。
+		////rbInfo.localInteria = { 1.0f, 1.0f, 1.0f };
+		////剛体を作成。
+		//m_rb.Create(rbInfo);
+		////剛体を物理ワールドに追加。
+		//PhysicsWorld pw = Game::GetInstance()->GetPhysicsWorld();
+		//pw.AddRigidBody(m_rb);
+
+		m_colli_InitFlag = true;
+	}
+
+	////物理エンジンで計算された座標を反映する。
+	//btTransform& trans = m_rb.GetBody()->getWorldTransform();
+	//m_position.Set(trans.getOrigin());
+	//CQuaternion qRot;
+	//qRot.Set(trans.getRotation());
+
+}
+
 /// <summary>
 /// レイと箱の面が衝突しているか調べる処理
 /// </summary>
 /// <param name="startPos">始点</param>
 /// <param name="endPos">終点</param>
-void GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* boxPos, CVector3& box_N) {
+bool GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* boxPos, CVector3& box_N, CVector3& plane_scale) {
 
 	m_N = CVector3::Zero();
 
@@ -110,19 +144,20 @@ void GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* b
 				vPos_2, 
 				N
 			);
-
+			
+			m_World = mWorld;
 			CVector3 v1 = vPos_0 - startPos;
 			CVector3 v2 = vPos_0 - endPos;
 
 			//内積を求める
 			float N1 = (v1.x * N.x) + (v1.y * N.y) + (v1.z * N.z);
 			float N2 = (v2.x * N.x) + (v2.y * N.y) + (v2.z * N.z);
-
-			if (N1 > 0 && N2 < 0) {
+			
+			if (N1 < 0 && N2 > 0) {
 
 				//交点を求める
 				float N_ratio = fabsf(N1) / (fabsf(N1) + fabsf(N2));		//射影の比率
-
+			
 				CVector3 CrossPoint = (startPos * (1.0f - N_ratio)) + (endPos * N_ratio);
 				v1 = CrossPoint - vPos_0;
 				CVector3 v1_ = vPos_1 - vPos_0;
@@ -204,7 +239,20 @@ void GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* b
 
 							boxPos[3] = m_vPos_3;
 
-							break;
+							//面の大きさを計算す～る
+							CVector3 vMax, vMin;
+							vMax = boxPos[0];
+							vMax.Max(boxPos[1]);
+							vMax.Max(boxPos[2]);
+
+							vMin = boxPos[0];
+							vMin.Min(boxPos[1]);
+							vMin.Min(boxPos[2]);
+							
+							plane_scale = vMax - vMin;
+							
+							//衝突した。
+							return true;
 						}
 
 					}
@@ -213,9 +261,9 @@ void GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* b
 			}
 
 		}
-
-
 	}
+	//何ともぶつからなかった。
+	return false;
 
 }
 
@@ -223,9 +271,6 @@ void GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* b
 /// バッファの計算をする
 /// </summary>
 void GameBox::MeshStandBy() {
-
-	CMatrix mBias;
-	mBias.MakeRotationX(CMath::PI * -0.5f);
 
 	m_model.FindMesh([&](const auto& mesh) {
 
@@ -246,8 +291,7 @@ void GameBox::MeshStandBy() {
 			CVector3 pos;
 			for (int i = 0; i < vertexCount; i++) {
 				pos = *((CVector3*)pData);
-				//バイアスをかける。
-				mBias.Mul(pos);
+				
 				vertexBuffer.push_back(pos);
 				//次の頂点へ。
 				pData += mesh->vertexStride;

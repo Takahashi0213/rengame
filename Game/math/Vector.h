@@ -391,6 +391,13 @@ public:
 		this->z = _z;
 		this->w = _w;
 	}
+	void Set(const btQuaternion& rot)
+	{
+		x = rot.x();
+		y = rot.y();
+		z = rot.z();
+		w = rot.w();
+	}
 	/*!
 	* @brief	–@ü‚ğ³‹K‰»B
 	*/

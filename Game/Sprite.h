@@ -1,13 +1,21 @@
 #pragma once
 #include "graphics/Shader.h"
 
+enum Sprite_RenderMode {
+	Normal,		//普通に描画
+	X_Cut,		//Xをカットする
+	Y_Cut,		//Yをカットする
+};
+
 class Sprite
 {
 public:
+
 	Sprite();
 	~Sprite();
 	
 	void Sprite_Init(const wchar_t* texFilePath, float w, float h);
+	void Sprite_Init(ID3D11ShaderResourceView* srv, float w, float h);
 	void Sprite_Update(const CVector3& pos, const CQuaternion& rot, const CVector3& scale, CVector2 pivot = { 0.5f, 0.5f });
 	void Sprite_Draw();
 
@@ -32,11 +40,15 @@ public:
 	struct ConstantBuffer {
 		CMatrix WVP;
 		CVector4 mulColor;	//乗算カラー
+		float cut_line;
 	};
 	//メンバ変数
 	ID3D11Buffer* m_vertexBuffer = NULL;	//頂点バッファ
 	ID3D11Buffer* m_indexBuffer = NULL;		//インデックスバッファ
+
 	Shader	m_ps;		//!<ピクセルシェーダー。
+	Shader	m_ps_X_Cut;	//!<Xをカットするピクセルシェーダー。
+	Shader	m_ps_Y_Cut;	//!<Yをカットするピクセルシェーダー。
 	Shader	m_vs;		//!<頂点シェーダー。
 	ID3D11ShaderResourceView* m_texture = NULL;		//テクスチャ
 	ID3D11SamplerState* m_samplerState = NULL;	//サンプラステート
@@ -50,8 +62,23 @@ public:
 	CVector2 m_size = CVector2::Zero();		//画像のサイズ
 	ID3D11Buffer* m_cb = nullptr;		//定数バッファ
 	bool m_isInited = false;	//!<初期化フラグ。
+
+	Sprite_RenderMode m_renderMode = Normal;	//レンダーモード
+	float m_cut_UV = 0.5f;
+
 private:
+	/// <summary>
+	/// 16の倍数に切り上げる処理
+	/// </summary>
+	/// <param name="n">切り上げたい整数</param>
+	/// <returns>16の倍数に切り上げた値</returns>
+	int Raundup16(int n)
+	{
+		return (((n - 1) / 16) + 1) * 16;
+	}
+
 	void Sprite::InitConstantBuffer();
+	void Sprite::InitCommon(float w, float h);
 
 };
 

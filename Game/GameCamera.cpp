@@ -1,23 +1,38 @@
 #include "stdafx.h"
 #include "GameCamera.h"
 
+GameCamera* GameCamera::m_instance = nullptr;
 
 GameCamera::GameCamera()
 {
+	if (m_instance != nullptr) {
+		std::abort(); //すでに出ているためクラッシュ
+	}
+
+	//このインスタンスを唯一のインスタンスとして記録する
+	m_instance = this;
+
 	//遠平面を設定する
 	g_camera3D.SetFar(30000.0f);
 	//画角を変更
 	g_camera3D.SetViewAngle(CMath::DegToRad(60.0f));
 
 	m_player = CGameObjectManager::GetInstance()->FindGO<Player>(Hash::MakeHash("Player"), false);
+	m_game = Game::GetInstance();
+
 }
 
 
 GameCamera::~GameCamera()
 {
+	//インスタンスが破棄されたので、nullptrを代入
+	m_instance = nullptr;
 }
 
 void GameCamera::Update() {
+
+	//共通のカメラ処理
+	CommonMove();
 
 	Game::GameMode NowGameMode = m_game->GetGameMode();		//現在のゲームモードを呼び出す
 
@@ -84,6 +99,15 @@ void GameCamera::ActionMode() {
 	CVector3 P_Position = m_player->Getm_Position();
 	CQuaternion P_qRot = m_player->Getm_Rotation();
 	CVector3 vBase = { 0.0f,0.0f,1.0f };
+	CVector3 Camera_Position = g_camera3D.GetTarget();
+
+	if (m_camera_BoxToPlayer_MoveFlag == true) {
+
+		Camera_Position.y -= 100.0f;
+		CVector3 Move = (P_Position - Camera_Position) / CameraMoveHosei;
+		P_Position = Camera_Position + Move;
+	}
+
 	//注視点を動かす
 	m_cameraTarget.x = P_Position.x;
 	m_cameraTarget.y = P_Position.y + 100.0f;	//プレイヤーのちょっと上にする
@@ -151,7 +175,7 @@ void GameCamera::CreateMode() {
 	if (m_gamebox != nullptr) {
 		CVector3 Box_Position = m_gamebox->GetPosition();
 		CVector3 Camera_Position = g_camera3D.GetTarget();
-		CVector3 Move = (Box_Position - Camera_Position) / 10.0f;
+		CVector3 Move = (Box_Position - Camera_Position) / CameraMoveHosei;
 		P_Position = Camera_Position + Move;
 
 		m_cameraTarget.x = P_Position.x;
@@ -163,5 +187,26 @@ void GameCamera::CreateMode() {
 	m_cameraPos.x = P_Position.x + m_cameraHosei.x;
 	m_cameraPos.y = P_Position.y + m_cameraHosei.y;
 	m_cameraPos.z = P_Position.z + m_cameraHosei.z;
+
+}
+
+void GameCamera::CommonMove() {
+
+	int now_delta = MouseSupporter::GetInstance()->GetWheelMove();
+	float Angle = g_camera3D.GetViewAngle();
+
+	if (now_delta > 0) {
+		Angle -= 0.1f;
+		if (Angle < 0.5f) {
+			Angle = 0.5f;
+		}
+	}
+	else if (now_delta < 0) {
+		Angle += 0.1f;
+		if (Angle > 1.7f) {
+			Angle = 1.7f;
+		}
+	}
+	g_camera3D.SetViewAngle(Angle);
 
 }

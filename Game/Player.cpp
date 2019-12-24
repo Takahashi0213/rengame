@@ -28,6 +28,11 @@ Player::Player()
 	r->m_spriteSupporter.SpriteScale({ 0.5f,0.5f,0.5f }, 60, 60);
 	r->m_spriteSupporter.SpriteColor({ 1.0f,0.5f,0.5f,0.5f }, 180, 60);
 
+	SpriteRender* rr = NewGO<SpriteRender>("Obj");
+	rr->Init(L"Assets/sprite/mikyan.dds", 240.0f, 240.0f, { 200.0f, -200.0f,0.0f });
+	rr->SetRenderMode(Sprite_RenderMode::Y_Cut);
+	rr->SetCutLine(0.8f);
+
 	//キャラクターコントローラーを初期化。
 	m_charaCon.Init(25, 30, m_position);
 

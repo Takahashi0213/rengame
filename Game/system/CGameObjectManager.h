@@ -2,6 +2,10 @@
 #include <vector>
 #include "IGameObject.h"
 
+#include "RenderTarget.h"
+#include "Sprite.h"
+#include "PostEffect.h"
+
 /// <summary>
 /// ゲームオブジェクトマネージャーです…
 /// </summary>
@@ -182,14 +186,69 @@
 			return m_instance;
 		}
 
+		/// <summary>
+		/// メインレンダリングターゲットを取得
+		/// </summary>
+		/// <returns></returns>
+		RenderTarget* GetMainRenderTarget()
+		{
+			return &m_mainRenderTarget;
+		}
+		/// <summary>
+		/// カメラ空間での深度値を書き込んでいるレンダリングターゲットを取得。
+		/// </summary>
+		/// <returns></returns>
+		RenderTarget* GetDepthInViewRenderTarget()
+		{
+			return &m_depthRenderTarget;
+		}
 	private:
+		/// <summary>
+		/// 半透明合成のブレンドステートを初期化。
+		/// </summary>
+		void InitTranslucentBlendState();
+
 		std::list<IGameObject*> m_goList; //オブジェクトのリスト
 		std::list<IGameObject*> m_deleteList; //削除するオブジェクトのリスト
+
+		RenderTarget m_mainRenderTarget;									//メインレンダリングターゲット。
+		RenderTarget m_depthRenderTarget;									//深度値の書き込み先となるレンダリングターゲット。
+
+		Sprite m_copyMainRtToFrameBufferSprite;								//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
+		D3D11_VIEWPORT m_frameBufferViewports;								//フレームバッファのビューポート。
+		ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
+		ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
+
+		ID3D11BlendState* m_translucentBlendState = nullptr;	//半透明合成用のブレンドステート。
+
+		PostEffect m_postEffect;		//ポストエフェクト
 
 		/// <summary>
 		/// 削除リストに積んだオブジェクトをまとめて削除する
 		/// </summary>
 		void CGameObjectManager::ExecuteDeleteGameObjects();
+
+		/// <summary>
+		/// プリレンダー
+		/// </summary>
+		void CGameObjectManager::PreRender();
+		/// <summary>
+		/// フォワードレンダー
+		/// </summary>
+		void CGameObjectManager::ForwordRender();
+		/// <summary>
+		/// ポストレンダー
+		/// </summary>
+		void CGameObjectManager::PostRender();
+
+		/// <summary>
+		/// レンダリングターゲットの切り替え。
+		/// </summary>
+		/// <param name="d3dDeviceContext">D3Dデバイスコンテキスト</param>
+		/// <param name="renderTarget">レンダリングターゲット</param>
+		/// <param name="viewport">ビューポート</param>
+		void CGameObjectManager::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, RenderTarget* renderTarget, D3D11_VIEWPORT* viewport);
+		void CGameObjectManager::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStensil, D3D11_VIEWPORT* viewport);
 
 	};
 

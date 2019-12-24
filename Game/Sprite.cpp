@@ -25,13 +25,10 @@ Sprite::~Sprite()
 }
 
 /// <summary>
-/// 初期化
+/// 初期化の共通処理。
 /// </summary>
-/// <param name="texFilePath">ファイルパス</param>
-/// <param name="w">幅</param>
-/// <param name="h">高さ</param>
-void Sprite::Sprite_Init(const wchar_t* texFilePath, float w, float h) {
-
+void Sprite::InitCommon(float w, float h)
+{
 	m_size.x = w;
 	m_size.y = h;
 	//頂点バッファの初期化
@@ -40,9 +37,27 @@ void Sprite::Sprite_Init(const wchar_t* texFilePath, float w, float h) {
 	InitIndexBuffer(m_indexBuffer);
 	//サンプラステートの初期化
 	InitSamplerState(m_samplerState);
-	//シェーダーロード
-	m_ps.Load("Assets/shader/sprite.fx", "PSMain", Shader::EnType::PS);
+	//シェーダーのロード。
 	m_vs.Load("Assets/shader/sprite.fx", "VSMain", Shader::EnType::VS);
+	m_ps.Load("Assets/shader/sprite.fx", "PSMain", Shader::EnType::PS);
+	m_ps_X_Cut.Load("Assets/shader/sprite.fx", "PSMain_X_Cut", Shader::EnType::PS);
+	m_ps_Y_Cut.Load("Assets/shader/sprite.fx", "PSMain_Y_Cut", Shader::EnType::PS);
+
+	//定数バッファを初期化。
+	InitConstantBuffer();
+
+}
+
+/// <summary>
+/// 初期化
+/// </summary>
+/// <param name="texFilePath">ファイルパス</param>
+/// <param name="w">幅</param>
+/// <param name="h">高さ</param>
+void Sprite::Sprite_Init(const wchar_t* texFilePath, float w, float h) {
+
+	InitCommon(w, h);
+
 	//テクスチャをロード。
 	DirectX::CreateDDSTextureFromFileEx(
 		g_graphicsEngine->GetD3DDevice(),				//D3Dデバイス。
@@ -58,10 +73,14 @@ void Sprite::Sprite_Init(const wchar_t* texFilePath, float w, float h) {
 									//アクセスするためのインターフェースの格納先。
 	);
 
-	//定数バッファの初期化
-	InitConstantBuffer();
-
 	m_isInited = true;
+}
+void Sprite::Sprite_Init(ID3D11ShaderResourceView* srv, float w, float h)
+{
+	//共通の初期化処理を呼び出す。
+	InitCommon(w, h);
+	m_texture = srv;
+	m_texture->AddRef();	//参照カウンタを増やす。
 }
 
 /// <summary>
@@ -139,6 +158,7 @@ void Sprite::Sprite_Draw() {
 	cb.WVP.Mul(cb.WVP, g_camera2D.GetViewMatrix());
 	cb.WVP.Mul(cb.WVP, g_camera2D.GetProjectionMatrix());
 	cb.mulColor = m_mulColor;
+	cb.cut_line = m_cut_UV;
 
 	g_graphicsEngine->GetD3DDeviceContext()->UpdateSubresource(m_cb, 0, NULL, &cb, 0, 0);
 	g_graphicsEngine->GetD3DDeviceContext()->VSSetConstantBuffers(0, 1, &m_cb);
@@ -146,7 +166,20 @@ void Sprite::Sprite_Draw() {
 
 	g_graphicsEngine->GetD3DDeviceContext()->IASetInputLayout(m_vs.GetInputLayout());
 	g_graphicsEngine->GetD3DDeviceContext()->VSSetShader((ID3D11VertexShader*)m_vs.GetBody(), NULL, 0);
-	g_graphicsEngine->GetD3DDeviceContext()->PSSetShader((ID3D11PixelShader*)m_ps.GetBody(), NULL, 0);
+
+	//ステートによってPSを変更
+	switch (m_renderMode)
+	{
+	case Normal:
+		g_graphicsEngine->GetD3DDeviceContext()->PSSetShader((ID3D11PixelShader*)m_ps.GetBody(), NULL, 0);
+		break;
+	case X_Cut:
+		g_graphicsEngine->GetD3DDeviceContext()->PSSetShader((ID3D11PixelShader*)m_ps_X_Cut.GetBody(), NULL, 0);
+		break;
+	case Y_Cut:
+		g_graphicsEngine->GetD3DDeviceContext()->PSSetShader((ID3D11PixelShader*)m_ps_Y_Cut.GetBody(), NULL, 0);
+		break;
+	}
 	//プリミティブのトポロジーは
 	//トライアングルストリップを設定する。
 	g_graphicsEngine->GetD3DDeviceContext()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

@@ -26,6 +26,11 @@ LRESULT CALLBACK MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		ReleaseDirectX();
 		PostQuitMessage(0);
 		break;	
+	case WM_MOUSEWHEEL: {
+		int now_delta = MouseSupporter::GetInstance()->GetWheelMove();
+		int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
+		MouseSupporter::GetInstance()->SetWheelMove(now_delta + zDelta);
+	}break;
 	default:
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 	}

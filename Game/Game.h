@@ -1,7 +1,12 @@
 #pragma once
 
+/// <summary>
+/// ゲーム！
+/// ・シングルトン
+/// </summary>
 class Game : public IGameObject
 {
+	static Game* m_instance;
 public:
 	enum GameMode {
 		Title,
@@ -30,7 +35,26 @@ public:
 		return m_gameMode;
 	}
 
+	/// <summary>
+	/// インスタンスを取得！
+	/// </summary>
+	/// <returns>インスタンスです</returns>
+	static Game* Game::GetInstance() {
+		return m_instance;
+	}
+
+	/// <summary>
+	/// PhysicsWorldを取得
+	/// </summary>
+	/// <returns>PhysicsWorld</returns>
+	PhysicsWorld GetPhysicsWorld() {
+		return m_physicsWorld;
+	}
+
 private:
 	GameMode m_gameMode = ActionMode;
+	
+	PhysicsWorld m_physicsWorld;
+
 };
 

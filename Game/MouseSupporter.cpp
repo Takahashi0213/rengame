@@ -108,11 +108,6 @@ void MouseSupporter::MouseUpdate() {
 	}
 
 	//ƒzƒC[ƒ‹‚ÌˆÚ“®”‚ğŠi”[
-	m_wheelMove = GetAsyncKeyState(WM_MOUSEWHEEL);
-
-	if (m_wheelMove != 0) {
-		int a = 0;
-	}
 
 	CVector2 move = GetBeforeMouse(0);
 	m_mouseMove.x = move.x;

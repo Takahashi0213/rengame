@@ -1,7 +1,15 @@
 #pragma once
+#include "character/CharacterController.h"
+#include "Physics/MeshCollider.h"
+
 class GameBox
 {
 public:
+	enum BoxTag {
+		Origin,			//最初に作った箱
+		Another,		//その他の箱
+	};
+
 	typedef std::vector<CVector3>					VertexBuffer;		//頂点バッファ。
 	typedef std::vector<unsigned int>				IndexBuffer;		//インデックスバッファ。
 	GameBox();
@@ -19,7 +27,7 @@ public:
 		m_rotation = rot;
 	}
 
-	void CheckHitRayToPlane(CVector3 startPos, CVector3 endPos,CVector3* boxPos,CVector3& box_N);
+	bool CheckHitRayToPlane(CVector3 startPos, CVector3 endPos,CVector3* boxPos,CVector3& box_N, CVector3& plane_scale);
 	
 	CVector3 GetPosition() {
 		return m_position;
@@ -28,9 +36,32 @@ public:
 	/// <summary>
 	/// 子のボックスリストを追加する
 	/// </summary>
-	/// <param name="box"></param>
+	/// <param name="box">追加する箱のアドレス</param>
 	void SetBox(GameBox* box) {
 		m_boxList.push_back(box);
+	}
+
+	/// <summary>
+	/// 子のボックスリストを削除する
+	/// </summary>
+	void SetBox_Delete() {
+		m_boxList.pop_back();
+	}
+
+	/// <summary>
+	/// 箱のタグを変更する
+	/// </summary>
+	/// <param name="box_tag">たぐ</param>
+	void SetBoxTag(BoxTag box_tag) {
+		m_boxTag = box_tag;
+	}
+
+	/// <summary>
+	/// 箱のタグを取得する
+	/// </summary>
+	/// <returns>タグです</returns>
+	BoxTag GetBoxTag() {
+		return m_boxTag;
 	}
 
 	/// <summary>
@@ -64,6 +95,7 @@ public:
 		return m_rotation;
 	}
 
+	void GameBoxUpdate_Colli();
 
 private:
 	void GetTrianglePositionAndNormal(
@@ -99,10 +131,16 @@ private:
 	void MeshStandBy();
 	SkinModel m_model;	//スキンモデル。
 
+	BoxTag m_boxTag = Another;
+
+	RigidBody m_rb;				//剛体
+	MeshCollider m_meshColli;	//コライダー
+	CMatrix  m_World;
+
 	CVector3 m_position = CVector3().Zero();
 	CQuaternion m_rotation = CQuaternion().Identity();
 	CVector3 m_scale = CVector3().One(); //拡大率
-	
+
 	std::vector<VertexBuffer>						m_vertexBufferArray;		//頂点バッファの配列。
 	std::vector<IndexBuffer>						m_indexBufferArray;		//インデックスバッファの配列。
 
@@ -112,11 +150,14 @@ private:
 	CVector3 m_vPos_1;
 	CVector3 m_vPos_2;
 
-	//子になるボックスども
+	bool m_colli_InitFlag = false;
+
+	//子になるボックスども（OrizinBoxだけ変更される）
 	std::list<GameBox*> m_boxList;
 
 	//定数
 	const CVector3 BoxDefScale = { 100.0f,100.0f,100.0f };
+	const float m_gravity = 0.8f;		//重力ﾊﾟｩﾜｧ
 
 };
 

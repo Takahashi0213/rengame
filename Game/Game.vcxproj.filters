@@ -55,6 +55,9 @@
     <Filter Include="Player">
       <UniqueIdentifier>{d7991004-bffa-45f5-a76f-fafb6edcbdeb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="graphics\PostEffect">
+      <UniqueIdentifier>{bea0f45f-c0cc-435c-bfbc-763f0dd2f8f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -188,6 +191,21 @@
     </ClCompile>
     <ClCompile Include="RenderTarget.cpp">
       <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Bloom.cpp">
+      <Filter>graphics\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Dof.cpp">
+      <Filter>graphics\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="GaussianBlur.cpp">
+      <Filter>graphics\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="PostEffect.cpp">
+      <Filter>graphics\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBufferGPU.cpp">
+      <Filter>graphics\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -336,6 +354,21 @@
     </ClInclude>
     <ClInclude Include="RenderTarget.h">
       <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Bloom.h">
+      <Filter>graphics\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Dof.h">
+      <Filter>graphics\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="GaussianBlur.h">
+      <Filter>graphics\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="PostEffect.h">
+      <Filter>graphics\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBufferGPU.h">
+      <Filter>graphics\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

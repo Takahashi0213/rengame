@@ -117,6 +117,14 @@ public:
 	{
 		m_isShadowReciever = flag;
 	}
+	/// <summary>
+	/// World行列を取得。
+	/// </summary>
+	/// <returns></returns>
+	CMatrix GetWorldMatrix() const
+	{
+		return m_worldMatrix;
+	}
 private:
 	/*!
 	*@brief	サンプラステートの初期化。
@@ -134,7 +142,7 @@ private:
 	
 	//ディレクションライトをセット
 	void D_LightUpdate();
-
+	
 private:
 	//定数バッファ。
 	struct SVSConstantBuffer {

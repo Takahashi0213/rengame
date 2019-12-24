@@ -10,6 +10,7 @@
 class SpriteRender : public IGameObject
 {
 public:
+
 	SpriteRender();
 	~SpriteRender();
 	void Update()override;
@@ -120,6 +121,24 @@ public:
 	}
 
 	/// <summary>
+	/// レンダーモードの設定
+	/// </summary>
+	/// <param name="render_mode">モード</param>
+	void SetRenderMode(Sprite_RenderMode render_mode) {
+		m_sprite_RenderMode = render_mode;
+		m_sprite.m_renderMode = m_sprite_RenderMode;
+	}
+
+	/// <summary>
+	/// どこから切るか設定
+	/// </summary>
+	/// <param name="cut">UV座標の境界</param>
+	void SetCutLine(float cut) {
+		m_pos_Cut = cut;
+		m_sprite.m_cut_UV = m_pos_Cut;
+	}
+
+	/// <summary>
 	/// スプライトを楽に動かすクラスを呼び出せるぞ
 	/// </summary>
 	/// <remarks>
@@ -140,6 +159,9 @@ private:
 	float m_wide = 0.0f;	//幅！
 	float m_high = 0.0f;	//高さ！
 	CVector4 m_mulColor = { 1.0f,1.0f,1.0f,1.0f };	//!<乗算カラー。
+
+	Sprite_RenderMode m_sprite_RenderMode = Sprite_RenderMode::Normal;
+	float m_pos_Cut = 0.0f;				//CutMode時、どこから切る？？？？
 
 };
 

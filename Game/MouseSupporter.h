@@ -81,6 +81,26 @@ public:
 	CVector2 MouseSupporter::GetBeforeMouse(int p = 0);
 
 	/// <summary>
+	/// マウス移動量を設定
+	/// </summary>
+	/// <remarks>
+	/// 
+	/// system.cpp以外で呼ばないで！！！
+	/// 
+	/// </remarks>
+	/// <param name="move">移動量</param>
+	void MouseSupporter::SetWheelMove(int move) {
+		m_wheelMove = move;
+	}
+	/// <summary>
+	/// マウス移動量を返す
+	/// </summary>
+	/// <returns>移動量</returns>
+	int MouseSupporter::GetWheelMove() {
+		return m_wheelMove;
+	}
+
+	/// <summary>
 	/// インスタンスを取得！
 	/// </summary>
 	/// <returns>インスタンスです</returns>
@@ -100,7 +120,7 @@ private:
 	//ホイールの移動数を保存する
 	int m_wheelMove = 0;
 	//前回のマウス座標を保存する
-	CVector2 m_beforeMouse[2] = { {0.0f,0.0f},{0.0f,0.0f} };
+	CVector2 m_beforeMouse[2] = { {0.0f,0.0f},{0.0f,0.0f} };	//2つ目はカメラ操作用
 	CVector2 m_mouseMove = { 0.0f,0.0f };
 };
 

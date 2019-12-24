@@ -7,9 +7,19 @@
 
 #include "GameCamera.h"
 
+Game* Game::m_instance = nullptr;
+
 Game::Game()
 {
+	if (m_instance != nullptr) {
+		std::abort(); //すでに出ているためクラッシュ
+	}
+
+	//このインスタンスを唯一のインスタンスとして記録する
+	m_instance = this;
+
 	//生成
+	m_physicsWorld.Init();
 
 	//ライトメーカーの生成
 	CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
@@ -25,10 +35,6 @@ Game::Game()
 	//ボックスメイカーに渡すよ
 	m_box->SetGame(this);
 	m_box->SetPlayer(pl);
-	//ゲームカメラに渡す
-	int a = Hash::MakeHash("GameCamera");
-	GameCamera* GC = CGameObjectManager::GetInstance()->FindGO<GameCamera>(a);
-	GC->SetGame(this);
 	//プレイヤーに渡す
 	pl->SetGame(this);
 	//背景に渡す
@@ -38,9 +44,13 @@ Game::Game()
 
 Game::~Game()
 {
+	//インスタンスが破棄されたので、nullptrを代入
+	m_instance = nullptr;
 }
 
 void Game::Update() {
+
+	//m_physicsWorld.Update();
 
 }
 

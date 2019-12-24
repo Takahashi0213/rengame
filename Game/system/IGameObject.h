@@ -8,6 +8,7 @@
 		/// 上から順番に実行される
 		/// </summary>
 		enum objectTag {
+			t_BackSprite, //背景スプライト
 			t_Other,
 			t_Sprite,
 		};

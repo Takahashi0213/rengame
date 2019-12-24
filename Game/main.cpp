@@ -14,7 +14,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 {
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
-
+	
 	//Hands-On 奥のモノを手前に描画する深度ステンシルステートを作ってみよう。
 	D3D11_DEPTH_STENCIL_DESC desc = { 0 };
 	desc.DepthEnable = true;
@@ -81,5 +81,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		goMgr.Execute();
 		//描画終了。
 		g_graphicsEngine->EndRender();
+		MouseSupporter::GetInstance()->SetWheelMove(0);
 	}
 }
