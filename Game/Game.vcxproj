@@ -111,9 +111,13 @@
     <ClCompile Include="DebugLog.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="Dof.cpp" />
+    <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameBox.cpp" />
     <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="GameData.cpp" />
+    <ClCompile Include="GameEffect.cpp" />
+    <ClCompile Include="GameFont.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp" />
     <ClCompile Include="graphics\animation\AnimationClip.cpp" />
@@ -134,6 +138,7 @@
     <ClCompile Include="math\kMath.cpp" />
     <ClCompile Include="math\Matrix.cpp" />
     <ClCompile Include="math\Vector.cpp" />
+    <ClCompile Include="MouseOver.cpp" />
     <ClCompile Include="MouseSupporter.cpp" />
     <ClCompile Include="physics\MeshCollider.cpp" />
     <ClCompile Include="physics\Physics.cpp" />
@@ -169,9 +174,13 @@
     <ClInclude Include="DebugLog.h" />
     <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="Dof.h" />
+    <ClInclude Include="FontRender.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameBox.h" />
     <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="GameData.h" />
+    <ClInclude Include="GameEffect.h" />
+    <ClInclude Include="GameFont.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="graphics\animation\Animation.h" />
@@ -194,6 +203,7 @@
     <ClInclude Include="math\kMath.h" />
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\Vector.h" />
+    <ClInclude Include="MouseOver.h" />
     <ClInclude Include="MouseSupporter.h" />
     <ClInclude Include="physics\ICollider.h" />
     <ClInclude Include="physics\MeshCollider.h" />
@@ -234,6 +244,16 @@
     <ImageContentTask Include="Assets\sprite\mikyan.jpg">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\Assets\sprite\%(Filename).dds</ContentOutput>
     </ImageContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\stand\keis.png" />
+    <ImageContentTask Include="Assets\sprite\stand\keis_ang.png" />
+    <ImageContentTask Include="Assets\sprite\stand\keis_happy.png" />
+    <ImageContentTask Include="Assets\sprite\stand\keis_sad.png" />
+    <ImageContentTask Include="Assets\sprite\stand\keis_wow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\system_sprite\fukidasi.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,7 @@
 #pragma once
 #include "character/CharacterController.h"
 #include "Physics/MeshCollider.h"
+#include "physics/PhysicsStaticObject.h"
 
 class GameBox
 {
@@ -134,8 +135,10 @@ private:
 	BoxTag m_boxTag = Another;
 
 	RigidBody m_rb;				//剛体
-	MeshCollider m_meshColli;	//コライダー
+	PhysicsStaticObject m_physicsStaticObject;
 	CMatrix  m_World;
+
+	LightMaker* m_lightMaker;
 
 	CVector3 m_position = CVector3().Zero();
 	CQuaternion m_rotation = CQuaternion().Identity();

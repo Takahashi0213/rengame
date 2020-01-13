@@ -15,6 +15,7 @@ protected:
 	Shader m_psMonochrome;		//モノクロ描画用のピクセルシェーダー。
 	Shader m_vsShadowMap;		//シャドウマップ生成用の頂点シェーダー。
 	Shader m_psShadowMap;		//シャドウマップ生成用のピクセルシェーダー。
+	Shader m_psShader_Box;		//箱用のピクセルシェーダー
 
 	Shader* m_pVSShader = nullptr;
 	Shader* m_pPSShader = nullptr;
@@ -22,6 +23,7 @@ protected:
 	Shader* m_pPSMonochromeShader = nullptr;
 	Shader* m_vsShadowMapShader = nullptr;
 	Shader* m_psShadowMapShader = nullptr;
+	Shader* m_pPSShaderBox = nullptr;
 
 	int m_renderMode = 0;
 	int m_renderMode_Shadow = 0;

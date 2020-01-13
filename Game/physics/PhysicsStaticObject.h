@@ -28,8 +28,10 @@ public:
 		*@param[in]	rot			回転。
 		*/
 	void CreateMeshObject(SkinModel& skinModel, CVector3 pos, CQuaternion rot);
-	
+	void CreateMeshObject(SkinModel& skinModel, CVector3 pos, CQuaternion rot, CVector3 scl);
+
 private:
 	MeshCollider m_meshCollider;		//!<メッシュコライダー。
 	RigidBody m_rigidBody;				//!<剛体。
+	bool m_rigidFlag = false;
 };

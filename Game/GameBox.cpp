@@ -38,9 +38,16 @@ GameBox::GameBox()
 {
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/box.cmo", enFbxUpAxisY);
+	m_model.SetRenderMode(RenderMode::Box);
 	m_scale = BoxDefScale;
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+	//ライトメーカーの取得
+	int a = Hash::MakeHash("LightMaker");
+	m_lightMaker = CGameObjectManager::GetInstance()->FindGO<LightMaker>(a);
+
+	//シャドウレシーバーにする。
+	m_model.SetShadowReciever(true);
 
 	//メッシュ
 	MeshStandBy();
@@ -50,8 +57,6 @@ GameBox::GameBox()
 
 GameBox::~GameBox()
 {
-
-
 }
 
 /// <summary>
@@ -61,7 +66,8 @@ void GameBox::GameBox_Update() {
 
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	//シャドウキャスターを登録。
-	ShadowMap::GetInstance()->RegistShadowCaster(&m_model);
+	//ShadowMap::GetInstance()->RegistShadowCaster(&m_model);
+	//ShadowMap::GetInstance()->Update(m_lightMaker->GetLightCameraPosition(), m_lightMaker->GetLightCameraTarget());
 
 }
 
@@ -78,30 +84,11 @@ void GameBox::GameBox_Render() {
 void GameBox::GameBoxUpdate_Colli() {
 
 	if (m_colli_InitFlag == false) {
-
-		////コライダーを作成。
-		//m_meshColli.CreateFromSkinModel(m_model, &m_World);
-		////剛体の情報を作成。
-		//RigidBodyInfo rbInfo;
-		//rbInfo.mass = 5.0f;		//質量。
-		//rbInfo.pos = m_position;	//座標。
-		//rbInfo.rot = m_rotation;	//回転。
-		//rbInfo.collider = &m_meshColli;	//形状。
-		////rbInfo.localInteria = { 1.0f, 1.0f, 1.0f };
-		////剛体を作成。
-		//m_rb.Create(rbInfo);
-		////剛体を物理ワールドに追加。
-		//PhysicsWorld pw = Game::GetInstance()->GetPhysicsWorld();
-		//pw.AddRigidBody(m_rb);
-
+		
+		//コライダーを作成。
+		m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation, m_scale);
 		m_colli_InitFlag = true;
 	}
-
-	////物理エンジンで計算された座標を反映する。
-	//btTransform& trans = m_rb.GetBody()->getWorldTransform();
-	//m_position.Set(trans.getOrigin());
-	//CQuaternion qRot;
-	//qRot.Set(trans.getRotation());
 
 }
 

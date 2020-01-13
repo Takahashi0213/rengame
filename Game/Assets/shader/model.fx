@@ -153,6 +153,7 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
+
 	float4 worldPos_ = mul(mWorld, In.Position);
 
 	if (isShadowReciever == 1) {
@@ -207,9 +208,9 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	//カメラ空間での座標をピクセルシェーダーで使うので、保存しておく。
 	psInput.posInView = pos;
 
-
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
+
 	psInput.TexCoord = In.TexCoord;
     return psInput;
 }
@@ -223,6 +224,9 @@ PSOutput PSMain(PSInput In)
 	//albedoテクスチャからカラーをフェッチする。
 	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
+
+	//float hoge = In.TexCoord.x % 2;
+	//if ( hoge > 0.2f && hoge < 0.3f )discard;
 
 	//float3 hoge = float3(0.0f, -1.0f, 0.0f);
 	//float4 hoge2 = float4( 0.0f,0.8f, 0.0f, 1.0f );
@@ -276,7 +280,7 @@ PSOutput PSMain(PSInput In)
 
 	finalColor.xyz += albedoColor.xyz * lig;
 	//return finalColor;
-
+	
 	//カラーを出力。
 	psOut.color = finalColor;
 	//カメラ座標系でのZ値を出力。

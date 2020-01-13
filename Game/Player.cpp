@@ -15,23 +15,7 @@ Player::Player()
 	//ワールド行列の更新。
 	m_model_Sl.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
-
-	SpriteRender* r = NewGO<SpriteRender>("Obj");
-	r->Init(L"Assets/sprite/mikyan.dds", 240.0f, 240.0f, { -100.0f, -100.0f,0.0f });
-	//r->SetPosition({ -100.0f, -100.0f,0.0f });
-	r->m_spriteSupporter.SpriteMove({ 500.0f,500.0f }, 60, 60);
-	r->m_spriteSupporter.SpriteMove({ -500.0f,50.0f }, 60, 120);
-	r->m_spriteSupporter.SpriteMove({ 1000.0f,0.0f }, 60, 180);
-	m_nextPos = m_position;
-
-	r->m_spriteSupporter.SpriteRotation(20.0f, 60, 60, true);
-	r->m_spriteSupporter.SpriteScale({ 0.5f,0.5f,0.5f }, 60, 60);
-	r->m_spriteSupporter.SpriteColor({ 1.0f,0.5f,0.5f,0.5f }, 180, 60);
-
-	SpriteRender* rr = NewGO<SpriteRender>("Obj");
-	rr->Init(L"Assets/sprite/mikyan.dds", 240.0f, 240.0f, { 200.0f, -200.0f,0.0f });
-	rr->SetRenderMode(Sprite_RenderMode::Y_Cut);
-	rr->SetCutLine(0.8f);
+	m_nextPos = m_position;		//移動先を初期化
 
 	//キャラクターコントローラーを初期化。
 	m_charaCon.Init(25, 30, m_position);
@@ -61,8 +45,6 @@ void Player::Update()
 	//	Player* p = CGameObjectManager::GetInstance()->FindGO<Player>(a,false);
 	//}
 
-	//CVector2 a = MouseSupporter::GetInstance()->GetMousePos();
-
 	if (m_gameObj != nullptr) {
 		if (m_gameObj->GetGameMode() == Game::CreateMode && m_monochromeFlag == false) {
 			m_model.SetRenderMode(RenderMode::Monochrome);
@@ -80,6 +62,7 @@ void Player::Update()
 
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
 		if (m_jumpNow == false && OnG_Flag == true) {
+			GameEffect::GetInstance()->GetInstance_Stand()->StandControl(GameEffect_Stand::Stand_Normal, GameEffect_Stand::New_Stand);
 			Jump();
 		}
 		m_jumpNow = true;
@@ -134,9 +117,10 @@ void Player::Move() {
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
 	bool OnG_Flag = m_charaCon.IsOnGround();
 
-	if (key == MouseSupporter::Release_Push && OnG_Flag == true && m_gameObj->GetGameMode() == Game::ActionMode) {
+	if (key == MouseSupporter::Release_Push && m_gameObj->GetGameMode() == Game::ActionMode) {
 		if (MouseSupporter::GetInstance()->GetMouseTimer(MouseSupporter::Left_Key) < 12) {
 			m_nextPos = MouseSupporter::GetInstance()->GetMousePos_3D();
+			GameEffect::GetInstance()->GetInstance_Stand()->StandControl(GameEffect_Stand::Stand_Happy, GameEffect_Stand::Jump_Stand);
 
 			//btCollisionWorld::ClosestRayResultCallback ResultCallback();
 			btDiscreteDynamicsWorld* dw = g_physics.GetDynamicWorld();
@@ -158,6 +142,19 @@ void Player::Move() {
 	m_moveSpeed.z = m_nextPos.z - m_position.z;
 	m_moveSpeed.x /= 20.0f;
 	m_moveSpeed.z /= 20.0f;
+
+	if (m_moveSpeed.x > m_moveMax) {
+		m_moveSpeed.x = m_moveMax;
+	}
+	if (m_moveSpeed.x < -m_moveMax) {
+		m_moveSpeed.x = -m_moveMax;
+	}
+	if (m_moveSpeed.z > m_moveMax) {
+		m_moveSpeed.z = m_moveMax;
+	}
+	if (m_moveSpeed.z < -m_moveMax) {
+		m_moveSpeed.z = -m_moveMax;
+	}
 
 	float angle = atan2(m_moveSpeed.x, m_moveSpeed.z);
 	m_rotation.SetRotation(CVector3().AxisY(), angle);

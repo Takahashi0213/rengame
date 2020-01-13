@@ -43,6 +43,24 @@ public:
 		return m_pd3dDeviceContext;
 	}
 	/*!
+	*@brief	SpriteBatchの取得。
+	*@details
+	* ゲーム層では使用しないように。
+	*/
+	DirectX::SpriteBatch* GetSpriteBatch() const
+	{
+		return m_spriteBatch.get();
+	}
+	/*!
+	*@brief	SpriteFontの取得。
+	*@details
+	* ゲーム層では使用しないように。
+	*/
+	DirectX::SpriteFont* GetSpriteFont() const
+	{
+		return m_spriteFont.get();
+	}
+	/*!
 	*@brief	スワップチェインを取得。
 	*/
 	IDXGISwapChain* GetSwapChain() {
@@ -71,6 +89,7 @@ public:
 	void ChangeRenderTarget(ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStensil, D3D11_VIEWPORT* viewport);
 
 private:
+
 	D3D_FEATURE_LEVEL		m_featureLevel;				//Direct3D デバイスのターゲットとなる機能セット。
 	ID3D11Device*			m_pd3dDevice = NULL;		//D3D11デバイス。
 	IDXGISwapChain*			m_pSwapChain = NULL;		//スワップチェイン。
@@ -79,6 +98,9 @@ private:
 	ID3D11RasterizerState*	m_rasterizerState = NULL;	//ラスタライザステート。
 	ID3D11Texture2D*		m_depthStencil = NULL;		//デプスステンシル。
 	ID3D11DepthStencilView* m_depthStencilView = NULL;	//デプスステンシルビュー。
+
+	std::unique_ptr<DirectX::SpriteBatch>	m_spriteBatch;				//!<スプライトバッチ。
+	std::unique_ptr<DirectX::SpriteFont>	m_spriteFont;				//!<スプライトフォント。
 
 };
 

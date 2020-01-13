@@ -6,7 +6,6 @@ GraphicsEngine::GraphicsEngine()
 {
 }
 
-
 GraphicsEngine::~GraphicsEngine()
 {
 	Release();
@@ -15,7 +14,7 @@ GraphicsEngine::~GraphicsEngine()
 void GraphicsEngine::BegineRender()
 {
 	float ClearColor[4] = { 0.5f, 0.5f, 0.5f, 1.0f }; //red,green,blue,alpha
-													  //描き込み先をバックバッファにする。
+	//描き込み先をバックバッファにする。
 	m_pd3dDeviceContext->OMSetRenderTargets(1, &m_backBuffer, m_depthStencilView);
 	//バックバッファを灰色で塗りつぶす。
 	m_pd3dDeviceContext->ClearRenderTargetView(m_backBuffer, ClearColor);
@@ -151,6 +150,11 @@ void GraphicsEngine::Init(HWND hWnd)
 	viewport.MaxDepth = 1.0f;
 	m_pd3dDeviceContext->RSSetViewports(1, &viewport);
 	m_pd3dDeviceContext->RSSetState(m_rasterizerState);
+
+	//フォント用のデータの初期化。
+	m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_pd3dDeviceContext);
+	m_spriteFont = std::make_unique<DirectX::SpriteFont>(m_pd3dDevice, L"Assets/font/myfile.spritefont");
+
 }
 void GraphicsEngine::ChangeRenderTarget(RenderTarget* renderTarget, D3D11_VIEWPORT* viewport)
 {

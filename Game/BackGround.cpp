@@ -40,8 +40,8 @@ void BackGround::Update() {
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 
 	//シャドウキャスターを登録。
-	ShadowMap::GetInstance()->RegistShadowCaster(&m_model);
-	ShadowMap::GetInstance()->Update(m_lightMaker->GetLightCameraPosition(), m_lightMaker->GetLightCameraTarget());
+	//ShadowMap::GetInstance()->RegistShadowCaster(&m_model);
+	//ShadowMap::GetInstance()->Update(m_lightMaker->GetLightCameraPosition(), m_lightMaker->GetLightCameraTarget());
 
 }
 

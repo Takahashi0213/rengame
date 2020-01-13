@@ -19,7 +19,6 @@ Game::Game()
 	m_instance = this;
 
 	//生成
-	m_physicsWorld.Init();
 
 	//ライトメーカーの生成
 	CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
@@ -49,8 +48,6 @@ Game::~Game()
 }
 
 void Game::Update() {
-
-	//m_physicsWorld.Update();
 
 }
 

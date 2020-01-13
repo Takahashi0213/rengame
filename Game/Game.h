@@ -43,18 +43,9 @@ public:
 		return m_instance;
 	}
 
-	/// <summary>
-	/// PhysicsWorld‚ðŽæ“¾
-	/// </summary>
-	/// <returns>PhysicsWorld</returns>
-	PhysicsWorld GetPhysicsWorld() {
-		return m_physicsWorld;
-	}
-
 private:
 	GameMode m_gameMode = ActionMode;
-	
-	PhysicsWorld m_physicsWorld;
-
+	GameData m_gameData;
+	GameEffect m_gameEffect;
 };
 

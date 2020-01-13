@@ -7,14 +7,18 @@ ModelEffect::ModelEffect()
 	m_psShader.Load("Assets/shader/model.fx", "PSMain", Shader::EnType::PS);
 	m_psSilhouette.Load("Assets/shader/model.fx", "PSMain_Silhouette", Shader::EnType::PS);
 	m_psMonochrome.Load("Assets/shader/model.fx", "PSMain_Monochrome", Shader::EnType::PS);
+	//シャドウマップ
 	m_psShadowMap.Load("Assets/shader/model.fx", "PSMain_ShadowMap", Shader::EnType::PS);
 	m_vsShadowMap.Load("Assets/shader/model.fx", "VSMain_ShadowMap", Shader::EnType::VS);
+	//箱用シェーダー
+	m_psShader_Box.Load("Assets/shader/box_model.fx", "PSMain", Shader::EnType::PS);
 
 	m_pPSShader = &m_psShader;
 	m_pPSSilhouetteShader = &m_psSilhouette;
 	m_pPSMonochromeShader = &m_psMonochrome;
 	m_vsShadowMapShader = &m_vsShadowMap;
 	m_psShadowMapShader = &m_psShadowMap;
+	m_pPSShaderBox = &m_psShader_Box;
 
 	//デプスステンシルの初期化。
 	InitSilhouettoDepthStepsilState();
@@ -60,6 +64,11 @@ void __cdecl ModelEffect::Apply(ID3D11DeviceContext* deviceContext)
 			deviceContext->PSSetShader((ID3D11PixelShader*)m_pPSMonochromeShader->GetBody(), NULL, 0);
 			deviceContext->PSSetShaderResources(0, 1, &m_albedoTex);
 			break;
+		case 3:
+			//箱用描画。
+			deviceContext->PSSetShader((ID3D11PixelShader*)m_pPSShaderBox->GetBody(), NULL, 0);
+			deviceContext->PSSetShaderResources(0, 1, &m_albedoTex);
+			break;
 		}
 
 		break;
@@ -71,9 +80,4 @@ void __cdecl ModelEffect::Apply(ID3D11DeviceContext* deviceContext)
 		break;
 	}
 
-	/*
-	deviceContext->VSSetShader((ID3D11VertexShader*)m_pVSShader->GetBody(), NULL, 0);
-	deviceContext->PSSetShader((ID3D11PixelShader*)m_pPSShader->GetBody(), NULL, 0);
-	deviceContext->PSSetShaderResources(enSkinModelSRVReg_AlbedoTexture, 1, &m_albedoTex);
-	*/
 }

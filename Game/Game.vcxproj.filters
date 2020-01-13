@@ -58,6 +58,18 @@
     <Filter Include="graphics\PostEffect">
       <UniqueIdentifier>{bea0f45f-c0cc-435c-bfbc-763f0dd2f8f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="graphics\font">
+      <UniqueIdentifier>{603848fd-d29f-4f41-b805-2c2161dd463a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\gameSystem">
+      <UniqueIdentifier>{84f0aef1-c4a6-4c0b-b6fc-8324262a13f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\sprite\stand">
+      <UniqueIdentifier>{19601a56-de18-42bb-94a4-4ccf6ccd85f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\sprite\system">
+      <UniqueIdentifier>{1d553739-477e-464f-8dcf-de70048a43f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -176,7 +188,6 @@
     </ClCompile>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="BackGround.cpp" />
-    <ClCompile Include="BoxMaker.cpp" />
     <ClCompile Include="graphics\Shader.cpp">
       <Filter>graphics\Sprite</Filter>
     </ClCompile>
@@ -206,6 +217,24 @@
     </ClCompile>
     <ClCompile Include="ConstantBufferGPU.cpp">
       <Filter>graphics\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFont.cpp">
+      <Filter>graphics\font</Filter>
+    </ClCompile>
+    <ClCompile Include="FontRender.cpp">
+      <Filter>graphics\font</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxMaker.cpp">
+      <Filter>system\gameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="GameData.cpp">
+      <Filter>system\gameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEffect.cpp">
+      <Filter>system\gameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseOver.cpp">
+      <Filter>system\gameSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -342,7 +371,6 @@
     </ClInclude>
     <ClInclude Include="Game.h" />
     <ClInclude Include="BackGround.h" />
-    <ClInclude Include="BoxMaker.h" />
     <ClInclude Include="GameBox.h">
       <Filter>graphics\GameBox</Filter>
     </ClInclude>
@@ -370,6 +398,24 @@
     <ClInclude Include="ConstantBufferGPU.h">
       <Filter>graphics\PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="GameFont.h">
+      <Filter>graphics\font</Filter>
+    </ClInclude>
+    <ClInclude Include="FontRender.h">
+      <Filter>graphics\font</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxMaker.h">
+      <Filter>system\gameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>system\gameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEffect.h">
+      <Filter>system\gameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseOver.h">
+      <Filter>system\gameSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\box.fbx">
@@ -385,6 +431,24 @@
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\mikyan.jpg">
       <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\stand\keis.png">
+      <Filter>Assets\sprite\stand</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\stand\keis_ang.png">
+      <Filter>Assets\sprite\stand</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\stand\keis_happy.png">
+      <Filter>Assets\sprite\stand</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\stand\keis_wow.png">
+      <Filter>Assets\sprite\stand</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\stand\keis_sad.png">
+      <Filter>Assets\sprite\stand</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\fukidasi.png">
+      <Filter>Assets\sprite\system</Filter>
     </ImageContentTask>
   </ItemGroup>
 </Project>

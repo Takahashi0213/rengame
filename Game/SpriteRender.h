@@ -55,9 +55,13 @@ public:
 	/// Šg‘å—¦‚ğİ’è
 	/// </summary>
 	/// <param name="scr">Šg‘å—¦</param>
-	void SetScale(const CVector3 scr)
+	void SetScale(const CVector3 scl)
 	{
-		m_scale = scr;
+		m_scale = scl;
+	}
+	void SetScale(const float scl) { //•Ö—˜Ver
+		m_scale.x = scl;
+		m_scale.y = scl;
 	}
 	/// <summary>
 	/// Šg‘å—¦‚ğæ“¾

@@ -24,6 +24,14 @@ public:
 	void Model_Init(const wchar_t* filePath, CVector3 pos, CQuaternion rot, CVector3 scl);
 
 	/// <summary>
+	/// モデルを返す
+	/// </summary>
+	/// <returns>モデルのポインタ</returns>
+	SkinModel* GetModel() {
+		return &m_skinModel;
+	}
+
+	/// <summary>
 	/// 座標を設定
 	/// </summary>
 	/// <param name="pos">座標</param>

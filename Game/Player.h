@@ -3,6 +3,7 @@
 #include "system/CGameObjectManager.h"
 #include "physics/PhysicsStaticObject.h"
 #include "Game.h"
+#include "MouseOver.h"
 
 class Player : public IGameObject
 {
@@ -37,6 +38,7 @@ private:
 	CharacterController m_charaCon;		//キャラクターコントローラー。
 	Game* m_gameObj;
 	LightMaker* m_lightMaker;
+	MouseOver ms;
 
 	//モノクロフラグ
 	bool m_monochromeFlag = false;
@@ -50,6 +52,9 @@ private:
 	CVector3 m_scale = CVector3().One(); //拡大率
 	CVector3 m_moveSpeed = CVector3().Zero();
 	CVector3 m_nextPos = CVector3().Zero();
+
+	//移動
+	const float m_moveMax = 30.0f;
 
 	//ジャンプ
 	bool m_jumpNow = false;
