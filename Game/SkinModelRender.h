@@ -14,6 +14,8 @@ public:
 		Silhouette, //シルエット！
 		Monochrome, //シロクロ
 	};
+	typedef std::vector<CVector3>					VertexBuffer;		//頂点バッファ。
+	typedef std::vector<unsigned int>				IndexBuffer;		//インデックスバッファ。
 
 	SkinModelRender();
 	~SkinModelRender();
@@ -108,6 +110,12 @@ public:
 	SkinModelSupporter m_skinModelSupporter;		//スキンモデルサポーター
 
 private:
+	struct Polygon {
+		CVector3 vertPos[3];	//頂点座標。
+		CVector3 normal;		//法線。
+	};
+	std::vector<Polygon> m_polygonList;
+
 	SkinModel m_skinModel;		//!<スキンモデル
 	CVector3 m_position = CVector3::Zero();		//!<座標。
 	CQuaternion m_rotation = CQuaternion().Identity();		//!<回転。

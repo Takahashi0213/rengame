@@ -74,6 +74,8 @@ void GameFont::InitTranslucentBlendState() {
 
 void GameFont::Begin()
 {
+	//InitTranslucentBlendState();
+
 	//レンダリングステートを退避させる。
 	//rc.PushRenderState();
 
@@ -114,6 +116,37 @@ void GameFont::Draw(
 	float frameBufferHalfHeight = FRAME_BUFFER_H * 0.5f;
 	pos.x += frameBufferHalfWidth;
 	pos.y = -pos.y + frameBufferHalfHeight;
+
+	if (m_isDrawShadow) {
+		//影を書く。
+		CVector2 offsetTbl[] = {
+			{ m_shadowOffset , 0.0f },
+		{ -m_shadowOffset , 0.0f },
+		{ 0.0f , m_shadowOffset },
+		{ 0.0f , -m_shadowOffset },
+
+		{ m_shadowOffset ,  m_shadowOffset },
+		{ m_shadowOffset ,  -m_shadowOffset },
+		{ -m_shadowOffset , m_shadowOffset },
+		{ -m_shadowOffset , -m_shadowOffset },
+		};
+		for (auto offset : offsetTbl) {
+
+			CVector2 sPos = pos;
+			sPos.x += offset.x;
+			sPos.y += offset.y;
+			m_spriteFont->DrawString(
+				m_spriteBatch,
+				text,
+				sPos.vec,
+				m_shadowColor,
+				rotation,
+				DirectX::XMFLOAT2(pivot.x, pivot.y),
+				scale
+			);
+		}
+
+	}
 
 	m_spriteFont->DrawString(
 		m_spriteBatch,

@@ -30,5 +30,7 @@ private:
 
 	Shader m_vs;				//頂点シェーダー。
 	Shader m_psFinal;			//最終ピクセルシェーダー。
+	Shader m_psFinal2;			//最終ピクセルシェーダー。
+
 };
 

@@ -123,6 +123,21 @@ public:
 	{
 		return m_mulColor;
 	}
+	/// <summary>
+	/// アルファの設定
+	/// </summary>
+	/// <param name="Alpha">アルファ</param>
+	void SetAlpha(const float Alpha) {
+		m_mulColor.w = Alpha;
+		m_sprite.SetMulColor(m_mulColor);
+	}
+	/// <summary>
+	/// アルファの取得
+	/// </summary>
+	/// <returns>現在の不透明度だ</returns>
+	float GetAlpha() {
+		return m_mulColor.w;
+	}
 
 	/// <summary>
 	/// レンダーモードの設定

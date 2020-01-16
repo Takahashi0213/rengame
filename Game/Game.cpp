@@ -6,6 +6,7 @@
 #include "BoxMaker.h"
 
 #include "GameCamera.h"
+#include "GameUI.h"
 
 Game* Game::m_instance = nullptr;
 
@@ -30,6 +31,7 @@ Game::Game()
 	BoxMaker* m_box = CGameObjectManager::GetInstance()->NewGO<BoxMaker>("BoxMaker", 1);
 	Player* pl = CGameObjectManager::GetInstance()->NewGO<Player>("Player", 1);
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
+	GameUI* ui = CGameObjectManager::GetInstance()->NewGO<GameUI>("GameUI", 8);
 
 	//ボックスメイカーに渡すよ
 	m_box->SetGame(this);
@@ -49,6 +51,7 @@ Game::~Game()
 
 void Game::Update() {
 
+	m_gameEffect.GameEffectUpdate();
 }
 
 void Game::Render() {

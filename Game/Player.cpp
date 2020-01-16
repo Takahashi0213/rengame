@@ -27,6 +27,11 @@ Player::Player()
 	//シャドウレシーバーにする。
 	m_model.SetShadowReciever(true);
 
+	//ニセプレイヤーの作成
+	SkinModelRender* smr = NewGO<SkinModelRender>("Player2", 0);
+	smr->Model_Init(L"Assets/modelData/unityChan.cmo");
+	smr->SetPosition({ 100.0f,50.0f,100.0f });
+
 }
 
 
@@ -37,6 +42,39 @@ Player::~Player()
 
 void Player::Update()
 {
+	if (hoge == 0) {
+		GameEffect::GetInstance()->EasyEffect(L"思い\R浮\Dかばんの\nやけど～",
+			GameEffect_Stand::Stand_Normal,
+			GameEffect_Stand::New_Stand);
+		hoge++;
+	}
+	if (hoge == 2) {
+		GameEffect::GetInstance()->EasyEffect(L"今日もいい天気", GameEffect_Stand::Stand_Happy);
+		hoge++;
+	}
+	if (hoge == 4) {
+		GameEffect::GetInstance()->EasyEffect(L"ご飯食ってて\n喋れません",
+			GameEffect_Stand::Stand_Sad,
+			GameEffect_Stand::Shake_Stand);
+		hoge++;
+	}	
+	if (hoge == 6) {
+		GameEffect::GetInstance()->GetInstance_Stand()->StandControl(
+			GameEffect_Stand::Stand_Happy,
+			GameEffect_Stand::Jump_Stand);
+		GameEffect::GetInstance()->GetInstance_Message()->MessageEffect(L"笑いやがった");
+		hoge++;
+	}
+	if (hoge == 8) {
+		GameEffect::GetInstance()->GetInstance_Stand()->StandControl(
+			GameEffect_Stand::Stand_Normal,
+			GameEffect_Stand::Delete_Stand);
+		hoge++;
+	}
+	if (GameEffect::GetInstance()->GetInstance_Message()->GetMessageOkuriFlag() == true) {
+		hoge++;
+	}
+
 	//if (g_pad[0].IsTrigger(enButtonA)) {
 	//	CGameObjectManager::GetInstance()->DeleteGO(this);
 	//}
@@ -62,7 +100,6 @@ void Player::Update()
 
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
 		if (m_jumpNow == false && OnG_Flag == true) {
-			GameEffect::GetInstance()->GetInstance_Stand()->StandControl(GameEffect_Stand::Stand_Normal, GameEffect_Stand::New_Stand);
 			Jump();
 		}
 		m_jumpNow = true;
@@ -119,8 +156,8 @@ void Player::Move() {
 
 	if (key == MouseSupporter::Release_Push && m_gameObj->GetGameMode() == Game::ActionMode) {
 		if (MouseSupporter::GetInstance()->GetMouseTimer(MouseSupporter::Left_Key) < 12) {
+
 			m_nextPos = MouseSupporter::GetInstance()->GetMousePos_3D();
-			GameEffect::GetInstance()->GetInstance_Stand()->StandControl(GameEffect_Stand::Stand_Happy, GameEffect_Stand::Jump_Stand);
 
 			//btCollisionWorld::ClosestRayResultCallback ResultCallback();
 			btDiscreteDynamicsWorld* dw = g_physics.GetDynamicWorld();

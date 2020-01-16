@@ -112,12 +112,14 @@
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="Dof.cpp" />
     <ClCompile Include="FontRender.cpp" />
+    <ClCompile Include="FontSupporter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameBox.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameEffect.cpp" />
     <ClCompile Include="GameFont.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp" />
     <ClCompile Include="graphics\animation\AnimationClip.cpp" />
@@ -175,6 +177,7 @@
     <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="Dof.h" />
     <ClInclude Include="FontRender.h" />
+    <ClInclude Include="FontSupporter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameBox.h" />
     <ClInclude Include="GameCamera.h" />
@@ -182,6 +185,7 @@
     <ClInclude Include="GameEffect.h" />
     <ClInclude Include="GameFont.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="GameUI.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="graphics\animation\Animation.h" />
     <ClInclude Include="graphics\animation\AnimationClip.h" />
@@ -215,6 +219,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PostEffect.h" />
     <ClInclude Include="RenderTarget.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="SkinModelRender.h" />
     <ClInclude Include="SkinModelSupporter.h" />
@@ -254,6 +259,15 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\system_sprite\fukidasi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\system_sprite\okuri.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\system_sprite\skipNow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Game.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

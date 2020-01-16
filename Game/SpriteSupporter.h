@@ -20,6 +20,11 @@ public:
 
 	void SpriteSupporter_Update();
 
+	/// <summary>
+	/// スプライトの演出を全てリセットする
+	/// </summary>
+	void SpriteDelayReset();
+
 	//実行するコマンド
 	void SpriteMove(CVector2 move, int moveTime, int moveDelay, bool relative = false);
 	void SpriteRotation(float rot, int moveTime, int moveDelay, bool loopflag = false);
@@ -75,6 +80,7 @@ private:
 	int m_spriteColorTimer = -1;	//スプライトの変化タイマー
 	//Shake
 	CVector2 m_spriteShakeMove = { 0.0f,0.0f }; //シェイクでの移動距離
+	CVector2 m_spriteShakeMove_OneFlame = { 0.0f,0.0f }; //シェイクの1フレーム移動距離
 	int m_spriteShakeLimit = -1;	//スプライトのシェイク間隔（-1は変化中ではない）
 	int m_spriteShakeCount = -1;	//スプライトのシェイク回数（0の場合、止めるまでループする）
 	int m_spriteShakeCounter = -1;	//スプライトのシェイク回数カウンター

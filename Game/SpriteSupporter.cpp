@@ -52,6 +52,40 @@ void SpriteSupporter::SpriteDataReturn() {
 
 }
 
+void SpriteSupporter::SpriteDelayReset() {
+
+	//
+	m_spriteMoveList.clear();
+	//
+	m_spriteRotation = CQuaternion().Identity();	//1フレームの回転量
+	m_spriteRotationLimit = -1;	//スプライトの回転時間（-1は移動中ではない）
+	m_spriteRotationDelay = -1;	//スプライトの回転ディレイ
+	m_spriteRotationTimer = -1; //スプライトの回転タイマー
+	m_spriteLoopRotationFlag = false;		//trueなら永遠に延々にフォーエバー回る回る回る
+	//Scale
+	m_spriteScale = CVector3().Zero();			//目標の大きさ
+	m_spriteScaleMove = CVector3().Zero();		//1フレームの変化量
+	m_spriteScaleLimit = -1;	//スプライトの拡大時間（-1は移動中ではない）
+	m_spriteScaleDelay = -1;	//スプライトの拡大ディレイ
+	m_spriteScaleTimer = -1;	//スプライトの拡大タイマー
+	//MulColor
+	m_spriteColor = CVector4().White();		//目標の色
+	m_spriteColorMove = CVector4().White();	//1フレームの変化量
+	m_spriteColorLimit = -1;	//スプライトの色変更時間（-1は変化中ではない）
+	m_spriteColorDelay = -1;	//スプライトの変化ディレイ
+	m_spriteColorTimer = -1;	//スプライトの変化タイマー
+	//Shake
+	m_spriteShakeMove.x = 0.0f;
+	m_spriteShakeMove.y = 0.0f;
+	m_spriteShakeMove_OneFlame.x = 0.0f;
+	m_spriteShakeMove_OneFlame.y = 0.0f;
+	m_spriteShakeLimit = -1;	//スプライトのシェイク間隔（-1は変化中ではない）
+	m_spriteShakeCount = -1;	//スプライトのシェイク回数（0の場合、止めるまでループする）
+	m_spriteShakeCounter = -1;	//スプライトのシェイク回数カウンター
+	m_spriteShakeTimer = -1;	//スプライトのシェイクタイマー
+
+}
+
 /// <summary>
 /// 画像移動をセットする
 /// </summary>
@@ -73,7 +107,7 @@ void SpriteSupporter::SpriteMove(CVector2 move, int moveTime, int moveDelay, boo
 /// <remarks>
 /// 
 /// 永久回転をセットしていて停止したい場合のサンプルコード
-/// SpriteRotation(0.0f,0,0);
+/// SpriteRotation(0.0f, 0,0);
 /// 
 /// </remarks>
 /// <param name="rot">1フレームの回転量（float）</param>
@@ -132,6 +166,10 @@ void SpriteSupporter::SpriteShake(CVector2 move, int moveTime, int moveCount) {
 	m_spriteShakeCount = moveCount;
 	m_spriteShakeCounter = 0;
 	m_spriteShakeTimer = 0;
+	//移動距離もこ↑こ↓で計算
+	m_spriteShakeMove_OneFlame.x = (m_spriteShakeMove.x / (m_spriteShakeLimit * 2));
+	m_spriteShakeMove_OneFlame.y = (m_spriteShakeMove.y / (m_spriteShakeLimit * 2));
+
 }
 
 //////////////////////////////////////
@@ -305,5 +343,39 @@ void SpriteSupporter::SpriteColorUpdate() {
 /// スプライトのシェイクを実行
 /// </summary>
 void SpriteSupporter::SpriteShakeUpdate() {
+
+	if (m_spriteShakeLimit == -1) {
+		//実行中でない
+		return;
+	}
+
+	//移動する
+	m_position.x += m_spriteShakeMove_OneFlame.x;
+	m_position.y += m_spriteShakeMove_OneFlame.y;
+
+	//タイマーの処理
+	m_spriteShakeTimer++;
+	if (m_spriteShakeTimer == (m_spriteShakeLimit / 2)) {
+		//折り返し
+		m_spriteShakeMove_OneFlame.x *= -1.0f;
+		m_spriteShakeMove_OneFlame.y *= -1.0f;
+
+	}
+	if (m_spriteShakeTimer >= m_spriteShakeLimit) {
+
+		//1シェイク完了
+		m_spriteShakeTimer = 0;
+		m_spriteShakeMove_OneFlame.x *= -1.0f;
+		m_spriteShakeMove_OneFlame.y *= -1.0f;
+
+		//無限シェイクでないならシェイク回数を加算
+		if (m_spriteShakeCount > 0) {
+			m_spriteShakeCounter++;
+			if (m_spriteShakeCount <= m_spriteShakeCounter) {
+				//シェイク終了
+				m_spriteShakeLimit = -1;
+			}
+		}
+	}
 
 }

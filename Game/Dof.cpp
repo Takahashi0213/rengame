@@ -16,6 +16,7 @@ void Dof::Init()
 
 	m_vs.Load("Assets/shader/dof.fx", "VSMain", Shader::EnType::VS);
 	m_psFinal.Load("Assets/shader/dof.fx", "PSFinal", Shader::EnType::PS);
+	m_psFinal2.Load("Assets/shader/dof.fx", "PSFinal2", Shader::EnType::PS);
 
 	//半透明合成のブレンドステートを作成する。
 	CD3D11_DEFAULT defaultSettings;
@@ -67,6 +68,7 @@ void Dof::Draw(PostEffect& postEffect)
 		deviceContext->OMSetBlendState(m_finalBlendState, blendFactor, 0xffffffff);
 		//フルスクリーン描画。
 		postEffect.DrawFullScreenQuadPrimitive(deviceContext, m_vs, m_psFinal);
+		postEffect.DrawFullScreenQuadPrimitive(deviceContext, m_vs, m_psFinal2);
 
 		//ブレンドステートを戻す。
 		deviceContext->OMSetBlendState(oldBlendState, oldBlendFactor, oldMask);

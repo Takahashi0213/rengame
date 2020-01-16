@@ -1,10 +1,14 @@
 #pragma once
 #include "GameFont.h"
 #include "system/CGameObjectManager.h"
+#include "FontSupporter.h"
 
 class FontRender : public IGameObject
 {
 public:
+	FontRender();
+	~FontRender();
+
 	void Update()override;
 	void Render()override;
 
@@ -59,6 +63,9 @@ public:
 	{
 		m_color = color;
 	}
+	void SetAlpha(float alpha) {
+		m_color.w = alpha;
+	}
 	/*!
 	*@brief	回転を設定。
 	*@param[in]	rotation	回転角度。単位はラジアン。
@@ -104,18 +111,81 @@ public:
 	{
 		return m_color;
 	}
+
+	/// <summary>
+	/// ゲームフォントを取得
+	/// </summary>
+	/// <returns>ふぉんとに？</returns>
+	GameFont* GetGameFont() {
+		return &m_font;
+	}
+
+	/// <summary>
+	/// メッセージ送り中ならtrueを返す
+	/// </summary>
+	/// <returns>メッセージ送りフラグ</returns>
+	bool GetMessageOkuriFlag() {
+		return m_okuriFlag;
+	}
+
+	/// <summary>
+	/// テキスト送り演出
+	/// </summary>
+	/// <param name="text">表示するテキスト</param>
+	/// <param name="Interval">1文字ごとのインターバル</param>
+	void SetTextOkuri(const wchar_t* text, int Interval);
+
+	/// <summary>
+	/// テキスト送りを一瞬で最後まで行います
+	/// </summary>
+	/// <remarks>
+	/// m_okuriFlagはここでは変更されず、Updateのテキスト送り終了処理に一度引っかかります
+	/// </remarks>
+	void TextOkuriEnd() {
+		m_textOkuri_NowLen = m_textOkuri_Len;
+		m_textOkuri_Timer = m_textOkuri_Interval;
+	}
+
+	FontSupporter m_fontSupporter;		//フォントサポーター
+
 private:
+	enum MessageState {
+		Normal,	//通常 \Dで設定
+		Red,	//赤文字 \Rで設定
+		Blue,	//青文字 \Bで設定
+		Green,	//緑文字 \Gで設定
+	};
 
 	void PostRender();
 
 	GameFont m_font;
 
 	std::wstring m_text;						//!<テキスト。
+
 	CVector2 m_position = CVector2().Zero();	//!<座標。x = 0.0f, y = 0.0fで画面の中心。
 	CVector4 m_color = CVector4().White();		//!<カラー。
 	float m_rotation = 0.0f;					//!<回転。
 	float m_scale = 1.0f;						//!<拡大率。
 	CVector2 m_pivot = { 0.5f,0.5f };			//!<ピボット。
+
+	//だんだん表示システム
+	wchar_t m_text_stock[256] = L"";			//!<予備テキスト。
+	int m_textOkuri_Interval = 0;				//!<テキスト送りのインターバルフレーム
+	int m_textOkuri_Timer = 0;					//!<テキスト送りタイマー
+	bool m_okuriFlag = false;					//!<メッセージ送り処理のフラグ
+	int m_textOkuri_Len = 0;					//!<予備テキストの文字数
+	int m_textOkuri_NowLen = 0;					//!<現在の文字数
+
+	//特殊文字用
+	struct MessageSt{
+		wchar_t Message[1024];
+		MessageState State;
+	};
+	std::list<MessageSt> m_messageList;		//分断した文章を保存する
+
+	const CVector4 RED_STATUS = { 0.9f,0.1f,0.1f,m_color.w };
+	const CVector4 BLUE_STATUS = { 0.1f,0.9f,0.1f,m_color.w };
+	const CVector4 GREEN_STATUS = { 0.1f,0.1f,0.9f,m_color.w };
 
 };
 

@@ -70,6 +70,9 @@
     <Filter Include="Assets\sprite\system">
       <UniqueIdentifier>{1d553739-477e-464f-8dcf-de70048a43f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="system\gameSystem\UI">
+      <UniqueIdentifier>{a02c1fe1-d10b-45c6-bc42-1c95b3fb88c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -236,6 +239,10 @@
     <ClCompile Include="MouseOver.cpp">
       <Filter>system\gameSystem</Filter>
     </ClCompile>
+    <ClCompile Include="FontSupporter.cpp">
+      <Filter>graphics\font</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -416,6 +423,11 @@
     <ClInclude Include="MouseOver.h">
       <Filter>system\gameSystem</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="FontSupporter.h">
+      <Filter>graphics\font</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\box.fbx">
@@ -450,5 +462,14 @@
     <ImageContentTask Include="Assets\sprite\system_sprite\fukidasi.png">
       <Filter>Assets\sprite\system</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\okuri.png">
+      <Filter>Assets\sprite\system</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\skipNow.png">
+      <Filter>Assets\sprite\system</Filter>
+    </ImageContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Game.rc" />
   </ItemGroup>
 </Project>

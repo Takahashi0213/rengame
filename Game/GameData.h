@@ -1,199 +1,199 @@
-#pragma once
+ï»¿#pragma once
 
 /// <summary>
-/// ƒQ[ƒ€‚ÌƒXƒe[ƒ^ƒX‚Í‚±‚¿‚ç
-/// ¦ƒVƒ“ƒOƒ‹ƒgƒ“
+/// ã‚²ãƒ¼ãƒ ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã¯ã“ã¡ã‚‰
+/// â€»ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³
 /// </summary>
 class GameData
 {
 	static GameData* m_instance;
 public:
-	enum Place_Data {		//êŠƒf[ƒ^
-		Null_Place,		//‹ó”’
-		Warehouse,		//‘qŒÉ
-		Meadow,			//‘Œ´
+	enum Place_Data {		//å ´æ‰€ãƒ‡ãƒ¼ã‚¿
+		Null_Place,		//ç©ºç™½
+		Warehouse,		//å€‰åº«
+		Meadow,			//è‰åŸ
 	};
 
 	GameData();
 	~GameData();
 
-	//ƒf[ƒ^—pŠÖ”
+	////Â°Ë–âœ§â—(â°â–¿â°)â—œâœ§Ë–Â°////
+	////ãƒ‡ãƒ¼ã‚¿ç”¨é–¢æ•°/////////
+	////Â°Ë–âœ§â—(â°â–¿â°)â—œâœ§Ë–Â°////
 
 	/// <summary>
-	/// is“x‰ÁZ
+	/// é€²è¡Œåº¦åŠ ç®—
 	/// </summary>
 	void ProgressPlus() {
 		m_progress++;
 	}
 	/// <summary>
-	/// is“xæ“¾
+	/// é€²è¡Œåº¦å–å¾—
 	/// </summary>
-	/// <returns>is“x</returns>
+	/// <returns>é€²è¡Œåº¦</returns>
 	int GetProgress() {
 		return m_progress;
 	}
 
 	/// <summary>
-	/// Œ»İˆÊ’u•ÏX
+	/// ç¾åœ¨ä½ç½®å¤‰æ›´
 	/// </summary>
-	/// <param name="pd">V‚µ‚¢Œ»İˆÊ’u</param>
+	/// <param name="pd">æ–°ã—ã„ç¾åœ¨ä½ç½®</param>
 	void SetPlace(Place_Data pd) {
 		m_nowPlace = pd;
 	}
 	/// <summary>
-	/// Œ»İˆÊ’uæ“¾
+	/// ç¾åœ¨ä½ç½®å–å¾—
 	/// </summary>
-	/// <returns>ƒCƒ}ƒRƒRI</returns>
+	/// <returns>ã‚¤ãƒã‚³ã‚³ï¼</returns>
 	Place_Data GetPlace() {
 		return m_nowPlace;
 	}
 
 	/// <summary>
-	/// ƒƒjƒ…[ƒtƒ‰ƒO‚Ì•ÏX
+	/// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒ•ãƒ©ã‚°ã®å¤‰æ›´ã¨å–å¾—
 	/// </summary>
-	/// <param name="flag">ƒtƒ‰ƒO</param>
 	void SetMenuFlag(bool flag) {
 		m_menuFlag = flag;
 	}
-	/// <summary>
-	/// ƒƒjƒ…[ƒtƒ‰ƒO‚Ìæ“¾
-	/// </summary>
-	/// <returns>ƒtƒ‰ƒO</returns>
 	bool GetMenuFlag() {
 		return m_menuFlag;
 	}
 
 	/// <summary>
-	/// ƒXƒ^[ƒ}ƒl[‚Ì•ÏX
+	/// ã‚¹ã‚¿ãƒ¼ãƒãƒãƒ¼ã®å¤‰æ›´
 	/// </summary>
-	/// <param name="money">‰ÁZ’li•‰‚Ì”‚à‰Âj</param>
+	/// <param name="money">åŠ ç®—å€¤ï¼ˆè² ã®æ•°ã‚‚å¯ï¼‰</param>
 	void StarMoneyPlus(int money) {
 		m_starMoney += money;
-		if (m_starMoney > MAX_STAR_MONEY) {	//ãŒÀ
+		if (m_starMoney > MAX_STAR_MONEY) {	//ä¸Šé™
 			m_starMoney = MAX_STAR_MONEY;
 		}
 
 	}
 	/// <summary>
-	/// ƒXƒ^[ƒ}ƒl[‚ğæ“¾
+	/// ã‚¹ã‚¿ãƒ¼ãƒãƒãƒ¼ã‚’å–å¾—
 	/// </summary>
-	/// <returns>‚¨‚©‚Ë</returns>
+	/// <returns>ãŠã‹ã­</returns>
 	int GetStarMoney() {
 		return m_starMoney;
 	}
 
 	/// <summary>
-	/// Œ»İ–‚—Í‚Ìİ’è
+	/// ç¾åœ¨é­”åŠ›ã®è¨­å®š
 	/// </summary>
-	/// <param name="power">‚±‚ê</param>
+	/// <param name="power">ã“ã‚Œ</param>
 	void SetMagicPower(int power) {
 		m_magicPower = power;
 	}
 	/// <summary>
-	/// Œ»İ–‚—Í‚Ì‰ÁZ
+	/// ç¾åœ¨é­”åŠ›ã®åŠ ç®—
 	/// </summary>
-	/// <param name="power">‰ÁZ’li•‰‚Ì”‚à‰Âj</param>
+	/// <param name="power">åŠ ç®—å€¤ï¼ˆè² ã®æ•°ã‚‚å¯ï¼‰</param>
 	void MagicPowerPlus(int power) {
 		m_magicPower += power;
-		if (m_magicPower > m_magicPower_MAX) {	//ãŒÀ
+		if (m_magicPower > m_magicPower_MAX) {	//ä¸Šé™
 			m_magicPower = m_magicPower_MAX;
 		}
 	}
 	/// <summary>
-	/// –‚—Í‚Ìæ“¾
+	/// é­”åŠ›ã®å–å¾—
 	/// </summary>
-	/// <returns>Œ»İ’l</returns>
+	/// <returns>ç¾åœ¨å€¤</returns>
 	int GetMagicPower() {
 		return m_magicPower;
 	}
 
 	/// <summary>
-	/// Å‘å–‚—Í‚Ìİ’è
+	/// æœ€å¤§é­”åŠ›ã®è¨­å®šã¨å–å¾—
 	/// </summary>
-	/// <param name="max">’l</param>
 	void SetMaxMagic(int max) {
 		m_magicPower_MAX = max;
 	}
-	/// <summary>
-	/// Å‘å–‚—Í‚Ìæ“¾
-	/// </summary>
-	/// <returns>Å‘å–‚—Í</returns>
 	int GetMaxMagic() {
 		return m_magicPower_MAX;
 	}
 
 	/// <summary>
-	/// Œ»İ‘Ì—Í‚Ìİ’è
+	/// ç¾åœ¨ä½“åŠ›ã®è¨­å®š
 	/// </summary>
-	/// <param name="hp">‚±‚ê</param>
+	/// <param name="hp">ã“ã‚Œ</param>
 	void SetHP(int hp) {
 		m_hp = hp;
 	}
 	/// <summary>
-	/// Œ»İ‘Ì—Í‚Ì‰ÁZ
+	/// ç¾åœ¨ä½“åŠ›ã®åŠ ç®—
 	/// </summary>
-	/// <param name="hp">‰ÁZ’li•‰‚Ì”‚à‰Âj</param>
+	/// <param name="hp">åŠ ç®—å€¤ï¼ˆè² ã®æ•°ã‚‚å¯ï¼‰</param>
 	void HP_Plus(int hp) {
 		m_hp += hp;
-		if (m_hp > m_hp_MAX) {	//ãŒÀ
+		if (m_hp > m_hp_MAX) {	//ä¸Šé™
 			m_hp = m_hp_MAX;
 		}
 	}
 	/// <summary>
-	/// ‘Ì—Í‚Ìæ“¾
+	/// ä½“åŠ›ã®å–å¾—
 	/// </summary>
-	/// <returns>Œ»İ’l</returns>
+	/// <returns>ç¾åœ¨å€¤</returns>
 	int GetHP() {
 		return m_hp;
 	}
 
 	/// <summary>
-	/// Å‘å‘Ì—Í‚Ìİ’è
+	/// æœ€å¤§ä½“åŠ›ã®è¨­å®šã¨å–å¾—
 	/// </summary>
-	/// <param name="max">’l</param>
 	void SetMaxHP(int max) {
 		m_hp_MAX = max;
 	}
-	/// <summary>
-	/// Å‘å‘Ì—Í‚Ìæ“¾
-	/// </summary>
-	/// <returns>Å‘å‘Ì—Í</returns>
 	int GetMaxHP() {
 		return m_hp_MAX;
 	}
 
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾I
+	/// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚¹ãƒ”ãƒ¼ãƒ‰ã®è¨­å®šã¨å–å¾—
 	/// </summary>
-	/// <returns>ƒCƒ“ƒXƒ^ƒ“ƒX‚Å‚·</returns>
+	void SetMessageSpeed(int speed) {
+		m_messageSpeed = speed;
+	}
+	int GetMessageSpeed() {
+		return m_messageSpeed;
+	}
+
+	/// <summary>
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ï¼
+	/// </summary>
+	/// <returns>ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã§ã™</returns>
 	static GameData* GameData::GetInstance() {
 		return m_instance;
 	}
 
 private:
 
-	//Šî–{
-	int m_progress = 0;		//is“x
-	Place_Data m_nowPlace = Null_Place;		//Œ»İˆÊ’u
-	bool m_menuFlag = false;				//¡ƒƒjƒ…[ŠJ‚¯‚éH
+	//åŸºæœ¬
+	int m_progress = 0;		//é€²è¡Œåº¦
+	Place_Data m_nowPlace = Null_Place;		//ç¾åœ¨ä½ç½®
+	bool m_menuFlag = false;				//ä»Šãƒ¡ãƒ‹ãƒ¥ãƒ¼é–‹ã‘ã‚‹ï¼Ÿ
 
-	//‰ğ•ú—v‘f
+	//è§£æ”¾è¦ç´ 
 	struct GameFlag {
-		bool m_boxMakerFlag;	//” ¶¬”\—Í
-		bool m_equipmentFlag;	//‘•”õ•ÏX
-		bool m_teleportFlag;	//ƒƒjƒ…[‚©‚ç‚ÌƒeƒŒƒ|[ƒg
+		bool m_boxMakerFlag;	//ç®±ç”Ÿæˆèƒ½åŠ›
+		bool m_equipmentFlag;	//è£…å‚™å¤‰æ›´
+		bool m_teleportFlag;	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‹ã‚‰ã®ãƒ†ãƒ¬ãƒãƒ¼ãƒˆ
 	};
 	GameFlag m_gameFlag;
 
-	//ƒXƒ^[ƒ}ƒl[
+	//ã‚¹ã‚¿ãƒ¼ãƒãƒãƒ¼
 	int m_starMoney = 0;
 	const int MAX_STAR_MONEY = 99999;
 
-	//ƒvƒŒƒCƒ„[ƒXƒe[ƒ^ƒX
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 	int m_magicPower = 100;
 	int m_magicPower_MAX = 100;
 	int m_hp = 100;
 	int m_hp_MAX = 100;
+
+	//ã‚³ãƒ³ãƒ•ã‚£ã‚°
+	int m_messageSpeed = 2;		//ä¼šè©±ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸é€ã‚Šã‚¹ãƒ”ãƒ¼ãƒ‰
 
 };
 

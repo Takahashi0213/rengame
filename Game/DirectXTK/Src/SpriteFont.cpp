@@ -182,6 +182,7 @@ void SpriteFont::Impl::SetDefaultCharacter(wchar_t character)
 template<typename TAction>
 void SpriteFont::Impl::ForEachGlyph(_In_z_ wchar_t const* text, TAction action) const
 {
+	bool OffsetFlag = false;
     float x = 0;
     float y = 0;
 
@@ -200,12 +201,28 @@ void SpriteFont::Impl::ForEachGlyph(_In_z_ wchar_t const* text, TAction action) 
                 x = 0;
                 y += lineSpacing;
                 break;
-
             default:
                 // Output this character.
                 auto glyph = FindGlyph(character);
+				auto size = glyph->XOffset;
 
-                x += glyph->XOffset;
+				size = 4;
+
+				if (OffsetFlag == true && (character <= 0x4e00 || character >= 0x9fff)) {
+					size += 7;
+				}
+				if (OffsetFlag == true && (character >= 0x4e00 && character <= 0x9fff)) {
+					size += 5;
+				}
+
+				if (character >= 0x4e00 && character <= 0x9fff) {
+					OffsetFlag = true;
+				}
+				else {
+					OffsetFlag = false;
+				}
+
+                x += size;
 
                 if (x < 0)
                     x = 0;
