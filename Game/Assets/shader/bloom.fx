@@ -43,6 +43,7 @@ float4 PSSamplingLuminance(PSInput In) : SV_Target0
 	float t = dot( color.xyz, float3(0.2125f, 0.7154f, 0.0721f) );
 	clip(t - 1.001f);			//‹P“x‚ª1.0ˆÈ‰º‚È‚çƒsƒNƒZƒ‹ƒLƒ‹
 	color.xyz *= (t - 1.0f);
+	//color.xyz *= 1000.0f;
 	color.a = 1.0f;
 	return color;
 }
@@ -65,8 +66,6 @@ float4 PSCombine( PSInput In ) : SV_Target0
 	finalColor += bokeTexture03.Sample( Sampler, uv );
 	finalColor /= 4.0f;
 	finalColor.a = 1.0f;
-
-	//finalColor.r = 255.0f;	//¢ŠE‚ªÔ‚­‚È```‚é
 
 	return finalColor;
 }

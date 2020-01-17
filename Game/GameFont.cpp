@@ -74,7 +74,8 @@ void GameFont::InitTranslucentBlendState() {
 
 void GameFont::Begin()
 {
-	//InitTranslucentBlendState();
+	//ステートの設定
+	InitTranslucentBlendState();
 
 	//レンダリングステートを退避させる。
 	//rc.PushRenderState();

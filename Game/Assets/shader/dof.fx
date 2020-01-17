@@ -42,6 +42,10 @@ float4 PSFinal(PSInput psIn) : SV_Target0
 	float depth = depthInViewTexture.Sample(Sampler, psIn.uv);
 	float alpha = saturate((depth - 1000.0f) / 1000.0f);
 
+	if (depth == 0.0f) {
+		alpha = 0.0f;
+	}
+
 	return float4( bokeTexture.Sample(Sampler, psIn.uv).xyz, alpha);
 }
 
@@ -49,6 +53,10 @@ float4 PSFinal2(PSInput psIn) : SV_Target0
 {
 	float depth = depthInViewTexture.Sample(Sampler, psIn.uv);
 	float alpha = (1000.0f - depth) / 1000.0f;
+
+	if (depth == 0.0f) {
+		alpha = 0.0f;
+	}
 	if (depth > 150.0f) {
 		alpha /= 2.0f;
 	}

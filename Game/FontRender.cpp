@@ -114,7 +114,6 @@ void FontRender::PostRender()
 
 	//描画開始
 	MessageSt GetPackage;		//取得したや～つを入れる場所
-	int hoge = 0;
 
 	for (int i = 0; i < m_messageList.size(); i++) {
 
@@ -123,8 +122,6 @@ void FontRender::PostRender()
 		m_messageList.pop_front();
 
 		GameFont* gf = new GameFont;
-
-		gf->Begin();
 
 		//色の変更
 		CVector4 color;
@@ -143,6 +140,8 @@ void FontRender::PostRender()
 			color = GREEN_STATUS;
 			continue;
 		}
+
+		gf->Begin();
 
 		gf->Draw(
 			GetPackage.Message,

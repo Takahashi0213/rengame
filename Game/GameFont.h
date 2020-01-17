@@ -50,13 +50,12 @@ public:
 
 private:
 	void InitTranslucentBlendState();
-
 	ID3D11BlendState* m_translucentBlendState = nullptr;	//半透明合成用のブレンドステート。
 
 	DirectX::SpriteBatch*	m_spriteBatch = nullptr;	//!<スプライトバッチ。
 	DirectX::SpriteFont*	m_spriteFont = nullptr;		//!<スプライトフォント。
 
-	const CVector4 ShadowColorDef = { 0.2f,0.2f,0.2f,1.0f };
+	const CVector4 ShadowColorDef = { 1.0f,1.0f,1.0f,1.0f };	//影の初期色
 
 	bool m_isDrawShadow = false;						//!<影を書く？
 	float m_shadowOffset = 0.0f;						//!<影を書くときのピクセルのオフセット量。

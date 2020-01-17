@@ -1,6 +1,7 @@
 #pragma once
 #include "Bloom.h"
 #include "Dof.h"
+#include "FarShadow.h"
 
 /// <summary>
 /// ポストエフェクトクラス。
@@ -38,7 +39,8 @@ private:
 	/// </summary>
 	void InitFullScreenQuadPrimitive();
 private:
-	Bloom	m_bloom;	//ブルーム。
+	FarShadow m_farShadow;	//遠くの影
+	Bloom m_bloom;	//ブルーム。
 	Dof m_dof;			//DoF
 	//フルスクリーン描画用のメンバ変数。
 	ID3D11Buffer*	m_vertexBuffer = nullptr;		//頂点バッファ。

@@ -19,8 +19,11 @@ Sprite::~Sprite()
 	if (m_samplerState != NULL) {
 		m_samplerState->Release();
 	}
-	if (m_texture != NULL) {
-		m_texture->Release();
+	if (m_mainSprite.Texture != NULL) {
+		m_mainSprite.Texture->Release();
+	}	
+	if (m_subSprite.Texture != NULL) {
+		m_subSprite.Texture->Release();
 	}
 }
 
@@ -29,8 +32,8 @@ Sprite::~Sprite()
 /// </summary>
 void Sprite::InitCommon(float w, float h)
 {
-	m_size.x = w;
-	m_size.y = h;
+	m_mainSprite.Size.x = w;
+	m_mainSprite.Size.y = h;
 	//頂点バッファの初期化
 	InitVertexBuffer(m_vertexBuffer, w, h);
 	//インデックスバッファの初期化
@@ -69,18 +72,45 @@ void Sprite::Sprite_Init(const wchar_t* texFilePath, float w, float h) {
 		0,							//今は気にしなくてよい。
 		false,						//今は気にしなくてよい。
 		nullptr,					//今は気にしなくてよい。
-		&m_texture					//読み込んだテクスチャに
+		&m_mainSprite.Texture		//読み込んだテクスチャに
 									//アクセスするためのインターフェースの格納先。
 	);
 
 	m_isInited = true;
 }
+void Sprite::Sprite_Init_Sub(const wchar_t* texFilePath, float w, float h) {
+
+	m_subSprite.Size.x = w;
+	m_subSprite.Size.y = h;
+
+	//テクスチャをロード。
+	DirectX::CreateDDSTextureFromFileEx(
+		g_graphicsEngine->GetD3DDevice(),				//D3Dデバイス。
+		texFilePath,				//読み込む画像データのファイルパス。
+		0,                          //今は気にしなくてよい。
+		D3D11_USAGE_DEFAULT,		//今は気にしなくてよい。
+		D3D11_BIND_SHADER_RESOURCE,	//今は気にしなくてよい。
+		0,							//今は気にしなくてよい。
+		0,							//今は気にしなくてよい。
+		false,						//今は気にしなくてよい。
+		nullptr,					//今は気にしなくてよい。
+		&m_subSprite.Texture		//読み込んだテクスチャに
+									//アクセスするためのインターフェースの格納先。
+	);
+}
 void Sprite::Sprite_Init(ID3D11ShaderResourceView* srv, float w, float h)
 {
 	//共通の初期化処理を呼び出す。
 	InitCommon(w, h);
-	m_texture = srv;
-	m_texture->AddRef();	//参照カウンタを増やす。
+	m_mainSprite.Texture = srv;
+	m_mainSprite.Texture->AddRef();	//参照カウンタを増やす。
+}
+void Sprite::Sprite_Init_Sub(ID3D11ShaderResourceView* srv, float w, float h)
+{
+	m_subSprite.Size.x = w;
+	m_subSprite.Size.y = h;
+	m_subSprite.Texture = srv;
+	m_subSprite.Texture->AddRef();	//参照カウンタを増やす。
 }
 
 /// <summary>
@@ -104,7 +134,7 @@ void Sprite::Sprite_Update(const CVector3& pos, const CQuaternion& rot, const CV
 	localPivot.x *= -2.0f;
 	localPivot.y *= -2.0f;
 	//画像のハーフサイズを求める
-	CVector2 halfSize = m_size;
+	CVector2 halfSize = m_mainSprite.Size;
 	halfSize.x *= 0.5f;
 	halfSize.y *= 0.5f;
 	CMatrix mPivotTrans;
@@ -116,9 +146,44 @@ void Sprite::Sprite_Update(const CVector3& pos, const CQuaternion& rot, const CV
 	mTrans.MakeTranslation(pos);
 	mRot.MakeRotationFromQuaternion(rot);
 	mScale.MakeScaling(scale);
-	m_world.Mul(mPivotTrans, mScale);
-	m_world.Mul(m_world, mRot);
-	m_world.Mul(m_world, mTrans);
+	m_mainSprite.World.Mul(mPivotTrans, mScale);
+	m_mainSprite.World.Mul(m_mainSprite.World, mRot);
+	m_mainSprite.World.Mul(m_mainSprite.World, mTrans);
+
+}
+void Sprite::Sprite_Update_Sub(const CVector3& pos, const CQuaternion& rot, const CVector3& scale, CVector2 pivot) {
+
+	if (m_isInited == false) {
+		//初期化されていない
+		return;
+	}
+	if (m_subSprite.Texture == NULL) {
+		//設定されていない
+		return;
+	}
+
+	//ピボットの計算
+	CVector2 localPivot = pivot;
+	localPivot.x -= 0.5f;
+	localPivot.y -= 0.5f;
+	localPivot.x *= -2.0f;
+	localPivot.y *= -2.0f;
+	//画像のハーフサイズを求める
+	CVector2 halfSize = m_subSprite.Size;
+	halfSize.x *= 0.5f;
+	halfSize.y *= 0.5f;
+	CMatrix mPivotTrans;
+
+	mPivotTrans.MakeTranslation(
+		{ halfSize.x * localPivot.x, halfSize.y * localPivot.y, 0.0f }
+	);
+	CMatrix mTrans, mRot, mScale;
+	mTrans.MakeTranslation(pos);
+	mRot.MakeRotationFromQuaternion(rot);
+	mScale.MakeScaling(scale);
+	m_subSprite.World.Mul(mPivotTrans, mScale);
+	m_subSprite.World.Mul(m_subSprite.World, mRot);
+	m_subSprite.World.Mul(m_subSprite.World, mTrans);
 
 }
 
@@ -149,15 +214,16 @@ void Sprite::Sprite_Draw() {
 	);
 
 	//テクスチャを設定。
-	g_graphicsEngine->GetD3DDeviceContext()->PSSetShaderResources(0, 1, &m_texture);
+	g_graphicsEngine->GetD3DDeviceContext()->PSSetShaderResources(0, 1, &m_mainSprite.Texture);
 	//サンプラステートを設定。
 	g_graphicsEngine->GetD3DDeviceContext()->PSSetSamplers(0, 1, &m_samplerState);
+
 	//ワールドビュープロジェクション行列を作成。
 	ConstantBuffer cb;
-	cb.WVP = m_world;
+	cb.WVP = m_mainSprite.World;
 	cb.WVP.Mul(cb.WVP, g_camera2D.GetViewMatrix());
 	cb.WVP.Mul(cb.WVP, g_camera2D.GetProjectionMatrix());
-	cb.mulColor = m_mulColor;
+	cb.mulColor = m_mainSprite.MulColor;
 	cb.cut_line = m_cut_UV;
 
 	g_graphicsEngine->GetD3DDeviceContext()->UpdateSubresource(m_cb, 0, NULL, &cb, 0, 0);

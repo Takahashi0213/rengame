@@ -52,9 +52,6 @@
     <Filter Include="graphics\GameBox">
       <UniqueIdentifier>{7bc2d564-c6fe-4bd9-9578-099020b909fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Player">
-      <UniqueIdentifier>{d7991004-bffa-45f5-a76f-fafb6edcbdeb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="graphics\PostEffect">
       <UniqueIdentifier>{bea0f45f-c0cc-435c-bfbc-763f0dd2f8f9}</UniqueIdentifier>
     </Filter>
@@ -72,6 +69,15 @@
     </Filter>
     <Filter Include="system\gameSystem\UI">
       <UniqueIdentifier>{a02c1fe1-d10b-45c6-bc42-1c95b3fb88c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object">
+      <UniqueIdentifier>{478c104a-efe0-4c0d-8756-7fa85e2167a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object\Player">
+      <UniqueIdentifier>{d7991004-bffa-45f5-a76f-fafb6edcbdeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object\Stage">
+      <UniqueIdentifier>{b024fb64-6107-4b4b-9b24-c5349875f94b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -170,7 +176,6 @@
     <ClCompile Include="CCamera2D.cpp">
       <Filter>graphics\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="SpriteSupporter.cpp">
       <Filter>graphics\Sprite</Filter>
     </ClCompile>
@@ -190,7 +195,6 @@
       <Filter>graphics\SkinModel</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="graphics\Shader.cpp">
       <Filter>graphics\Sprite</Filter>
     </ClCompile>
@@ -198,7 +202,7 @@
       <Filter>graphics\GameBox</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Player</Filter>
+      <Filter>object\Player</Filter>
     </ClCompile>
     <ClCompile Include="ShadowMap.cpp">
       <Filter>graphics</Filter>
@@ -242,7 +246,21 @@
     <ClCompile Include="FontSupporter.cpp">
       <Filter>graphics\font</Filter>
     </ClCompile>
-    <ClCompile Include="GameUI.cpp" />
+    <ClCompile Include="FarShadow.cpp">
+      <Filter>graphics\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>system\gameSystem\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>object\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCamera.cpp">
+      <Filter>system\gameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CGOM_Graphics.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -318,9 +336,6 @@
     <ClInclude Include="system\CGameObjectManager.h">
       <Filter>system</Filter>
     </ClInclude>
-    <ClInclude Include="Hash.h">
-      <Filter>system</Filter>
-    </ClInclude>
     <ClInclude Include="DebugLog.h">
       <Filter>Debug</Filter>
     </ClInclude>
@@ -354,7 +369,6 @@
     <ClInclude Include="CCamera2D.h">
       <Filter>graphics\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="GameCamera.h" />
     <ClInclude Include="SpriteSupporter.h">
       <Filter>graphics\Sprite</Filter>
     </ClInclude>
@@ -377,12 +391,11 @@
       <Filter>graphics\SkinModel</Filter>
     </ClInclude>
     <ClInclude Include="Game.h" />
-    <ClInclude Include="BackGround.h" />
     <ClInclude Include="GameBox.h">
       <Filter>graphics\GameBox</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Player</Filter>
+      <Filter>object\Player</Filter>
     </ClInclude>
     <ClInclude Include="ShadowMap.h">
       <Filter>graphics</Filter>
@@ -427,7 +440,24 @@
     <ClInclude Include="FontSupporter.h">
       <Filter>graphics\font</Filter>
     </ClInclude>
-    <ClInclude Include="GameUI.h" />
+    <ClInclude Include="FarShadow.h">
+      <Filter>graphics\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI.h">
+      <Filter>system\gameSystem\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
+      <Filter>object\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCamera.h">
+      <Filter>system\gameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="CGOM_Graphics.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\box.fbx">

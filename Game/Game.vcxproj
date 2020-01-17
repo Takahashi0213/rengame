@@ -106,11 +106,13 @@
     <ClCompile Include="BoxMaker.cpp" />
     <ClCompile Include="CameraSupporter.cpp" />
     <ClCompile Include="CCamera2D.cpp" />
+    <ClCompile Include="CGOM_Graphics.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="ConstantBufferGPU.cpp" />
     <ClCompile Include="DebugLog.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="Dof.cpp" />
+    <ClCompile Include="FarShadow.cpp" />
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="FontSupporter.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -171,11 +173,13 @@
     <ClInclude Include="BoxMaker.h" />
     <ClInclude Include="CameraSupporter.h" />
     <ClInclude Include="CCamera2D.h" />
+    <ClInclude Include="CGOM_Graphics.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="ConstantBufferGPU.h" />
     <ClInclude Include="DebugLog.h" />
     <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="Dof.h" />
+    <ClInclude Include="FarShadow.h" />
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="FontSupporter.h" />
     <ClInclude Include="Game.h" />

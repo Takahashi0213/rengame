@@ -43,7 +43,7 @@ Player::~Player()
 void Player::Update()
 {
 	if (hoge == 0) {
-		GameEffect::GetInstance()->EasyEffect(L"Žv‚¢\R•‚\D‚©‚Î‚ñ‚Ì\n‚â‚¯‚Ç`",
+		GameEffect::GetInstance()->EasyEffect(L"Žv‚¢\R•‚‚©\D‚Î‚ñ‚Ì\n‚â‚¯‚Ç`",
 			GameEffect_Stand::Stand_Normal,
 			GameEffect_Stand::New_Stand);
 		hoge++;
@@ -83,6 +83,7 @@ void Player::Update()
 	//	Player* p = CGameObjectManager::GetInstance()->FindGO<Player>(a,false);
 	//}
 
+	//ƒ‚ƒmƒNƒ‚É‚È[‚é
 	if (m_gameObj != nullptr) {
 		if (m_gameObj->GetGameMode() == Game::CreateMode && m_monochromeFlag == false) {
 			m_model.SetRenderMode(RenderMode::Monochrome);

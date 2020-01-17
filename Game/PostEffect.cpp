@@ -1,13 +1,12 @@
 #include "stdafx.h"
 #include "PostEffect.h"
-
+#include "Game.h"
 
 PostEffect::PostEffect()
 {
 	//フルスクリーン描画のための四角形プリミティブを初期化。
 	InitFullScreenQuadPrimitive();
 }
-
 
 PostEffect::~PostEffect()
 {
@@ -19,6 +18,7 @@ PostEffect::~PostEffect()
 
 void PostEffect::Init() 
 {
+	m_farShadow.Init();
 	m_dof.Init();
 }
 void PostEffect::Update()
@@ -27,6 +27,13 @@ void PostEffect::Update()
 
 void PostEffect::Draw()
 {
+	Game::GameMode NowGameMode = Game::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
+
+	if (NowGameMode == Game::CreateMode) {
+		//遠い場所を暗くする処理（クリエイト限定）
+		//m_farShadow.Draw(*this);
+	}
+
 	//ブルーム。
 	m_bloom.Draw(*this);
 	//ドフ。
@@ -80,7 +87,6 @@ void PostEffect::InitFullScreenQuadPrimitive()
 	//頂点バッファの作成。
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bd, &InitData, &m_vertexBuffer);
 }
-
 
 void PostEffect::DrawFullScreenQuadPrimitive(ID3D11DeviceContext* deviceContext, Shader& vsShader, Shader& psShader)
 {

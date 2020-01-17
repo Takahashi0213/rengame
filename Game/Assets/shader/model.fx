@@ -285,6 +285,7 @@ PSOutput PSMain(PSInput In)
 	psOut.color = finalColor;
 	//カメラ座標系でのZ値を出力。
 	psOut.depthInView = In.posInView.z;
+
 	return psOut;
 
 }

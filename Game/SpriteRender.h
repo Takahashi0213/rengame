@@ -19,125 +19,212 @@ public:
 	void Init(const wchar_t* texFilePath, float w, float h, int priority = 0);
 	void Init(const wchar_t* texFilePath, float w, float h, CVector3 pos = CVector3().Zero(), CVector4 color = CVector4().White(), int priority = 0);
 
+	void InitSub(const wchar_t* texFilePath, float w, float h, int priority = 0);
+	void InitSub(const wchar_t* texFilePath, float w, float h, CVector3 pos = CVector3().Zero(), CVector4 color = CVector4().White(), int priority = 0);
+
+	//設定色々
+	//全てのsubFlagはfalseならメインスプライト、trueならサブスプライトを変更します
+
 	/// <summary>
 	/// 座標を設定
 	/// </summary>
 	/// <param name="pos">座標</param>
-	void SetPosition(const CVector3 pos)
+	void SetPosition(const CVector3 pos, bool subFlag = false)
 	{
-		m_position = pos;
+		if (subFlag == false) {
+			m_mainSprite.Position = pos;
+		}
+		else {
+			m_subSprite.Position = pos;
+		}
 	}
 	/// <summary>
 	/// 座標を取得
 	/// </summary>
 	/// <returns>座標</returns>
-	const CVector3 GetPosition() const
+	const CVector3 GetPosition( bool subFlag = false ) const
 	{
-		return m_position;
+		if (subFlag == false) {
+			return m_mainSprite.Position;
+		}
+		else {
+			return m_subSprite.Position;
+		}
 	}
 	/// <summary>
 	/// 回転を設定
 	/// </summary>
 	/// <param name="rot">回転</param>
-	void SetRotation(const CQuaternion rot)
+	void SetRotation(const CQuaternion rot, bool subFlag = false)
 	{
-		m_rotation = rot;
+		if (subFlag == false) {
+			m_mainSprite.Rotation = rot;
+		}
+		else {
+			m_subSprite.Rotation = rot;
+		}
 	}
 	/// <summary>
 	/// 回転を取得
 	/// </summary>
 	/// <returns>回転</returns>
-	const CQuaternion GetRotation() const
+	const CQuaternion GetRotation(bool subFlag = false) const
 	{
-		return m_rotation;
+		if (subFlag == false) {
+			return m_mainSprite.Rotation;
+		}
+		else {
+			return m_subSprite.Rotation;
+		}
 	}
 	/// <summary>
 	/// 拡大率を設定
 	/// </summary>
 	/// <param name="scr">拡大率</param>
-	void SetScale(const CVector3 scl)
+	void SetScale(const CVector3 scl, bool subFlag = false)
 	{
-		m_scale = scl;
+		if (subFlag == false) {
+			m_mainSprite.Scale = scl;
+		}
+		else {
+			m_subSprite.Scale = scl;
+		}
 	}
-	void SetScale(const float scl) { //便利Ver
-		m_scale.x = scl;
-		m_scale.y = scl;
+	void SetScale(const float scl, bool subFlag = false) { //便利Ver
+		if (subFlag == false) {
+			m_mainSprite.Scale.x = scl;
+			m_mainSprite.Scale.y = scl;
+		}
+		else {
+			m_subSprite.Scale.x = scl;
+			m_subSprite.Scale.y = scl;
+		}
 	}
 	/// <summary>
 	/// 拡大率を取得
 	/// </summary>
 	/// <returns>拡大率</returns>
-	const CVector3 GetScale() const
+	const CVector3 GetScale(bool subFlag = false) const
 	{
-		return m_scale;
+		if (subFlag == false) {
+			return m_mainSprite.Scale;
+		}
+		else {
+			return m_subSprite.Scale;
+		}
 	}
 	/// <summary>
 	/// ピボットを設定
 	/// </summary>
 	/// <param name="pivot">ピボット</param>
-	void SetPivot(const CVector2 pivot)
+	void SetPivot(const CVector2 pivot , bool subFlag = false)
 	{
-		m_pivot.x = pivot.x;
-		m_pivot.y = pivot.y;
+		if (subFlag == false) {
+			m_mainSprite.Pivot.x = pivot.x;
+			m_mainSprite.Pivot.y = pivot.y;
+		}
+		else {
+			m_subSprite.Pivot.x = pivot.x;
+			m_subSprite.Pivot.y = pivot.y;
+		}
 	}
 	/// <summary>
 	/// ピボットを取得
 	/// </summary>
 	/// <returns>ピボット</returns>
-	CVector2 GetPivot()
+	CVector2 GetPivot(bool subFlag = false)
 	{
-		return m_pivot;
+		if (subFlag == false) {
+			return m_mainSprite.Pivot;
+		}
+		else {
+			return m_subSprite.Pivot;
+		}
 	}
 
 	/// <summary>
 	/// 幅を取得
 	/// </summary>
 	/// <returns>幅</returns>
-	float GetWide()
+	float GetWide(bool subFlag = false)
 	{
-		return m_wide;
+		if (subFlag == false) {
+			return m_mainSprite.Wide;
+		}
+		else {
+			return m_subSprite.Wide;
+		}
 	}
 	/// <summary>
 	/// 高さを取得
 	/// </summary>
 	/// <returns>高さ</returns>
-	float GetHigh()
+	float GetHigh(bool subFlag = false)
 	{
-		return m_high;
+		if (subFlag == false) {
+			return m_mainSprite.High;
+		}
+		else {
+			return m_subSprite.High;
+		}
 	}
 
 	/// <summary>
 	/// 乗算カラーを設定
 	/// </summary>
 	/// <param name="mulColor">乗算カラー</param>
-	void SetMulColor(const CVector4& mulColor)
+	void SetMulColor(const CVector4& mulColor, bool subFlag = false)
 	{
-		m_mulColor = mulColor;		
-		m_sprite.SetMulColor(m_mulColor);
+		if (subFlag == false) {
+			m_mainSprite.MulColor = mulColor;
+			m_sprite.SetMulColor(m_mainSprite.MulColor);
+		}
+		else {
+			m_subSprite.MulColor = mulColor;
+			m_sprite.SetMulColor_Sub(m_subSprite.MulColor);
+		}
 	}
 	/// <summary>
 	/// 乗算カラーを取得
 	/// </summary>
 	/// <returns>乗算カラー</returns>
-	CVector4 GetMulColor()
+	CVector4 GetMulColor(bool subFlag = false)
 	{
-		return m_mulColor;
+		if (subFlag == false) {
+			return m_mainSprite.MulColor;
+		}
+		else {
+			return m_subSprite.MulColor;
+		}
 	}
 	/// <summary>
 	/// アルファの設定
 	/// </summary>
 	/// <param name="Alpha">アルファ</param>
-	void SetAlpha(const float Alpha) {
-		m_mulColor.w = Alpha;
-		m_sprite.SetMulColor(m_mulColor);
+	void SetAlpha(const float Alpha, bool subFlag = false) {
+		if (subFlag == false) {
+			m_mainSprite.MulColor.w = Alpha;
+			m_sprite.SetMulColor(m_mainSprite.MulColor);
+		}
+		else {
+			m_subSprite.MulColor.w = Alpha;
+			m_sprite.SetMulColor(m_subSprite.MulColor);
+		}
 	}
 	/// <summary>
 	/// アルファの取得
 	/// </summary>
 	/// <returns>現在の不透明度だ</returns>
-	float GetAlpha() {
-		return m_mulColor.w;
+	float GetAlpha(bool subFlag = false) {
+		if (subFlag == false) {
+			return m_mainSprite.MulColor.w;
+		}
+		else {
+			return m_subSprite.MulColor.w;
+		}
 	}
+
+	//グラフィカルなアレンジを！！
 
 	/// <summary>
 	/// レンダーモードの設定
@@ -169,15 +256,25 @@ public:
 	SpriteSupporter m_spriteSupporter;		//スプライトサポーター
 
 private:
+
+	struct SpriteData
+	{
+		CVector3 Position = CVector3::Zero();
+		CQuaternion Rotation = CQuaternion().Identity();
+		CVector3 Scale = CVector3().One();
+		CVector2 Pivot = { 0.5f, 0.5f };
+		float Wide = 0.0f;	//幅！
+		float High = 0.0f;	//高さ！
+		CVector4 MulColor = { 1.0f,1.0f,1.0f,1.0f };	//!<乗算カラー。
+	};
+
 	//ID3D11ShaderResourceView* m_texture;	//!<テクスチャ。
 	Sprite m_sprite;		//!<スプライト。
-	CVector3 m_position = CVector3::Zero();		//!<座標。
-	CQuaternion m_rotation= CQuaternion().Identity();		//!<回転。
-	CVector3 m_scale = CVector3().One();		//!<拡大率。
-	CVector2 m_pivot = { 0.5f, 0.5f };		//!<ピボット。
-	float m_wide = 0.0f;	//幅！
-	float m_high = 0.0f;	//高さ！
-	CVector4 m_mulColor = { 1.0f,1.0f,1.0f,1.0f };	//!<乗算カラー。
+
+	SpriteData m_mainSprite;	//メインスプライト
+	SpriteData m_subSprite;		//サブスプライト（マスクを作るときに使います！）
+
+	bool m_subSpriteFlag = false;	//サブスプライト使用中？？？
 
 	Sprite_RenderMode m_sprite_RenderMode = Sprite_RenderMode::Normal;
 	float m_pos_Cut = 0.0f;				//CutMode時、どこから切る？？？？

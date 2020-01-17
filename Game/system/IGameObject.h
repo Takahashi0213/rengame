@@ -10,7 +10,7 @@
 		enum objectTag {
 			t_BackSprite, //背景スプライト
 			t_Other,
-			t_Sprite,
+			t_Sprite,	//スプライトじゃなくてもポストエフェクト後にレンダリングしたいものはここに分類するといいと思いますよ 知らんけど
 		};
 
 		IGameObject();
