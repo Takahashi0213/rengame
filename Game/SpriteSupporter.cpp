@@ -23,6 +23,7 @@ void SpriteSupporter::SpriteSupporter_Update() {
 	SpriteScaleUpdate();
 	SpriteColorUpdate();
 	SpriteShakeUpdate();
+	SpritePatternUpdate();
 
 	//最後に更新したデータを返す
 	SpriteDataReturn();
@@ -37,6 +38,8 @@ void SpriteSupporter::SpriteDataUpdate() {
 	m_rotation = m_spriteRender->GetRotation();
 	m_scale = m_spriteRender->GetScale();
 	m_mulColor = m_spriteRender->GetMulColor();
+	m_maxPattern = m_spriteRender->GetMaxPattern();
+	m_nowPattern = m_spriteRender->GetNowPattern();
 
 }
 
@@ -49,6 +52,9 @@ void SpriteSupporter::SpriteDataReturn() {
 	m_spriteRender->SetRotation(m_rotation);
 	m_spriteRender->SetScale(m_scale);
 	m_spriteRender->SetMulColor(m_mulColor);
+	if (m_maxPattern > -1) {
+		m_spriteRender->ChangePattern(m_nowPattern);
+	}
 
 }
 
@@ -170,6 +176,18 @@ void SpriteSupporter::SpriteShake(CVector2 move, int moveTime, int moveCount) {
 	m_spriteShakeMove_OneFlame.x = (m_spriteShakeMove.x / (m_spriteShakeLimit * 2));
 	m_spriteShakeMove_OneFlame.y = (m_spriteShakeMove.y / (m_spriteShakeLimit * 2));
 
+}
+
+/// <summary>
+/// スプライトのパラパラパターンを設定する
+/// </summary>
+/// <param name="moveTime">1枚の経過時間</param>
+/// <param name="loopflag">ループするかどうか（falseの場合終了時自動でアルファが0になるぞ）</param>
+void SpriteSupporter::SpritePattern(int moveTime, bool loopflag, int overLimit) {
+	m_patternLimit = moveTime;
+	m_patternTimer = 0;
+	m_patternOverLimit = overLimit;
+	m_patternLoopFlag = loopflag;
 }
 
 //////////////////////////////////////
@@ -376,6 +394,39 @@ void SpriteSupporter::SpriteShakeUpdate() {
 				m_spriteShakeLimit = -1;
 			}
 		}
+	}
+
+}
+
+/// <summary>
+/// パターン変更を実行
+/// </summary>
+void SpriteSupporter::SpritePatternUpdate() {
+
+	if (m_patternLimit > -1) {
+		m_patternTimer++;
+		if (m_patternTimer >= m_patternLimit) {
+			//パターン加算
+			m_patternTimer = 0;
+			m_nowPattern++;
+		}
+		//パターンがオーバー…
+		if (m_nowPattern > m_maxPattern-1) {
+			//ループする？
+			if (m_patternLoopFlag == false) {
+				//アルファを0にして終了
+				m_patternLimit = -1;
+				m_nowPattern = m_maxPattern - 1;
+				SpriteColor({ m_mulColor.x,m_mulColor.y,m_mulColor.z, 0.0f }, 6, m_patternOverLimit);
+				SpriteColorUpdate();
+			}
+			else {
+				//ループする
+				m_nowPattern = 0;
+			}
+
+		}
+
 	}
 
 }

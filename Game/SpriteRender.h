@@ -1,6 +1,8 @@
 #pragma once
 #include "system/CGameObjectManager.h"
 #include "Sprite.h"
+#include "MaskSprite.h"
+#include "SliceSprite.h"
 #include "SpriteSupporter.h"
 
 /// <summary>
@@ -21,6 +23,36 @@ public:
 
 	void InitSub(const wchar_t* texFilePath, float w, float h, int priority = 0);
 	void InitSub(const wchar_t* texFilePath, float w, float h, CVector3 pos = CVector3().Zero(), CVector4 color = CVector4().White(), int priority = 0);
+
+	/// <summary>
+	/// このスプライトをマスクスプライトに指定する場合、Initの前に必ず実行しようね
+	/// </summary>
+	void ChangeMaskSprite() {
+
+		if (m_sliceSpriteFlag == true) {
+			abort();	//浮気じゃん！
+		}
+
+		if (m_maskSprite == nullptr) {
+			m_maskSprite = new MaskSprite;
+		}
+
+		m_subSpriteFlag = true;
+	}
+	//こっちはスライススプライト
+	void ChangeSliceSprite(CVector2 size) {
+
+		if (m_subSpriteFlag == true) {
+			abort();	//浮気じゃん！
+		}
+
+		if (m_sliceSprite == nullptr) {
+			m_sliceSprite = new SliceSprite;
+		}
+
+		m_sliceSprite->SetDefSize(size);
+		m_sliceSpriteFlag = true;
+	}
 
 	//設定色々
 	//全てのsubFlagはfalseならメインスプライト、trueならサブスプライトを変更します
@@ -181,7 +213,6 @@ public:
 		}
 		else {
 			m_subSprite.MulColor = mulColor;
-			m_sprite.SetMulColor_Sub(m_subSprite.MulColor);
 		}
 	}
 	/// <summary>
@@ -224,6 +255,14 @@ public:
 		}
 	}
 
+	//パターン取得関連
+	int GetMaxPattern() {
+		return m_pattern;
+	}
+	int GetNowPattern() {
+		return m_nowPattern;
+	}
+
 	//グラフィカルなアレンジを！！
 
 	/// <summary>
@@ -243,6 +282,33 @@ public:
 		m_pos_Cut = cut;
 		m_sprite.m_cut_UV = m_pos_Cut;
 	}
+	float GetCutLine() {
+		return m_pos_Cut;
+	}
+
+	/// <summary>
+	/// SliceSpriteなら3Sliceに変更する
+	/// </summary>
+	void Set3Slice(float size) {
+		if (m_sliceSprite != nullptr) {
+			m_sliceSprite->Change3Slice(size);
+		}
+	}
+
+	/// <summary>
+	/// 縦パターンの設定
+	/// </summary>
+	/// <param name="pt">パターン数</param>
+	void SetHighPattern(int pattern,int nowPt = 0) {
+		m_sprite.m_renderMode = Sprite_RenderMode::Pattern;
+		m_sprite.m_slicePattern = pattern;
+		m_pattern = pattern;
+		m_defPosition = m_mainSprite.Position;
+		m_nowPattern = nowPt;
+		ChangePattern(m_nowPattern);
+	}
+
+	void ChangePattern(int pattern);
 
 	/// <summary>
 	/// スプライトを楽に動かすクラスを呼び出せるぞ
@@ -256,6 +322,8 @@ public:
 	SpriteSupporter m_spriteSupporter;		//スプライトサポーター
 
 private:
+	//マスクスプライトなら実行される
+	void MaskSpriteDataSet();
 
 	struct SpriteData
 	{
@@ -270,14 +338,20 @@ private:
 
 	//ID3D11ShaderResourceView* m_texture;	//!<テクスチャ。
 	Sprite m_sprite;		//!<スプライト。
+	MaskSprite* m_maskSprite = nullptr;
+	SliceSprite* m_sliceSprite = nullptr;
 
 	SpriteData m_mainSprite;	//メインスプライト
-	SpriteData m_subSprite;		//サブスプライト（マスクを作るときに使います！）
+	SpriteData m_subSprite;		//サブスプライト
 
 	bool m_subSpriteFlag = false;	//サブスプライト使用中？？？
+	bool m_sliceSpriteFlag = false;	//slice9スプライト使用中？？？
 
 	Sprite_RenderMode m_sprite_RenderMode = Sprite_RenderMode::Normal;
 	float m_pos_Cut = 0.0f;				//CutMode時、どこから切る？？？？
 
+	int m_pattern = -1;					//縦パターン数
+	int m_nowPattern = 0;				//現在パターン
+	CVector3 m_defPosition = CVector3::Zero();	//Pos一時保存
 };
 

@@ -43,7 +43,7 @@ void BoxMaker::Update() {
 
 			//リセット
 			bool surfaceFlag = false;
-	
+
 			for (auto go : m_nowBoxList) {
 
 				//準備
@@ -166,6 +166,9 @@ void BoxMaker::Update() {
 			m_boxScaleDef = m_nowBox->GetScale();
 			//箱の数を追加
 			m_box_Nom++;
+			//拡大縮小用マナ処理
+			m_downMana_Stock = m_downMana;
+			m_manaHosei = 0;
 
 			//モードを拡大モードに変更
 			m_boxMakerMode = FocusMode;
@@ -215,10 +218,23 @@ void BoxMaker::Update() {
 				m_boxScale.z = m_boxScaleDef.z;
 			}
 
+			//マナ計算
+			CVector3 Scale = { m_boxScale.x - m_boxScaleDef.x ,
+				m_boxScale.y - m_boxScaleDef.y ,
+				m_boxScale.z - m_boxScaleDef.z };
+			float ManaHosei = Scale.x + Scale.y + Scale.z;
+			ManaHosei /= 5.0f;
+			int ManaHosei2 = (int)floor(ManaHosei);
+			m_manaHosei = ManaHosei2;
+			m_downMana = m_downMana_Stock + m_manaHosei;
+
 			m_nowBox->SetScale(m_boxScale);
 
 
 		}else if (key == MouseSupporter::Release_Push) {	//離された！！！
+
+			//マナ処理
+			m_downMana = m_downMana_Stock + m_manaHosei;
 
 			//ポインタを変更
 			m_nowBox = m_nowBox_Stock;
@@ -251,6 +267,11 @@ void BoxMaker::Update() {
 		else {
 			m_undoFlag = false;
 		}
+	}
+
+	//マナ処理
+	if (NowGameMode == Game::CreateMode) {
+		GameData::GetInstance()->SetMagicPower(m_startMana - m_downMana);
 	}
 
 	BoxUpdate();
@@ -291,9 +312,10 @@ void BoxMaker::ModeChange() {
 	//中クリックの状態を判定
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Center_Key);
 	Game::GameMode NowGameMode = m_game->GetGameMode();		//現在のゲームモードを呼び出す
-	
-	//中クリックされた瞬間かつアクションモード
-	if (key == MouseSupporter::New_Push && NowGameMode == Game::ActionMode) {
+	int Mana = GameData::GetInstance()->GetMagicPower();
+
+	//中クリックされた瞬間かつアクションモードかつマナが10以上ある
+	if (key == MouseSupporter::New_Push && NowGameMode == Game::ActionMode && Mana >= 10) {
 
 		//クリエイトモードへ変更
 		m_game->SetGameMode(Game::CreateMode);
@@ -327,6 +349,10 @@ void BoxMaker::ModeChange() {
 
 		m_box_Nom = 1;				//箱の数をリセット
 
+		//マナ設定
+		m_downMana = 10;
+		m_startMana = GameData::GetInstance()->GetMagicPower();
+
 		//ゲームカメラに渡す
 		int a = Hash::MakeHash("GameCamera");
 		GameCamera* GC = CGameObjectManager::GetInstance()->FindGO<GameCamera>(a);
@@ -335,6 +361,9 @@ void BoxMaker::ModeChange() {
 	}
 	//クリエイトモードからアクションモードへ戻りマス
 	else if (key == MouseSupporter::New_Push && NowGameMode == Game::CreateMode) {	//中クリックされた瞬間かつアクションモード
+
+		//魔力減少
+		GameData::GetInstance()->SetMagicPower(m_startMana - m_downMana);
 
 		//アクションモードへ変更
 		m_game->SetGameMode(Game::ActionMode);

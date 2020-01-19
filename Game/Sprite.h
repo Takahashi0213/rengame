@@ -5,6 +5,9 @@ enum Sprite_RenderMode {
 	Normal,		//普通に描画
 	X_Cut,		//Xをカットする
 	Y_Cut,		//Yをカットする
+	Slice9,		//9slice
+	Mask,		//マシュク
+	Pattern,	//パターン
 };
 
 class Sprite
@@ -17,16 +20,13 @@ public:
 	//メインスプライト
 	void Sprite_Init(const wchar_t* texFilePath, float w, float h);
 	void Sprite_Init(ID3D11ShaderResourceView* srv, float w, float h);
-	void Sprite_Update(const CVector3& pos, const CQuaternion& rot, const CVector3& scale, CVector2 pivot = { 0.5f, 0.5f });
-	//サブスプライト
-	void Sprite_Init_Sub(const wchar_t* texFilePath, float w, float h);
-	void Sprite_Init_Sub(ID3D11ShaderResourceView* srv, float w, float h);
-	void Sprite_Update_Sub(const CVector3& pos, const CQuaternion& rot, const CVector3& scale, CVector2 pivot = { 0.5f, 0.5f });
-
-	/// <summary>
-	/// メインスプライトとサブスプライトの合わせ技（Draw）だ！
-	/// </summary>
+	void Sprite_Update();
+	void Sprite_Update(const CVector3& pos,
+		const CQuaternion& rot,
+		const CVector3& scale,
+		CVector2 pivot = { 0.5f, 0.5f });
 	void Sprite_Draw();
+	void Sprite_InitSub(const wchar_t* texFilePath);
 
 	/// <summary>
 	/// 乗算カラーを設定
@@ -35,10 +35,6 @@ public:
 	void SetMulColor(const CVector4& mulColor)
 	{
 		m_mainSprite.MulColor = mulColor;
-	}
-	void SetMulColor_Sub(const CVector4& mulColor)
-	{
-		m_subSprite.MulColor = mulColor;
 	}
 	/// <summary>
 	/// 乗算カラーを取得
@@ -53,6 +49,8 @@ public:
 		CMatrix WVP;	//ワールドビュープロジェクション行列
 		CVector4 mulColor;	//乗算カラー
 		float cut_line;
+		int slice_pattern;	//-1なら無効、スライス画像位置
+		int nowPattern;
 	};
 	struct SpriteData {
 		ID3D11ShaderResourceView* Texture = NULL;		//テクスチャ
@@ -69,21 +67,31 @@ public:
 	ID3D11Buffer* m_vertexBuffer = NULL;	//頂点バッファ
 	ID3D11Buffer* m_indexBuffer = NULL;		//インデックスバッファ
 
-	Shader	m_ps;		//!<ピクセルシェーダー。
-	Shader	m_ps_X_Cut;	//!<Xをカットするピクセルシェーダー。
-	Shader	m_ps_Y_Cut;	//!<Yをカットするピクセルシェーダー。
+	//シェーダー
+	Shader	m_ps;			//!<ピクセルシェーダー。
+	Shader	m_ps_X_Cut;		//!<Xをカットするピクセルシェーダー。
+	Shader	m_ps_Y_Cut;		//!<Yをカットするピクセルシェーダー。
+	Shader	m_ps_Slice9;	//!<9つにカットするピクセルシェーダー。
+	Shader	m_ps_Mask;		//!<マスク用ピクセルシェーダー。
+	Shader	m_ps_Pattern;		//!<マスク用ピクセルシェーダー。
 	Shader	m_vs;		//!<頂点シェーダー。
 	ID3D11SamplerState* m_samplerState = NULL;	//サンプラステート
 
-	//2つのスプライトである。
+	//スプライトである。
 	SpriteData m_mainSprite;
-	SpriteData m_subSprite;
 
 	ID3D11Buffer* m_cb = nullptr;		//定数バッファ
 	bool m_isInited = false;	//!<初期化フラグ。
 
 	Sprite_RenderMode m_renderMode = Normal;	//レンダーモード
-	float m_cut_UV = 0.5f;
+	float m_cut_UV = 0.5f;	//ここからカット！
+	int m_slicePattern = -1;
+	int m_nowPattern = 0;
+	ID3D11ShaderResourceView* SubTexture = NULL;		//サブテクスチャ
+
+	void SetSize(CVector2 size) {
+		InitCommon(size.x, size.y,true);
+	}
 
 private:
 	/// <summary>
@@ -97,7 +105,7 @@ private:
 	}
 
 	void Sprite::InitConstantBuffer();
-	void Sprite::InitCommon(float w, float h);
+	void Sprite::InitCommon(float w, float h, bool cutFlag = false);
 
 };
 

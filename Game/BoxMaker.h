@@ -102,6 +102,13 @@ private:
 	int m_box_Nom = 1;								//箱の数
 	bool m_undoFlag = false;						//アンドゥボタンが押されているかフラグ
 
+	//マナ制御
+	int m_downMana = 0;
+	int m_startMana = 0;							//移行時のマナ
+	int m_downMana_Stock = 0;						//拡大縮小用一時保存
+	int m_manaHosei = 0;							//拡大縮小用補正
+	CVector3 m_backupScale = CVector3().One();
+
 	//定数
 	const float PosHoseiY = 200.0f;									//レイがヒットしなかった時の補正
 	const float m_mouseMoveHosei = 0.5f;							//マウスの移動に応じた拡大率変更の補正値

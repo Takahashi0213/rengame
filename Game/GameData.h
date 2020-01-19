@@ -69,7 +69,9 @@ public:
 		if (m_starMoney > MAX_STAR_MONEY) {	//上限
 			m_starMoney = MAX_STAR_MONEY;
 		}
-
+		if (m_starMoney < 0) {	//下限
+			m_starMoney = 0;
+		}
 	}
 	/// <summary>
 	/// スターマネーを取得
@@ -85,6 +87,12 @@ public:
 	/// <param name="power">これ</param>
 	void SetMagicPower(int power) {
 		m_magicPower = power;
+		if (m_magicPower > m_magicPower_MAX) {	//上限
+			m_magicPower = m_magicPower_MAX;
+		}
+		if (m_magicPower < 0) {	//下限
+			m_magicPower = 0;
+		}
 	}
 	/// <summary>
 	/// 現在魔力の加算
@@ -94,6 +102,9 @@ public:
 		m_magicPower += power;
 		if (m_magicPower > m_magicPower_MAX) {	//上限
 			m_magicPower = m_magicPower_MAX;
+		}
+		if (m_magicPower < 0) {	//下限
+			m_magicPower = 0;
 		}
 	}
 	/// <summary>
@@ -129,6 +140,9 @@ public:
 		m_hp += hp;
 		if (m_hp > m_hp_MAX) {	//上限
 			m_hp = m_hp_MAX;
+		}
+		if (m_hp < 0) {	//下限
+			m_hp = 0;
 		}
 	}
 	/// <summary>
@@ -187,10 +201,15 @@ private:
 	const int MAX_STAR_MONEY = 99999;
 
 	//プレイヤーステータス
+	int m_level = 1;
+	int m_nextExp = 10;
+	int m_nowExp = 0;
+	int m_totalExp = 0;
+	//
 	int m_magicPower = 100;
 	int m_magicPower_MAX = 100;
-	int m_hp = 100;
-	int m_hp_MAX = 100;
+	int m_hp = 300;
+	int m_hp_MAX = 300;
 
 	//コンフィグ
 	int m_messageSpeed = 2;		//会話のメッセージ送りスピード

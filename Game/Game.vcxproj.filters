@@ -79,6 +79,9 @@
     <Filter Include="object\Stage">
       <UniqueIdentifier>{b024fb64-6107-4b4b-9b24-c5349875f94b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\sprite\window">
+      <UniqueIdentifier>{aebdecf2-87f2-46e4-ae3f-8b95828ed958}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -260,6 +263,12 @@
     </ClCompile>
     <ClCompile Include="CGOM_Graphics.cpp">
       <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="MaskSprite.cpp">
+      <Filter>graphics\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SliceSprite.cpp">
+      <Filter>graphics\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -458,6 +467,12 @@
     <ClInclude Include="CGOM_Graphics.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="MaskSprite.h">
+      <Filter>graphics\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SliceSprite.h">
+      <Filter>graphics\Sprite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\box.fbx">
@@ -496,6 +511,30 @@
       <Filter>Assets\sprite\system</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\system_sprite\skipNow.png">
+      <Filter>Assets\sprite\system</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\window\window1.png">
+      <Filter>Assets\sprite\window</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\window\window2.png">
+      <Filter>Assets\sprite\window</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Gage1.png">
+      <Filter>Assets\sprite\window</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Gage1_Under.png">
+      <Filter>Assets\sprite\window</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Life.png">
+      <Filter>Assets\sprite\system</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Life_Waku.png">
+      <Filter>Assets\sprite\system</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Accessory1.png">
+      <Filter>Assets\sprite\system</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\levelUp_8F.png">
       <Filter>Assets\sprite\system</Filter>
     </ImageContentTask>
   </ItemGroup>

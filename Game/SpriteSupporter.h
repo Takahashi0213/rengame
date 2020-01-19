@@ -31,6 +31,7 @@ public:
 	void SpriteScale(CVector3 scale, int moveTime, int moveDelay);
 	void SpriteColor(CVector4 color, int moveTime, int moveDelay);
 	void SpriteShake(CVector2 move, int moveTime, int moveCount);
+	void SpritePattern(int moveTime, bool loopflag = false ,int overLimit = 0);
 
 private:
 	//準備と片付け
@@ -42,6 +43,7 @@ private:
 	void SpriteScaleUpdate();
 	void SpriteColorUpdate();
 	void SpriteShakeUpdate();
+	void SpritePatternUpdate();
 
 	//メンバ変数
 	class SpriteRender* m_spriteRender;
@@ -49,6 +51,8 @@ private:
 	CQuaternion m_rotation = CQuaternion().Identity();		//回転
 	CVector3 m_scale = CVector3().One();					//拡大率
 	CVector4 m_mulColor = { 1.0f,1.0f,1.0f,1.0f };			//乗算カラー
+	int m_maxPattern = -1;									//最大パターン
+	int m_nowPattern = -1;									//現在パターン
 	//Move
 	struct SpriteMoveSet {
 		CVector2 m_spriteMovePos = { 0.0f,0.0f };	//スプライトの移動先
@@ -85,8 +89,11 @@ private:
 	int m_spriteShakeCount = -1;	//スプライトのシェイク回数（0の場合、止めるまでループする）
 	int m_spriteShakeCounter = -1;	//スプライトのシェイク回数カウンター
 	int m_spriteShakeTimer = -1;	//スプライトのシェイクタイマー
-
-
+	//Pattern
+	int m_patternLimit = -1;
+	int m_patternTimer = -1;
+	int m_patternOverLimit = -1;	//パターン終了後の待ち時間（パターン終了時一瞬で消えたりするので）
+	bool m_patternLoopFlag = false;	//falseならパターン終了時、アルファを自動で0にする trueならループする
 
 };
 

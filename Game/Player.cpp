@@ -32,8 +32,20 @@ Player::Player()
 	smr->Model_Init(L"Assets/modelData/unityChan.cmo");
 	smr->SetPosition({ 100.0f,50.0f,100.0f });
 
-}
+	//スプライトマスクのテスト
 
+	//MainSprite->ChangeMaskSprite();
+	//MainSprite->Init(L"Assets/sprite/keis.dds", 588.0f, 1240.0f, 0);
+	//MainSprite->SetPosition({ 250.0f,-250.0f ,1.0f });
+	//MainSprite->InitSub(L"Assets/sprite/fukidasi.dds", 600.0f, 400.0f, 0);
+	//MainSprite->SetPosition({ 250.0f,-50.0f ,0.0f }, true);
+
+	//SpriteRender* test = NewGO<SpriteRender>("TESTSPRITE", 0);
+	//test->Init(L"Assets/sprite/levelUp_8F.dds", 450.0f, 2000.0f, 0);
+	//test->SetHighPattern(8, 0);
+	//test->m_spriteSupporter.SpritePattern(1, false, 6);
+
+}
 
 Player::~Player()
 {
@@ -42,6 +54,7 @@ Player::~Player()
 
 void Player::Update()
 {
+	hoge = 10;
 	if (hoge == 0) {
 		GameEffect::GetInstance()->EasyEffect(L"思い\R浮か\Dばんの\nやけど～",
 			GameEffect_Stand::Stand_Normal,

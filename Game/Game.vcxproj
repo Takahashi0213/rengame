@@ -139,6 +139,7 @@
     <ClCompile Include="level\MapChip.cpp" />
     <ClCompile Include="LightMaker.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MaskSprite.cpp" />
     <ClCompile Include="math\kMath.cpp" />
     <ClCompile Include="math\Matrix.cpp" />
     <ClCompile Include="math\Vector.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="SkinModelRender.cpp" />
     <ClCompile Include="SkinModelSupporter.cpp" />
+    <ClCompile Include="SliceSprite.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteRender.cpp" />
     <ClCompile Include="SpriteStandby.cpp" />
@@ -208,6 +210,7 @@
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\MapChip.h" />
     <ClInclude Include="LightMaker.h" />
+    <ClInclude Include="MaskSprite.h" />
     <ClInclude Include="math\kMath.h" />
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\Vector.h" />
@@ -227,6 +230,7 @@
     <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="SkinModelRender.h" />
     <ClInclude Include="SkinModelSupporter.h" />
+    <ClInclude Include="SliceSprite.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteRender.h" />
     <ClInclude Include="SpriteStandby.h" />
@@ -252,14 +256,25 @@
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\mikyan.jpg">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\Assets\sprite\%(Filename).dds</ContentOutput>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\stand\keis.png" />
-    <ImageContentTask Include="Assets\sprite\stand\keis_ang.png" />
-    <ImageContentTask Include="Assets\sprite\stand\keis_happy.png" />
-    <ImageContentTask Include="Assets\sprite\stand\keis_sad.png" />
-    <ImageContentTask Include="Assets\sprite\stand\keis_wow.png" />
+    <ImageContentTask Include="Assets\sprite\stand\keis.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\stand\keis_ang.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\stand\keis_happy.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\stand\keis_sad.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\stand\keis_wow.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\system_sprite\fukidasi.png" />
@@ -272,6 +287,28 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\window\window1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\window\window2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Gage1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Gage1_Under.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Life.png" />
+    <ImageContentTask Include="Assets\sprite\system_sprite\Life_Waku.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Accessory1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\system_sprite\levelUp_8F.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
