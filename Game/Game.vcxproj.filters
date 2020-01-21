@@ -82,6 +82,9 @@
     <Filter Include="Assets\sprite\window">
       <UniqueIdentifier>{aebdecf2-87f2-46e4-ae3f-8b95828ed958}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\sprite\Menu">
+      <UniqueIdentifier>{7b6a8a85-f6cd-494f-9169-a07533271226}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -269,6 +272,9 @@
     </ClCompile>
     <ClCompile Include="SliceSprite.cpp">
       <Filter>graphics\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMenu.cpp">
+      <Filter>system\gameSystem\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -473,6 +479,9 @@
     <ClInclude Include="SliceSprite.h">
       <Filter>graphics\Sprite</Filter>
     </ClInclude>
+    <ClInclude Include="GameMenu.h">
+      <Filter>system\gameSystem\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\box.fbx">
@@ -488,9 +497,6 @@
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\mikyan.jpg">
       <Filter>Assets\sprite</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\stand\keis.png">
-      <Filter>Assets\sprite\stand</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\stand\keis_ang.png">
       <Filter>Assets\sprite\stand</Filter>
@@ -536,6 +542,21 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\system_sprite\levelUp_8F.png">
       <Filter>Assets\sprite\system</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Accessory2.png">
+      <Filter>Assets\sprite\system</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuButton.png">
+      <Filter>Assets\sprite\Menu</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuButton_Back.png">
+      <Filter>Assets\sprite\Menu</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\window\window3.png">
+      <Filter>Assets\sprite\window</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\stand\keis.png">
+      <Filter>Assets\sprite\stand</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

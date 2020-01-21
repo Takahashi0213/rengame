@@ -78,6 +78,7 @@ public:
 
 	CVector2 MouseSupporter::GetMousePos();
 	CVector3 MouseSupporter::GetMousePos_3D();
+	CVector2 MouseSupporter::GetMousePos_Sprite();
 	CVector2 MouseSupporter::GetBeforeMouse(int p = 0);
 
 	/// <summary>

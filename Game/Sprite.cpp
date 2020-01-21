@@ -90,24 +90,6 @@ void Sprite::Sprite_Init(ID3D11ShaderResourceView* srv, float w, float h)
 	m_mainSprite.Texture = srv;
 	m_mainSprite.Texture->AddRef();	//参照カウンタを増やす。
 }
-void Sprite::Sprite_InitSub(const wchar_t* texFilePath) {
-
-	//テクスチャをロード。
-	DirectX::CreateDDSTextureFromFileEx(
-		g_graphicsEngine->GetD3DDevice(),				//D3Dデバイス。
-		texFilePath,				//読み込む画像データのファイルパス。
-		0,                          //今は気にしなくてよい。
-		D3D11_USAGE_DEFAULT,		//今は気にしなくてよい。
-		D3D11_BIND_SHADER_RESOURCE,	//今は気にしなくてよい。
-		0,							//今は気にしなくてよい。
-		0,							//今は気にしなくてよい。
-		false,						//今は気にしなくてよい。
-		nullptr,					//今は気にしなくてよい。
-		&SubTexture					//読み込んだテクスチャに
-									//アクセスするためのインターフェースの格納先。
-	);
-
-}
 
 /// <summary>
 /// 更新
@@ -206,9 +188,6 @@ void Sprite::Sprite_Draw() {
 
 	//テクスチャを設定。
 	g_graphicsEngine->GetD3DDeviceContext()->PSSetShaderResources(0, 1, &m_mainSprite.Texture);
-	if (SubTexture != NULL) {
-		g_graphicsEngine->GetD3DDeviceContext()->PSSetShaderResources(1, 1, &SubTexture);
-	}
 	//サンプラステートを設定。
 	g_graphicsEngine->GetD3DDeviceContext()->PSSetSamplers(0, 1, &m_samplerState);
 

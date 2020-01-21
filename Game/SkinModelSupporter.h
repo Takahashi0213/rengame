@@ -43,7 +43,7 @@ private:
 		int m_skinModelMoveDelay = -1;	//スプライトの移動ディレイ
 		int m_skinModelMoveTimer = -1; //スプライトの移動タイマー
 		bool m_skinModelMoveRelative = false;		//スプライトの相対移動フラグ（trueなら相対移動）
-		bool m_skinModelMoveDeleteFlag = false;	//スプライトの削除フラグ（いじらないでね）
+		bool m_skinModelMoveDeleteFlag = false;	//削除フラグ（いじらないでね）
 	};
 	std::list<SkinModelMoveSet> m_skinModelMoveList; //移動のリスト
 	//Rotation

@@ -8,7 +8,7 @@ public:
 	/*!
 	* @brief	描画開始。
 	*/
-	void Begin();
+	void Begin(bool flag = false);
 	/*!
 	* @brief	描画終了。
 	*/
@@ -62,6 +62,8 @@ private:
 	CVector4 m_shadowColor = ShadowColorDef;			//!<影の色。
 
 	CMatrix m_scaleMat;
-
+	ID3D11DepthStencilState*	m_depthStencilStateBackup = nullptr;	//!<現在のデプスステンシルステート。
+	ID3D11RasterizerState*		m_rasterrizerStateBackup = nullptr;		//!<現在のラスタライザステート。
+	ID3D11BlendState*			m_blendStateBackup = nullptr;			//!<現在のブレンドステート。
+	Shader m_psShader;													//!<フォント用のぴくせるしぇ
 };
-

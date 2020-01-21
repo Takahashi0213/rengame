@@ -51,6 +51,14 @@ public:
 		return &m_depthRenderTarget;
 	}
 
+	/// <summary>
+	/// フレームバッファのデプスステンシルビューを取得
+	/// </summary>
+	/// <returns></returns>
+	ID3D11DepthStencilView* GetFrameBufferDepthStencilView() {
+		return m_frameBufferDepthStencilView;
+	}
+
 private:
 	/// <summary>
 	/// 半透明合成のブレンドステートを初期化。

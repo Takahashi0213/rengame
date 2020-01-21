@@ -14,7 +14,7 @@
     <ProjectGuid>{9CB90C92-58AF-482A-B34C-AC02496110F6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Lesson_00</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -121,6 +121,7 @@
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameEffect.cpp" />
     <ClCompile Include="GameFont.cpp" />
+    <ClCompile Include="GameMenu.cpp" />
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameEffect.h" />
     <ClInclude Include="GameFont.h" />
+    <ClInclude Include="GameMenu.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="GaussianBlur.h" />
@@ -260,20 +262,17 @@
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\stand\keis.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\stand\keis_ang.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\stand\keis_happy.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\stand\keis_sad.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\stand\keis_wow.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
@@ -289,7 +288,9 @@
     <ResourceCompile Include="Game.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\window\window1.png" />
+    <ImageContentTask Include="Assets\sprite\window\window1.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\window\window2.png" />
@@ -309,6 +310,19 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\system_sprite\levelUp_8F.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Accessory2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuButton.png" />
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuButton_Back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\window\window3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\stand\keis.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

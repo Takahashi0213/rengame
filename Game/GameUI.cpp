@@ -2,8 +2,17 @@
 #include "GameUI.h"
 #include "Game.h"
 
+GameUI* GameUI::m_instance = nullptr;
+
 GameUI::GameUI()
 {
+	if (m_instance != nullptr) {
+		std::abort(); //すでに出ているためクラッシュ
+	}
+
+	//このインスタンスを唯一のインスタンスとして記録する
+	m_instance = this;
+
 	//設定！
 
 	Accessory1 = new Sprite;
@@ -11,11 +20,15 @@ GameUI::GameUI()
 	Accessory1->m_mainSprite.Scale = AccScale;
 	Accessory1->m_mainSprite.Position = AccDefPos;
 
+	Accessory2 = new Sprite;
+	Accessory2->Sprite_Init(L"Assets/sprite/Accessory2.dds", 600.0f, 300.0f);
+	Accessory2->m_mainSprite.Scale = CVector3().One();
+	Accessory2->m_mainSprite.Position = Acc2DefPos;
 
 	//マナゲージ
-	GageUnder = new Sprite;
-	GageUnder->Sprite_Init(L"Assets/sprite/Gage1_Under.dds", 400.0f, 60.0f);
-	GageUnder->m_mainSprite.Position = GagePos;
+	GageUnder = NewGO<SpriteRender>("GageUnder", 0);
+	GageUnder->Init(L"Assets/sprite/Gage1_Under.dds", 400.0f, 60.0f, 7);
+	GageUnder->SetPosition(GagePos);
 
 	RedGage = NewGO<SpriteRender>("RedGage", 0);
 	RedGage->SetRenderMode(Sprite_RenderMode::X_Cut);
@@ -201,16 +214,20 @@ GameUI::GameUI()
 
 GameUI::~GameUI()
 {
-
+	//インスタンスが破棄されたので、nullptrを代入
+	m_instance = nullptr;
 }
 
 void GameUI::Update() {
 
+	//様々な更新と計算
+	m_gameMenu.GameMenuUpdate();
 	ManaUpdate();
 	LifeUpdate();
 
+	//スプライトの更新
+	Accessory2->Sprite_Update();
 	Accessory1->Sprite_Update();
-	GageUnder->Sprite_Update();
 	Life1_Window->Sprite_Update();
 	Life2_Window->Sprite_Update();
 	Life3_Window->Sprite_Update();
@@ -224,8 +241,9 @@ void GameUI::Update() {
 }
 
 void GameUI::Render() {
+
+	Accessory2->Sprite_Draw();
 	Accessory1->Sprite_Draw();
-	GageUnder->Sprite_Draw();
 	Life1_Window->Sprite_Draw();
 	Life2_Window->Sprite_Draw();
 	Life3_Window->Sprite_Draw();

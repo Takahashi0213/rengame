@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "BoxMaker.h"
+#include "GameUI.h"
 
 BoxMaker* BoxMaker::m_instance = nullptr;
 
@@ -190,19 +191,38 @@ void BoxMaker::Update() {
 			mouseMove.x *= m_mouseMoveHosei;
 			mouseMove.y *= m_mouseMoveHosei;
 
+			//マナ計算
+			CVector3 Scale = { m_boxScale.x - m_boxScaleDef.x ,
+				m_boxScale.y - m_boxScaleDef.y ,
+				m_boxScale.z - m_boxScaleDef.z };
+			float ManaHosei = Scale.x + Scale.y + Scale.z;
+			ManaHosei /= 5.0f;
+			int ManaHosei2 = (int)floor(ManaHosei);
+			m_manaHosei = ManaHosei2;
+			m_downMana = m_downMana_Stock + m_manaHosei;
+
 			//箱の向きに合わせて拡大率を色々する
 			switch (m_boxDirection)
 			{
 			case BoxMaker::X_Direction:
 				//m_boxScale.x += mouseMove.x;
+				if (m_downMana > m_startMana && mouseMove.y > 0.0f) {
+					mouseMove.y = 0.0f;
+				}
 				m_boxScale.y += mouseMove.y;
 				break;
 			case BoxMaker::Y_Direction:
 				//m_boxScale.x += mouseMove.x;
+				if (m_downMana > m_startMana && mouseMove.y < 0.0f) {
+					mouseMove.y = 0.0f;
+				}
 				m_boxScale.y += -mouseMove.y;
 				break;
 			case BoxMaker::Z_Direction:
 				//m_boxScale.x += mouseMove.x;
+				if (m_downMana > m_startMana && mouseMove.y > 0.0f) {
+					mouseMove.y = 0.0f;
+				}
 				m_boxScale.y += mouseMove.y;
 				break;
 			}
@@ -218,22 +238,13 @@ void BoxMaker::Update() {
 				m_boxScale.z = m_boxScaleDef.z;
 			}
 
-			//マナ計算
-			CVector3 Scale = { m_boxScale.x - m_boxScaleDef.x ,
-				m_boxScale.y - m_boxScaleDef.y ,
-				m_boxScale.z - m_boxScaleDef.z };
-			float ManaHosei = Scale.x + Scale.y + Scale.z;
-			ManaHosei /= 5.0f;
-			int ManaHosei2 = (int)floor(ManaHosei);
-			m_manaHosei = ManaHosei2;
-			m_downMana = m_downMana_Stock + m_manaHosei;
-
 			m_nowBox->SetScale(m_boxScale);
 
 
 		}else if (key == MouseSupporter::Release_Push) {	//離された！！！
 
 			//マナ処理
+			m_manaList.push_back(m_manaHosei);
 			m_downMana = m_downMana_Stock + m_manaHosei;
 
 			//ポインタを変更
@@ -259,6 +270,10 @@ void BoxMaker::Update() {
 				m_boxList.pop_back();
 				m_nowBoxList.pop_back();
 				m_originBox->SetBox_Delete();
+
+				//マナも減少
+				m_downMana -= m_manaList.back();
+				m_manaList.pop_back();
 
 				m_undoFlag = true;
 				m_box_Nom--;
@@ -358,6 +373,10 @@ void BoxMaker::ModeChange() {
 		GameCamera* GC = CGameObjectManager::GetInstance()->FindGO<GameCamera>(a);
 		GC->SetGameBox(m_box);
 
+	}
+	if (key == MouseSupporter::New_Push && NowGameMode == Game::ActionMode && Mana < 10) {
+		//マナが足りません！
+		GameUI::GetInstance()->ManaShake();
 	}
 	//クリエイトモードからアクションモードへ戻りマス
 	else if (key == MouseSupporter::New_Push && NowGameMode == Game::CreateMode) {	//中クリックされた瞬間かつアクションモード

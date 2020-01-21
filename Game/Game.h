@@ -12,7 +12,7 @@ public:
 		Title,
 		ActionMode,
 		CreateMode,
-		Menu,
+		MenuMode,
 	};
 
 	Game();

@@ -132,6 +132,10 @@ public:
 		Set(_v.x(), _v.y(), _v.z());
 	}
 	
+	void SetXMV(DirectX::XMVECTOR xmvec)
+	{
+		DirectX::XMStoreFloat3(&vec, xmvec);
+	}
 	/*!
 	 * @brief	ベクトルを加算。
 	 */

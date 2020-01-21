@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "GameFont.h"
 
 
@@ -19,6 +19,8 @@ GameFont::GameFont()
 		}
 	);
 
+	m_psShader.Load("Assets/shader/font.fx", "SpritePixelShader", Shader::EnType::PS);
+
 }
 
 
@@ -30,72 +32,100 @@ GameFont::~GameFont()
 }
 
 /// <summary>
-/// ƒXƒe[ƒg‚Ìİ’èB
+/// ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®šã€‚
 /// </summary>
 void GameFont::InitTranslucentBlendState() {
 
-	//—á‚Ì‚²‚Æ‚­Aì¬‚·‚éƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìî•ñ‚ğİ’è‚·‚éB
+	//ä¾‹ã®ã”ã¨ãã€ä½œæˆã™ã‚‹ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®æƒ…å ±ã‚’è¨­å®šã™ã‚‹ã€‚
 	CD3D11_DEFAULT defaultSettings;
-	//ƒfƒtƒHƒ‹ƒgƒZƒbƒeƒBƒ“ƒO‚Å‰Šú‰»‚·‚éB
+	//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚»ãƒƒãƒ†ã‚£ãƒ³ã‚°ã§åˆæœŸåŒ–ã™ã‚‹ã€‚
 	CD3D11_BLEND_DESC blendDesc(defaultSettings);
 
-	//ƒ¿ƒuƒŒƒ“ƒfƒBƒ“ƒO‚ğ—LŒø‚É‚·‚éB
+	//Î±ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚’æœ‰åŠ¹ã«ã™ã‚‹ã€‚
 	blendDesc.RenderTarget[0].BlendEnable = true;
 
-	//ƒ\[ƒXƒJƒ‰[‚ÌƒuƒŒƒ“ƒfƒBƒ“ƒO•û–@‚ğw’è‚µ‚Ä‚¢‚éB
-	//ƒ\[ƒXƒJƒ‰[‚Æ‚ÍƒsƒNƒZƒ‹ƒVƒF[ƒ_\‚©‚ç‚Ìo—Í‚ğw‚µ‚Ä‚¢‚éB
-	//‚±‚Ìw’è‚Å‚ÍAƒ\[ƒXƒJƒ‰[‚ğSRC(rgba)‚Æ‚·‚é‚ÆA
-	//ÅI“I‚Èƒ\[ƒXƒJƒ‰[‚Í‰º‹L‚Ì‚æ‚¤‚ÉŒvZ‚³‚ê‚éB
-	//ÅI“I‚Èƒ\[ƒXƒJƒ‰[ = SRC.rgb ~ SRC.aEEEEEE@‡@
+	//ã‚½ãƒ¼ã‚¹ã‚«ãƒ©ãƒ¼ã®ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚°æ–¹æ³•ã‚’æŒ‡å®šã—ã¦ã„ã‚‹ã€‚
+	//ã‚½ãƒ¼ã‚¹ã‚«ãƒ©ãƒ¼ã¨ã¯ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€â€•ã‹ã‚‰ã®å‡ºåŠ›ã‚’æŒ‡ã—ã¦ã„ã‚‹ã€‚
+	//ã“ã®æŒ‡å®šã§ã¯ã€ã‚½ãƒ¼ã‚¹ã‚«ãƒ©ãƒ¼ã‚’SRC(rgba)ã¨ã™ã‚‹ã¨ã€
+	//æœ€çµ‚çš„ãªã‚½ãƒ¼ã‚¹ã‚«ãƒ©ãƒ¼ã¯ä¸‹è¨˜ã®ã‚ˆã†ã«è¨ˆç®—ã•ã‚Œã‚‹ã€‚
+	//æœ€çµ‚çš„ãªã‚½ãƒ¼ã‚¹ã‚«ãƒ©ãƒ¼ = SRC.rgb Ã— SRC.aãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ã€€â‘ 
 	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 
-	//ƒfƒBƒXƒeƒBƒl[ƒVƒ‡ƒ“ƒJƒ‰[‚ÌƒuƒŒƒ“ƒfƒBƒ“ƒO•û–@‚ğw’è‚µ‚Ä‚¢‚éB
-	//ƒfƒBƒXƒeƒBƒl[ƒVƒ‡ƒ“ƒJƒ‰[‚Æ‚ÍA
-	//‚·‚Å‚É•`‚«‚Ü‚ê‚Ä‚¢‚éƒŒƒ“ƒ_ƒŠƒ“ƒOƒ^[ƒQƒbƒg‚ÌƒJƒ‰[‚ğw‚µ‚Ä‚¢‚éB
-	//‚±‚Ìw’è‚Å‚ÍAƒfƒBƒXƒeƒBƒl[ƒVƒ‡ƒ“ƒJƒ‰[‚ğDEST(rgba)A
-	//ƒ\[ƒXƒJƒ‰[‚ğSRC(RGBA)‚Æ‚·‚é‚ÆAÅI“I‚ÈƒfƒBƒXƒeƒBƒl[ƒVƒ‡ƒ“ƒJƒ‰[‚Í
-	//‰º‹L‚Ì‚æ‚¤‚ÉŒvZ‚³‚ê‚éB
-	//ÅI“I‚ÈƒfƒBƒXƒeƒBƒl[ƒVƒ‡ƒ“ƒJƒ‰[ = DEST.rgb ~ (1.0f - SRC.a)EEEEE‡A
+	//ãƒ‡ã‚£ã‚¹ãƒ†ã‚£ãƒãƒ¼ã‚·ãƒ§ãƒ³ã‚«ãƒ©ãƒ¼ã®ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚°æ–¹æ³•ã‚’æŒ‡å®šã—ã¦ã„ã‚‹ã€‚
+	//ãƒ‡ã‚£ã‚¹ãƒ†ã‚£ãƒãƒ¼ã‚·ãƒ§ãƒ³ã‚«ãƒ©ãƒ¼ã¨ã¯ã€
+	//ã™ã§ã«æãè¾¼ã¾ã‚Œã¦ã„ã‚‹ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ã‚«ãƒ©ãƒ¼ã‚’æŒ‡ã—ã¦ã„ã‚‹ã€‚
+	//ã“ã®æŒ‡å®šã§ã¯ã€ãƒ‡ã‚£ã‚¹ãƒ†ã‚£ãƒãƒ¼ã‚·ãƒ§ãƒ³ã‚«ãƒ©ãƒ¼ã‚’DEST(rgba)ã€
+	//ã‚½ãƒ¼ã‚¹ã‚«ãƒ©ãƒ¼ã‚’SRC(RGBA)ã¨ã™ã‚‹ã¨ã€æœ€çµ‚çš„ãªãƒ‡ã‚£ã‚¹ãƒ†ã‚£ãƒãƒ¼ã‚·ãƒ§ãƒ³ã‚«ãƒ©ãƒ¼ã¯
+	//ä¸‹è¨˜ã®ã‚ˆã†ã«è¨ˆç®—ã•ã‚Œã‚‹ã€‚
+	//æœ€çµ‚çš„ãªãƒ‡ã‚£ã‚¹ãƒ†ã‚£ãƒãƒ¼ã‚·ãƒ§ãƒ³ã‚«ãƒ©ãƒ¼ = DEST.rgb Ã— (1.0f - SRC.a)ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»â‘¡
 	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 
-	//ÅI“I‚ÉƒŒƒ“ƒ_ƒŠƒ“ƒOƒ^[ƒQƒbƒg‚É•`‚«‚Ü‚ê‚éƒJƒ‰[‚ÌŒvZ•û–@‚ğw’è‚µ‚Ä‚¢‚éB
-	//‚±‚Ìw’è‚¾‚ÆA‡@{‡A‚ÌƒJƒ‰[‚ª‘‚«‚Ü‚ê‚éB
-	//‚Â‚Ü‚èAÅI“I‚ÉƒŒƒ“ƒ_ƒŠƒ“ƒOƒ^[ƒQƒbƒg‚É•`‚«‚Ü‚ê‚éƒJƒ‰[‚Í
-	//SRC.rgb ~ SRC.a + DEST.rgb ~ (1.0f - SRC.a)
-	//‚Æ‚È‚éB
+	//æœ€çµ‚çš„ã«ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«æãè¾¼ã¾ã‚Œã‚‹ã‚«ãƒ©ãƒ¼ã®è¨ˆç®—æ–¹æ³•ã‚’æŒ‡å®šã—ã¦ã„ã‚‹ã€‚
+	//ã“ã®æŒ‡å®šã ã¨ã€â‘ ï¼‹â‘¡ã®ã‚«ãƒ©ãƒ¼ãŒæ›¸ãè¾¼ã¾ã‚Œã‚‹ã€‚
+	//ã¤ã¾ã‚Šã€æœ€çµ‚çš„ã«ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«æãè¾¼ã¾ã‚Œã‚‹ã‚«ãƒ©ãƒ¼ã¯
+	//SRC.rgb Ã— SRC.a + DEST.rgb Ã— (1.0f - SRC.a)
+	//ã¨ãªã‚‹ã€‚
 	blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
 
-	//‚±‚Ìİ’è‚ÅAƒuƒŒƒ“ƒhƒXƒe[ƒg‚ğì¬‚·‚é‚Æ
-	//”¼“§–¾‡¬‚ğs‚¦‚éƒuƒŒƒ“ƒhƒXƒe[ƒg‚ªì¬‚Å‚«‚éB
+	//ã“ã®è¨­å®šã§ã€ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½œæˆã™ã‚‹ã¨
+	//åŠé€æ˜åˆæˆã‚’è¡Œãˆã‚‹ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆãŒä½œæˆã§ãã‚‹ã€‚
 	auto d3dDevice = g_graphicsEngine->GetD3DDevice();
 	d3dDevice->CreateBlendState(&blendDesc, &m_translucentBlendState);
 
 }
 
-void GameFont::Begin()
+void GameFont::Begin(bool flag)
 {
-	//ƒXƒe[ƒg‚Ìİ’è
+	auto d3dDevice = g_graphicsEngine->GetD3DDeviceContext();
+	float bf[4];
+	UINT samplerMask;
+	d3dDevice->OMGetBlendState(&m_blendStateBackup, bf, &samplerMask);
+	d3dDevice->RSGetState(&m_rasterrizerStateBackup);
+	d3dDevice->OMGetDepthStencilState(&m_depthStencilStateBackup, 0);
+
+	//ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
 	InitTranslucentBlendState();
 
-	//ƒŒƒ“ƒ_ƒŠƒ“ƒOƒXƒe[ƒg‚ğ‘Ş”ğ‚³‚¹‚éB
+	//ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¹ãƒ†ãƒ¼ãƒˆã‚’é€€é¿ã•ã›ã‚‹ã€‚
 	//rc.PushRenderState();
 
-	m_spriteBatch->Begin(
-		DirectX::SpriteSortMode_Deferred,
-		m_translucentBlendState,
-		nullptr,
-		nullptr,
-		nullptr,
-		nullptr,
-		m_scaleMat
-	);
+	if (flag == false) {
+		m_spriteBatch->Begin(
+			DirectX::SpriteSortMode_Deferred,
+			m_translucentBlendState,
+			nullptr,
+			nullptr,
+			nullptr,
+			[&]() {
+				auto d3dDevice = g_graphicsEngine->GetD3DDeviceContext();
+				d3dDevice->PSSetShader((ID3D11PixelShader*)m_psShader.GetBody(), NULL, 0);
+			},
+			m_scaleMat
+				);
+	}
+	else {
+		m_spriteBatch->Begin(
+			DirectX::SpriteSortMode_Deferred,
+			m_translucentBlendState,
+			nullptr,
+			nullptr,
+			nullptr,
+			nullptr,
+			m_scaleMat
+				);
+	}
+
 }
 
 void GameFont::End()
 {
 	m_spriteBatch->End();
-	//ƒŒƒ“ƒ_ƒŠƒ“ƒOƒXƒe[ƒg‚ğ•œŠˆ‚³‚¹‚éB
-	//rc.PopRenderState(true);
+	
+	auto d3dDevice = g_graphicsEngine->GetD3DDeviceContext();
+	//ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å¾©æ´»ã•ã›ã‚‹ã€‚
+	d3dDevice->OMSetBlendState(m_blendStateBackup, 0, 0xFFFFFFFF);
+	d3dDevice->RSSetState(m_rasterrizerStateBackup);
+	d3dDevice->OMSetDepthStencilState(m_depthStencilStateBackup, 0);
 }
 
 void GameFont::Draw(
@@ -111,7 +141,7 @@ void GameFont::Draw(
 	}
 	pivot.y = 1.0f - pivot.y;
 	DirectX::XMFLOAT2 tkFloat2Zero(0, 0);
-	//À•WŒn‚ğƒXƒvƒ‰ƒCƒg‚Æ‡‚í‚¹‚éB
+	//åº§æ¨™ç³»ã‚’ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã¨åˆã‚ã›ã‚‹ã€‚
 	CVector2 pos = position;
 	float frameBufferHalfWidth = FRAME_BUFFER_W * 0.5f;
 	float frameBufferHalfHeight = FRAME_BUFFER_H * 0.5f;
@@ -119,7 +149,7 @@ void GameFont::Draw(
 	pos.y = -pos.y + frameBufferHalfHeight;
 
 	if (m_isDrawShadow) {
-		//‰e‚ğ‘‚­B
+		//å½±ã‚’æ›¸ãã€‚
 		CVector2 offsetTbl[] = {
 			{ m_shadowOffset , 0.0f },
 		{ -m_shadowOffset , 0.0f },
@@ -132,7 +162,7 @@ void GameFont::Draw(
 		{ -m_shadowOffset , -m_shadowOffset },
 		};
 		for (auto offset : offsetTbl) {
-
+			DirectX::FXMVECTOR xmv = DirectX::XMLoadFloat4(&m_shadowColor.vec);
 			CVector2 sPos = pos;
 			sPos.x += offset.x;
 			sPos.y += offset.y;
@@ -140,7 +170,7 @@ void GameFont::Draw(
 				m_spriteBatch,
 				text,
 				sPos.vec,
-				m_shadowColor,
+				xmv,
 				rotation,
 				DirectX::XMFLOAT2(pivot.x, pivot.y),
 				scale
@@ -148,6 +178,10 @@ void GameFont::Draw(
 		}
 
 	}
+
+	End();
+
+	Begin(true);
 
 	m_spriteFont->DrawString(
 		m_spriteBatch,

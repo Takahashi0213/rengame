@@ -200,6 +200,15 @@
 		{
 			return m_cgom_Graphics->GetDepthInViewRenderTarget();
 		}
+
+		/// <summary>
+		/// フレームバッファのデプスステンシルビューを取得
+		/// </summary>
+		/// <returns></returns>
+		ID3D11DepthStencilView* GetFrameBufferDepthStencilView() {
+			return m_cgom_Graphics->GetFrameBufferDepthStencilView();
+		}
+
 	private:
 
 		CGOM_Graphics * m_cgom_Graphics = nullptr;

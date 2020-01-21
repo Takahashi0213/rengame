@@ -175,6 +175,53 @@ private:
 
 };
 
+class GameEffect_AnimationSprite {
+
+public:
+	//アニメ呼び出し用
+	enum Anime_Name {
+		Anime_LevelUp,		//レベルアップ
+	};
+
+	/// <summary>
+	/// パターンアニメーション呼び出し
+	/// </summary>
+	/// <param name="m_animeName">呼び出すアニメの種類</param>
+	/// <param name="pos">座標</param>
+	/// <param name="m_scale">大きさ</param>
+	void NewAnimationSprite(Anime_Name m_animeName, CVector3 pos, CVector3 m_scale = CVector3().One(), int priority = 0);
+
+	void SpriteAnimationUpdate();
+
+private:
+
+	//スプライトレンダーのリスト アルファが0になったレンダーを消去すれば大量にアニメを出しても大丈夫！多分！
+	struct SpriteRenderList
+	{
+		SpriteRender* SpriteRender_pt;
+		bool DeleteFlag = false;
+	};
+	std::list<SpriteRenderList> m_spriteRenderList;
+
+	int AnimationNom = 0;	//作成したアニメーション数
+
+	struct SpriteAnime_Data {		//スプライトパターンデータ構造体
+		wchar_t* SpriteName;	//スプライトファイル名
+		float High;				//高さ
+		float Wide;				//幅
+		int Pattern;			//縦パターン数
+		bool Loop;				//ループする？
+	};
+
+	//アニメデータ
+	const SpriteAnime_Data Game_SpriteAnime_Data[2]{
+		{ L"Assets/sprite/levelUp_8F.dds", 450.0f, 2000.0f, 8,false },
+		{ L"Assets/sprite/levelUp_8F.dds", 450.0f, 2000.0f, 8,false },
+
+	};
+
+};
+
 /// <summary>
 /// ゲームの演出サポート
 /// ※シングルトン
@@ -200,12 +247,16 @@ public:
 	GameEffect_Message* GetInstance_Message() {
 		return &m_message;
 	}
+	GameEffect_AnimationSprite* GetInstance_SpriteAnime() {
+		return &m_spriteAnime;
+	}
 
 	/// <summary>
 	/// 更新処理
 	/// </summary>
 	void GameEffectUpdate() {
 		m_message.MessageUpdate();
+		m_spriteAnime.SpriteAnimationUpdate();
 	}
 
 	/// <summary>
@@ -226,5 +277,5 @@ public:
 private:
 	GameEffect_Stand m_stand;
 	GameEffect_Message m_message;
-
+	GameEffect_AnimationSprite m_spriteAnime;
 };

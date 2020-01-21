@@ -152,6 +152,21 @@ CVector3 MouseSupporter::GetMousePos_3D() {
 }
 
 /// <summary>
+/// マウス座標を画面座標に変換する
+/// </summary>
+/// <returns>座標</returns>
+CVector2 MouseSupporter::GetMousePos_Sprite() {
+
+	CVector2 pos = GetMousePos();
+
+	pos.x -= FRAME_BUFFER_W / 2.0f;
+	pos.y -= FRAME_BUFFER_H / 2.0f;
+	pos.y *= -1.0f;
+
+	return pos;
+}
+
+/// <summary>
 /// 実行する度に前回の座標と今回の座標の差（ベクトル）を返す
 /// </summary>
 /// <param name="p">取得する位置（0は常時実行、1はｶｧﾒｨﾗｧ）</param>

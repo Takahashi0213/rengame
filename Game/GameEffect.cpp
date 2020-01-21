@@ -144,7 +144,10 @@ void GameEffect_Message::MessageInit() {
 		0);
 
 	//テキストに影（という名のフチ）を設定
-	m_messageFont->GetGameFont()->SetShadowParam(true, 2.0f, { 1.0f,1.0f,1.0f,1.0f });
+	m_messageFont->GetGameFont()->SetShadowParam(true, 3.0f, { 1.0f,1.0f,1.0f,1.0f });
+
+	m_messageFont->SetScale(0.6f);
+	m_messageSkipOshiraseFont->SetScale(0.6f);
 
 	//スプライトに滅びの爆裂疾風弾（不透明度を0にしているだけです…）
 	m_windowSprite->SetAlpha(0.0f);
@@ -154,27 +157,27 @@ void GameEffect_Message::MessageInit() {
 
 void GameEffect_Message::MessageEffect(wchar_t* Message) {
 
-	//メッセージ送り
-	m_messageFont->SetTextOkuri(Message, 2);
+//メッセージ送り
+m_messageFont->SetTextOkuri(Message, 2);
 
-	//色々と準備が必要です
+//色々と準備が必要です
 
-	m_windowOkuriSprite->SetAlpha(0.0f);
+m_windowOkuriSprite->SetAlpha(0.0f);
 
-	if (m_windowSprite->GetAlpha() < 1.0f) {
-		//初回表示処理
-		m_windowSprite->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,1.0f }, 6, 0);
-		m_windowSprite->SetPosition({ WindowDefPos.x,WindowDefPos.y - 30.0f,WindowDefPos.z });
-		m_windowSprite->m_spriteSupporter.SpriteMove({ 0.0f, 30.0f }, 6, 0, true);
+if (m_windowSprite->GetAlpha() < 1.0f) {
+	//初回表示処理
+	m_windowSprite->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,1.0f }, 6, 0);
+	m_windowSprite->SetPosition({ WindowDefPos.x,WindowDefPos.y - 30.0f,WindowDefPos.z });
+	m_windowSprite->m_spriteSupporter.SpriteMove({ 0.0f, 30.0f }, 6, 0, true);
 
-		m_messageSkipOshiraseFont->SetPosition({ TextSkipDefPos.x,TextSkipDefPos.y - 200.0f });
-		m_messageSkipOshiraseFont->m_fontSupporter.FontMoveSet({ TextSkipDefPos.x,TextSkipDefPos.y }, 12, 0, false);
+	m_messageSkipOshiraseFont->SetPosition({ TextSkipDefPos.x,TextSkipDefPos.y - 200.0f });
+	m_messageSkipOshiraseFont->m_fontSupporter.FontMoveSet({ TextSkipDefPos.x,TextSkipDefPos.y }, 12, 0, false);
 
-	}
+}
 
-	m_nowMessage = true;
-	m_messageOkuriWait = false;
-	m_messageTimer = 0;
+m_nowMessage = true;
+m_messageOkuriWait = false;
+m_messageTimer = 0;
 
 }
 
@@ -187,7 +190,7 @@ void GameEffect_Message::MessageUpdate() {
 	else {
 		//SPACEが押されていないのでスプライトを消去
 		m_messageSkipSprite->m_spriteSupporter.SpriteDelayReset();	//リセットしないとスプライトが残ってしまう
-		m_messageSkipSprite->SetAlpha(0.0f);	
+		m_messageSkipSprite->SetAlpha(0.0f);
 		m_skipFlag = false;
 	}
 
@@ -196,7 +199,7 @@ void GameEffect_Message::MessageUpdate() {
 
 		int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
 		//クリック待ち！
-		if (key == MouseSupporter::Release_Push || m_skipFlag==true) {
+		if (key == MouseSupporter::Release_Push || m_skipFlag == true) {
 			//押されました
 			if (m_messageOkuriWait == true) {
 				//表示終了
@@ -222,7 +225,7 @@ void GameEffect_Message::MessageUpdate() {
 		if (m_skipFlag == true) {
 
 			if (m_skipTimer == 0) {
-				m_messageSkipSprite->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,1.0f }, SkipLimit / 2 , 0);
+				m_messageSkipSprite->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,1.0f }, SkipLimit / 2, 0);
 			}
 			if (m_skipTimer == SkipLimit / 2) {
 				m_messageSkipSprite->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,0.0f }, SkipLimit / 2, 0);
@@ -250,4 +253,55 @@ void GameEffect_Message::MessageUpdate() {
 			m_skipFlag = false;
 		}
 	}
+}
+
+//ここから～～～GameEffect_AnimationSprite
+
+void GameEffect_AnimationSprite::NewAnimationSprite(Anime_Name m_animeName, CVector3 pos, CVector3 m_scale, int priority){
+
+	char RenderName[256];
+	//インスタンスの名前を作成。
+	AnimationNom++;
+	sprintf(RenderName, "SpriteAnime%d", AnimationNom);
+	SpriteRender* sr = NewGO<SpriteRender>(RenderName, priority);
+	//アニメーション処理を自動で行ってくれるぞ！すごいぞーかっこいいぞー
+	sr->Init(Game_SpriteAnime_Data[m_animeName].SpriteName,
+		Game_SpriteAnime_Data[m_animeName].High, Game_SpriteAnime_Data[m_animeName].Wide, priority);
+	sr->SetHighPattern(Game_SpriteAnime_Data[m_animeName].Pattern, 0);
+	sr->m_spriteSupporter.SpritePattern(1, Game_SpriteAnime_Data[m_animeName].Loop, 6);
+	
+	SpriteRenderList srl;
+	srl.SpriteRender_pt = sr;
+
+	m_spriteRenderList.push_back(srl);
+}
+
+void GameEffect_AnimationSprite::SpriteAnimationUpdate() {
+
+	//勝手に削除処理
+
+	for (auto go = m_spriteRenderList.begin();
+		go != m_spriteRenderList.end();
+		go++) {
+
+		//アルファが0なら削除フラグをオン
+		if (go->SpriteRender_pt->GetAlpha() == 0.0f) {
+			go->DeleteFlag = true;
+		}
+
+	}
+
+	//実際に黄泉送りにしてく
+	std::list<SpriteRenderList>::iterator it;
+	it = m_spriteRenderList.begin();
+	while (it != m_spriteRenderList.end()) {
+		if (it->DeleteFlag == true) {
+			DeleteGO(it->SpriteRender_pt);
+			it = m_spriteRenderList.erase(it); //erase関数は削除されたイテレータの次を返してくるので、eraseの戻り値を使う。
+		}
+		else {
+			it++; //それ以外は次へ。
+		}
+	}
+
 }

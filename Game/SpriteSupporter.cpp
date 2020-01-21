@@ -233,7 +233,6 @@ void SpriteSupporter::SpriteMoveUpdate() {
 				//‚¨‚µ‚Ü‚Ð
 				go->m_spriteMoveDeleteFlag = true;
 				go->m_spriteMoveTimer = -1;
-				//go = m_spriteMoveList.erase(go);
 			}
 		}
 	}

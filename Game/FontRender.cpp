@@ -54,6 +54,7 @@ void FontRender::Render() {
 
 void FontRender::PostRender()
 {
+	/*
 	//•¶Žš—ñ‚ð•ª’f
 	const wchar_t* text = nullptr;
 	m_messageList.clear();
@@ -154,6 +155,26 @@ void FontRender::PostRender()
 		gf->End();
 
 	}
+
+	*/
+
+	m_font.Begin();
+
+	const wchar_t* text = nullptr;
+	if (m_text.c_str() != nullptr) {
+		text = m_text.c_str();
+	}
+
+	m_font.Draw(
+		text,
+		m_position,
+		m_color,
+		m_rotation,
+		m_scale,
+		m_pivot);
+
+	m_font.End();
+
 
 }
 

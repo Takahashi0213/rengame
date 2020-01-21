@@ -19,7 +19,6 @@ struct PSInput {
 };
 
 Texture2D<float4> colorTexture : register(t0);	//カラーテクスチャ
-Texture2D<float4> colorTexture_Sub : register(t1);	//サブテクスチャ
 sampler Sampler : register(s0);
 
 PSInput VSMain(VSInput In) {
@@ -188,9 +187,8 @@ float4 PSMain_Slice(PSInput In) :SV_Target0{
 float4 PSMain_Mask(PSInput In) :SV_Target0{
 	//マスク用ピクセルシェーダー
 	float4 color = colorTexture.Sample(Sampler, In.uv);
-	float4 color2 = colorTexture_Sub.Sample(Sampler, In.uv);
-
-	clip(color2.a - 0.0001); //α<= 0のピクセルを出力しない
+	
+	clip(color.a - 0.0001); //α<= 0のピクセルを出力しない
 
 	return color * mulColor;
 }

@@ -73,6 +73,7 @@ private:
 
 	//箱リスト
 	std::list<GameBox*> m_boxList;
+	std::list<int>m_manaList;
 	GameBox* m_nowBox = nullptr;					//現在見ているボックスさん
 	GameBox* m_nowBox_Stock = nullptr;				//以前見ていたボックスを一時保存！
 	std::list<GameBox*> m_nowBoxList;				//今変更中のボックスりすりす
@@ -107,7 +108,6 @@ private:
 	int m_startMana = 0;							//移行時のマナ
 	int m_downMana_Stock = 0;						//拡大縮小用一時保存
 	int m_manaHosei = 0;							//拡大縮小用補正
-	CVector3 m_backupScale = CVector3().One();
 
 	//定数
 	const float PosHoseiY = 200.0f;									//レイがヒットしなかった時の補正

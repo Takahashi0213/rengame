@@ -45,8 +45,6 @@ void SpriteRender::Init(const wchar_t* texFilePath, float w, float h, int priori
 	else {
 		m_maskSprite->GetMainSprite()->Sprite_Init(texFilePath, w, h); //描画する
 		m_maskSprite->GetMainSprite()->SetMulColor(m_mainSprite.MulColor);
-		//サブスプライトも設定
-		m_maskSprite->GetSubSprite()->Sprite_InitSub(texFilePath);
 	}
 }
 void SpriteRender::InitSub(const wchar_t* texFilePath, float w, float h, int priority)
@@ -91,8 +89,6 @@ void SpriteRender::Init(const wchar_t* texFilePath, float w, float h, CVector3 p
 	else {
 		m_maskSprite->GetMainSprite()->Sprite_Init(texFilePath, w, h); //描画する
 		m_maskSprite->GetMainSprite()->SetMulColor(m_mainSprite.MulColor);
-		//サブスプライトも設定
-		m_maskSprite->GetSubSprite()->Sprite_InitSub(texFilePath);
 	}
 }
 void SpriteRender::InitSub(const wchar_t* texFilePath, float w, float h, CVector3 pos, CVector4 color, int priority) {

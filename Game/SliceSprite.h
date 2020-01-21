@@ -92,7 +92,9 @@ private:
 	/// </summary>
 	void SpriteDataSlice();
 	void SpriteDataSlice3();
+
 	void SpriteUpdate() {
+
 		m_sprite1.Sprite_Update(m_sprite1.m_mainSprite.Position,
 			m_sprite1.m_mainSprite.Rotation,
 			m_sprite1.m_mainSprite.Scale,
@@ -143,6 +145,7 @@ private:
 	SpriteData m_meinSpriteData;	//5番目のこと
 
 	//スプライトども
+	Sprite* m_sprite[8];
 	Sprite m_sprite1;
 	Sprite m_sprite2;
 	Sprite m_sprite3;

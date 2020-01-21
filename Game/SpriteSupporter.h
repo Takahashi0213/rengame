@@ -61,7 +61,7 @@ private:
 		int m_spriteMoveDelay = -1;	//スプライトの移動ディレイ
 		int m_spriteMoveTimer = -1; //スプライトの移動タイマー
 		bool m_spriteMoveRelative = false;		//スプライトの相対移動フラグ（trueなら相対移動）
-		bool m_spriteMoveDeleteFlag = false;	//スプライトの削除フラグ（いじらないでね）
+		bool m_spriteMoveDeleteFlag = false;	//削除フラグ（いじらないでね）
 	};
 	std::list<SpriteMoveSet> m_spriteMoveList; //移動のリスト
 	//Rotation

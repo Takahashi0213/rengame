@@ -26,7 +26,6 @@ public:
 		const CVector3& scale,
 		CVector2 pivot = { 0.5f, 0.5f });
 	void Sprite_Draw();
-	void Sprite_InitSub(const wchar_t* texFilePath);
 
 	/// <summary>
 	/// 乗算カラーを設定
@@ -87,7 +86,6 @@ public:
 	float m_cut_UV = 0.5f;	//ここからカット！
 	int m_slicePattern = -1;
 	int m_nowPattern = 0;
-	ID3D11ShaderResourceView* SubTexture = NULL;		//サブテクスチャ
 
 	void SetSize(CVector2 size) {
 		InitCommon(size.x, size.y,true);

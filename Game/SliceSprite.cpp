@@ -4,25 +4,21 @@
 
 SliceSprite::SliceSprite()
 {
-	m_sprite1.m_slicePattern = 1;
-	m_sprite2.m_slicePattern = 2;
-	m_sprite3.m_slicePattern = 3;
-	m_sprite4.m_slicePattern = 4;
-	m_sprite5.m_slicePattern = 5;
-	m_sprite6.m_slicePattern = 6;
-	m_sprite7.m_slicePattern = 7;
-	m_sprite8.m_slicePattern = 8;
-	m_sprite9.m_slicePattern = 9;
-	//
-	m_sprite1.m_renderMode = Sprite_RenderMode::Slice9;
-	m_sprite2.m_renderMode = Sprite_RenderMode::Slice9;
-	m_sprite3.m_renderMode = Sprite_RenderMode::Slice9;
-	m_sprite4.m_renderMode = Sprite_RenderMode::Slice9;
-	m_sprite5.m_renderMode = Sprite_RenderMode::Slice9;
-	m_sprite6.m_renderMode = Sprite_RenderMode::Slice9;
-	m_sprite7.m_renderMode = Sprite_RenderMode::Slice9;
-	m_sprite8.m_renderMode = Sprite_RenderMode::Slice9;
-	m_sprite9.m_renderMode = Sprite_RenderMode::Slice9;
+	m_sprite[0] = &m_sprite1;
+	m_sprite[1] = &m_sprite2;
+	m_sprite[2] = &m_sprite3;
+	m_sprite[3] = &m_sprite4;
+	m_sprite[4] = &m_sprite5;
+	m_sprite[5] = &m_sprite6;
+	m_sprite[6] = &m_sprite7;
+	m_sprite[7] = &m_sprite8;
+	m_sprite[8] = &m_sprite9;
+
+	for (int i = 0; i < 9; i++) {
+		m_sprite[i]->m_slicePattern = i+1;
+		m_sprite[i]->m_renderMode = Sprite_RenderMode::Slice9;
+	}
+
 	//pivot
 	m_sprite1.m_mainSprite.Pivot.x = 0.0f;
 	m_sprite1.m_mainSprite.Pivot.y = 1.0f;

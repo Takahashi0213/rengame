@@ -49,7 +49,7 @@ public:
 		if (m_sliceSprite == nullptr) {
 			m_sliceSprite = new SliceSprite;
 		}
-
+		m_sprite_RenderMode = Sprite_RenderMode::Slice9;
 		m_sliceSprite->SetDefSize(size);
 		m_sliceSpriteFlag = true;
 	}

@@ -183,7 +183,8 @@ private:
 	void MaskSprite::CreateDepthStencilState();
 
 	ID3D11DepthStencilState* m_depthStencilState = nullptr;
-	ID3D11DepthStencilState* m_depthStencilState2 = nullptr;
+	ID3D11DepthStencilState* m_depthStencilState_Def = nullptr;
+	ID3D11DepthStencilState* m_depthStencilState_Z = nullptr;
 
 	struct SpriteData
 	{
