@@ -85,6 +85,12 @@
     <Filter Include="Assets\sprite\Menu">
       <UniqueIdentifier>{7b6a8a85-f6cd-494f-9169-a07533271226}</UniqueIdentifier>
     </Filter>
+    <Filter Include="graphics\Transition">
+      <UniqueIdentifier>{6e5abbe2-d4b5-4973-a4c7-36d14cf7055b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\sprite\Transition">
+      <UniqueIdentifier>{2ed49e2a-daef-4284-9bd4-d786674bc835}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -275,6 +281,12 @@
     </ClCompile>
     <ClCompile Include="GameMenu.cpp">
       <Filter>system\gameSystem\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TransitionGenerator.cpp">
+      <Filter>graphics\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="TransitionSprite.cpp">
+      <Filter>graphics\Transition</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -482,6 +494,18 @@
     <ClInclude Include="GameMenu.h">
       <Filter>system\gameSystem\UI</Filter>
     </ClInclude>
+    <ClInclude Include="SystemData.h">
+      <Filter>system\gameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="GameGraphic.h">
+      <Filter>system\gameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TransitionGenerator.h">
+      <Filter>graphics\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="TransitionSprite.h">
+      <Filter>graphics\Transition</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\box.fbx">
@@ -557,6 +581,12 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\stand\keis.png">
       <Filter>Assets\sprite\stand</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\transition\under.png">
+      <Filter>Assets\sprite\Transition</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\transition\naname_box.png">
+      <Filter>Assets\sprite\Transition</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

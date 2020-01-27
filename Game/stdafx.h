@@ -59,6 +59,8 @@ static const int MAX_DIRECTION_LIGHT = 5;	//!<ディレクションライトの最大数。
 #include "GameData.h"
 #include "GameEffect.h"
 
+#include "TransitionGenerator.h"
+
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
 

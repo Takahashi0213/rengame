@@ -33,6 +33,9 @@ Game::Game()
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
 	GameUI* ui = CGameObjectManager::GetInstance()->NewGO<GameUI>("GameUI", 8);
 
+	TransitionGenerator* tg = CGameObjectManager::GetInstance()->NewGO<TransitionGenerator>("TransitionGenerator", 10);
+	tg->SetObjectTag(objectTag::t_Sprite);		//とにかく最後に実行されるようにする
+
 	//ボックスメイカーに渡すよ
 	m_box->SetGame(this);
 	m_box->SetPlayer(pl);

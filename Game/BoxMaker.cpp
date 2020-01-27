@@ -205,21 +205,18 @@ void BoxMaker::Update() {
 			switch (m_boxDirection)
 			{
 			case BoxMaker::X_Direction:
-				//m_boxScale.x += mouseMove.x;
 				if (m_downMana > m_startMana && mouseMove.y > 0.0f) {
 					mouseMove.y = 0.0f;
 				}
 				m_boxScale.y += mouseMove.y;
 				break;
 			case BoxMaker::Y_Direction:
-				//m_boxScale.x += mouseMove.x;
 				if (m_downMana > m_startMana && mouseMove.y < 0.0f) {
 					mouseMove.y = 0.0f;
 				}
 				m_boxScale.y += -mouseMove.y;
 				break;
 			case BoxMaker::Z_Direction:
-				//m_boxScale.x += mouseMove.x;
 				if (m_downMana > m_startMana && mouseMove.y > 0.0f) {
 					mouseMove.y = 0.0f;
 				}

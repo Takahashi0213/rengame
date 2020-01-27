@@ -144,6 +144,5 @@ float4 PSBlur( PS_BlurInput In ) : SV_Target0
 	Color += weight[1].w * (srcTexture.Sample( Sampler, In.tex7.xy )
 	                 + srcTexture.Sample( Sampler, In.tex7.zw ));
 	      
-	//Color.r = 255.0f;	//ê¢äEÇ™ê‘Ç≠Ç»Å`Å`Å`ÇÈ
 	return Color;
 }

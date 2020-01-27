@@ -38,6 +38,9 @@ public:
 	static GameUI* GameUI::GetInstance() {
 		return m_instance;
 	}
+	GameMenu* GameUI::GetGemeMenu() {
+		return &m_gameMenu;
+	}
 
 private:
 	
@@ -72,11 +75,11 @@ private:
 	const CVector3 LifeDefPos = { -520.0f,220.0f,1.0f };	//段々右に寄っていく
 	const float LifeX_Hosei = 40.0f;
 
-	//スプライトいろいろ（種類によってRenderの使用有無を変える）（動作を軽くするため）
+	//スプライトいろいろ
 
 	//装飾
-	Sprite* Accessory1;
-	Sprite* Accessory2;
+	SpriteRender* Accessory1;
+	SpriteRender* Accessory2;
 
 	//ゲージ
 	SpriteRender* GageUnder;
@@ -95,16 +98,16 @@ private:
 	SpriteRender* Life8;
 	SpriteRender* Life9;
 	SpriteRender* Life10;
-	Sprite* Life1_Window;
-	Sprite* Life2_Window;
-	Sprite* Life3_Window;
-	Sprite* Life4_Window;
-	Sprite* Life5_Window;
-	Sprite* Life6_Window;
-	Sprite* Life7_Window;
-	Sprite* Life8_Window;
-	Sprite* Life9_Window;
-	Sprite* Life10_Window;
+	SpriteRender* Life1_Window;
+	SpriteRender* Life2_Window;
+	SpriteRender* Life3_Window;
+	SpriteRender* Life4_Window;
+	SpriteRender* Life5_Window;
+	SpriteRender* Life6_Window;
+	SpriteRender* Life7_Window;
+	SpriteRender* Life8_Window;
+	SpriteRender* Life9_Window;
+	SpriteRender* Life10_Window;
 
 };
 

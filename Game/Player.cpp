@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "BulletCollision/CollisionDispatch/btCollisionWorld.h"
+#include "GameUI.h"
 
-int a = Hash::MakeHash("Player");
+int Game_UI = Hash::MakeHash("GameUI");
 
 Player::Player()
 {
@@ -42,6 +43,14 @@ Player::Player()
 	//MainSprite->SetPosition({ 250.0f,-250.0f ,0.0f }, true);
 	//MainSprite->m_spriteSupporter.SpriteRotation(10.0f, 600, 0, true);
 
+	//if (g_pad[0].IsTrigger(enButtonA)) {
+	//	CGameObjectManager::GetInstance()->DeleteGO(this);
+	//}
+	//if (g_pad[0].IsTrigger(enButtonB)) {
+	//	int s = CGameObjectManager::GetInstance()->ObjCount<Player>(a);
+	//	Player* p = CGameObjectManager::GetInstance()->FindGO<Player>(a,false);
+	//}
+
 }
 
 Player::~Player()
@@ -51,7 +60,7 @@ Player::~Player()
 
 void Player::Update()
 {
-	hoge = 10;
+	//hoge = 10;
 	if (hoge == 0) {
 		//GameEffect::GetInstance()->EasyEffect(L"ああ感\Rいい\Dうう\n\Rええ\Dおお",
 		GameEffect::GetInstance()->EasyEffect(L"ああ感いいうう\nええおお",
@@ -85,14 +94,6 @@ void Player::Update()
 	if (GameEffect::GetInstance()->GetInstance_Message()->GetMessageOkuriFlag() == true) {
 		hoge++;
 	}
-
-	//if (g_pad[0].IsTrigger(enButtonA)) {
-	//	CGameObjectManager::GetInstance()->DeleteGO(this);
-	//}
-	//if (g_pad[0].IsTrigger(enButtonB)) {
-	//	int s = CGameObjectManager::GetInstance()->ObjCount<Player>(a);
-	//	Player* p = CGameObjectManager::GetInstance()->FindGO<Player>(a,false);
-	//}
 
 	//モノクロになーる
 	if (m_gameObj != nullptr) {
@@ -165,8 +166,10 @@ void Player::Move() {
 	//左クリックの状態を判定
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
 	bool OnG_Flag = m_charaCon.IsOnGround();
+	GameUI* ui = CGameObjectManager::GetInstance()->FindGO<GameUI>(Game_UI);
 
-	if (key == MouseSupporter::Release_Push && m_gameObj->GetGameMode() == Game::ActionMode) {
+	if (key == MouseSupporter::Release_Push && m_gameObj->GetGameMode() == Game::ActionMode
+		&& ui->GetGemeMenu()->GetSelectFlag() == false) {
 		if (MouseSupporter::GetInstance()->GetMouseTimer(MouseSupporter::Left_Key) < 12) {
 
 			m_nextPos = MouseSupporter::GetInstance()->GetMousePos_3D();

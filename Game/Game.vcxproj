@@ -169,6 +169,8 @@
     <ClCompile Include="system\CGameObjectManager.cpp" />
     <ClCompile Include="system\IGameObject.cpp" />
     <ClCompile Include="system\system.cpp" />
+    <ClCompile Include="TransitionGenerator.cpp" />
+    <ClCompile Include="TransitionSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
@@ -191,6 +193,7 @@
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameEffect.h" />
     <ClInclude Include="GameFont.h" />
+    <ClInclude Include="GameGraphic.h" />
     <ClInclude Include="GameMenu.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="GameUI.h" />
@@ -238,9 +241,12 @@
     <ClInclude Include="SpriteStandby.h" />
     <ClInclude Include="SpriteSupporter.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SystemData.h" />
     <ClInclude Include="system\CGameObjectManager.h" />
     <ClInclude Include="system\IGameObject.h" />
     <ClInclude Include="system\system.h" />
+    <ClInclude Include="TransitionGenerator.h" />
+    <ClInclude Include="TransitionSprite.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\box.fbx">
@@ -289,7 +295,7 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\window\window1.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
@@ -323,6 +329,12 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\stand\keis.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\transition\under.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\transition\naname_box.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,6 +6,15 @@
 		/// <summary>
 		/// オブジェクトタグ
 		/// 上から順番に実行される
+		/// 
+		/// t_BackSprite
+		/// ↓
+		/// t_Other（基本はこれ）
+		/// ↓
+		/// ポストエフェクト
+		/// ↓
+		/// t_Sprite
+		/// 
 		/// </summary>
 		enum objectTag {
 			t_BackSprite, //背景スプライト

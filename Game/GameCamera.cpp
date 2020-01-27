@@ -31,10 +31,12 @@ GameCamera::~GameCamera()
 
 void GameCamera::Update() {
 
-	//共通のカメラ処理
-	CommonMove();
-
 	Game::GameMode NowGameMode = m_game->GetGameMode();		//現在のゲームモードを呼び出す
+
+	if (NowGameMode == Game::ActionMode || NowGameMode == Game::CreateMode) {
+		//共通のカメラ処理
+		CommonMove();
+	}
 
 	if (NowGameMode == Game::ActionMode) {
 		ActionMode();

@@ -15,15 +15,15 @@ GameUI::GameUI()
 
 	//設定！
 
-	Accessory1 = new Sprite;
-	Accessory1->Sprite_Init(L"Assets/sprite/Accessory1.dds", 340.0f, 340.0f);
-	Accessory1->m_mainSprite.Scale = AccScale;
-	Accessory1->m_mainSprite.Position = AccDefPos;
+	Accessory1 = NewGO<SpriteRender>("Accessory1", 0);
+	Accessory1->Init(L"Assets/sprite/Accessory1.dds", 340.0f, 340.0f,6);
+	Accessory1->SetScale(AccScale);
+	Accessory1->SetPosition(AccDefPos);
 
-	Accessory2 = new Sprite;
-	Accessory2->Sprite_Init(L"Assets/sprite/Accessory2.dds", 600.0f, 300.0f);
-	Accessory2->m_mainSprite.Scale = CVector3().One();
-	Accessory2->m_mainSprite.Position = Acc2DefPos;
+	Accessory2 = NewGO<SpriteRender>("Accessory2", 0);
+	Accessory2->Init(L"Assets/sprite/Accessory2.dds", 600.0f, 300.0f,6);
+	Accessory2->SetScale(CVector3().One());
+	Accessory2->SetPosition(Acc2DefPos);
 
 	//マナゲージ
 	GageUnder = NewGO<SpriteRender>("GageUnder", 0);
@@ -52,12 +52,10 @@ GameUI::GameUI()
 	//体力 とりあえず最大1000ね…
 	float X_Hosei = 0.0f;
 
-	Life1_Window = new Sprite;
-	Life1_Window->Sprite_Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f);
-	Life1_Window->m_mainSprite.Position.x = LifeDefPos.x + X_Hosei;
-	Life1_Window->m_mainSprite.Position.y = LifeDefPos.y;
-	Life1_Window->m_mainSprite.Position.z = LifeDefPos.z;
-	Life1_Window->m_mainSprite.Scale = LifeScale;
+	Life1_Window = NewGO<SpriteRender>("Life1", 6);
+	Life1_Window->Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f,6);
+	Life1_Window->SetPosition({ LifeDefPos.x + X_Hosei ,LifeDefPos.y ,LifeDefPos.z });
+	Life1_Window->SetScale(LifeScale);
 
 	Life1 = NewGO<SpriteRender>("Life1", 0);
 	Life1->SetRenderMode(Sprite_RenderMode::Y_Cut);
@@ -68,12 +66,10 @@ GameUI::GameUI()
 
 	X_Hosei += LifeX_Hosei;
 
-	Life2_Window = new Sprite;
-	Life2_Window->Sprite_Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f);
-	Life2_Window->m_mainSprite.Position.x = LifeDefPos.x + X_Hosei;
-	Life2_Window->m_mainSprite.Position.y = LifeDefPos.y;
-	Life2_Window->m_mainSprite.Position.z = LifeDefPos.z;
-	Life2_Window->m_mainSprite.Scale = LifeScale;
+	Life2_Window = NewGO<SpriteRender>("Life2", 6);
+	Life2_Window->Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f, 6);
+	Life2_Window->SetPosition({ LifeDefPos.x + X_Hosei ,LifeDefPos.y ,LifeDefPos.z });
+	Life2_Window->SetScale(LifeScale);
 
 	Life2 = NewGO<SpriteRender>("Life2", 0);
 	Life2->SetRenderMode(Sprite_RenderMode::Y_Cut);
@@ -84,12 +80,10 @@ GameUI::GameUI()
 
 	X_Hosei += LifeX_Hosei;
 
-	Life3_Window = new Sprite;
-	Life3_Window->Sprite_Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f);
-	Life3_Window->m_mainSprite.Position.x = LifeDefPos.x + X_Hosei;
-	Life3_Window->m_mainSprite.Position.y = LifeDefPos.y;
-	Life3_Window->m_mainSprite.Position.z = LifeDefPos.z;
-	Life3_Window->m_mainSprite.Scale = LifeScale;
+	Life3_Window = NewGO<SpriteRender>("Life3", 6);
+	Life3_Window->Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f, 6);
+	Life3_Window->SetPosition({ LifeDefPos.x + X_Hosei ,LifeDefPos.y ,LifeDefPos.z });
+	Life3_Window->SetScale(LifeScale);
 
 	Life3 = NewGO<SpriteRender>("Life3", 0);
 	Life3->SetRenderMode(Sprite_RenderMode::Y_Cut);
@@ -100,12 +94,10 @@ GameUI::GameUI()
 
 	X_Hosei += LifeX_Hosei;
 
-	Life4_Window = new Sprite;
-	Life4_Window->Sprite_Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f);
-	Life4_Window->m_mainSprite.Position.x = LifeDefPos.x + X_Hosei;
-	Life4_Window->m_mainSprite.Position.y = LifeDefPos.y;
-	Life4_Window->m_mainSprite.Position.z = LifeDefPos.z;
-	Life4_Window->m_mainSprite.Scale = LifeScale;
+	Life4_Window = NewGO<SpriteRender>("Life4", 6);
+	Life4_Window->Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f, 6);
+	Life4_Window->SetPosition({ LifeDefPos.x + X_Hosei ,LifeDefPos.y ,LifeDefPos.z });
+	Life4_Window->SetScale(LifeScale);
 
 	Life4 = NewGO<SpriteRender>("Life4", 0);
 	Life4->SetRenderMode(Sprite_RenderMode::Y_Cut);
@@ -116,12 +108,10 @@ GameUI::GameUI()
 
 	X_Hosei += LifeX_Hosei;
 
-	Life5_Window = new Sprite;
-	Life5_Window->Sprite_Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f);
-	Life5_Window->m_mainSprite.Position.x = LifeDefPos.x + X_Hosei;
-	Life5_Window->m_mainSprite.Position.y = LifeDefPos.y;
-	Life5_Window->m_mainSprite.Position.z = LifeDefPos.z;
-	Life5_Window->m_mainSprite.Scale = LifeScale;
+	Life5_Window = NewGO<SpriteRender>("Life5", 6);
+	Life5_Window->Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f, 6);
+	Life5_Window->SetPosition({ LifeDefPos.x + X_Hosei ,LifeDefPos.y ,LifeDefPos.z });
+	Life5_Window->SetScale(LifeScale);
 
 	Life5 = NewGO<SpriteRender>("Life5", 0);
 	Life5->SetRenderMode(Sprite_RenderMode::Y_Cut);
@@ -132,12 +122,10 @@ GameUI::GameUI()
 
 	X_Hosei += LifeX_Hosei;
 
-	Life6_Window = new Sprite;
-	Life6_Window->Sprite_Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f);
-	Life6_Window->m_mainSprite.Position.x = LifeDefPos.x + X_Hosei;
-	Life6_Window->m_mainSprite.Position.y = LifeDefPos.y;
-	Life6_Window->m_mainSprite.Position.z = LifeDefPos.z;
-	Life6_Window->m_mainSprite.Scale = LifeScale;
+	Life6_Window = NewGO<SpriteRender>("Life6", 6);
+	Life6_Window->Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f, 6);
+	Life6_Window->SetPosition({ LifeDefPos.x + X_Hosei ,LifeDefPos.y ,LifeDefPos.z });
+	Life6_Window->SetScale(LifeScale);
 
 	Life6 = NewGO<SpriteRender>("Life6", 0);
 	Life6->SetRenderMode(Sprite_RenderMode::Y_Cut);
@@ -148,12 +136,10 @@ GameUI::GameUI()
 
 	X_Hosei += LifeX_Hosei;
 
-	Life7_Window = new Sprite;
-	Life7_Window->Sprite_Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f);
-	Life7_Window->m_mainSprite.Position.x = LifeDefPos.x + X_Hosei;
-	Life7_Window->m_mainSprite.Position.y = LifeDefPos.y;
-	Life7_Window->m_mainSprite.Position.z = LifeDefPos.z;
-	Life7_Window->m_mainSprite.Scale = LifeScale;
+	Life7_Window = NewGO<SpriteRender>("Life7", 6);
+	Life7_Window->Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f, 6);
+	Life7_Window->SetPosition({ LifeDefPos.x + X_Hosei ,LifeDefPos.y ,LifeDefPos.z });
+	Life7_Window->SetScale(LifeScale);
 
 	Life7 = NewGO<SpriteRender>("Life7", 0);
 	Life7->SetRenderMode(Sprite_RenderMode::Y_Cut);
@@ -164,12 +150,10 @@ GameUI::GameUI()
 
 	X_Hosei += LifeX_Hosei;
 
-	Life8_Window = new Sprite;
-	Life8_Window->Sprite_Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f);
-	Life8_Window->m_mainSprite.Position.x = LifeDefPos.x + X_Hosei;
-	Life8_Window->m_mainSprite.Position.y = LifeDefPos.y;
-	Life8_Window->m_mainSprite.Position.z = LifeDefPos.z;
-	Life8_Window->m_mainSprite.Scale = LifeScale;
+	Life8_Window = NewGO<SpriteRender>("Life8", 6);
+	Life8_Window->Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f, 6);
+	Life8_Window->SetPosition({ LifeDefPos.x + X_Hosei ,LifeDefPos.y ,LifeDefPos.z });
+	Life8_Window->SetScale(LifeScale);
 
 	Life8 = NewGO<SpriteRender>("Life8", 0);
 	Life8->SetRenderMode(Sprite_RenderMode::Y_Cut);
@@ -180,12 +164,10 @@ GameUI::GameUI()
 
 	X_Hosei += LifeX_Hosei;
 
-	Life9_Window = new Sprite;
-	Life9_Window->Sprite_Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f);
-	Life9_Window->m_mainSprite.Position.x = LifeDefPos.x + X_Hosei;
-	Life9_Window->m_mainSprite.Position.y = LifeDefPos.y;
-	Life9_Window->m_mainSprite.Position.z = LifeDefPos.z;
-	Life9_Window->m_mainSprite.Scale = LifeScale;
+	Life9_Window = NewGO<SpriteRender>("Life9", 6);
+	Life9_Window->Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f, 6);
+	Life9_Window->SetPosition({ LifeDefPos.x + X_Hosei ,LifeDefPos.y ,LifeDefPos.z });
+	Life9_Window->SetScale(LifeScale);
 
 	Life9 = NewGO<SpriteRender>("Life9", 0);
 	Life9->SetRenderMode(Sprite_RenderMode::Y_Cut);
@@ -196,12 +178,10 @@ GameUI::GameUI()
 
 	X_Hosei += LifeX_Hosei;
 
-	Life10_Window = new Sprite;
-	Life10_Window->Sprite_Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f);
-	Life10_Window->m_mainSprite.Position.x = LifeDefPos.x + X_Hosei;
-	Life10_Window->m_mainSprite.Position.y = LifeDefPos.y;
-	Life10_Window->m_mainSprite.Position.z = LifeDefPos.z;
-	Life10_Window->m_mainSprite.Scale = LifeScale;
+	Life10_Window = NewGO<SpriteRender>("Life10", 6);
+	Life10_Window->Init(L"Assets/sprite/Life_Waku.dds", 220.0f, 190.0f, 6);
+	Life10_Window->SetPosition({ LifeDefPos.x + X_Hosei ,LifeDefPos.y ,LifeDefPos.z });
+	Life10_Window->SetScale(LifeScale);
 
 	Life10 = NewGO<SpriteRender>("Life10", 0);
 	Life10->SetRenderMode(Sprite_RenderMode::Y_Cut);
@@ -225,35 +205,9 @@ void GameUI::Update() {
 	ManaUpdate();
 	LifeUpdate();
 
-	//スプライトの更新
-	Accessory2->Sprite_Update();
-	Accessory1->Sprite_Update();
-	Life1_Window->Sprite_Update();
-	Life2_Window->Sprite_Update();
-	Life3_Window->Sprite_Update();
-	Life4_Window->Sprite_Update();
-	Life5_Window->Sprite_Update();
-	Life6_Window->Sprite_Update();
-	Life7_Window->Sprite_Update();
-	Life8_Window->Sprite_Update();
-	Life9_Window->Sprite_Update();
-	Life10_Window->Sprite_Update();
 }
 
 void GameUI::Render() {
-
-	Accessory2->Sprite_Draw();
-	Accessory1->Sprite_Draw();
-	Life1_Window->Sprite_Draw();
-	Life2_Window->Sprite_Draw();
-	Life3_Window->Sprite_Draw();
-	Life4_Window->Sprite_Draw();
-	Life5_Window->Sprite_Draw();
-	Life6_Window->Sprite_Draw();
-	Life7_Window->Sprite_Draw();
-	Life8_Window->Sprite_Draw();
-	Life9_Window->Sprite_Draw();
-	Life10_Window->Sprite_Draw();
 
 }
 
@@ -313,11 +267,11 @@ void GameUI::LifeUpdate() {
 	GageX = 1.0f - GageX;
 	Life2->SetCutLine(GageX);
 	if (MaxHP >= 200) {
-		Life2_Window->m_mainSprite.MulColor.w = 1.0f;
+		Life2_Window->SetAlpha(1.0f);
 		Life2->SetAlpha(1.0f);
 	}
 	else {
-		Life2_Window->m_mainSprite.MulColor.w = 0.0f;
+		Life2_Window->SetAlpha(0.0f);
 		Life2->SetAlpha(0.0f);
 	}
 	//ゲージ3
@@ -331,11 +285,11 @@ void GameUI::LifeUpdate() {
 	GageX = 1.0f - GageX;
 	Life3->SetCutLine(GageX);
 	if (MaxHP >= 300) {
-		Life3_Window->m_mainSprite.MulColor.w = 1.0f;
+		Life3_Window->SetAlpha(1.0f);
 		Life3->SetAlpha(1.0f);
 	}
 	else {
-		Life3_Window->m_mainSprite.MulColor.w = 0.0f;
+		Life3_Window->SetAlpha(0.0f);
 		Life3->SetAlpha(0.0f);
 	}
 	//ゲージ4
@@ -349,11 +303,11 @@ void GameUI::LifeUpdate() {
 	GageX = 1.0f - GageX;
 	Life4->SetCutLine(GageX);
 	if (MaxHP >= 400) {
-		Life4_Window->m_mainSprite.MulColor.w = 1.0f;
+		Life4_Window->SetAlpha(1.0f);
 		Life4->SetAlpha(1.0f);
 	}
 	else {
-		Life4_Window->m_mainSprite.MulColor.w = 0.0f;
+		Life4_Window->SetAlpha(0.0f);
 		Life4->SetAlpha(0.0f);
 	}
 	//ゲージ5
@@ -367,11 +321,11 @@ void GameUI::LifeUpdate() {
 	GageX = 1.0f - GageX;
 	Life5->SetCutLine(GageX);
 	if (MaxHP >= 500) {
-		Life5_Window->m_mainSprite.MulColor.w = 1.0f;
+		Life5_Window->SetAlpha(1.0f);
 		Life5->SetAlpha(1.0f);
 	}
 	else {
-		Life5_Window->m_mainSprite.MulColor.w = 0.0f;
+		Life5_Window->SetAlpha(0.0f);
 		Life5->SetAlpha(0.0f);
 	}
 	//ゲージ6
@@ -385,11 +339,11 @@ void GameUI::LifeUpdate() {
 	GageX = 1.0f - GageX;
 	Life6->SetCutLine(GageX);
 	if (MaxHP >= 600) {
-		Life6_Window->m_mainSprite.MulColor.w = 1.0f;
+		Life6_Window->SetAlpha(1.0f);
 		Life6->SetAlpha(1.0f);
 	}
 	else {
-		Life6_Window->m_mainSprite.MulColor.w = 0.0f;
+		Life6_Window->SetAlpha(0.0f);
 		Life6->SetAlpha(0.0f);
 	}
 	//ゲージ7
@@ -403,11 +357,11 @@ void GameUI::LifeUpdate() {
 	GageX = 1.0f - GageX;
 	Life7->SetCutLine(GageX);
 	if (MaxHP >= 700) {
-		Life7_Window->m_mainSprite.MulColor.w = 1.0f;
+		Life7_Window->SetAlpha(1.0f);
 		Life7->SetAlpha(1.0f);
 	}
 	else {
-		Life7_Window->m_mainSprite.MulColor.w = 0.0f;
+		Life7_Window->SetAlpha(0.0f);
 		Life7->SetAlpha(0.0f);
 	}
 	//ゲージ8
@@ -421,11 +375,11 @@ void GameUI::LifeUpdate() {
 	GageX = 1.0f - GageX;
 	Life8->SetCutLine(GageX);
 	if (MaxHP >= 800) {
-		Life8_Window->m_mainSprite.MulColor.w = 1.0f;
+		Life8_Window->SetAlpha(1.0f);
 		Life8->SetAlpha(1.0f);
 	}
 	else {
-		Life8_Window->m_mainSprite.MulColor.w = 0.0f;
+		Life8_Window->SetAlpha(0.0f);
 		Life8->SetAlpha(0.0f);
 	}
 	//ゲージ9
@@ -439,11 +393,11 @@ void GameUI::LifeUpdate() {
 	GageX = 1.0f - GageX;
 	Life9->SetCutLine(GageX);
 	if (MaxHP >= 900) {
-		Life9_Window->m_mainSprite.MulColor.w = 1.0f;
+		Life9_Window->SetAlpha(1.0f);
 		Life9->SetAlpha(1.0f);
 	}
 	else {
-		Life9_Window->m_mainSprite.MulColor.w = 0.0f;
+		Life9_Window->SetAlpha(0.0f);
 		Life9->SetAlpha(0.0f);
 	}
 	//ゲージ10
@@ -457,11 +411,11 @@ void GameUI::LifeUpdate() {
 	GageX = 1.0f - GageX;
 	Life10->SetCutLine(GageX);
 	if (MaxHP >= 1000) {
-		Life10_Window->m_mainSprite.MulColor.w = 1.0f;
+		Life10_Window->SetAlpha(1.0f);
 		Life10->SetAlpha(1.0f);
 	}
 	else {
-		Life10_Window->m_mainSprite.MulColor.w = 0.0f;
+		Life10_Window->SetAlpha(0.0f);
 		Life10->SetAlpha(0.0f);
 	}
 

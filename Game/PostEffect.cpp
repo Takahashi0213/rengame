@@ -6,12 +6,32 @@ PostEffect::PostEffect()
 {
 	//フルスクリーン描画のための四角形プリミティブを初期化。
 	InitFullScreenQuadPrimitive();
+
+	//半透明合成のブレンドステートを作成する。
+	CD3D11_DEFAULT defaultSettings;
+	//デフォルトセッティングで初期化する。
+	CD3D11_BLEND_DESC blendDesc(defaultSettings);
+	blendDesc.RenderTarget[0].BlendEnable = true;
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	auto device = g_graphicsEngine->GetD3DDevice();
+
+	device->CreateBlendState(&blendDesc, &m_blendState);
+
+	//シェーダー
+	m_vs.Load("Assets/shader/Blur.fx", "VSMain", Shader::EnType::VS);
+	m_ps.Load("Assets/shader/Blur.fx", "PSMain", Shader::EnType::PS);
+
 }
 
 PostEffect::~PostEffect()
 {
 	if (m_vertexBuffer != nullptr) {
 		m_vertexBuffer->Release();
+	}
+	if (m_blendState != nullptr) {
+		m_blendState->Release();
 	}
 }
 
@@ -38,6 +58,12 @@ void PostEffect::Draw()
 	m_bloom.Draw(*this);
 	//ドフ。
 	m_dof.Draw(*this);
+
+	//画面にブラーをかける
+	if (Game::GetInstance()->GetGameGraphicInstance()->m_blurIntensity > 0.0f) {
+		BlurDraw();
+	}
+
 }
 
 void PostEffect::InitFullScreenQuadPrimitive()
@@ -105,4 +131,37 @@ void PostEffect::DrawFullScreenQuadPrimitive(ID3D11DeviceContext* deviceContext,
 
 	deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &vertexSize, &offset);
 	deviceContext->Draw(4, 0);
+}
+
+void PostEffect::BlurDraw() {
+
+	//メインレンダリングターゲットを取得。
+	auto mainRT = CGameObjectManager::GetInstance()->GetMainRenderTarget();
+	auto deviceContext = g_graphicsEngine->GetD3DDeviceContext();
+
+	//ガウシアンブラーの初期化と実行
+	m_gaussianBlur.Init(CGameObjectManager::GetInstance()->GetMainRenderTarget()->GetRenderTargetSRV(), 
+		Game::GetInstance()->GetGameGraphicInstance()->m_blurIntensity);
+	m_gaussianBlur.Execute(*this);
+
+	g_graphicsEngine->ChangeRenderTarget(mainRT, mainRT->GetViewport());
+
+	//ボケ画像のアドレスをt0レジスタに設定する。
+	auto srv = m_gaussianBlur.GetResultTextureSRV();
+	deviceContext->PSSetShaderResources(0, 1, &srv);
+
+	ID3D11BlendState* oldBlendState;
+	float oldBlendFactor[4];
+	UINT oldMask;
+	deviceContext->OMGetBlendState(&oldBlendState, oldBlendFactor, &oldMask);
+	//半透明合成用のブレンディングステートを設定する。
+	float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	deviceContext->OMSetBlendState(m_blendState, blendFactor, 0xffffffff);
+	//フルスクリーン描画。
+	DrawFullScreenQuadPrimitive(deviceContext, m_vs, m_ps);
+
+	//ブレンドステートを戻す。
+	deviceContext->OMSetBlendState(oldBlendState, oldBlendFactor, oldMask);
+	oldBlendState->Release();
+
 }
