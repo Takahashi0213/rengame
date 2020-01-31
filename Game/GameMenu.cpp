@@ -4,6 +4,8 @@
 
 GameMenu::GameMenu()
 {
+
+	//メニューのメイン部分
 	MenuWindow = NewGO<SpriteRender>("MenuWindow", SpriteNo);
 	MenuWindow->ChangeSliceSprite({ 150.0f,150.0f });
 	MenuWindow->Init(L"Assets/sprite/window3.dds", 
@@ -26,6 +28,8 @@ GameMenu::GameMenu()
 		SpriteNo);
 	MenuWindow2->SetPosition({ DefMenuWindow_2Position.x + MenuMove ,
 		DefMenuWindow_2Position.y,DefMenuWindow_2Position.z });
+
+	//ボタンと装飾
 
 	//登録しとく
 	m_spriteRenderList.push_back(MenuWindow);

@@ -30,6 +30,25 @@ public:
 		MagicWindow->m_spriteSupporter.SpriteShake({ m_manaGageShakeData.MoveX,0.0f },
 			m_manaGageShakeData.MoveTime, m_manaGageShakeData.MoveCount);
 	}
+	/// <summary>
+	/// UIの開閉
+	/// </summary>
+	void CloseUI() {
+		for (int i = 0; i < m_spriteList.size(); i++) {
+			m_spriteList[i]->m_spriteSupporter.SpriteMove({ OpenAndCloseMoveBound,0.0f },
+				OpenAndCloseTimeBound, 0, true);
+			m_spriteList[i]->m_spriteSupporter.SpriteMove({ -OpenAndCloseMove,0.0f }, 
+				OpenAndCloseTime, OpenAndCloseTimeBound, true);
+		}
+	}
+	void OpenUI() {
+		for (int i = 0; i < m_spriteList.size(); i++) {
+			m_spriteList[i]->m_spriteSupporter.SpriteMove({ OpenAndCloseMove,0.0f }, 
+				OpenAndCloseTime, 0, true);
+			m_spriteList[i]->m_spriteSupporter.SpriteMove({ -OpenAndCloseMoveBound,0.0f },
+				OpenAndCloseTimeBound, OpenAndCloseTime, true);
+		}
+	}
 
 	/// <summary>
 	/// インスタンスを取得！
@@ -48,10 +67,16 @@ private:
 	GameMenu m_gameMenu;
 
 	//更新色々
-	void ManaUpdate();
-	void LifeUpdate();
+	void GameUI::ManaUpdate();
+	void GameUI::LifeUpdate();
 
 	//メンバ変数
+
+	//移動用
+	const float OpenAndCloseMove = 1000.0f;
+	const float OpenAndCloseMoveBound = 20.0f;	//反動
+	const int OpenAndCloseTime = 16;
+	const int OpenAndCloseTimeBound = 4;	//反動
 
 	//装飾
 	const CVector3 AccScale = { 0.5f,0.5f,1.0f };
@@ -68,7 +93,7 @@ private:
 		int MoveTime = 2;
 		int MoveCount = 3;
 	};
-	const ManaGageShakeData m_manaGageShakeData;
+	const ManaGageShakeData m_manaGageShakeData;		//ManaShake呼び出し用
 
 	//ライフ
 	const CVector3 LifeScale = { 0.15f,0.15f,1.0f };
@@ -76,6 +101,7 @@ private:
 	const float LifeX_Hosei = 40.0f;
 
 	//スプライトいろいろ
+	std::vector<SpriteRender*>m_spriteList;
 
 	//装飾
 	SpriteRender* Accessory1;

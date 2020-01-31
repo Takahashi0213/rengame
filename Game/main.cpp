@@ -25,7 +25,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	desc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
 	desc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	desc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
-
 	desc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 	desc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
 	desc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;

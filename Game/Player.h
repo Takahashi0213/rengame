@@ -40,6 +40,10 @@ private:
 	LightMaker* m_lightMaker;
 	MouseOver ms;
 
+	SkinModel m_titan;	//スキンモデル。
+	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;
+	ID3D11ShaderResourceView* m_specMapSRV = nullptr;
+
 	//モノクロフラグ
 	bool m_monochromeFlag = false;
 

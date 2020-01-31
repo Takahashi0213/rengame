@@ -59,7 +59,7 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 		m_light.directionLight.direction[i] = { 0.5f, -1.0f, 0.0f, 0.0f };
 		m_light.directionLight.direction[i].Normalize();	//正規化。
 		m_light.directionLight.color[i] = { 0.4f, 0.4f, 0.4f, 1.0f };
-		m_light.specPow = 4.0f;
+		m_light.specPow = 10.0f;
 	}
 
 	LoadAmbientLight();
@@ -179,6 +179,21 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix ,EnRenderMode render
 	else {
 		vsCb.isShadowReciever = 0;
 	}
+	//法線マップを使用するかどうかのフラグを送る。
+	if (m_normalMapSRV != nullptr) {
+		vsCb.isHasNormalMap = true;
+	}
+	else {
+		vsCb.isHasNormalMap = false;
+	}
+	//スペキュラマップを使用するかどうかのフラグを送る。
+	if (m_specMapSRV != nullptr) {
+		vsCb.isHasSpecMap = true;
+	}
+	else {
+		vsCb.isHasSpecMap = false;
+	}
+
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 
 	//ライト用の定数バッファを更新。
@@ -205,6 +220,15 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix ,EnRenderMode render
 			auto modelMaterial = reinterpret_cast<SkinModelEffect*>(material);
 			modelMaterial->SetRenderMode(m_renderMode, renderMode);
 			});
+
+		if (m_normalMapSRV != nullptr) {
+			//法線マップが設定されていたらレジスタt3に設定する。
+			d3dDeviceContext->PSSetShaderResources(3, 1, &m_normalMapSRV);
+		}
+		if (m_specMapSRV != nullptr) {
+			//スペキュラマップが設定されていたらレジスタt4に設定する。
+			d3dDeviceContext->PSSetShaderResources(4, 1, &m_specMapSRV);
+		}
 
 	//ボーン行列をGPUに転送。
 	m_skeleton.SendBoneMatrixArrayToGPU();

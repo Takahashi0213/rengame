@@ -109,6 +109,11 @@ void BoxMaker::Update() {
 			//箱を生成
 			GameBox* m_box = new GameBox;
 			m_box->GameBox_Set(AveragePoint);
+			m_box->SetOriginBox(m_originBox);
+
+			//初代箱から見たローカル座標も保存しておく
+			CVector3 localPos = AveragePoint - m_originBox->GetPosition();
+			m_box->SetLocalPos(localPos);
 
 			//回転設定
 			CVector3 boxUp = { 0.0f,1.0f,0.0f };
@@ -355,6 +360,7 @@ void BoxMaker::ModeChange() {
 		m_box->GameBox_Set(m_boxPos);
 		m_box->SetBoxTag(GameBox::Origin);	//箱のタグを「最初の箱」に変更する
 		m_boxList.push_back(m_box);
+		m_nowBoxList.clear();
 		m_nowBoxList.push_back(m_box);
 		m_nowBox = m_box;
 		m_originBox = m_box;

@@ -98,6 +98,23 @@ public:
 
 	void GameBoxUpdate_Colli();
 
+	/// <summary>
+	/// 箱のローカル座標！
+	/// </summary>
+	void SetLocalPos(CVector3 pos) {
+		m_localPosition = pos;
+	}
+	CVector3 GetLocalPos() {
+		return m_localPosition;
+	}
+
+	/// <summary>
+	/// 初代箱を設定
+	/// </summary>
+	void SetOriginBox(GameBox* box) {
+		m_originBox = box;
+	}
+
 private:
 	void GetTrianglePositionAndNormal(
 		int polyNo,
@@ -132,8 +149,6 @@ private:
 	void MeshStandBy();
 	SkinModel m_model;	//スキンモデル。
 
-	BoxTag m_boxTag = Another;
-
 	RigidBody m_rb;				//剛体
 	PhysicsStaticObject m_physicsStaticObject;
 	CMatrix  m_World;
@@ -143,6 +158,11 @@ private:
 	CVector3 m_position = CVector3().Zero();
 	CQuaternion m_rotation = CQuaternion().Identity();
 	CVector3 m_scale = CVector3().One(); //拡大率
+
+	//親の箱とのローカル座標
+	GameBox* m_originBox = nullptr;		//初代箱様！！！！
+	CVector3 m_localPosition = CVector3().Zero();
+	BoxTag m_boxTag = Another;
 
 	std::vector<VertexBuffer>						m_vertexBufferArray;		//頂点バッファの配列。
 	std::vector<IndexBuffer>						m_indexBufferArray;		//インデックスバッファの配列。

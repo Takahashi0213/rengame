@@ -190,6 +190,34 @@ GameUI::GameUI()
 	Life10->SetScale(LifeScale);
 	Life10->Init(L"Assets/sprite/Life.dds", 190.0f, 160.0f, 7);
 
+	//ê›íË
+	m_spriteList.push_back(Accessory1);
+	m_spriteList.push_back(Accessory2);
+	m_spriteList.push_back(GageUnder);
+	m_spriteList.push_back(RedGage);
+	m_spriteList.push_back(Gage);
+	m_spriteList.push_back(MagicWindow);
+	m_spriteList.push_back(Life1);
+	m_spriteList.push_back(Life2);
+	m_spriteList.push_back(Life3);
+	m_spriteList.push_back(Life4);
+	m_spriteList.push_back(Life5);
+	m_spriteList.push_back(Life6);
+	m_spriteList.push_back(Life7);
+	m_spriteList.push_back(Life8);
+	m_spriteList.push_back(Life9);
+	m_spriteList.push_back(Life10);
+	m_spriteList.push_back(Life1_Window);
+	m_spriteList.push_back(Life2_Window);
+	m_spriteList.push_back(Life3_Window);
+	m_spriteList.push_back(Life4_Window);
+	m_spriteList.push_back(Life5_Window);
+	m_spriteList.push_back(Life6_Window);
+	m_spriteList.push_back(Life7_Window);
+	m_spriteList.push_back(Life8_Window);
+	m_spriteList.push_back(Life9_Window);
+	m_spriteList.push_back(Life10_Window);
+
 }
 
 GameUI::~GameUI()

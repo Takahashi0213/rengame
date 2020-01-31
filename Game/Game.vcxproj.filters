@@ -91,6 +91,9 @@
     <Filter Include="Assets\sprite\Transition">
       <UniqueIdentifier>{2ed49e2a-daef-4284-9bd4-d786674bc835}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\Titan">
+      <UniqueIdentifier>{c4bd8911-7ff6-4c63-81f1-4c0c982a3c57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -517,6 +520,9 @@
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Titan.fbx">
+      <Filter>Assets\modelData\Titan</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\mikyan.jpg">
@@ -587,6 +593,15 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\transition\naname_box.png">
       <Filter>Assets\sprite\Transition</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\Titan__Albedo.tga">
+      <Filter>Assets\modelData\Titan</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\Titan_normals.tga">
+      <Filter>Assets\modelData\Titan</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\Titan_Metallic.tga">
+      <Filter>Assets\modelData\Titan</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

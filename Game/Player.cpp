@@ -51,6 +51,30 @@ Player::Player()
 	//	Player* p = CGameObjectManager::GetInstance()->FindGO<Player>(a,false);
 	//}
 
+	m_titan.Init(L"Assets/modelData/Titan.cmo");
+	m_titan.UpdateWorldMatrix({ 0.0f,30.0f,0.0f }, CQuaternion::Identity(), { 5.0f,5.0f,5.0f });
+
+	//法線マップをロード。
+	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
+	DirectX::CreateDDSTextureFromFileEx(
+		g_graphicsEngine->GetD3DDevice(), L"Assets/sprite/Titan_normals.dds", 0,
+		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
+		false, nullptr, &m_normalMapSRV);
+
+	//モデルに法線マップを設定する。
+	m_titan.SetNormalMap(m_normalMapSRV);
+
+	//スペキュラマップをロード。
+	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
+	DirectX::CreateDDSTextureFromFileEx(
+		g_graphicsEngine->GetD3DDevice(), L"Assets/sprite/Titan_Metallic.dds", 0,
+		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
+		false, nullptr, &m_specMapSRV);
+
+	//モデルにスペキュラマップを設定する。
+	m_titan.SetSpecMap(m_specMapSRV);
+
+
 }
 
 Player::~Player()
@@ -60,7 +84,7 @@ Player::~Player()
 
 void Player::Update()
 {
-	//hoge = 10;
+	hoge = 10;
 	if (hoge == 0) {
 		//GameEffect::GetInstance()->EasyEffect(L"ああ感\Rいい\Dうう\n\Rええ\Dおお",
 		GameEffect::GetInstance()->EasyEffect(L"ああ感いいうう\nええおお",
@@ -159,6 +183,11 @@ void Player::Render()
 		g_camera3D.GetViewMatrix(), 
 		g_camera3D.GetProjectionMatrix()
 	);
+	m_titan.Draw(
+		g_camera3D.GetViewMatrix(),
+		g_camera3D.GetProjectionMatrix()
+	);
+
 }
 
 void Player::Move() {

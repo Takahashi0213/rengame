@@ -12,6 +12,8 @@ Texture2D<float4> albedoTexture : register(t0);
 StructuredBuffer<float4x4> boneMatrix : register(t1);
 //todo シャドウマップ
 Texture2D<float4> g_shadowMap : register(t2);
+Texture2D<float4> g_normalMap : register(t3);		//	法線マップ。
+Texture2D<float4> g_specMap : register(t4);			//	スペキュラマップ。
 
 /////////////////////////////////////////////////////////////
 // SamplerState
@@ -35,6 +37,8 @@ cbuffer VSPSCb : register(b0){
 	float4x4 mLightView;	//ライトビュー行列。
 	float4x4 mLightProj;	//ライトプロジェクション行列。
 	int isShadowReciever;	//シャドウレシーバーフラグ。
+	int isHasNormalMap;	//法線マップある？
+	int isHasSpecMap;	//スペキュラマップある？
 };
 /*!
 *@brief	ライト用の定数バッファ。
@@ -214,6 +218,31 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	psInput.TexCoord = In.TexCoord;
     return psInput;
 }
+
+/// <summary>
+/// 法線を計算する。
+/// </summary>
+float3 CalcNormal(float3 normal, float3 tangent, float2 uv)
+{
+	float3 worldSpaceNormal;
+	if (isHasNormalMap == 1) {
+		//法線マップがある。
+		//法線と接ベクトルの外積を計算して、従ベクトルを計算する。
+		float3 biNormal = cross(normal, tangent);
+		float3 tangentSpaceNormal = g_normalMap.Sample(Sampler, uv);
+		//0.0～1.0の範囲になっているタンジェントスペース法線を
+		//-1.0～1.0の範囲に変換する。
+		tangentSpaceNormal = (tangentSpaceNormal * 2.0f) - 1.0f;
+		//法線をタンジェントスペースから、ワールドスペースに変換する。
+		worldSpaceNormal = tangent * tangentSpaceNormal.x + biNormal * tangentSpaceNormal.y + normal * tangentSpaceNormal.z;
+	}
+	else {
+		//ない。
+		worldSpaceNormal = normal;
+	}
+	return worldSpaceNormal;
+}
+
 //--------------------------------------------------------------------------------------
 // ピクセルシェーダーのエントリ関数。
 //--------------------------------------------------------------------------------------
@@ -225,18 +254,20 @@ PSOutput PSMain(PSInput In)
 	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 
+	//法線を計算する。
+	float3 normal = CalcNormal(In.Normal, In.Tangent, In.TexCoord);
+
 	//float hoge = In.TexCoord.x % 2;
 	//if ( hoge > 0.2f && hoge < 0.3f )discard;
 
-	//float3 hoge = float3(0.0f, -1.0f, 0.0f);
-	//float4 hoge2 = float4( 0.0f,0.8f, 0.0f, 1.0f );
-
 	//ディレクションライトの拡散反射光を計算する。
 	float3 lig = 0;
+
 	for (int i = 0; i < MAX_DIRECTION_LIGHT; i++) {
 
 		//lig += max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) * dligColor[i];
-		lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction[i])) * directionLight.color[i].xyz;
+		//lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction[i])) * directionLight.color[i].xyz;
+		lig = max(0.0f, dot(normal * -1.0f, directionLight.direction[i])) * directionLight.color[i].xyz;
 
 		//ディレクションライトの鏡面反射光を計算する。
 		{

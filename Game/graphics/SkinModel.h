@@ -126,6 +126,22 @@ public:
 	{
 		return m_worldMatrix;
 	}
+
+	/// <summary>
+	/// 法線マップの設定。
+	/// </summary>
+	void SetNormalMap(ID3D11ShaderResourceView* srv)
+	{
+		m_normalMapSRV = srv;
+	}
+	/// <summary>
+	/// スペキュラマップの設定。
+	/// </summary>
+	void SetSpecMap(ID3D11ShaderResourceView* srv)
+	{
+		m_specMapSRV = srv;
+	}
+
 private:
 	/*!
 	*@brief	サンプラステートの初期化。
@@ -143,7 +159,7 @@ private:
 	
 	//ディレクションライトをセット
 	void D_LightUpdate();
-	
+
 private:
 	//定数バッファ。
 	struct SVSConstantBuffer {
@@ -153,7 +169,8 @@ private:
 		CMatrix mLightView;		//todo ライトビュー行列。
 		CMatrix mLightProj;		//todo ライトプロジェクション行列。
 		int isShadowReciever;	//todo シャドウレシーバーのフラグ。
-		//CVector3 emissionColor;
+		int isHasNormalMap;		//法線マップを保持している？
+		int isHasSpecMap;		//スペキュラマップを保持している？
 	};
 
 	//環境光の定数バッファ
@@ -202,5 +219,8 @@ private:
 	ID3D11ShaderResourceView* m_albedoTextureSRV = nullptr;	//!<アルベドテクスチャのSRV
 	int					m_renderMode = 0;				//!<レンダーモード
 	bool m_isShadowReciever = false;						//シャドウレシーバーのフラグ。
+	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;		//線マップのSRV
+	ID3D11ShaderResourceView* m_specMapSRV = nullptr;		//スペキュラマップのSRV
+
 };
 
