@@ -19,7 +19,18 @@ GameFont::GameFont()
 		}
 	);
 
+	//シェーダー設定
 	m_psShader.Load("Assets/shader/font.fx", "SpritePixelShader", Shader::EnType::PS);
+	m_psShader2.Load("Assets/shader/font.fx", "SpritePixelShader2", Shader::EnType::PS);
+
+	//定数バッファの初期化
+	D3D11_BUFFER_DESC desc;
+	ZeroMemory(&desc, sizeof(desc));
+	desc.Usage = D3D11_USAGE_DEFAULT;
+	desc.ByteWidth = (((sizeof(ConstantBuffer) - 1) / 16) + 1) * 16;	//16バイトアライメントに切りあげる。
+	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	desc.CPUAccessFlags = 0;
+	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&desc, NULL, &m_cb);
 
 }
 
@@ -82,7 +93,7 @@ void GameFont::Begin(bool flag)
 	d3dDevice->OMGetBlendState(&m_blendStateBackup, bf, &samplerMask);
 	d3dDevice->RSGetState(&m_rasterrizerStateBackup);
 	d3dDevice->OMGetDepthStencilState(&m_depthStencilStateBackup, 0);
-
+	
 	//ステートの設定
 	InitTranslucentBlendState();
 
@@ -110,8 +121,10 @@ void GameFont::Begin(bool flag)
 			nullptr,
 			nullptr,
 			nullptr,
-			nullptr,
-			m_scaleMat
+			[&]() {
+				auto d3dDevice = g_graphicsEngine->GetD3DDeviceContext();
+				d3dDevice->PSSetShader((ID3D11PixelShader*)m_psShader2.GetBody(), NULL, 0);
+			}, m_scaleMat
 				);
 	}
 
@@ -147,6 +160,12 @@ void GameFont::Draw(
 	float frameBufferHalfHeight = FRAME_BUFFER_H * 0.5f;
 	pos.x += frameBufferHalfWidth;
 	pos.y = -pos.y + frameBufferHalfHeight;
+
+	//定数バッファ
+	ConstantBuffer cb;
+	cb.CutUp = m_cutY_Up;
+	cb.CutDown = m_cutY_Down;
+	g_graphicsEngine->GetD3DDeviceContext()->UpdateSubresource(m_cb, 0, NULL, &cb, 0, 0);
 
 	if (m_isDrawShadow) {
 		//影を書く。

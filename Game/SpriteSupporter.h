@@ -14,8 +14,9 @@ public:
 	/// 最初に実行してね！
 	/// </summary>
 	/// <param name="sp">ポインタ</param>
-	void SpriteRenderSetting(class SpriteRender* sp) {
+	void SpriteRenderSetting(class SpriteRender* sp ,int No = -1) {
 		m_spriteRender = sp;
+		m_spriteNo = No;
 	}
 
 	void SpriteSupporter_Update();
@@ -53,6 +54,7 @@ private:
 	CVector4 m_mulColor = { 1.0f,1.0f,1.0f,1.0f };			//乗算カラー
 	int m_maxPattern = -1;									//最大パターン
 	int m_nowPattern = -1;									//現在パターン
+	int m_spriteNo = -1;
 	//Move
 	struct SpriteMoveSet {
 		CVector2 m_spriteMovePos = { 0.0f,0.0f };	//スプライトの移動先

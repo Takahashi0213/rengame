@@ -4,6 +4,7 @@
 #include "physics/PhysicsStaticObject.h"
 #include "Game.h"
 #include "MouseOver.h"
+#include "GameBox.h"
 
 class Player : public IGameObject
 {
@@ -28,11 +29,11 @@ public:
 		return m_rotation;
 	}
 
-	void SetGame(Game* game) {
-		m_gameObj = game;
-	}
-
 private:
+
+	//常時呼ばれる
+	void BoxUp();
+
 	SkinModel m_model;	//スキンモデル。
 	SkinModel m_model_Sl;	//スキンモデル（シルエット）
 	CharacterController m_charaCon;		//キャラクターコントローラー。
@@ -40,15 +41,19 @@ private:
 	LightMaker* m_lightMaker;
 	MouseOver ms;
 
+	//巨人
 	SkinModel m_titan;	//スキンモデル。
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;
 	ID3D11ShaderResourceView* m_specMapSRV = nullptr;
+	ID3D11ShaderResourceView* m_aoMapSRV = nullptr;
 
 	//モノクロフラグ
 	bool m_monochromeFlag = false;
 
+	//行動
 	void Move();
 	void Jump();
+	void BoxCatch();
 
 	//プレイヤー
 	CVector3 m_position = CVector3().Zero();
@@ -65,6 +70,11 @@ private:
 	bool m_jumpNow = false;
 	const float m_jumpPower = 16.0f;	//ジャンプﾊﾟｩﾜｧ
 	const float m_gravity = 0.8f;		//重力ﾊﾟｩﾜｧ
+
+	//箱持ち上げ
+	GameBox* m_upBox = nullptr;		//持ち上げている箱
+	bool m_boxUpFlag = false;		//箱持ち上げ中？
+	bool m_boxButtonFlag = false;	//箱のボタン
 
 };
 

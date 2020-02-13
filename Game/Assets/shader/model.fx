@@ -10,10 +10,10 @@
 Texture2D<float4> albedoTexture : register(t0);	
 //ボーン行列
 StructuredBuffer<float4x4> boneMatrix : register(t1);
-//todo シャドウマップ
-Texture2D<float4> g_shadowMap : register(t2);
+Texture2D<float4> g_shadowMap : register(t2);		//シャドウマップ
 Texture2D<float4> g_normalMap : register(t3);		//	法線マップ。
 Texture2D<float4> g_specMap : register(t4);			//	スペキュラマップ。
+Texture2D<float4> g_aoMap : register(t5);			//	AOマップ。
 
 /////////////////////////////////////////////////////////////
 // SamplerState
@@ -39,6 +39,7 @@ cbuffer VSPSCb : register(b0){
 	int isShadowReciever;	//シャドウレシーバーフラグ。
 	int isHasNormalMap;	//法線マップある？
 	int isHasSpecMap;	//スペキュラマップある？
+	int isHasAOMap;		//アンビエントオクリュージョンマップある？
 };
 /*!
 *@brief	ライト用の定数バッファ。
@@ -243,6 +244,18 @@ float3 CalcNormal(float3 normal, float3 tangent, float2 uv)
 	return worldSpaceNormal;
 }
 
+//アンビエントライトを計算
+float3 CalcAmbientLight(float4 albedoColor, float2 uv)
+{
+	float4 Amb = { Ambient_R, Ambient_G, Ambient_B, 1.0f };
+	if (isHasAOMap == true) {
+		return albedoColor.xyz * Amb * g_aoMap.Sample(Sampler, uv);
+	}
+	else {
+		return albedoColor.xyz * Amb;
+	}
+}
+
 //--------------------------------------------------------------------------------------
 // ピクセルシェーダーのエントリ関数。
 //--------------------------------------------------------------------------------------
@@ -276,6 +289,10 @@ PSOutput PSMain(PSInput In)
 			float3 E = normalize(In.worldPos - eyePos);
 
 			float specPower = max(0, dot(R, -E));
+			if (isHasSpecMap) {
+				specPower = g_specMap.Sample(Sampler, In.TexCoord).r;
+				//specPower *= 1.2f;
+			}
 
 			finalColor = float4(directionLight.color[i].xyz*pow(specPower, specPow), 1);
 
@@ -284,7 +301,8 @@ PSOutput PSMain(PSInput In)
 	}
 
 	//環境光をあてる。
-	lig += float3(Ambient_R, Ambient_G, Ambient_B);
+	//lig += float3(Ambient_R, Ambient_G, Ambient_B);
+	lig += CalcAmbientLight(albedoColor, In.TexCoord);
 
 	if (isShadowReciever == 1) {	//シャドウレシーバー。
 		

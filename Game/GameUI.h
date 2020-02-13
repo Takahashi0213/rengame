@@ -34,6 +34,7 @@ public:
 	/// UIの開閉
 	/// </summary>
 	void CloseUI() {
+		m_uiDrawNow = false;
 		for (int i = 0; i < m_spriteList.size(); i++) {
 			m_spriteList[i]->m_spriteSupporter.SpriteMove({ OpenAndCloseMoveBound,0.0f },
 				OpenAndCloseTimeBound, 0, true);
@@ -42,6 +43,7 @@ public:
 		}
 	}
 	void OpenUI() {
+		m_uiDrawNow = true;
 		for (int i = 0; i < m_spriteList.size(); i++) {
 			m_spriteList[i]->m_spriteSupporter.SpriteMove({ OpenAndCloseMove,0.0f }, 
 				OpenAndCloseTime, 0, true);
@@ -71,6 +73,8 @@ private:
 	void GameUI::LifeUpdate();
 
 	//メンバ変数
+
+	bool m_uiDrawNow = true;	//UI表示中？
 
 	//移動用
 	const float OpenAndCloseMove = 1000.0f;

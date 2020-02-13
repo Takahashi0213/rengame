@@ -53,5 +53,7 @@ private:
 	Shader m_vs;			//頂点シェーダー。
 	Shader m_ps;			//ピクセルシェーダー。
 
+	bool m_blurInitFlag = false;
+
 };
 

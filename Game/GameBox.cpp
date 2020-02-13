@@ -64,7 +64,34 @@ GameBox::~GameBox()
 /// </summary>
 void GameBox::GameBox_Update() {
 
-	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+	Game::GameMode NowGameMode = Game::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
+
+	CVector3 Pos;
+	CQuaternion Rot;
+	if (m_originBox == nullptr) {
+		Rot = m_rotation;
+	}
+	else {
+		Rot = m_rotation * m_originBox->GetRotation();
+	}
+
+	//計算機
+	if (m_boxTag == Origin) {
+		Pos = m_position;
+	}
+	else if (m_boxTag == Another) {
+		auto originRot = m_originBox->GetRotation();
+		Pos = m_originBox->GetPosition();
+		CVector3 LP = m_localPosition;
+		originRot.Multiply(LP);
+		Pos += LP;
+	}
+	m_model.UpdateWorldMatrix(Pos, Rot, m_scale);
+
+	if (m_colli_InitFlag == true) {
+		m_physicsStaticObject.SetPositionAndRotation(Pos, Rot);
+	}
+
 	//シャドウキャスターを登録。
 	//ShadowMap::GetInstance()->RegistShadowCaster(&m_model);
 	//ShadowMap::GetInstance()->Update(m_lightMaker->GetLightCameraPosition(), m_lightMaker->GetLightCameraTarget());
@@ -83,10 +110,33 @@ void GameBox::GameBox_Render() {
 
 void GameBox::GameBoxUpdate_Colli() {
 
+	Game::GameMode NowGameMode = Game::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
+
 	if (m_colli_InitFlag == false) {
 		
 		//コライダーを作成。
-		m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation, m_scale);
+		if (NowGameMode == Game::ActionMode) {
+			CVector3 Pos;
+			if (m_boxTag == Origin) {
+				Pos = m_position;
+			}
+			else if (m_boxTag == Another) {
+				Pos = m_originBox->GetPosition();
+				Pos += m_localPosition;
+			}
+			m_physicsStaticObject.CreateMeshObject(m_model, Pos, m_rotation, m_scale);
+		}
+		else {
+			CQuaternion Rot;
+			if (m_originBox == nullptr) {
+				Rot = m_rotation;
+			}
+			else {
+				Rot = m_rotation * m_originBox->GetRotation();
+			}
+			m_physicsStaticObject.CreateMeshObject(m_model, m_position, Rot, m_scale);
+		}
+
 		m_colli_InitFlag = true;
 	}
 

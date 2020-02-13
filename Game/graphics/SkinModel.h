@@ -141,6 +141,13 @@ public:
 	{
 		m_specMapSRV = srv;
 	}
+	/// <summary>
+	/// アンビエントオクリュージョンマップの設定。
+	/// </summary>
+	void SetAOMap(ID3D11ShaderResourceView* srv)
+	{
+		m_aoMapSRV = srv;
+	}
 
 private:
 	/*!
@@ -171,6 +178,7 @@ private:
 		int isShadowReciever;	//todo シャドウレシーバーのフラグ。
 		int isHasNormalMap;		//法線マップを保持している？
 		int isHasSpecMap;		//スペキュラマップを保持している？
+		int isHasAOMap;			//AOマップを保持している？
 	};
 
 	//環境光の定数バッファ
@@ -219,8 +227,10 @@ private:
 	ID3D11ShaderResourceView* m_albedoTextureSRV = nullptr;	//!<アルベドテクスチャのSRV
 	int					m_renderMode = 0;				//!<レンダーモード
 	bool m_isShadowReciever = false;						//シャドウレシーバーのフラグ。
-	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;		//線マップのSRV
+
+	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;		//法線マップのSRV
 	ID3D11ShaderResourceView* m_specMapSRV = nullptr;		//スペキュラマップのSRV
+	ID3D11ShaderResourceView* m_aoMapSRV = nullptr;			//AOマップのSRV
 
 };
 

@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "BulletCollision/CollisionDispatch/btCollisionWorld.h"
+
 #include "GameUI.h"
+#include "BoxMaker.h"
 
 int Game_UI = Hash::MakeHash("GameUI");
 
@@ -28,6 +30,9 @@ Player::Player()
 	//シャドウレシーバーにする。
 	m_model.SetShadowReciever(true);
 
+	//ゲームのポインタ
+	m_gameObj = Game::GetInstance();
+
 	//ニセプレイヤーの作成
 	//SkinModelRender* smr = NewGO<SkinModelRender>("Player2", 0);
 	//smr->Model_Init(L"Assets/modelData/unityChan.cmo");
@@ -37,11 +42,11 @@ Player::Player()
 
 	//SpriteRender* MainSprite = NewGO<SpriteRender>("TEST", 0);
 	//MainSprite->ChangeMaskSprite();
-	//MainSprite->Init(L"Assets/sprite/fukidasi.dds", 600.0f, 400.0f, 0);
-	//MainSprite->SetPosition({ 250.0f,-50.0f ,0.0f });
-	//MainSprite->InitSub(L"Assets/sprite/keis.dds", 588.0f, 1240.0f, 0);
-	//MainSprite->SetPosition({ 250.0f,-250.0f ,0.0f }, true);
-	//MainSprite->m_spriteSupporter.SpriteRotation(10.0f, 600, 0, true);
+	//MainSprite->Init(L"Assets/sprite/keis.dds", 588.0f, 1240.0f, 0);
+	//MainSprite->SetPosition({ 250.0f,-250.0f ,0.0f });
+	//MainSprite->InitSub(L"Assets/sprite/fukidasi.dds", 600.0f, 400.0f, 0);
+	//MainSprite->SetPosition({ 250.0f,-50.0f ,0.0f }, 0);
+	//MainSprite->GetSubSpriteSupporter(0)->SpriteRotation(10.0f, 600, 0, true);
 
 	//if (g_pad[0].IsTrigger(enButtonA)) {
 	//	CGameObjectManager::GetInstance()->DeleteGO(this);
@@ -74,6 +79,16 @@ Player::Player()
 	//モデルにスペキュラマップを設定する。
 	m_titan.SetSpecMap(m_specMapSRV);
 
+	//AOマップをロード。
+	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
+	DirectX::CreateDDSTextureFromFileEx(
+		g_graphicsEngine->GetD3DDevice(), L"Assets/sprite/Titan__Ao.dds", 0,
+		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
+		false, nullptr, &m_aoMapSRV);
+
+	//モデルにAOマップを設定する。
+	m_titan.SetAOMap(m_aoMapSRV);
+
 
 }
 
@@ -87,9 +102,10 @@ void Player::Update()
 	hoge = 10;
 	if (hoge == 0) {
 		//GameEffect::GetInstance()->EasyEffect(L"ああ感\Rいい\Dうう\n\Rええ\Dおお",
-		GameEffect::GetInstance()->EasyEffect(L"ああ感いいうう\nええおお",
+		GameEffect::GetInstance()->EasyEffect(L"ああ感いいうう\nええ\nおお",
 			GameEffect_Stand::Stand_Normal,
 			GameEffect_Stand::New_Stand);
+		Game::GetInstance()->GetUI()->CloseUI();
 		hoge++;
 	}
 	if (hoge == 2) {
@@ -97,7 +113,7 @@ void Player::Update()
 		hoge++;
 	}
 	if (hoge == 4) {
-		GameEffect::GetInstance()->EasyEffect(L"ご飯食ってて\n喋れません",
+		GameEffect::GetInstance()->EasyEffect(L"ご飯食ってて\n喋れません\nほげ～～",
 			GameEffect_Stand::Stand_Sad,
 			GameEffect_Stand::Shake_Stand);
 		hoge++;
@@ -106,7 +122,7 @@ void Player::Update()
 		GameEffect::GetInstance()->GetInstance_Stand()->StandControl(
 			GameEffect_Stand::Stand_Happy,
 			GameEffect_Stand::Jump_Stand);
-		GameEffect::GetInstance()->GetInstance_Message()->MessageEffect(L"笑いやがった");
+		GameEffect::GetInstance()->GetInstance_Message()->MessageEffect(L"笑いやがった\nはははは\nはは　は");
 		hoge++;
 	}
 	if (hoge == 8) {
@@ -131,19 +147,15 @@ void Player::Update()
 		}
 	}
 
+	//処理
+
+	BoxUp();
+
 	Move();
 
-	bool OnG_Flag = m_charaCon.IsOnGround();
+	Jump();
 
-	if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
-		if (m_jumpNow == false && OnG_Flag == true) {
-			Jump();
-		}
-		m_jumpNow = true;
-	}
-	else {
-		m_jumpNow = false;
-	}
+	BoxCatch();
 
 	//ワールド行列の更新。
 	m_model_Sl.UpdateWorldMatrix(m_position, m_rotation, m_scale);
@@ -191,6 +203,11 @@ void Player::Render()
 }
 
 void Player::Move() {
+
+	//イベント中なら強制終了
+	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+		return;
+	}
 
 	//左クリックの状態を判定
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
@@ -244,6 +261,116 @@ void Player::Move() {
 
 void Player::Jump() {
 	
-	m_moveSpeed.y = m_jumpPower;
+	//イベント中なら強制終了
+	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+		return;
+	}
+
+	bool OnG_Flag = m_charaCon.IsOnGround();
+
+	//ジャンプ処理
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+		if (m_jumpNow == false && OnG_Flag == true) {
+			m_moveSpeed.y = m_jumpPower;
+		}
+		m_jumpNow = true;
+	}
+	else {
+		m_jumpNow = false;
+	}
+
+}
+
+void Player::BoxCatch() {
+
+	//イベント中なら強制終了
+	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+		return;
+	}
+
+	//アクションモードでないなら強制終了
+	if (Game::GetInstance()->GetGameMode() != Game::ActionMode) {
+		return;
+	}
+
+	//対応するボタンが押されてないなら強制終了
+	if (HIWORD(GetAsyncKeyState('C'))) {
+		if (m_boxButtonFlag == false) {
+			m_boxButtonFlag = true;
+		}
+		else {
+			return;
+		}
+	}
+	else {
+		m_boxButtonFlag = false;
+		return;
+	}
+
+	//ﾎﾞｯｸｽﾒｲｶｱ…
+	BoxMaker* BoxMaker = BoxMaker::GetInstance();
+
+	//箱を持ち上げているかどうかで分岐
+	if (m_boxUpFlag == false) {
+
+		//近くに箱があるか検索ｩ
+		std::list<GameBox*> boxList = BoxMaker->GetBoxList();
+		float FinalRange = 0.0f;		//距離保存用
+		GameBox* UpBox = nullptr;	//（持ち上げる）箱の名は。
+
+		for (auto go : boxList) {
+
+			//そもそもOriginかな？
+			if (go->GetBoxTag() == GameBox::Origin) {
+
+				CVector3 P_B_Range = m_position - go->GetPosition();
+				float P_B_Range_Final = P_B_Range.Length();
+
+				if (UpBox == nullptr) {
+					UpBox = go;
+					FinalRange = P_B_Range_Final;
+				}
+				else {
+					//距離が近いかな？
+					if (FinalRange > P_B_Range_Final) {
+						UpBox = go;
+						FinalRange = P_B_Range_Final;
+					}
+				}
+
+			}
+
+		}
+
+		//箱を持ちアゲアゲ↑
+
+		m_upBox = UpBox;
+		m_boxUpFlag = true;
+
+
+	}
+	else {
+
+		//箱をおろす
+
+		m_boxUpFlag = false;
+		m_upBox = nullptr;
+
+	}
+
+}
+
+void Player::BoxUp() {
+
+	//何も持ち上げてないなら終了
+	if (m_upBox == nullptr) {
+		return;
+	}
+
+	CVector3 BoxPos = m_upBox->GetPosition();
+	BoxPos = m_position;
+	BoxPos.y += 150.0f;
+	m_upBox->GameBox_Set(BoxPos, m_rotation);
+	
 
 }

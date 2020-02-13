@@ -33,16 +33,20 @@ void GameCamera::Update() {
 
 	Game::GameMode NowGameMode = m_game->GetGameMode();		//現在のゲームモードを呼び出す
 
-	if (NowGameMode == Game::ActionMode || NowGameMode == Game::CreateMode) {
-		//共通のカメラ処理
-		CommonMove();
-	}
+	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == false) {	//イベント中はどれも実行しない
 
-	if (NowGameMode == Game::ActionMode) {
-		ActionMode();
-	}
-	else if (NowGameMode == Game::CreateMode) {
-		CreateMode();
+		if (NowGameMode == Game::ActionMode || NowGameMode == Game::CreateMode) {
+			//共通のカメラ処理
+			CommonMove();
+		}
+
+		if (NowGameMode == Game::ActionMode) {
+			ActionMode();
+		}
+		else if (NowGameMode == Game::CreateMode) {
+			CreateMode();
+		}
+
 	}
 
 	//注視点をカメラに伝える

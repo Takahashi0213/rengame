@@ -19,6 +19,9 @@ Game::Game()
 	//このインスタンスを唯一のインスタンスとして記録する
 	m_instance = this;
 
+	//サウンドエンジンを初期化。
+	m_soundEngine.Init();
+
 	//生成
 
 	//ライトメーカーの生成
@@ -32,15 +35,13 @@ Game::Game()
 	Player* pl = CGameObjectManager::GetInstance()->NewGO<Player>("Player", 1);
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
 	GameUI* ui = CGameObjectManager::GetInstance()->NewGO<GameUI>("GameUI", 8);
+	m_ui = ui;
 
 	TransitionGenerator* tg = CGameObjectManager::GetInstance()->NewGO<TransitionGenerator>("TransitionGenerator", 10);
 	tg->SetObjectTag(objectTag::t_Sprite);		//とにかく最後に実行されるようにする
 
 	//ボックスメイカーに渡すよ
-	m_box->SetGame(this);
 	m_box->SetPlayer(pl);
-	//プレイヤーに渡す
-	pl->SetGame(this);
 	//背景に渡す
 	bg->SetGame(this);
 }

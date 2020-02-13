@@ -112,6 +112,13 @@ public:
 		dst.y = y;
 		dst.z = z;
 	}
+	template<>
+	void CopyTo(btVector3& dst) const
+	{
+		dst.setX(x);
+		dst.setY(y);
+		dst.setZ(z);
+	}
 	/*!
 	* @brief	ベクトルの各要素を設定。
 	*/
@@ -360,6 +367,22 @@ public:
 	{
 		return DirectX::XMLoadFloat4(&vec);
 	}
+	template<class TVector4>
+	void CopyTo(TVector4& dst) const
+	{
+		dst.x = x;
+		dst.y = y;
+		dst.z = z;
+		dst.w = w;
+	}
+	template<>
+	void CopyTo(btQuaternion& dst) const
+	{
+		dst.setX(x);
+		dst.setY(y);
+		dst.setZ(z);
+		dst.setW(w);
+	}
 	CVector4(){}
 	/*!
 	*@brief	代入演算子。
@@ -530,6 +553,9 @@ public:
 	}
 	void SetRotationDeg(const CVector3& axis, float angle)
 	{
+		if (axis.LengthSq() < 0.001f) {
+			return;
+		}
 		float s;
 		float halfAngle = CMath::DegToRad(angle) * 0.5f;
 		s = sin(halfAngle);
@@ -670,5 +696,16 @@ static inline TVector operator-(const TVector& v0, const TVector& v1)
 	TVector result;
 	result.Subtract(v0, v1);
 	return result;
+}
+/*!
+*@brief	クォータニオン同士の乗算。
+*@details
+* 乗算は左から右に向かってかかっていく。
+*/
+static inline CQuaternion operator*(const CQuaternion& q1, const CQuaternion q2)
+{
+	CQuaternion qRet;
+	qRet.Multiply(q2, q1);
+	return qRet;
 }
 

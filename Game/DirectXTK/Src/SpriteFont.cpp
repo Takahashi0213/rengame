@@ -183,7 +183,8 @@ template<typename TAction>
 void SpriteFont::Impl::ForEachGlyph(_In_z_ wchar_t const* text, TAction action) const
 {
 	bool OffsetFlag = false;
-    float x = 0;
+	bool OffsetFlag2 = false;
+	float x = 0;
     float y = 0;
 
     for (; *text; text++)
@@ -206,6 +207,7 @@ void SpriteFont::Impl::ForEachGlyph(_In_z_ wchar_t const* text, TAction action) 
                 auto glyph = FindGlyph(character);
 				auto size = glyph->XOffset;
 
+				//ここ改変ポイント
 				size = 4;
 
 				if (OffsetFlag == true && (character <= 0x4e00 || character >= 0x9fff)) {
@@ -215,8 +217,17 @@ void SpriteFont::Impl::ForEachGlyph(_In_z_ wchar_t const* text, TAction action) 
 					size += 5;
 				}
 
+				if (OffsetFlag2 == true ) {
+					size -= 7;
+					OffsetFlag2 = false;
+				}
+
 				if (character >= 0x4e00 && character <= 0x9fff) {
 					OffsetFlag = true;
+				}
+				else if (character == 0x30FC) {	//「ー」だけ特別処理
+					size += 3;
+					OffsetFlag2 = true;
 				}
 				else {
 					OffsetFlag = false;

@@ -8,16 +8,18 @@
 // http://go.microsoft.com/fwlink/?LinkId=248929
 // http://create.msdn.com/en-US/education/catalog/sample/stock_effects
 
+cbuffer cb:register(b0) {
+	float CutUp;
+	float CutDown;
+};
 
 Texture2D<float4> Texture : register(t0);
 sampler TextureSampler : register(s0);
-
 
 cbuffer Parameters : register(b0)
 {
 	row_major float4x4 MatrixTransform;
 };
-
 
 void SpriteVertexShader(inout float4 color    : COLOR0,
 	inout float2 texCoord : TEXCOORD0,
@@ -26,11 +28,20 @@ void SpriteVertexShader(inout float4 color    : COLOR0,
 	position = mul(position, MatrixTransform);
 }
 
-
 float4 SpritePixelShader(float4 color    : COLOR0,
 	float2 texCoord : TEXCOORD0) : SV_Target0
 {
 	float4 texColor = Texture.Sample(TextureSampler, texCoord) * color;
 	clip(texColor.a - 0.9f);
+	return texColor;
+}
+
+float4 SpritePixelShader2(float4 color    : COLOR0,
+	float2 texCoord : TEXCOORD0) : SV_Target0
+{
+	float4 texColor = Texture.Sample(TextureSampler, texCoord) * color;
+
+	//if (0.5f > texCoord.y)discard;
+
 	return texColor;
 }

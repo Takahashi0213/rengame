@@ -1,6 +1,7 @@
 #pragma once
 #include "SystemData.h"
 #include "GameGraphic.h"
+#include "GameUI.h"
 
 /// <summary>
 /// ゲーム！
@@ -50,6 +51,9 @@ public:
 	GameGraphic* Game::GetGameGraphicInstance() {
 		return &m_gameGraphic;
 	}
+	GameUI* Game::GetUI() {
+		return m_ui;
+	}
 
 private:
 	GameMode m_gameMode = ActionMode;
@@ -59,5 +63,8 @@ private:
 	SystemData m_systemData;
 	GameGraphic m_gameGraphic;
 
+	CSoundEngine m_soundEngine;				//サウンドエンジン。
+
+	GameUI* m_ui = nullptr;
 };
 

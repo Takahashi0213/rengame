@@ -27,5 +27,22 @@ public:
 	{
 		return rigidBody;
 	}
+	/*!
+	* @brief	物理オブジェクトの座標と回転を設定
+	*@param[in]	pos			座標。
+	*@param[in]	rot			回転。
+	*/
+	void SetPositionAndRotation(const CVector3& pos, const CQuaternion& rot)
+	{
+		btTransform trans;
+		btVector3 btPos;
+		pos.CopyTo(btPos);
+		trans.setOrigin(btPos);
+		btQuaternion btRot;
+		rot.CopyTo(btRot);
+		trans.setRotation(btRot);
+		rigidBody->setWorldTransform(trans);
+	}
+
 };
 

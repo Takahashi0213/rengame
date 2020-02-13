@@ -193,6 +193,13 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix ,EnRenderMode render
 	else {
 		vsCb.isHasSpecMap = false;
 	}
+	//AOマップを使用するかどうかのフラグを送る。
+	if (m_aoMapSRV != nullptr) {
+		vsCb.isHasAOMap = true;
+	}
+	else {
+		vsCb.isHasAOMap = false;
+	}
 
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 
@@ -207,7 +214,6 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix ,EnRenderMode render
 	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
 
 	//定数バッファをシェーダースロットに設定。
-	//d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
 	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb2);
 	d3dDeviceContext->PSSetConstantBuffers(2, 1, &m_ambientlightCb);
 	d3dDeviceContext->PSSetConstantBuffers(3, 1, &m_lightCb2);
@@ -228,6 +234,10 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix ,EnRenderMode render
 		if (m_specMapSRV != nullptr) {
 			//スペキュラマップが設定されていたらレジスタt4に設定する。
 			d3dDeviceContext->PSSetShaderResources(4, 1, &m_specMapSRV);
+		}
+		if (m_aoMapSRV != nullptr) {
+			//スペキュラマップが設定されていたらレジスタt5に設定する。
+			d3dDeviceContext->PSSetShaderResources(5, 1, &m_aoMapSRV);
 		}
 
 	//ボーン行列をGPUに転送。

@@ -71,6 +71,8 @@ public:
 		m_meinSpriteData.High = high;
 		m_meinSpriteData.MulColor = color;
 		
+		SetMulColor();
+
 		if (m_3sliceFlag == false) {
 			SpriteDataSlice();
 		}
@@ -92,6 +94,12 @@ private:
 	/// </summary>
 	void SpriteDataSlice();
 	void SpriteDataSlice3();
+
+	void SetMulColor() {
+		for (int i = 0; i < 9; i++) {
+			m_sprite[i]->SetMulColor(m_meinSpriteData.MulColor);
+		}
+	}
 
 	void SpriteUpdate() {
 
@@ -145,7 +153,7 @@ private:
 	SpriteData m_meinSpriteData;	//5番目のこと
 
 	//スプライトども
-	Sprite* m_sprite[8];
+	Sprite* m_sprite[9];
 	Sprite m_sprite1;
 	Sprite m_sprite2;
 	Sprite m_sprite3;

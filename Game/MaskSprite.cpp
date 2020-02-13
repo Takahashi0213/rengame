@@ -4,7 +4,7 @@
 MaskSprite::MaskSprite()
 {
 	CreateDepthStencilState();
-	m_subSprite.m_renderMode = Sprite_RenderMode::Mask;
+	m_mainSprite.m_renderMode = Sprite_RenderMode::Mask;
 }
 
 MaskSprite::~MaskSprite()
@@ -24,6 +24,7 @@ void MaskSprite::CreateDepthStencilState()
 {
 	//D3Dデバイスを取得。
 	auto pd3d = g_graphicsEngine->GetD3DDevice();
+
 	//作成する深度ステンシルステートの定義を設定していく。
 	D3D11_DEPTH_STENCIL_DESC desc = { 0 };
 	desc.DepthEnable = true;					 //Zテストが有効。
@@ -59,15 +60,40 @@ void MaskSprite::Draw() {
 	g_graphicsEngine->GetD3DDeviceContext()->OMSetDepthStencilState(m_depthStencilState, 0);
 
 	//マスクをかけられるスプライトの描画
-	m_subSprite.Sprite_Draw();
+	m_mainSprite.Sprite_Draw();
 
 	//デプスステンシルステートを切り替える。
 	g_graphicsEngine->GetD3DDeviceContext()->OMSetDepthStencilState(m_depthStencilState_Z, 0);
 
-	//マスクのスプライトの描画
-	m_mainSprite.Sprite_Draw();
+	//サブ（マスク）の描画
+	if (m_subSpriteList.size() > 0) {
+		for (int i = 0; i < m_subSpriteList.size(); i++) {
+			m_subSpriteList[i].sprite->Sprite_Draw();
+		}
+	}
 
 	//戻す	
 	g_graphicsEngine->GetD3DDeviceContext()->OMSetDepthStencilState(m_depthStencilState_Def, 0);
 
+}
+
+Sprite* MaskSprite::AddSubSprite(const wchar_t* texFilePath, float w, float h) {
+
+	//スプライトの生成
+	SubSpriteData Data;
+	Data.sprite = new Sprite;
+	//どっせい
+	Data.sprite->Sprite_Init(texFilePath, w, h);
+	Data.sprite->SetMulColor(m_mainSpriteData.MulColor);
+	//データ設定
+	Data.subData.Position = m_mainSpriteData.Position;
+	Data.subData.Wide = w;
+	Data.subData.High = h;
+	Data.subData.Rotation = m_mainSpriteData.Rotation;
+	Data.subData.Scale = CVector3::One();
+	Data.subData.MulColor = m_mainSpriteData.MulColor;
+	//Vectorにぶちこみます
+	m_subSpriteList.push_back(Data);
+
+	return Data.sprite;
 }

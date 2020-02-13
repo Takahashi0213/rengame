@@ -34,10 +34,10 @@ void SpriteSupporter::SpriteSupporter_Update() {
 /// </summary>
 void SpriteSupporter::SpriteDataUpdate() {
 
-	m_position = m_spriteRender->GetPosition();
-	m_rotation = m_spriteRender->GetRotation();
-	m_scale = m_spriteRender->GetScale();
-	m_mulColor = m_spriteRender->GetMulColor();
+	m_position = m_spriteRender->GetPosition(m_spriteNo);
+	m_rotation = m_spriteRender->GetRotation(m_spriteNo);
+	m_scale = m_spriteRender->GetScale(m_spriteNo);
+	m_mulColor = m_spriteRender->GetMulColor(m_spriteNo);
 	m_maxPattern = m_spriteRender->GetMaxPattern();
 	m_nowPattern = m_spriteRender->GetNowPattern();
 
@@ -48,10 +48,10 @@ void SpriteSupporter::SpriteDataUpdate() {
 /// </summary>
 void SpriteSupporter::SpriteDataReturn() {
 
-	m_spriteRender->SetPosition(m_position);
-	m_spriteRender->SetRotation(m_rotation);
-	m_spriteRender->SetScale(m_scale);
-	m_spriteRender->SetMulColor(m_mulColor);
+	m_spriteRender->SetPosition(m_position, m_spriteNo);
+	m_spriteRender->SetRotation(m_rotation, m_spriteNo);
+	m_spriteRender->SetScale(m_scale, m_spriteNo);
+	m_spriteRender->SetMulColor(m_mulColor, m_spriteNo);
 	if (m_maxPattern > -1) {
 		m_spriteRender->ChangePattern(m_nowPattern);
 	}

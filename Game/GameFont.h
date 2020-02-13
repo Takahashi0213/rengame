@@ -48,8 +48,19 @@ public:
 		m_shadowColor = shadowColor;
 	}
 
+	void SetCut(float cutUp, float cutDown) {
+		m_cutY_Up = cutUp;
+		m_cutY_Down = cutDown;
+	}
+
+	struct ConstantBuffer {
+		float CutUp;
+		float CutDown;
+	};
+
 private:
 	void InitTranslucentBlendState();
+	ID3D11Buffer* m_cb = nullptr;		//定数バッファ
 	ID3D11BlendState* m_translucentBlendState = nullptr;	//半透明合成用のブレンドステート。
 
 	DirectX::SpriteBatch*	m_spriteBatch = nullptr;	//!<スプライトバッチ。
@@ -61,9 +72,14 @@ private:
 	float m_shadowOffset = 0.0f;						//!<影を書くときのピクセルのオフセット量。
 	CVector4 m_shadowColor = ShadowColorDef;			//!<影の色。
 
+	//カットシステムゥ！！
+	float m_cutY_Up = 720.0f;						//!<ここより上は描画しない
+	float m_cutY_Down = -720.0f;					//!<ここより下は描画しない
+
 	CMatrix m_scaleMat;
 	ID3D11DepthStencilState*	m_depthStencilStateBackup = nullptr;	//!<現在のデプスステンシルステート。
 	ID3D11RasterizerState*		m_rasterrizerStateBackup = nullptr;		//!<現在のラスタライザステート。
 	ID3D11BlendState*			m_blendStateBackup = nullptr;			//!<現在のブレンドステート。
 	Shader m_psShader;													//!<フォント用のぴくせるしぇ
+	Shader m_psShader2;													//!<フォント用のぴくせるしぇ
 };

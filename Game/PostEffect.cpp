@@ -140,8 +140,11 @@ void PostEffect::BlurDraw() {
 	auto deviceContext = g_graphicsEngine->GetD3DDeviceContext();
 
 	//ガウシアンブラーの初期化と実行
-	m_gaussianBlur.Init(CGameObjectManager::GetInstance()->GetMainRenderTarget()->GetRenderTargetSRV(), 
-		Game::GetInstance()->GetGameGraphicInstance()->m_blurIntensity);
+	if (m_blurInitFlag == false) {
+		m_gaussianBlur.Init(CGameObjectManager::GetInstance()->GetMainRenderTarget()->GetRenderTargetSRV(),
+			Game::GetInstance()->GetGameGraphicInstance()->m_blurIntensity);
+		m_blurInitFlag = true;
+	}
 	m_gaussianBlur.Execute(*this);
 
 	g_graphicsEngine->ChangeRenderTarget(mainRT, mainRT->GetViewport());

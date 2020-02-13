@@ -97,6 +97,14 @@ public:
 		m_pivot.x = pivot.x;
 		m_pivot.y = pivot.y;
 	}
+	/// <summary>
+	/// カットするゾイ
+	/// </summary>
+	/// <param name="cutUp">ここより上は描画しないよ</param>
+	/// <param name="cutDown">ここより下も描画しないぞ</param>
+	void SetCut(float cutUp,float cutDown) {
+		m_font.SetCut(cutUp, cutDown);
+	}
 	/*!
 	* @brief	座標を取得。
 	*/

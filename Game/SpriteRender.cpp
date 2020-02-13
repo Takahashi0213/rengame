@@ -49,10 +49,12 @@ void SpriteRender::Init(const wchar_t* texFilePath, float w, float h, int priori
 }
 void SpriteRender::InitSub(const wchar_t* texFilePath, float w, float h, int priority)
 {
-	m_subSprite.Wide = w;
-	m_subSprite.High = h;
-	m_maskSprite->GetSubSprite()->Sprite_Init(texFilePath, w, h); //描画する
-	m_maskSprite->GetSubSprite()->SetMulColor(m_subSprite.MulColor);
+	SpriteData data;
+	m_subSprite.push_back(data);
+	SpriteSupporter* SS = new SpriteSupporter;
+	m_subSpriteSupporter.push_back(SS);
+	SS->SpriteRenderSetting(this, (int)m_subSprite.size()-1);
+	m_maskSprite->AddSubSprite(texFilePath, w, h);
 }
 
 /// <summary>
@@ -93,12 +95,18 @@ void SpriteRender::Init(const wchar_t* texFilePath, float w, float h, CVector3 p
 }
 void SpriteRender::InitSub(const wchar_t* texFilePath, float w, float h, CVector3 pos, CVector4 color, int priority) {
 
-	m_subSprite.Wide = w;
-	m_subSprite.High = h;
-	m_maskSprite->GetSubSprite()->Sprite_Init(texFilePath, w, h); //描画する
-	m_subSprite.MulColor = color;
-	m_maskSprite->GetSubSprite()->SetMulColor(m_subSprite.MulColor);
-	m_subSprite.Position = pos;
+	SpriteData data;
+	data.Wide = w;
+	data.High = h;
+	data.MulColor = color;
+	data.Position = pos;
+	m_subSprite.push_back(data);
+	SpriteSupporter* SS = new SpriteSupporter;
+	m_subSpriteSupporter.push_back(SS);
+	SS->SpriteRenderSetting(this, (int)m_subSprite.size()-1);
+
+	Sprite* newSp = m_maskSprite->AddSubSprite(texFilePath, w, h);
+	newSp->SetMulColor(data.MulColor);
 }
 
 /// <summary>
@@ -106,14 +114,21 @@ void SpriteRender::InitSub(const wchar_t* texFilePath, float w, float h, CVector
 /// </summary>
 void SpriteRender::Update() {
 
-	m_spriteSupporter.SpriteSupporter_Update();
+	SpriteSp_Update();
 
 	if (m_maskSprite != nullptr) {	
 		//マスクスプライトの処理
 		MaskSpriteDataSet();
 
-		m_maskSprite->GetMainSprite()->Sprite_Update(m_mainSprite.Position, m_mainSprite.Rotation, m_mainSprite.Scale, m_mainSprite.Pivot);
-		m_maskSprite->GetSubSprite()->Sprite_Update(m_subSprite.Position, m_subSprite.Rotation, m_subSprite.Scale, m_subSprite.Pivot);
+		m_maskSprite->GetMainSprite()->Sprite_Update(m_mainSprite.Position, m_mainSprite.Rotation, 
+			m_mainSprite.Scale, m_mainSprite.Pivot);
+		if (m_subSprite.size() > 0) {
+			for (int i = 0; i < m_subSprite.size() ; i++) {
+				//サブ更新
+				m_maskSprite->GetSubList_Sprite(i)->Sprite_Update(m_subSprite[i].Position,
+					m_subSprite[i].Rotation, m_subSprite[i].Scale, m_subSprite[i].Pivot);
+			}
+		}
 	}
 	else if (m_sliceSprite != nullptr) {
 		//準備
@@ -146,23 +161,25 @@ void SpriteRender::Render() {
 /// </summary>
 void SpriteRender::MaskSpriteDataSet() {
 
+	//メイン
 	m_maskSprite->SetPosition(m_mainSprite.Position);
-	m_maskSprite->SetPosition(m_subSprite.Position, true);
-
 	m_maskSprite->SetRotation(m_mainSprite.Rotation);
-	m_maskSprite->SetRotation(m_subSprite.Rotation, true);
-
 	m_maskSprite->SetScale(m_mainSprite.Scale);
-	m_maskSprite->SetScale(m_subSprite.Scale, true);
-
 	m_maskSprite->SetPivot(m_mainSprite.Pivot);
-	m_maskSprite->SetPivot(m_subSprite.Pivot, true);
-
 	m_maskSprite->SetSize({ m_mainSprite.Wide,m_mainSprite.High });
-	m_maskSprite->SetSize({ m_mainSprite.Wide,m_mainSprite.High }, true);
-
 	m_maskSprite->SetMulColor(m_mainSprite.MulColor);
-	m_maskSprite->SetMulColor(m_subSprite.MulColor, true);
+	//サブ
+	if (m_subSprite.size() > 0) {
+		for (int i = 0; i < m_subSprite.size(); i++) {
+			//サブ更新
+			m_maskSprite->SetPosition(m_subSprite[i].Position, i);
+			m_maskSprite->SetRotation(m_subSprite[i].Rotation, i);
+			m_maskSprite->SetScale(m_subSprite[i].Scale, i);
+			m_maskSprite->SetPivot(m_subSprite[i].Pivot, i);
+			m_maskSprite->SetSize({ m_subSprite[i].Wide,m_mainSprite.High }, i);
+			m_maskSprite->SetMulColor(m_subSprite[i].MulColor, i);
+		}
+	}
 
 }
 
@@ -179,4 +196,23 @@ void SpriteRender::ChangePattern(int pattern) {
 	float OneSize = m_mainSprite.High / (float)m_pattern;		//パターン1つの大きさを計算
 
 	m_mainSprite.Position.y = m_defPosition.y + (OneSize * (float)pattern);
+}
+
+bool SpriteRender::MouseOverMouse() {
+
+	bool Flag = false;
+
+	CVector2 MousePos = MouseSupporter::GetInstance()->GetMousePos_Sprite();
+
+	//座標計算
+	float PosX = m_mainSprite.Position.x + (m_mainSprite.Wide / 2.0f);
+	float PosX2 = m_mainSprite.Position.x - (m_mainSprite.Wide / 2.0f);
+	float PosY = m_mainSprite.Position.y + (m_mainSprite.High / 2.0f);
+	float PosY2 = m_mainSprite.Position.y - (m_mainSprite.High / 2.0f);
+
+	if (MousePos.x <= PosX && MousePos.x >= PosX2 && MousePos.y <= PosY && MousePos.y >= PosY2) {
+		Flag = true;
+	}
+
+	return Flag;
 }

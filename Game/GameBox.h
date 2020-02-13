@@ -114,6 +114,9 @@ public:
 	void SetOriginBox(GameBox* box) {
 		m_originBox = box;
 	}
+	GameBox* GetOriginBox() {
+		return m_originBox;
+	}
 
 private:
 	void GetTrianglePositionAndNormal(
@@ -150,7 +153,7 @@ private:
 	SkinModel m_model;	//スキンモデル。
 
 	RigidBody m_rb;				//剛体
-	PhysicsStaticObject m_physicsStaticObject;
+	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
 	CMatrix  m_World;
 
 	LightMaker* m_lightMaker;
@@ -161,7 +164,7 @@ private:
 
 	//親の箱とのローカル座標
 	GameBox* m_originBox = nullptr;		//初代箱様！！！！
-	CVector3 m_localPosition = CVector3().Zero();
+	CVector3 m_localPosition = CVector3().Zero();	//親との相対座標
 	BoxTag m_boxTag = Another;
 
 	std::vector<VertexBuffer>						m_vertexBufferArray;		//頂点バッファの配列。

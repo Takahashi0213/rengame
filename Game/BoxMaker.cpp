@@ -12,6 +12,9 @@ BoxMaker::BoxMaker()
 
 	//このインスタンスを唯一のインスタンスとして記録する
 	m_instance = this;
+
+	//ゲームのポインタ保存
+	m_game = Game::GetInstance();
 }
 
 BoxMaker::~BoxMaker()
@@ -121,7 +124,7 @@ void BoxMaker::Update() {
 			m_box_N = m_box_N_Now;		//わかりにくいけど箱の向きを保存する
 			CQuaternion rot = m_box->GetRotation();
 
-			CQuaternion addRot;
+			CQuaternion addRot = CQuaternion::Identity();
 
 			if (m_box_N_Now.y < 0.098f) {
 				//ものすご～い計算

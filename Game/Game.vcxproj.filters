@@ -94,6 +94,18 @@
     <Filter Include="Assets\modelData\Titan">
       <UniqueIdentifier>{c4bd8911-7ff6-4c63-81f1-4c0c982a3c57}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sound">
+      <UniqueIdentifier>{645e286f-d38c-4077-9c21-ac9ae0dd85c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\sprite\Menu\Logo">
+      <UniqueIdentifier>{addd37ae-4aaf-448f-9589-58bb2baca794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object\Gimmick">
+      <UniqueIdentifier>{c2d1b38a-7b2e-4328-a05d-d12408cadab8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\Jewel">
+      <UniqueIdentifier>{b614d219-f094-480d-b123-116c8927972c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -290,6 +302,21 @@
     </ClCompile>
     <ClCompile Include="TransitionSprite.cpp">
       <Filter>graphics\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\SoundEngine.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\SoundSource.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\WaveFile.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\WaveFileBank.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="StarMoney.cpp">
+      <Filter>object\Gimmick</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -509,6 +536,21 @@
     <ClInclude Include="TransitionSprite.h">
       <Filter>graphics\Transition</Filter>
     </ClInclude>
+    <ClInclude Include="sound\SoundEngine.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="sound\SoundSource.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="sound\WaveFile.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="sound\WaveFileBank.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="StarMoney.h">
+      <Filter>object\Gimmick</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\box.fbx">
@@ -522,6 +564,9 @@
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Titan.fbx">
       <Filter>Assets\modelData\Titan</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\jewel.fbx">
+      <Filter>Assets\modelData\Jewel</Filter>
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
@@ -602,6 +647,39 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\Titan_Metallic.tga">
       <Filter>Assets\modelData\Titan</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\window\window4.png">
+      <Filter>Assets\sprite\window</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\black.png">
+      <Filter>Assets\sprite\system</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\Titan__Ao.tga">
+      <Filter>Assets\modelData\Titan</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo.png">
+      <Filter>Assets\sprite\Menu\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo_Nami.png">
+      <Filter>Assets\sprite\Menu\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo_Up.png">
+      <Filter>Assets\sprite\Menu\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo_Under.png">
+      <Filter>Assets\sprite\Menu\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogoLight.png">
+      <Filter>Assets\sprite\Menu\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\mahojin.png">
+      <Filter>Assets\sprite\Menu</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuCursor.png">
+      <Filter>Assets\sprite\Menu</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\window\window5.png">
+      <Filter>Assets\sprite\window</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

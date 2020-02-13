@@ -127,6 +127,10 @@ public:
 
 private:
 
+	//ログ関数
+	void LogChange(bool Flag);
+	void LogUpdate();
+
 	//会話枠表示用
 	SpriteRender* m_windowSprite;			//会話ウィンドウのスプライト
 	const int WindowSpritePriority = 6;		//会話ウィンドウの優先度
@@ -142,6 +146,13 @@ private:
 
 	FontRender* m_messageSkipOshiraseFont;				//スキップのお知らせ
 	const int MessageSkipOshiraseFontPriority = 7;		//スキップお知らせの優先度
+
+	SpriteRender* m_logBlack;				//ログウィンドウの背景スプライト
+	SpriteRender* m_logWindow;				//ログウィンドウのスプライト
+	const int LogWindowSpritePriority = 7;		//ログウィンドウとブラックアウトの優先度
+
+	FontRender* m_logFont;				//ログ
+	const int LogFontPriority = 7;		//ログの優先度
 
 	//座標指定
 	const CVector3 WindowDefPos = { -200.0f,50.0f,0.0f };
@@ -172,6 +183,22 @@ private:
 
 	//スキップお知らせテキスト
 	const wchar_t* SkipText = L"ＳＰＡＣＥ長押し：スキップ";
+
+	//ログ関連
+	bool m_logFlag = false;			//ログ中？？？
+	struct LogData {
+		wchar_t* Name;		//話し手の名前
+		wchar_t* Message;	//会話内容
+	};
+	wchar_t m_logText[4096] = L"";								//ログ保存用
+	int m_logHigh = 0;											//ログの高さ
+	int m_logCursorPos = 0;										//ログの参照位置
+	const CVector2 LogWindowSize = { 800.0f,600.0f };			//ログウィンドウの大きさ
+	const float LogFontSize = 0.6f;								//ログテキストの大きさ
+	const CVector2 LogFontPosition = { -350.0f,-300.0f };		//ログテキストの基準座標
+	const int LogTime = 6;										//ログの表示＆消去にかかる時間
+	const float LogOffsetY = 38;								//1行ごとのY補正
+	const int DeltaHoseiY = 10;									//ログでホイール入力された時の移動量補正
 
 };
 

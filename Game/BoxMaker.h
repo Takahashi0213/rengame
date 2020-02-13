@@ -37,13 +37,6 @@ public:
 	void Render()override;
 
 	/// <summary>
-	/// ゲームのポインタをほぞんぬ
-	/// </summary>
-	/// <param name="game">アドレス</param>
-	void SetGame(Game* game) {
-		m_game = game;
-	}
-	/// <summary>
 	/// プレイヤーのポインタをほぞんぬ
 	/// </summary>
 	/// <param name="game">アドレス</param>
@@ -59,6 +52,11 @@ public:
 		return m_instance;
 	}
 
+	//色々を取得する
+	std::list<GameBox*> GetBoxList() {
+		return m_boxList;
+	}
+
 private:
 	void BoxUpdate();
 	void ModeChange();
@@ -72,7 +70,7 @@ private:
 	CVector3 m_boxN = CVector3::Zero();				//法線だ
 
 	//箱リスト
-	std::list<GameBox*> m_boxList;
+	std::list<GameBox*> m_boxList;					//箱ども
 	std::list<int>m_manaList;
 	GameBox* m_nowBox = nullptr;					//現在見ているボックスさん
 	GameBox* m_nowBox_Stock = nullptr;				//以前見ていたボックスを一時保存！

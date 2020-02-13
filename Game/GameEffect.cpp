@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GameEffect.h"
+#include "Game.h"
 
 GameEffect* GameEffect::m_instance = nullptr;
 
@@ -116,6 +117,9 @@ void GameEffect_Message::MessageInit() {
 	m_messageSkipSprite = NewGO<SpriteRender>("MessageSkipSprite", MessageSkipSpritePriority);
 	m_messageFont = NewGO<FontRender>("MessageFont", MessageFontPriority);
 	m_messageSkipOshiraseFont = NewGO<FontRender>("MessageSkipOshiraseFont", MessageSkipOshiraseFontPriority);
+	m_logBlack = NewGO<SpriteRender>("LogBlack", LogWindowSpritePriority);
+	m_logWindow = NewGO<SpriteRender>("LogWindow", LogWindowSpritePriority);
+	m_logFont = NewGO<FontRender>("LogFont", LogFontPriority);
 
 	//画像を設定
 	m_windowSprite->Init(L"Assets/sprite/fukidasi.dds", 600.0f, 400.0f, WindowSpritePriority);
@@ -128,14 +132,24 @@ void GameEffect_Message::MessageInit() {
 	m_messageSkipSprite->SetPosition({ 0.0f,0.0f,1.0f });
 	m_messageFont->SetPosition(TextDefPos);
 	m_messageSkipOshiraseFont->SetPosition({ TextSkipDefPos.x,TextSkipDefPos.y - 200.0f });
+	m_logFont->SetPosition(LogFontPosition);
 
 	//テキストを設定
 	m_messageSkipOshiraseFont->SetText(SkipText);
+	m_logFont->SetText(m_logText);
+
+	//ログウィンドウとログテキスト
+	m_logBlack->Init(L"Assets/sprite/Black.dds",FRAME_BUFFER_W,FRAME_BUFFER_H,LogWindowSpritePriority);
+	m_logWindow->ChangeSliceSprite({ 300.0f,300.0f });
+	m_logWindow->Init(L"Assets/sprite/window4.dds",
+		LogWindowSize.x,
+		LogWindowSize.y,
+		LogWindowSpritePriority);
 
 	//色を設定
-	m_messageSkipSprite->SetAlpha(0.0f);
 	m_messageFont->SetColor(TextColor);
 	m_messageSkipOshiraseFont->SetColor(TextColor);
+	m_logFont->SetColor(TextColor);
 
 	//メッセージ送りのシェイク設定
 	m_windowOkuriSprite->m_spriteSupporter.SpriteShake(
@@ -146,13 +160,21 @@ void GameEffect_Message::MessageInit() {
 	//テキストに影（という名のフチ）を設定
 	m_messageFont->GetGameFont()->SetShadowParam(true, 3.0f, { 1.0f,1.0f,1.0f,1.0f });
 
+	//スケール調整
 	m_messageFont->SetScale(0.6f);
 	m_messageSkipOshiraseFont->SetScale(0.6f);
+	m_logFont->SetScale(LogFontSize);
+
+	//ログテキストのピボットを変更
+	m_logFont->SetPivot({ 0.5f,5.0f });		//中央下
 
 	//スプライトに滅びの爆裂疾風弾（不透明度を0にしているだけです…）
 	m_windowSprite->SetAlpha(0.0f);
 	m_windowOkuriSprite->SetAlpha(0.0f);
-
+	m_messageSkipSprite->SetAlpha(0.0f);
+	m_logBlack->SetAlpha(0.0f);
+	m_logWindow->SetAlpha(0.0f);
+	m_logFont->SetAlpha(0.0f);
 }
 
 void GameEffect_Message::MessageEffect(wchar_t* Message) {
@@ -173,9 +195,51 @@ if (m_windowSprite->GetAlpha() < 1.0f) {
 	m_messageSkipOshiraseFont->SetPosition({ TextSkipDefPos.x,TextSkipDefPos.y - 200.0f });
 	m_messageSkipOshiraseFont->m_fontSupporter.FontMoveSet({ TextSkipDefPos.x,TextSkipDefPos.y }, 12, 0, false);
 
+	//イベントフラグをtrueにする
+	Game::GetInstance()->GetSystemInstance()->m_eventNowFlag = true;
+
+	//ログ関連の初期化
+	for (int i = 0; i < 4096; i++) {
+		m_logText[i] = L'\0';
+	}
+	m_logHigh = 0;
 }
 
-m_nowMessage = true;
+//行数を計算
+int high = 0;
+wchar_t* MessageStock = Message;
+while (true) {	//改行がなくなるまでループ
+
+	MessageStock = wcsstr(MessageStock, L"\n");
+	high++;
+
+	if (MessageStock == NULL) {
+		break;
+	}
+	MessageStock++;
+}
+m_logHigh += high + 2;
+
+//ログに追加する
+const wchar_t* text = nullptr;
+std::wstring m_text = Message;
+text = m_text.c_str();
+wchar_t character[2];
+
+for (; *text; text++) {
+	character[0] = *text;
+	character[1] = L'\0';
+
+	wcscat(m_logText, character);
+
+}
+character[0] = L'\n';
+character[1] = L'\0';
+wcscat(m_logText, character);
+wcscat(m_logText, character);
+
+//フラグとか
+m_nowMessage = true; 
 m_messageOkuriWait = false;
 m_messageTimer = 0;
 
@@ -184,7 +248,8 @@ m_messageTimer = 0;
 void GameEffect_Message::MessageUpdate() {
 
 	m_messageClickFlag = false;
-	if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+	//スキップ機能
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000 && m_logFlag == false) {
 		m_skipFlag = true;
 	}
 	else {
@@ -197,9 +262,22 @@ void GameEffect_Message::MessageUpdate() {
 	//メッセージ表示中の処理
 	if (m_nowMessage == true) {
 
+		//ログ機能
+		int right_key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Right_Key);
+		if (right_key == MouseSupporter::Release_Push) {	//右クリックされたらログフラグ変更
+			if (m_logFlag == false) {
+				m_logFlag = true;
+			}
+			else {
+				m_logFlag = false;
+			}
+			LogChange(m_logFlag);	//表示処理
+		}
+
+		//ここからメッセージ送り
 		int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
 		//クリック待ち！
-		if (key == MouseSupporter::Release_Push || m_skipFlag == true) {
+		if ( (key == MouseSupporter::Release_Push || m_skipFlag == true) && m_logFlag == false) {
 			//押されました
 			if (m_messageOkuriWait == true) {
 				//表示終了
@@ -238,6 +316,11 @@ void GameEffect_Message::MessageUpdate() {
 			}
 		}
 
+		//ログの更新
+		if (m_logFlag == true) {	//ログの表示中だけ実行
+			LogUpdate();
+		}
+
 	}
 	else { //メッセージ表示中ではない
 
@@ -251,8 +334,49 @@ void GameEffect_Message::MessageUpdate() {
 			m_messageSkipSprite->SetAlpha(0.0f);
 			m_messageSkipOshiraseFont->m_fontSupporter.FontMoveSet({ TextSkipDefPos.x,TextSkipDefPos.y - 200.0f }, 12, 0, false);
 			m_skipFlag = false;
+			Game::GetInstance()->GetSystemInstance()->m_eventNowFlag = false;
 		}
 	}
+}
+
+void GameEffect_Message::LogChange(bool Flag) {
+
+	if (Flag == true) {
+		//表示する時の処理
+		m_logBlack->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,0.5f }, LogTime, 0);
+		m_logWindow->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,1.0f }, LogTime, 0);
+		//ログテキストの調整
+		m_logFont->SetText(m_logText);
+		m_logFont->SetPosition({ LogFontPosition.x,LogFontPosition.y + (m_logHigh * LogOffsetY) });
+		m_logCursorPos = 0;	//初期化
+		m_logFont->m_fontSupporter.FontColorSet({ TextColor.x,TextColor.y,TextColor.z,1.0f }, LogTime, 0);
+	}
+	else {
+		//削除するときの処理
+		m_logBlack->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,0.0f }, LogTime, 0);
+		m_logWindow->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,0.0f }, LogTime, 0);
+		m_logFont->m_fontSupporter.FontColorSet({ TextColor.x,TextColor.y,TextColor.z,0.0f }, LogTime, 0);
+	}
+
+}
+
+void GameEffect_Message::LogUpdate() {
+
+	//ホイールで移動させる
+	int now_delta = MouseSupporter::GetInstance()->GetWheelMove();
+
+	//補正っ！！！！
+	m_logCursorPos += -(now_delta / DeltaHoseiY);
+
+	//上限下限
+	if (m_logCursorPos < 0) {
+		m_logCursorPos = 0;
+	}
+
+	//座標変更
+	m_logFont->SetPosition({ LogFontPosition.x,
+		LogFontPosition.y + (m_logHigh * LogOffsetY) - (m_logCursorPos * (LogOffsetY / DeltaHoseiY)) });
+
 }
 
 //ここから～～～GameEffect_AnimationSprite

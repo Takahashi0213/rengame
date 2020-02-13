@@ -65,7 +65,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>DirectXTK.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies);xinput.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib</AdditionalDependencies>
+      <AdditionalDependencies>DirectXTK.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies);xinput.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib;XAudio2.lib;Winmm.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
     </Link>
@@ -158,10 +158,15 @@
     <ClCompile Include="SkinModelRender.cpp" />
     <ClCompile Include="SkinModelSupporter.cpp" />
     <ClCompile Include="SliceSprite.cpp" />
+    <ClCompile Include="sound\SoundEngine.cpp" />
+    <ClCompile Include="sound\SoundSource.cpp" />
+    <ClCompile Include="sound\WaveFile.cpp" />
+    <ClCompile Include="sound\WaveFileBank.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteRender.cpp" />
     <ClCompile Include="SpriteStandby.cpp" />
     <ClCompile Include="SpriteSupporter.cpp" />
+    <ClCompile Include="StarMoney.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -236,10 +241,15 @@
     <ClInclude Include="SkinModelRender.h" />
     <ClInclude Include="SkinModelSupporter.h" />
     <ClInclude Include="SliceSprite.h" />
+    <ClInclude Include="sound\SoundEngine.h" />
+    <ClInclude Include="sound\SoundSource.h" />
+    <ClInclude Include="sound\WaveFile.h" />
+    <ClInclude Include="sound\WaveFileBank.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteRender.h" />
     <ClInclude Include="SpriteStandby.h" />
     <ClInclude Include="SpriteSupporter.h" />
+    <ClInclude Include="StarMoney.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SystemData.h" />
     <ClInclude Include="system\CGameObjectManager.h" />
@@ -252,6 +262,7 @@
     <MeshContentTask Include="Assets\modelData\box.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\jewel.fbx" />
     <MeshContentTask Include="Assets\modelData\map.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
@@ -343,6 +354,31 @@
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\Titan_Metallic.tga" />
     <ImageContentTask Include="Assets\modelData\Titan_normals.tga" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\window\window4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\system_sprite\black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\Titan__Ao.tga" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo.png" />
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogoLight.png" />
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo_Nami.png" />
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo_Under.png" />
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo_Up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\mahojin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuCursor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\window\window5.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

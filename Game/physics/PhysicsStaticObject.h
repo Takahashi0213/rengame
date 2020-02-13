@@ -30,6 +30,14 @@ public:
 	void CreateMeshObject(SkinModel& skinModel, CVector3 pos, CQuaternion rot);
 	void CreateMeshObject(SkinModel& skinModel, CVector3 pos, CQuaternion rot, CVector3 scl);
 
+	/*!
+	* @brief	座標と回転を設定。
+	*/
+	void SetPositionAndRotation(const CVector3& pos, const CQuaternion& rot)
+	{
+		m_rigidBody.SetPositionAndRotation(pos, rot);
+	}
+
 private:
 	MeshCollider m_meshCollider;		//!<メッシュコライダー。
 	RigidBody m_rigidBody;				//!<剛体。

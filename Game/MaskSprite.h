@@ -14,116 +14,114 @@ public:
 	/// 座標を設定
 	/// </summary>
 	/// <param name="pos">座標</param>
-	void SetPosition(const CVector3 pos, bool subFlag = false)
+	void SetPosition(const CVector3 pos, int list = -1)
 	{
-		if (subFlag == false) {
+		if (list == -1) {
 			m_mainSpriteData.Position = pos;
 		}
 		else {
-			m_subSpriteData.Position = pos;
+			m_subSpriteList[list].subData.Position = pos;
 		}
 	}
 	/// <summary>
 	/// 座標を取得
 	/// </summary>
 	/// <returns>座標</returns>
-	const CVector3 GetPosition(bool subFlag = false) const
+	const CVector3 GetPosition(int list = -1) const
 	{
-		if (subFlag == false) {
+		if (list == -1) {
 			return m_mainSpriteData.Position;
 		}
 		else {
-			return m_subSpriteData.Position;
+			return m_subSpriteList[list].subData.Position;		//サブ
 		}
 	}
 	/// <summary>
 	/// 回転を設定
 	/// </summary>
 	/// <param name="rot">回転</param>
-	void SetRotation(const CQuaternion rot, bool subFlag = false)
+	void SetRotation(const CQuaternion rot,int list = -1)
 	{
-		if (subFlag == false) {
+		if (list == -1) {
 			m_mainSpriteData.Rotation = rot;
 		}
 		else {
-			m_subSpriteData.Rotation = rot;
+			m_subSpriteList[list].subData.Rotation = rot;		//サブ
 		}
 	}
 	/// <summary>
 	/// 回転を取得
 	/// </summary>
 	/// <returns>回転</returns>
-	const CQuaternion GetRotation(bool subFlag = false) const
+	const CQuaternion GetRotation(int list = -1) const
 	{
-		if (subFlag == false) {
+		if (list == -1) {
 			return m_mainSpriteData.Rotation;
 		}
 		else {
-			return m_subSpriteData.Rotation;
+			return m_subSpriteList[list].subData.Rotation;		//サブ
 		}
 	}
 	/// <summary>
 	/// 拡大率を設定
 	/// </summary>
 	/// <param name="scr">拡大率</param>
-	void SetScale(const CVector3 scl, bool subFlag = false)
+	void SetScale(const CVector3 scl,int list = -1)
 	{
-		if (subFlag == false) {
+		if (list == -1) {
 			m_mainSpriteData.Scale = scl;
 		}
 		else {
-			m_subSpriteData.Scale = scl;
+			m_subSpriteList[list].subData.Scale = scl;		//サブ
 		}
 	}
-	void SetScale(const float scl, bool subFlag = false) { //便利Ver
-		if (subFlag == false) {
+	void SetScale(const float scl, int list = -1) { //便利Ver
+		if (list == -1) {
 			m_mainSpriteData.Scale.x = scl;
 			m_mainSpriteData.Scale.y = scl;
 		}
 		else {
-			m_subSpriteData.Scale.x = scl;
-			m_subSpriteData.Scale.y = scl;
+			m_subSpriteList[list].subData.Scale.x = scl;
+			m_subSpriteList[list].subData.Scale.y = scl;
 		}
 	}
 	/// <summary>
 	/// 拡大率を取得
 	/// </summary>
 	/// <returns>拡大率</returns>
-	const CVector3 GetScale(bool subFlag = false) const
+	const CVector3 GetScale(int list = -1) const
 	{
-		if (subFlag == false) {
+		if (list == -1) {
 			return m_mainSpriteData.Scale;
 		}
 		else {
-			return m_subSpriteData.Scale;
+			return m_subSpriteList[list].subData.Scale;
 		}
 	}
 	/// <summary>
 	/// ピボットを設定
 	/// </summary>
 	/// <param name="pivot">ピボット</param>
-	void SetPivot(const CVector2 pivot, bool subFlag = false)
+	void SetPivot(const CVector2 pivot, int list = -1)
 	{
-		if (subFlag == false) {
-			m_mainSpriteData.Pivot.x = pivot.x;
-			m_mainSpriteData.Pivot.y = pivot.y;
+		if (list == -1) {
+			m_mainSpriteData.Pivot = pivot;
 		}
 		else {
-			m_subSpriteData.Pivot.x = pivot.x;
-			m_subSpriteData.Pivot.y = pivot.y;
+			m_subSpriteList[list].subData.Pivot = pivot;
 		}
 	}
 	/// <summary>
 	/// ピボットを取得
 	/// </summary>
 	/// <returns>ピボット</returns>
-	CVector2 GetPivot(bool subFlag = false)
+	CVector2 GetPivot(int list = -1)
 	{
-		if (subFlag == false) {
+		if (list == -1) {
 			return m_mainSpriteData.Pivot;
 		}
 		else {
-			return m_subSpriteData.Pivot;
+			return m_subSpriteList[list].subData.Pivot;
 		}
 	}
 
@@ -131,61 +129,71 @@ public:
 	/// サイズを設定
 	/// </summary>
 	/// <param name="size">サイズ</param>
-	void SetSize(CVector2 size, bool subFlag = false) {
-		if (subFlag == false) {
+	void SetSize(CVector2 size, int list = -1) {
+		
+		if (list == -1) {
 			m_mainSpriteData.Wide = size.x;
 			m_mainSpriteData.High = size.y;
 		}
 		else {
-			m_subSpriteData.Wide = size.x;
-			m_subSpriteData.High = size.y;
+			m_subSpriteList[list].subData.Wide = size.x;
+			m_subSpriteList[list].subData.High = size.y;
 		}
-
 	}
 
 	/// <summary>
 	/// 乗算カラーを設定
 	/// </summary>
 	/// <param name="mulColor">乗算カラー</param>
-	void SetMulColor(const CVector4& mulColor, bool subFlag = false)
+	void SetMulColor(const CVector4& mulColor, int list = -1)
 	{
-		if (subFlag == false) {
+		if (list == -1) {
 			m_mainSpriteData.MulColor = mulColor;
 			m_mainSprite.SetMulColor(m_mainSpriteData.MulColor);
 		}
 		else {
-			m_subSpriteData.MulColor = mulColor;
-			m_subSprite.SetMulColor(m_subSpriteData.MulColor);
+			m_subSpriteList[list].subData.MulColor = mulColor;
+			m_subSpriteList[list].sprite->SetMulColor(m_subSpriteList[list].subData.MulColor);
 		}
 	}
 	/// <summary>
 	/// 乗算カラーを取得
 	/// </summary>
 	/// <returns>乗算カラー</returns>
-	CVector4 GetMulColor(bool subFlag = false)
+	CVector4 GetMulColor(int list = -1)
 	{
-		if (subFlag == false) {
+		if (list == -1) {
 			return m_mainSpriteData.MulColor;
 		}
 		else {
-			return m_subSpriteData.MulColor;
+			return m_subSpriteList[list].subData.MulColor;
 		}
 	}
 	
+	/// <summary>
+	/// サブスプライトの追加
+	/// </summary>
+	Sprite* AddSubSprite(const wchar_t* texFilePath, float w, float h);
+
+	//取得
 	Sprite* GetMainSprite() {
 		return &m_mainSprite;
 	}
-	Sprite* GetSubSprite() {
-		return &m_subSprite;
+	Sprite* GetSubList_Sprite(int i) {
+		return m_subSpriteList[i].sprite;
 	}
 
+
 private:
+	//ステートを作成
 	void MaskSprite::CreateDepthStencilState();
 
+	//深度ステンシル
 	ID3D11DepthStencilState* m_depthStencilState = nullptr;
 	ID3D11DepthStencilState* m_depthStencilState_Def = nullptr;
 	ID3D11DepthStencilState* m_depthStencilState_Z = nullptr;
 
+	//スプライトのデータ
 	struct SpriteData
 	{
 		CVector3 Position = CVector3::Zero();
@@ -197,11 +205,16 @@ private:
 		CVector4 MulColor = { 1.0f,1.0f,1.0f,1.0f };	//!<乗算カラー。
 	};
 
-	SpriteData m_mainSpriteData;	//メインスプライト
-	SpriteData m_subSpriteData;		//サブスプライト（マスクを作るときに使います！）
-
+	//メインスプライト
+	SpriteData m_mainSpriteData;
 	Sprite m_mainSprite;
-	Sprite m_subSprite;
+
+	//サブスプライト！！
+	struct SubSpriteData {
+		Sprite* sprite;
+		SpriteData subData;
+	};
+	std::vector<SubSpriteData> m_subSpriteList;		//追加分
 
 };
 
