@@ -16,6 +16,7 @@ protected:
 	Shader m_vsShadowMap;		//シャドウマップ生成用の頂点シェーダー。
 	Shader m_psShadowMap;		//シャドウマップ生成用のピクセルシェーダー。
 	Shader m_psShader_Box;		//箱用のピクセルシェーダー
+	Shader m_psShader_Kirameki;	//きらめき用のピクセルシェーダー
 
 	Shader* m_pVSShader = nullptr;
 	Shader* m_pPSShader = nullptr;
@@ -24,6 +25,7 @@ protected:
 	Shader* m_vsShadowMapShader = nullptr;
 	Shader* m_psShadowMapShader = nullptr;
 	Shader* m_pPSShaderBox = nullptr;
+	Shader* m_pPSKiramekiShader = nullptr;
 
 	int m_renderMode = 0;
 	int m_renderMode_Shadow = 0;
@@ -31,6 +33,10 @@ protected:
 	bool isSkining;
 	ID3D11ShaderResourceView* m_albedoTex = nullptr;
 	ID3D11DepthStencilState* m_silhouettoDepthStepsilState = nullptr;	//シルエット描画用のデプスステンシルステート。
+	ID3D11DepthStencilState* m_kiramekiDepthStepsilState = nullptr;		//きらめき描画用のデプスステンシルステート。
+	ID3D11DepthStencilState*	m_depthStencilStateBackup = nullptr;	//デプスステンシルステートのﾊﾞｯｸｱｯﾋﾟ
+
+	ID3D11BlendState* m_translucentBlendState = nullptr;	//半透明合成用のブレンドステート。
 
 public:
 	ModelEffect();
@@ -81,6 +87,11 @@ private:
 	/// シルエット描画用のデプスステンシルステートを初期化する。
 	/// </summary>
 	void InitSilhouettoDepthStepsilState();
+
+	/// <summary>
+	/// 半透明合成用のブレンドステートを初期化する
+	/// </summary>
+	void InitTranslucentBlendState();
 
 };
 /*!

@@ -382,3 +382,11 @@ float4 PSMain_ShadowMap(PSInput_ShadowMap In) : SV_Target0
 	//射影空間でのZ値を返す。
 	return In.Position.z / In.Position.w;
 }
+
+//--------------------------------------------------------------------------------------
+// きらめきのピクセルシェーダーのエントリ関数。
+//--------------------------------------------------------------------------------------
+float4 PSMain_Kirameki(PSInput In) : SV_Target0
+{
+	return float4(1.0f, 0.0f, 0.0f, 0.5f);
+}

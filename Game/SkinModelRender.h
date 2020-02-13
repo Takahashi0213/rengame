@@ -9,11 +9,6 @@
 class SkinModelRender : public IGameObject
 {
 public:
-	enum RenderMode {
-		Default, //普通
-		Silhouette, //シルエット！
-		Monochrome, //シロクロ
-	};
 	typedef std::vector<CVector3>					VertexBuffer;		//頂点バッファ。
 	typedef std::vector<unsigned int>				IndexBuffer;		//インデックスバッファ。
 

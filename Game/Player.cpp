@@ -89,6 +89,8 @@ Player::Player()
 	//モデルにAOマップを設定する。
 	m_titan.SetAOMap(m_aoMapSRV);
 
+	m_starMoney = NewGO<StarMoney>("StarMoney", 0);
+	m_starMoney->SetPosition({ 0.0f,50.0f,100.0f });
 
 }
 

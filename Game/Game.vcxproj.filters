@@ -106,6 +106,9 @@
     <Filter Include="Assets\modelData\Jewel">
       <UniqueIdentifier>{b614d219-f094-480d-b123-116c8927972c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\sprite\effect">
+      <UniqueIdentifier>{2779139b-cc6f-4f51-a566-8305f0843b7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -680,6 +683,9 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\window\window5.png">
       <Filter>Assets\sprite\window</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\effect\jewel_mask.png">
+      <Filter>Assets\sprite\effect</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

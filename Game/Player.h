@@ -6,6 +6,8 @@
 #include "MouseOver.h"
 #include "GameBox.h"
 
+#include "StarMoney.h"
+
 class Player : public IGameObject
 {
 public:
@@ -46,6 +48,8 @@ private:
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;
 	ID3D11ShaderResourceView* m_specMapSRV = nullptr;
 	ID3D11ShaderResourceView* m_aoMapSRV = nullptr;
+	//•óÎ
+	StarMoney* m_starMoney;
 
 	//ƒ‚ƒmƒNƒƒtƒ‰ƒO
 	bool m_monochromeFlag = false;

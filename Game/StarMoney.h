@@ -17,9 +17,11 @@ public:
 private:
 
 	SkinModel m_model;	//スキンモデル。
+	SkinModel m_model_Kirameki;	//キラメキラリ
+
 	CVector3 m_position = CVector3().Zero();
 	CQuaternion m_rotation = CQuaternion().Identity();
-	CVector3 m_scale = CVector3().One(); //拡大率
+	CVector3 m_scale = { 10.0f,10.0f,10.f }; //拡大率
 
 
 

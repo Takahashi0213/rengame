@@ -11,10 +11,11 @@ enum EnFbxUpAxis {
 	enFbxUpAxisZ,		//Z-up
 };
 enum RenderMode {
-	Default=0,			//普通
+	Default = 0,		//普通
 	Silhouette = 1,		//シルエット
 	Monochrome = 2,		//モノクロ
 	Box = 3,			//箱です。	
+	Kirameki = 4,		//宝石の輝き
 };
 /*!
 *@brief	スキンモデルクラス。
