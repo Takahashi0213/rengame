@@ -8,6 +8,13 @@ StarMoney::StarMoney()
 	m_model.Init(L"Assets/modelData/jewel.cmo");
 	m_model_Kirameki.Init(L"Assets/modelData/jewel.cmo");
 	m_model_Kirameki.SetRenderMode(RenderMode::Kirameki);
+	//
+	DirectX::CreateDDSTextureFromFileEx(
+		g_graphicsEngine->GetD3DDevice(), L"Assets/sprite/jewel_mask.dds", 0,
+		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
+		false, nullptr, &m_kiramekiSRV);
+	m_model_Kirameki.SetKirameki(m_kiramekiSRV);
+
 
 }
 

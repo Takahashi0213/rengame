@@ -149,6 +149,12 @@ public:
 	{
 		m_aoMapSRV = srv;
 	}
+	/// <summary>
+	/// きらめきテクスチャの設定
+	/// </summary>
+	void SetKirameki(ID3D11ShaderResourceView* srv) {
+		m_kiramekiTextureSRV = srv;
+	}
 
 private:
 	/*!
@@ -180,6 +186,9 @@ private:
 		int isHasNormalMap;		//法線マップを保持している？
 		int isHasSpecMap;		//スペキュラマップを保持している？
 		int isHasAOMap;			//AOマップを保持している？
+		int isHasKirameki;		//きらめきを保持している？
+		float mHigh;
+		float mWide;			//画面の縦横
 	};
 
 	//環境光の定数バッファ
@@ -232,6 +241,7 @@ private:
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;		//法線マップのSRV
 	ID3D11ShaderResourceView* m_specMapSRV = nullptr;		//スペキュラマップのSRV
 	ID3D11ShaderResourceView* m_aoMapSRV = nullptr;			//AOマップのSRV
+	ID3D11ShaderResourceView* m_kiramekiTextureSRV = nullptr;//きらめきテクスチャのSRV
 
 };
 

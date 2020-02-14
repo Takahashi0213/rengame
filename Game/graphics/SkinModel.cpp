@@ -200,6 +200,17 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix ,EnRenderMode render
 	else {
 		vsCb.isHasAOMap = false;
 	}
+	//きらめきテクスチャを使用するかどうかのフラグを送る。
+	if (m_kiramekiTextureSRV != nullptr) {
+		vsCb.isHasKirameki = true;
+	}
+	else {
+		vsCb.isHasKirameki = false;
+	}
+
+	//縦横
+	vsCb.mHigh = FRAME_BUFFER_H;
+	vsCb.mWide = FRAME_BUFFER_W;
 
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 
@@ -236,8 +247,12 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix ,EnRenderMode render
 			d3dDeviceContext->PSSetShaderResources(4, 1, &m_specMapSRV);
 		}
 		if (m_aoMapSRV != nullptr) {
-			//スペキュラマップが設定されていたらレジスタt5に設定する。
+			//AOが設定されていたらレジスタt5に設定する。
 			d3dDeviceContext->PSSetShaderResources(5, 1, &m_aoMapSRV);
+		}
+		if (m_kiramekiTextureSRV != nullptr) {
+			//きらめきテクスチャが設定されていたらレジスタt6に設定する。
+			d3dDeviceContext->PSSetShaderResources(6, 1, &m_kiramekiTextureSRV);
 		}
 
 	//ボーン行列をGPUに転送。

@@ -380,7 +380,7 @@ void GameMenu::Update_Effect(int mode) {
 		MenuLogoTimer++;
 		MenuLogoRotTimer++;
 
-		if (MenuLogoMoveSpeed == MenuLogoTimer) {
+		if (MenuLogoMoveSpeed -1 == MenuLogoTimer) {		//ちょっと補正
 			//移動更新してタイマーリセット
 
 			//２つを比べて左にいる方を右に持っていく

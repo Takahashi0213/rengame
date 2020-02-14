@@ -14,6 +14,7 @@ Texture2D<float4> g_shadowMap : register(t2);		//シャドウマップ
 Texture2D<float4> g_normalMap : register(t3);		//	法線マップ。
 Texture2D<float4> g_specMap : register(t4);			//	スペキュラマップ。
 Texture2D<float4> g_aoMap : register(t5);			//	AOマップ。
+Texture2D<float4> g_kirameki : register(t6);		//	きらめき。
 
 /////////////////////////////////////////////////////////////
 // SamplerState
@@ -40,6 +41,9 @@ cbuffer VSPSCb : register(b0){
 	int isHasNormalMap;	//法線マップある？
 	int isHasSpecMap;	//スペキュラマップある？
 	int isHasAOMap;		//アンビエントオクリュージョンマップある？
+	int isHasKirameki;		//きらめきを保持している？
+	float mHigh;
+	float mWide;			//画面の縦横
 };
 /*!
 *@brief	ライト用の定数バッファ。
@@ -388,5 +392,20 @@ float4 PSMain_ShadowMap(PSInput_ShadowMap In) : SV_Target0
 //--------------------------------------------------------------------------------------
 float4 PSMain_Kirameki(PSInput In) : SV_Target0
 {
-	return float4(1.0f, 0.0f, 0.0f, 0.5f);
+	float4 finalColor;
+
+	if (isHasKirameki == 1) {
+		//UV座標の計算
+		float2 uv;
+		uv.x = In.Position.x / mWide;
+		uv.y = In.Position.y / mHigh;
+		finalColor = g_kirameki.Sample(Sampler, uv);
+		finalColor.w = 0.5f;
+		//finalColor = float4(1.0f, 0.0f, 0.0f, 1.0f);
+	}
+	else {
+		finalColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	}
+
+	return finalColor;
 }

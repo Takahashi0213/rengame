@@ -18,6 +18,7 @@ private:
 
 	SkinModel m_model;	//スキンモデル。
 	SkinModel m_model_Kirameki;	//キラメキラリ
+	ID3D11ShaderResourceView* m_kiramekiSRV = nullptr;
 
 	CVector3 m_position = CVector3().Zero();
 	CQuaternion m_rotation = CQuaternion().Identity();
