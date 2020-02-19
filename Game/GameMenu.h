@@ -89,6 +89,7 @@ private:
 	const float TextFontSize = 0.6f;						//テキストの大きさ
 	const CVector2 DefMenuCommand_TextPosition = { 375.0f,182.0f };
 	const float SaveX_Hosei = 30.0f;
+	//アクセサリー
 
 	//説明文
 	const CVector3 SetumeiTextColor = { 0.9f,0.9f,0.9f };		//説明文の色
@@ -103,7 +104,7 @@ private:
 	};
 
 	//選択カーソル
-	const CVector3 DefCursorPosition = { 280.0f,160.0f,1.0f };
+	const CVector3 DefCursorPosition = { 280.0f,160.0f,1.0f };	//一番上のポジション！！
 	int m_cursorMoveTimer = 0;			//カーソルの左右移動タイマー
 	const int CursorMoveLimit = 20;		//カーソルが左右1往復するまでの時間
 	const float Cursor_YMove = 10.0f;	//カーソルのY移動量
@@ -144,6 +145,8 @@ private:
 	FontRender* MenuCommand_Font3;
 	SpriteRender* MenuCommand_Sprite4;		//セーブ
 	FontRender* MenuCommand_Font4;
+	//コマンドアクセサリー
+
 	//説明文
 	FontRender* MenuSetumeiFont;
 	//カーソル

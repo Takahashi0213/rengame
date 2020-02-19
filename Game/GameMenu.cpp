@@ -131,6 +131,9 @@ GameMenu::GameMenu()
 	MenuCommand_Font4->SetPosition({ DefMenuCommand_TextPosition.x + MenuMove + SaveX_Hosei,
 		DefMenuCommand_TextPosition.y + Y_Hosei });
 
+	//ƒRƒ}ƒ“ƒh‚ ‚­‚¹‚³‚è‚¡
+
+
 	//à–¾•¶
 	MenuSetumeiFont = NewGO<FontRender>("MenuSetumeiFont", SpriteNo);
 	MenuSetumeiFont->SetText(L"");
