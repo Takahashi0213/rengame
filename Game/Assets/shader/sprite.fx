@@ -33,6 +33,8 @@ float4 PSMain(PSInput In) :SV_Target0{
 	//テクスチャカラーをそのまま返す。
 	float4 color = colorTexture.Sample(Sampler, In.uv);
 
+	if(mulColor.a == 0.0f)discard;
+
 	return color * mulColor;
 }
 

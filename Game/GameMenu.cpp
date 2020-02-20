@@ -2,8 +2,17 @@
 #include "GameMenu.h"
 #include "Game.h"
 
+GameMenu* GameMenu::m_instance = nullptr;
+
 GameMenu::GameMenu()
 {
+	if (m_instance != nullptr) {
+		std::abort(); //すでに出ているためクラッシュ
+	}
+
+	//このインスタンスを唯一のインスタンスとして記録する
+	m_instance = this;
+
 	//メニューのメイン部分
 	MenuWindow = NewGO<SpriteRender>("MenuWindow", SpriteNo);
 	MenuWindow->ChangeSliceSprite({ 150.0f,150.0f });
@@ -172,6 +181,8 @@ GameMenu::GameMenu()
 
 GameMenu::~GameMenu()
 {
+	//インスタンスが破棄されたので、nullptrを代入
+	m_instance = nullptr;
 }
 
 void GameMenu::GameMenuUpdate() {

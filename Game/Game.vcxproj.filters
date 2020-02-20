@@ -109,6 +109,9 @@
     <Filter Include="Assets\sprite\effect">
       <UniqueIdentifier>{2779139b-cc6f-4f51-a566-8305f0843b7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="system\gameSystem\Effekseer">
+      <UniqueIdentifier>{c7f840ca-59e4-49a2-873b-b33ca59ecd4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -267,9 +270,6 @@
     <ClCompile Include="GameData.cpp">
       <Filter>system\gameSystem</Filter>
     </ClCompile>
-    <ClCompile Include="GameEffect.cpp">
-      <Filter>system\gameSystem</Filter>
-    </ClCompile>
     <ClCompile Include="MouseOver.cpp">
       <Filter>system\gameSystem</Filter>
     </ClCompile>
@@ -320,6 +320,12 @@
     </ClCompile>
     <ClCompile Include="StarMoney.cpp">
       <Filter>object\Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEffect.cpp">
+      <Filter>system\gameSystem\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="EffekseerSupporter.cpp">
+      <Filter>system\gameSystem\Effekseer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -490,9 +496,6 @@
     <ClInclude Include="GameData.h">
       <Filter>system\gameSystem</Filter>
     </ClInclude>
-    <ClInclude Include="GameEffect.h">
-      <Filter>system\gameSystem</Filter>
-    </ClInclude>
     <ClInclude Include="MouseOver.h">
       <Filter>system\gameSystem</Filter>
     </ClInclude>
@@ -553,6 +556,12 @@
     </ClInclude>
     <ClInclude Include="StarMoney.h">
       <Filter>object\Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEffect.h">
+      <Filter>system\gameSystem\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EffekseerSupporter.h">
+      <Filter>system\gameSystem\Effekseer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

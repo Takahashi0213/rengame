@@ -274,6 +274,10 @@ void Player::Jump() {
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
 		if (m_jumpNow == false && OnG_Flag == true) {
 			m_moveSpeed.y = m_jumpPower;
+
+			EffekseerSupporter::GetInstance()->NewEffect(EffekseerSupporter::TestData, false, { 0.0f,50.0f,0.0f });
+			EffekseerSupporter::GetInstance()->NewEffect(EffekseerSupporter::TestData, true, { 0.0f,150.0f,0.0f });
+
 		}
 		m_jumpNow = true;
 	}

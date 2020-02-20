@@ -2,9 +2,11 @@
 
 /// <summary>
 /// メニューのアレコレを総括する…なんやろなあ
+/// ・シングルトン
 /// </summary>
 class GameMenu
 {
+	static GameMenu* m_instance;
 public:
 	enum MenuCommand {	//メニューの項目
 		Create,			//マナ、アイテム、スターマネーを使用して色々創造
@@ -24,6 +26,14 @@ public:
 	/// </summary>
 	bool GetSelectFlag() {
 		return m_selectFlag;
+	}
+
+	/// <summary>
+	/// インスタンスを取得！
+	/// </summary>
+	/// <returns>インスタンスです</returns>
+	static GameMenu* GameMenu::GetInstance() {
+		return m_instance;
 	}
 
 private:

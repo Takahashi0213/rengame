@@ -209,6 +209,16 @@
 			return m_cgom_Graphics->GetFrameBufferDepthStencilView();
 		}
 
+		/// <summary>
+		/// エフェクサーマネージャーを取得
+		/// </summary>
+		Effekseer::Manager* GetEffekseerManager() {
+			return m_cgom_Graphics->GetEffekseerManager();
+		}
+		EffekseerRenderer::Renderer* GetEffekseerRender() {
+			return m_cgom_Graphics->GetEffekseerRender();
+		}
+
 	private:
 
 		CGOM_Graphics * m_cgom_Graphics = nullptr;

@@ -30,12 +30,21 @@ CGOM_Graphics::CGOM_Graphics()
 	//半透明合成のブレンドステートを初期化する。
 	InitTranslucentBlendState();
 
+	//Effekseerの初期化
+	InitEffekseer();
+
 }
 
 CGOM_Graphics::~CGOM_Graphics()
 {
 	if (m_translucentBlendState != nullptr) {
 		m_translucentBlendState->Release();
+	}
+	if (m_effekseerManager != nullptr) {
+		m_effekseerManager->Destroy();
+	}
+	if (m_effekseerRenderer != nullptr) {
+		m_effekseerRenderer->Destroy();
 	}
 }
 
@@ -83,6 +92,30 @@ void CGOM_Graphics::InitTranslucentBlendState() {
 	d3dDevice->CreateBlendState(&blendDesc, &m_translucentBlendState);
 
 }
+void CGOM_Graphics::InitEffekseer()
+{
+	//レンダラーを初期化。
+	m_effekseerRenderer = EffekseerRendererDX11::Renderer::Create(
+		g_graphicsEngine->GetD3DDevice(),			//D3Dデバイス。
+		g_graphicsEngine->GetD3DDeviceContext(),	//D3Dデバイスコンテキスト。
+		20000										//板ポリの最大数。
+	);
+	//エフェクトマネージャを初期化。
+	m_effekseerManager = Effekseer::Manager::Create(10000);
+
+	// 描画用インスタンスから描画機能を設定
+	m_effekseerManager->SetSpriteRenderer(m_effekseerRenderer->CreateSpriteRenderer());
+	m_effekseerManager->SetRibbonRenderer(m_effekseerRenderer->CreateRibbonRenderer());
+	m_effekseerManager->SetRingRenderer(m_effekseerRenderer->CreateRingRenderer());
+	m_effekseerManager->SetTrackRenderer(m_effekseerRenderer->CreateTrackRenderer());
+	m_effekseerManager->SetModelRenderer(m_effekseerRenderer->CreateModelRenderer());
+
+	// 描画用インスタンスからテクスチャの読込機能を設定
+	// 独自拡張可能、現在はファイルから読み込んでいる。
+	m_effekseerManager->SetTextureLoader(m_effekseerRenderer->CreateTextureLoader());
+	m_effekseerManager->SetModelLoader(m_effekseerRenderer->CreateModelLoader());
+
+}
 
 void CGOM_Graphics::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, RenderTarget* renderTarget, D3D11_VIEWPORT* viewport)
 {
@@ -119,6 +152,19 @@ void CGOM_Graphics::Standby() {
 	d3dDeviceContext->RSGetViewports(&numViewport, &m_frameBufferViewports);
 	//ポストエフェクトの更新。
 	m_postEffect.Update();
+
+	//Effekseerカメラ行列を設定。
+	//まずはEffeseerの行列型の変数に、カメラ行列とプロジェクション行列をコピー。
+	Effekseer::Matrix44 efCameraMat;
+	g_camera3D.GetViewMatrix().CopyTo(efCameraMat);
+	Effekseer::Matrix44 efProjMat;
+	g_camera3D.GetProjectionMatrix().CopyTo(efProjMat);
+	//カメラ行列とプロジェクション行列を設定。
+	m_effekseerRenderer->SetCameraMatrix(efCameraMat);
+	m_effekseerRenderer->SetProjectionMatrix(efProjMat);
+	//Effekseerを更新。
+	m_effekseerManager->Update();
+
 }
 
 void CGOM_Graphics::PreRender() {
@@ -170,6 +216,7 @@ void CGOM_Graphics::ForwordRender() {
 		m_mainRenderTarget.GetDepthStensilView()	//第三引数は深度ステンシルバッファ。これは一つしか指定できない。
 	);
 	deviceContext->RSSetViewports(1, m_mainRenderTarget.GetViewport());
+
 	//メインレンダリングターゲットをクリアする。
 	float clearColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	m_mainRenderTarget.ClearRenderTarget(clearColor);
@@ -195,6 +242,25 @@ void CGOM_Graphics::PostRender() {
 
 	m_frameBufferRenderTargetView->Release();
 	m_frameBufferDepthStencilView->Release();
+
+}
+
+void CGOM_Graphics::EffectRender(bool Mode) {
+
+	m_effekseerRenderer->BeginRendering();
+	
+	for (auto go = EffekseerSupporter::GetInstance()->g_effectList_P->begin();
+		go != EffekseerSupporter::GetInstance()->g_effectList_P->end();
+		go++) {
+
+		if ( m_effekseerManager->Exists(go->Handle) == true && go->PostFlag == Mode) {
+			//描画する
+			m_effekseerManager->DrawHandle(go->Handle);
+		}
+
+	}
+
+	m_effekseerRenderer->EndRendering();
 
 }
 

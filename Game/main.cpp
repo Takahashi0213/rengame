@@ -45,6 +45,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//スプライトレンダー
 	SpriteRender spRen;
 
+	//エフェクサーサポーター
+	EffekseerSupporter efSup;
+
 	//カメラを初期化。
 	g_camera3D.SetPosition({ 0.0f, 100.0f, 300.0f });
 	g_camera3D.SetTarget({ 0.0f, 100.0f, 0.0f });
@@ -55,7 +58,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera2D.SetNear(0.1f);
 	g_camera2D.SetFar(1000.0f);
 
-	//CameraSupporter::GetInstance()->CameraMove_Zoom(30.0f, 20.0f, 60.0f, true);
 	CGameObjectManager::GetInstance()->NewGO<Game>("main_Game");
 
 	//ゲームループ。

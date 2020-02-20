@@ -47,7 +47,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(ProjectDir)/DirectXTK\Bin\Desktop_2015_Win10\x64\Debug;$(SolutionDir)/x64/Debug;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir);$(ProjectDir)/bulletPhysics/src;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -112,6 +112,7 @@
     <ClCompile Include="DebugLog.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="Dof.cpp" />
+    <ClCompile Include="EffekseerSupporter.cpp" />
     <ClCompile Include="FarShadow.cpp" />
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="FontSupporter.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="DebugLog.h" />
     <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="Dof.h" />
+    <ClInclude Include="EffekseerSupporter.h" />
     <ClInclude Include="FarShadow.h" />
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="FontSupporter.h" />

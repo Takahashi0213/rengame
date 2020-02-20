@@ -33,6 +33,10 @@ public:
 	/// レンダー群が終わった後に呼ぶ
 	/// </summary>
 	void EndSet();
+	/// <summary>
+	/// エフェクサー描画
+	/// </summary>
+	void EffectRender(bool Mode);
 
 	/// <summary>
 	/// メインレンダリングターゲットを取得
@@ -59,11 +63,26 @@ public:
 		return m_frameBufferDepthStencilView;
 	}
 
+	/// <summary>
+	/// エフェクサーマネージャーを取得
+	/// </summary>
+	Effekseer::Manager* GetEffekseerManager() {
+		return m_effekseerManager;
+	}
+	EffekseerRenderer::Renderer* GetEffekseerRender() {
+		return m_effekseerRenderer;
+	}
+
 private:
 	/// <summary>
 	/// 半透明合成のブレンドステートを初期化。
 	/// </summary>
 	void InitTranslucentBlendState();
+
+	/// <summary>
+	/// Effekseerの初期化。
+	/// </summary>
+	void InitEffekseer();
 
 	RenderTarget m_mainRenderTarget;									//メインレンダリングターゲット。
 	RenderTarget m_depthRenderTarget;									//深度値の書き込み先となるレンダリングターゲット。
@@ -77,6 +96,10 @@ private:
 	ID3D11BlendState* m_translucentBlendState = nullptr;	//半透明合成用のブレンドステート。
 
 	PostEffect m_postEffect;		//ポストエフェクト
+
+	//Effekseerマネージャ管理。
+	Effekseer::Manager*	m_effekseerManager = nullptr;
+	EffekseerRenderer::Renderer*	m_effekseerRenderer = nullptr;
 
 	/// <summary>
 	/// レンダリングターゲットの切り替え。

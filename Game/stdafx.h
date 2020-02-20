@@ -17,6 +17,8 @@
 #include <x3daudio.h>
 #include <xaudio2fx.h>
 
+#include <EffekseerSupporter.h>
+
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\CollisionDispatch\btGhostObject.h"
 
