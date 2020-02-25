@@ -277,7 +277,6 @@ void Player::Jump() {
 
 			EffekseerSupporter::GetInstance()->NewEffect(EffekseerSupporter::TestData, false, { 0.0f,50.0f,0.0f });
 			EffekseerSupporter::GetInstance()->NewEffect(EffekseerSupporter::TestData, true, { 0.0f,150.0f,0.0f });
-
 		}
 		m_jumpNow = true;
 	}

@@ -212,3 +212,15 @@ float4 PSMain_Pattern(PSInput In) :SV_Target0{
 
 	return color * mulColor;
 }
+
+float4 PSMain_Monochrome(PSInput In) :SV_Target0{
+	//ÉÇÉmÉNÉçïœä∑
+	float4 color = colorTexture.Sample(Sampler, In.uv);
+
+	float P = (0.29900 * color.r) + (0.58700 * color.g) + (0.11400 * color.b);
+	color.r = P;
+	color.g = P;
+	color.b = P;
+
+	return color * mulColor;
+}

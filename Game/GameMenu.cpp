@@ -83,7 +83,7 @@ GameMenu::GameMenu()
 	MenuCommand_Sprite1->SetPosition({ DefMenuCommandPosition.x + MenuMove ,
 		DefMenuCommandPosition.y + Y_Hosei,DefMenuCommandPosition.z });
 	MenuCommand_Font1 = NewGO<FontRender>("MenuCommand_Font1", SpriteNo);
-	MenuCommand_Font1->SetText(L"クリエイト");
+	MenuCommand_Font1->SetText(Koumoku[0]);
 	MenuCommand_Font1->SetColor(TextColor);
 	MenuCommand_Font1->SetScale(TextFontSize);
 	MenuCommand_Font1->SetPosition({ DefMenuCommand_TextPosition.x + MenuMove ,
@@ -100,7 +100,7 @@ GameMenu::GameMenu()
 	MenuCommand_Sprite2->SetPosition({ DefMenuCommandPosition.x + MenuMove ,
 		DefMenuCommandPosition.y + Y_Hosei,DefMenuCommandPosition.z });
 	MenuCommand_Font2 = NewGO<FontRender>("MenuCommand_Font2", SpriteNo);
-	MenuCommand_Font2->SetText(L"全箱解放");
+	MenuCommand_Font2->SetText(Koumoku[1]);
 	MenuCommand_Font2->SetColor(TextColor);
 	MenuCommand_Font2->SetScale(TextFontSize);
 	MenuCommand_Font2->SetPosition({ DefMenuCommand_TextPosition.x + MenuMove , 
@@ -117,7 +117,7 @@ GameMenu::GameMenu()
 	MenuCommand_Sprite3->SetPosition({ DefMenuCommandPosition.x + MenuMove ,
 		DefMenuCommandPosition.y + Y_Hosei,DefMenuCommandPosition.z });
 	MenuCommand_Font3 = NewGO<FontRender>("MenuCommand_Font3", SpriteNo);
-	MenuCommand_Font3->SetText(L"ライブラリ");
+	MenuCommand_Font3->SetText(Koumoku[2]);
 	MenuCommand_Font3->SetColor(TextColor);
 	MenuCommand_Font3->SetScale(TextFontSize);
 	MenuCommand_Font3->SetPosition({ DefMenuCommand_TextPosition.x + MenuMove ,
@@ -134,7 +134,7 @@ GameMenu::GameMenu()
 	MenuCommand_Sprite4->SetPosition({ DefMenuCommandPosition.x + MenuMove ,
 		DefMenuCommandPosition.y + Y_Hosei,DefMenuCommandPosition.z });
 	MenuCommand_Font4 = NewGO<FontRender>("MenuCommand_Font4", SpriteNo);
-	MenuCommand_Font4->SetText(L"セーブ");
+	MenuCommand_Font4->SetText(Koumoku[3]);
 	MenuCommand_Font4->SetColor(TextColor);
 	MenuCommand_Font4->SetScale(TextFontSize);
 	MenuCommand_Font4->SetPosition({ DefMenuCommand_TextPosition.x + MenuMove + SaveX_Hosei,
@@ -232,6 +232,7 @@ void GameMenu::GameMenuUpdate() {
 				MenuCommand_Cursor->SetAlpha(1.0f);
 				m_nowMenuCommand = MenuCommand::Create;	//カーソル位置リセリセ
 				m_menuMoveTimer = 0;
+				EffekseerSupporter::GetInstance()->NoPostStop();
 
 				//コマンドの描画をリセット
 				Update_CommandDraw(true);
@@ -290,6 +291,7 @@ void GameMenu::GameMenuUpdate() {
 
 				Game::GetInstance()->SetGameMode(Game::GameMode::ActionMode);
 				MenuCommand_Cursor->SetAlpha(0.0f);
+				EffekseerSupporter::GetInstance()->NoPostMove();
 
 				//移動
 				MenuButton->Init(L"Assets/sprite/MenuButton.dds", MenuButtonSize, MenuButtonSize, SpriteNo);

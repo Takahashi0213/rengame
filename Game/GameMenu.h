@@ -99,6 +99,13 @@ private:
 	const float TextFontSize = 0.6f;						//テキストの大きさ
 	const CVector2 DefMenuCommand_TextPosition = { 375.0f,182.0f };
 	const float SaveX_Hosei = 30.0f;
+	//項目内容
+	const wchar_t* Koumoku[4]{
+		L"クリエイト",
+		L"全箱解放",
+		L"ライブラリ",
+		L"セーブ",
+	};
 	//アクセサリー
 
 	//説明文

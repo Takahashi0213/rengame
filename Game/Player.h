@@ -23,6 +23,10 @@ public:
 	CVector3 Getm_Position() {
 		return m_position;
 	}
+	CVector3 GetPosition() {
+		return m_position;
+	}
+
 	/// <summary>
 	/// ƒvƒŒƒCƒ„[‚Ì‰ñ“]‚ğ•Ô‚·
 	/// </summary>

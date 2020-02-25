@@ -71,3 +71,30 @@ void EffekseerSupporter::EffectClear() {
 	}
 
 }
+
+void EffekseerSupporter::NoPostStop() {
+
+	for (auto go = m_effectList.begin();
+		go != m_effectList.end();
+		go++) {
+
+		if (go->PostFlag == false) {
+			CGameObjectManager::GetInstance()->GetEffekseerManager()->SetPaused(go->Handle, true);
+		}
+
+	}
+
+}
+void EffekseerSupporter::NoPostMove() {
+
+	for (auto go = m_effectList.begin();
+		go != m_effectList.end();
+		go++) {
+
+		if (go->PostFlag == false) {
+			CGameObjectManager::GetInstance()->GetEffekseerManager()->SetPaused(go->Handle, false);
+		}
+
+	}
+
+}

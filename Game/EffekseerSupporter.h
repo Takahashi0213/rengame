@@ -29,7 +29,7 @@ public:
 
 	EffekseerSupporter();
 	~EffekseerSupporter();
-
+	
 	/// <summary>
 	/// エフェクトの生成
 	/// </summary>
@@ -44,7 +44,15 @@ public:
 	/// ここからエフェクト調整
 	/// </summary>
 	
+	/// <summary>
+	/// 先に描画されるエフェクトのストップ＆再開
+	/// </summary>
+	void NoPostStop();
+	void NoPostMove();
 
+	/// <summary>
+	/// エフェクトデータの削除（毎フレーム呼んでね）
+	/// </summary>
 	void EffectClear();
 
 	/// <summary>

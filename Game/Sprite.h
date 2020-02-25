@@ -2,12 +2,13 @@
 #include "graphics/Shader.h"
 
 enum Sprite_RenderMode {
-	Normal,		//普通に描画
-	X_Cut,		//Xをカットする
-	Y_Cut,		//Yをカットする
-	Slice9,		//9slice
-	Mask,		//マシュク
-	Pattern,	//パターン
+	Normal,				//普通に描画
+	X_Cut,				//Xをカットする
+	Y_Cut,				//Yをカットする
+	Slice9,				//9slice
+	Mask,				//マシュク
+	Pattern,			//パターン
+	Sprite_Monochrome,	//モノクロ
 };
 
 class Sprite
@@ -67,13 +68,15 @@ public:
 	ID3D11Buffer* m_indexBuffer = NULL;		//インデックスバッファ
 
 	//シェーダー
-	Shader	m_ps;			//!<ピクセルシェーダー。
-	Shader	m_ps_X_Cut;		//!<Xをカットするピクセルシェーダー。
-	Shader	m_ps_Y_Cut;		//!<Yをカットするピクセルシェーダー。
-	Shader	m_ps_Slice9;	//!<9つにカットするピクセルシェーダー。
-	Shader	m_ps_Mask;		//!<マスク用ピクセルシェーダー。
-	Shader	m_ps_Pattern;		//!<マスク用ピクセルシェーダー。
-	Shader	m_vs;		//!<頂点シェーダー。
+	Shader	m_ps;				//!<ピクセルシェーダー。
+	Shader	m_ps_X_Cut;			//!<Xをカットするピクセルシェーダー。
+	Shader	m_ps_Y_Cut;			//!<Yをカットするピクセルシェーダー。
+	Shader	m_ps_Slice9;		//!<9つにカットするピクセルシェーダー。
+	Shader	m_ps_Mask;			//!<マスク用ピクセルシェーダー。
+	Shader	m_ps_Pattern;		//!<パターン用ピクセルシェーダー。
+	Shader	m_ps_Monochrome;	//!<モノクロピクセルシェーダー。
+	Shader	m_vs;				//!<頂点シェーダー。
+
 	ID3D11SamplerState* m_samplerState = NULL;	//サンプラステート
 
 	//スプライトである。

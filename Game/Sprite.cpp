@@ -50,6 +50,7 @@ void Sprite::InitCommon(float w, float h ,bool cutFlag)
 	m_ps_Slice9.Load("Assets/shader/sprite.fx", "PSMain_Slice", Shader::EnType::PS);
 	m_ps_Mask.Load("Assets/shader/sprite.fx", "PSMain_Mask", Shader::EnType::PS);
 	m_ps_Pattern.Load("Assets/shader/sprite.fx", "PSMain_Pattern", Shader::EnType::PS);
+	m_ps_Monochrome.Load("Assets/shader/sprite.fx", "PSMain_Monochrome", Shader::EnType::PS);
 
 	//定数バッファを初期化。
 	InitConstantBuffer();
@@ -228,6 +229,9 @@ void Sprite::Sprite_Draw() {
 		break;
 	case Pattern:
 		g_graphicsEngine->GetD3DDeviceContext()->PSSetShader((ID3D11PixelShader*)m_ps_Pattern.GetBody(), NULL, 0);
+		break;
+	case Sprite_Monochrome:
+		g_graphicsEngine->GetD3DDeviceContext()->PSSetShader((ID3D11PixelShader*)m_ps_Monochrome.GetBody(), NULL, 0);
 		break;
 	}
 	//プリミティブのトポロジーは
