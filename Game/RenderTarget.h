@@ -63,6 +63,11 @@ public:
 	{
 		return m_renderTargetSRV;
 	}
+	ID3D11ShaderResourceView* GetRenderTargetSRV_Resolve()
+	{
+		return m_resolveRenderTargetSRV;
+	}
+
 	/// <summary>
 	/// ビューポートの取得。
 	/// </summary>
@@ -97,6 +102,20 @@ public:
 		return m_format;
 	}
 
+	ID3D11Texture2D* GetRTT() {
+		return m_renderTargetTex;
+	}
+	ID3D11Texture2D* GetRTT_Resolve() {
+		return m_resolveRenderTargetTex;
+	}
+
+	/// <summary>
+	/// フォーマットを返す
+	/// </summary>
+	DXGI_FORMAT GetFormat() {
+		return m_format;
+	}
+
 private:
 	float m_width = 0;										//レンダリングターゲットの幅。
 	float m_height = 0;										//レンダリングターゲットの高さ。
@@ -108,5 +127,11 @@ private:
 	ID3D11Texture2D*			m_depthStencilTex = nullptr;		//!<デプスステンシルとなるテクスチャ。
 	ID3D11DepthStencilView*		m_depthStencilView = nullptr;		//!<デプスステンシルビュー。
 	D3D11_VIEWPORT				m_viewport;							//!<ビューポート。
+
+	ID3D11Texture2D*			m_resolveRenderTargetTex = nullptr;	//!<Resolve用
+	ID3D11RenderTargetView*		m_resolveRenderTargetView = nullptr;//!<Resolveレンダーターゲットビュー。
+	ID3D11ShaderResourceView*	m_resolveRenderTargetSRV = nullptr;	//!<ResolveレンダリングターゲットのSRV
+
 };
+
 

@@ -9,6 +9,7 @@ enum Sprite_RenderMode {
 	Mask,				//マシュク
 	Pattern,			//パターン
 	Sprite_Monochrome,	//モノクロ
+	Overlay,			//オーバーレイ
 };
 
 class Sprite
@@ -75,6 +76,7 @@ public:
 	Shader	m_ps_Mask;			//!<マスク用ピクセルシェーダー。
 	Shader	m_ps_Pattern;		//!<パターン用ピクセルシェーダー。
 	Shader	m_ps_Monochrome;	//!<モノクロピクセルシェーダー。
+	Shader	m_ps_Overlay;		//!<オーバーレイピクセルシェーダー
 	Shader	m_vs;				//!<頂点シェーダー。
 
 	ID3D11SamplerState* m_samplerState = NULL;	//サンプラステート

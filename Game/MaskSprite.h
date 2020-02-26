@@ -171,6 +171,18 @@ public:
 	}
 	
 	/// <summary>
+	/// レンダーモードの変更
+	/// </summary>
+	void ChangeRenderMode(Sprite_RenderMode srm, int list) {
+		if (list >= 0) {
+			m_subSpriteList[list].sprite->m_renderMode = srm;
+		}
+		else {
+			std::abort(); //異常な値です！！！！！！コラ！
+		}
+	}
+
+	/// <summary>
 	/// サブスプライトの追加
 	/// </summary>
 	Sprite* AddSubSprite(const wchar_t* texFilePath, float w, float h);

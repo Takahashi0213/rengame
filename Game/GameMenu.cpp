@@ -70,6 +70,9 @@ GameMenu::GameMenu()
 	MenuLogo_Up->Init(L"Assets/sprite/MenuLogo_Up.dds", MenuLogoAccSize.x, MenuLogoAccSize.y, SpriteNo);
 	MenuLogo_Up->SetPosition(DefMenuLogo_AccPosition);
 	MenuLogo_Up->SetScale(MenuLogoScale);
+	//ロゴのレンダーモード変更
+	MenuLogo->ChangeRenderMode_Mask(Sprite_RenderMode::Overlay, 0);
+	MenuLogo->ChangeRenderMode_Mask(Sprite_RenderMode::Overlay, 1);
 
 	//めにゅう
 	float Y_Hosei = 0.0f;

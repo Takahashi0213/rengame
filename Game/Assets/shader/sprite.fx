@@ -18,7 +18,8 @@ struct PSInput {
 	float2 uv : TEXCOORD0;
 };
 
-Texture2D<float4> colorTexture : register(t0);	//カラーテクスチャ
+Texture2D<float4> colorTexture : register(t0);		//カラーテクスチャ
+Texture2D<float4> renderingTarget : register(t1);	//現在の画面
 sampler Sampler : register(s0);
 
 PSInput VSMain(VSInput In) {
@@ -221,6 +222,15 @@ float4 PSMain_Monochrome(PSInput In) :SV_Target0{
 	color.r = P;
 	color.g = P;
 	color.b = P;
+
+	return color * mulColor;
+}
+
+float4 PSMain_Overlay(PSInput In) :SV_Target0{
+	//おばれい
+	float4 color = renderingTarget.Sample(Sampler, In.uv);
+
+	if (mulColor.a == 0.0f)discard;
 
 	return color * mulColor;
 }

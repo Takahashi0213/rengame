@@ -24,12 +24,23 @@ void RenderTarget::Release()
 		m_renderTargetView->Release();
 		m_renderTargetView = nullptr;
 	}
+	if (m_resolveRenderTargetView != nullptr) {
+		m_resolveRenderTargetView->Release();
+		m_resolveRenderTargetView = nullptr;
+	}
 	if (m_renderTargetTex != nullptr) {
 		m_renderTargetTex->Release();
 		m_renderTargetTex = nullptr;
 	}
+	if (m_resolveRenderTargetTex != nullptr) {
+		m_resolveRenderTargetTex->Release();
+		m_resolveRenderTargetTex = nullptr;
+	}
 	if (m_renderTargetSRV != nullptr) {
 		m_renderTargetSRV->Release();
+	}
+	if (m_resolveRenderTargetSRV != nullptr) {
+		m_resolveRenderTargetSRV->Release();
 	}
 }
 void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
@@ -74,6 +85,8 @@ void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
 		texDesc.MiscFlags = 0;
 		//テクスチャを作成。
 		d3dDevice->CreateTexture2D(&texDesc, nullptr, &m_renderTargetTex);
+		//コピー先のテクスチャも作る！
+		d3dDevice->CreateTexture2D(&texDesc, nullptr, &m_resolveRenderTargetTex);
 	}
 	//2.レンダリングターゲットビューの作成
 	{
@@ -90,6 +103,8 @@ void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
 		viewDesc.Texture2D.MipSlice = 0;
 		//レンダリングターゲットビューの作成。
 		d3dDevice->CreateRenderTargetView(m_renderTargetTex, &viewDesc, &m_renderTargetView);
+		//resolveレンダリングターゲットビューの作成。
+		d3dDevice->CreateRenderTargetView(m_resolveRenderTargetTex, &viewDesc, &m_resolveRenderTargetView);
 	}
 	//3.シェーダーリソースビューの作成
 	{
@@ -109,6 +124,8 @@ void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
 		srvDesc.Texture2D.MostDetailedMip = 0;
 		//SRVを作成する。
 		d3dDevice->CreateShaderResourceView(m_renderTargetTex, &srvDesc, &m_renderTargetSRV);
+		//resolve用SRVを作成する。
+		d3dDevice->CreateShaderResourceView(m_resolveRenderTargetTex, &srvDesc, &m_resolveRenderTargetSRV);
 	}
 	//4.デプスステンシルテクスチャの作成
 	D3D11_TEXTURE2D_DESC depthTexDesc = texDesc;
@@ -157,6 +174,7 @@ void RenderTarget::ClearRenderTarget(float* clearColor)
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	//レンダリングターゲットをクリア。
 	d3dDeviceContext->ClearRenderTargetView(m_renderTargetView, clearColor);
+	d3dDeviceContext->ClearRenderTargetView(m_resolveRenderTargetView, clearColor);
 	d3dDeviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 

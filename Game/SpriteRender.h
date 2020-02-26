@@ -337,6 +337,15 @@ public:
 	void ChangePattern(int pattern);
 
 	/// <summary>
+	/// マスクのサブスプライトのレンダーモードを変えます
+	/// </summary>
+	void ChangeRenderMode_Mask(Sprite_RenderMode srm, int list) {
+		if (m_subSpriteFlag == true) {
+			m_maskSprite->ChangeRenderMode(srm, list);
+	}
+	}
+
+	/// <summary>
 	/// マウスが自分に重なってたらTrueを返す
 	/// </summary>
 	/// <returns>重なってる？？？？？</returns>
