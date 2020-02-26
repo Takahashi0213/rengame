@@ -86,9 +86,6 @@
 
 		m_cgom_Graphics->EndSet();
 
-		//エフェクサー
-		m_cgom_Graphics->EffectRender(true);
-
 		//登録されているスプライトの描画関数を呼び出す
 		for (int i = 0; i < MAX_OBJ_PRIORITY; i++) { //優先度
 			for (auto go : m_goList) {
@@ -97,6 +94,9 @@
 				}
 			}
 		}
+
+		//エフェクサー
+		m_cgom_Graphics->EffectRender(true);
 
 		//エフェクトデータの削除
 		EffekseerSupporter::GetInstance()->EffectClear();

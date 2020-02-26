@@ -73,6 +73,14 @@ public:
 		return m_effekseerRenderer;
 	}
 
+	ID3D11Texture2D* GetFrameBufferTexture() {
+		return m_frameBufferTexture;
+	}
+	DXGI_FORMAT GetFormat() {
+		return m_format;
+	}
+
+
 private:
 	/// <summary>
 	/// 半透明合成のブレンドステートを初期化。
@@ -86,6 +94,9 @@ private:
 
 	RenderTarget m_mainRenderTarget;									//メインレンダリングターゲット。
 	RenderTarget m_depthRenderTarget;									//深度値の書き込み先となるレンダリングターゲット。
+
+	ID3D11Texture2D* m_frameBufferTexture = nullptr;
+	DXGI_FORMAT m_format;
 
 	Sprite m_copyMainRtToFrameBufferSprite;								//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	D3D11_VIEWPORT m_frameBufferViewports;								//フレームバッファのビューポート。

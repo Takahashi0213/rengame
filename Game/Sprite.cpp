@@ -52,6 +52,7 @@ void Sprite::InitCommon(float w, float h ,bool cutFlag)
 	m_ps_Pattern.Load("Assets/shader/sprite.fx", "PSMain_Pattern", Shader::EnType::PS);
 	m_ps_Monochrome.Load("Assets/shader/sprite.fx", "PSMain_Monochrome", Shader::EnType::PS);
 	m_ps_Overlay.Load("Assets/shader/sprite.fx", "PSMain_Overlay", Shader::EnType::PS);
+	m_ps_Add.Load("Assets/shader/sprite.fx", "PSMain_Add", Shader::EnType::PS);
 
 	//定数バッファを初期化。
 	InitConstantBuffer();
@@ -202,6 +203,8 @@ void Sprite::Sprite_Draw() {
 	cb.cut_line = m_cut_UV;
 	cb.slice_pattern = m_slicePattern;
 	cb.nowPattern = m_nowPattern;
+	cb.mHigh = FRAME_BUFFER_H;
+	cb.mWide = FRAME_BUFFER_W;
 
 	g_graphicsEngine->GetD3DDeviceContext()->UpdateSubresource(m_cb, 0, NULL, &cb, 0, 0);
 	g_graphicsEngine->GetD3DDeviceContext()->VSSetConstantBuffers(0, 1, &m_cb);
@@ -209,6 +212,7 @@ void Sprite::Sprite_Draw() {
 
 	g_graphicsEngine->GetD3DDeviceContext()->IASetInputLayout(m_vs.GetInputLayout());
 	g_graphicsEngine->GetD3DDeviceContext()->VSSetShader((ID3D11VertexShader*)m_vs.GetBody(), NULL, 0);
+	ID3D11ShaderResourceView* srv;
 
 	//ステートによってPSを変更
 	switch (m_renderMode)
@@ -239,16 +243,32 @@ void Sprite::Sprite_Draw() {
 		g_graphicsEngine->GetD3DDeviceContext()->ResolveSubresource(
 			CGameObjectManager::GetInstance()->GetMainRenderTarget()->GetRTT_Resolve(),
 			0,
-			CGameObjectManager::GetInstance()->GetMainRenderTarget()->GetRTT(),
+			CGameObjectManager::GetInstance()->GetFrameBufferTexture(),
 			0,
-			CGameObjectManager::GetInstance()->GetMainRenderTarget()->GetFormat()
+			CGameObjectManager::GetInstance()->GetFormat()
 			);
 		//テクスチャを設定。
-		g_graphicsEngine->GetD3DDeviceContext()->PSSetShaderResources(1, 1,
-		(ID3D11ShaderResourceView* const*)CGameObjectManager::GetInstance()->GetMainRenderTarget()->GetRenderTargetSRV_Resolve());
+		srv = CGameObjectManager::GetInstance()->GetMainRenderTarget()->GetRenderTargetSRV_Resolve() ;
+		g_graphicsEngine->GetD3DDeviceContext()->PSSetShaderResources(1, 1,	&srv);
 		//描画
 		g_graphicsEngine->GetD3DDeviceContext()->PSSetShader((ID3D11PixelShader*)m_ps_Overlay.GetBody(), NULL, 0);
 		break;
+	case Add:
+		//メインレンダリングターゲットをコピー
+		g_graphicsEngine->GetD3DDeviceContext()->ResolveSubresource(
+			CGameObjectManager::GetInstance()->GetMainRenderTarget()->GetRTT_Resolve(),
+			0,
+			CGameObjectManager::GetInstance()->GetFrameBufferTexture(),
+			0,
+			CGameObjectManager::GetInstance()->GetFormat()
+		);
+		//テクスチャを設定。
+		srv = CGameObjectManager::GetInstance()->GetMainRenderTarget()->GetRenderTargetSRV_Resolve();
+		g_graphicsEngine->GetD3DDeviceContext()->PSSetShaderResources(1, 1, &srv);
+		//描画
+		g_graphicsEngine->GetD3DDeviceContext()->PSSetShader((ID3D11PixelShader*)m_ps_Add.GetBody(), NULL, 0);
+		break;
+
 	}
 	//プリミティブのトポロジーは
 	//トライアングルストリップを設定する。

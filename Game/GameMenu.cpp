@@ -73,6 +73,7 @@ GameMenu::GameMenu()
 	//ロゴのレンダーモード変更
 	MenuLogo->ChangeRenderMode_Mask(Sprite_RenderMode::Overlay, 0);
 	MenuLogo->ChangeRenderMode_Mask(Sprite_RenderMode::Overlay, 1);
+	MenuLogo->ChangeRenderMode_Mask(Sprite_RenderMode::Add, 2);
 
 	//めにゅう
 	float Y_Hosei = 0.0f;

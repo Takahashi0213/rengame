@@ -147,6 +147,13 @@ void CGOM_Graphics::Standby() {
 		&m_frameBufferRenderTargetView,
 		&m_frameBufferDepthStencilView
 	);
+	ID3D11Resource* res;
+	m_frameBufferRenderTargetView->GetResource(&res);
+	m_frameBufferTexture = (ID3D11Texture2D*)res;
+	D3D11_TEXTURE2D_DESC desc;
+	m_frameBufferTexture->GetDesc(&desc);
+	m_format = desc.Format;
+
 	//ビューポートもバックアップを取っておく。
 	unsigned int numViewport = 1;
 	d3dDeviceContext->RSGetViewports(&numViewport, &m_frameBufferViewports);

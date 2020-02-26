@@ -7,6 +7,8 @@ cbuffer cb:register(b0) {
 	float cut_line;
 	int slice_pattern;
 	int nowPattern;
+	float mHigh;
+	float mWide;			//âÊñ ÇÃècâ°
 };
 
 struct VSInput {
@@ -228,9 +230,60 @@ float4 PSMain_Monochrome(PSInput In) :SV_Target0{
 
 float4 PSMain_Overlay(PSInput In) :SV_Target0{
 	//Ç®ÇŒÇÍÇ¢
-	float4 color = renderingTarget.Sample(Sampler, In.uv);
+	float4 color = colorTexture.Sample(Sampler, In.uv);
 
-	if (mulColor.a == 0.0f)discard;
+	float2 RT_uv;
+	RT_uv.x = In.pos.x / mWide;
+	RT_uv.y = In.pos.y / mHigh;
 
-	return color * mulColor;
+	float4 RTcolor = renderingTarget.Sample(Sampler, RT_uv);
+	float TempColor = (RTcolor.r + RTcolor.g + RTcolor.b) / 3.0f;
+	float4 FinalColor;
+	FinalColor.a = color.a;
+
+	//ï™äÚ
+	if (RTcolor.r < 0.5f) {
+		FinalColor.r = (color.r * RTcolor.r) * 2.0f;
+	}
+	else {
+		FinalColor.r = 1.0f - (2.0f * ((1.0f - color.r) * (1.0f - RTcolor.r)));
+	}
+
+	if (RTcolor.g < 0.5f) {
+		FinalColor.g = (color.g * RTcolor.g) * 2.0f;
+	}
+	else {
+		FinalColor.g = 1.0f - (2.0f * ((1.0f - color.g) * (1.0f - RTcolor.g)));
+	}
+
+	if (RTcolor.b < 0.5f) {
+		FinalColor.b = (color.b * RTcolor.b) * 2.0f;
+	}
+	else {
+		FinalColor.b = 1.0f - (2.0f * ((1.0f - color.b) * (1.0f - RTcolor.b)));
+	}
+
+	return FinalColor;
+	//return color;
+	//return RTcolor;
+	//return RTcolor + color;
+}
+
+float4 PSMain_Add(PSInput In) :SV_Target0{
+	//â¡éZ
+	float4 color = colorTexture.Sample(Sampler, In.uv);
+
+	float2 RT_uv;
+	RT_uv.x = In.pos.x / mWide;
+	RT_uv.y = In.pos.y / mHigh;
+
+	float4 RTcolor = renderingTarget.Sample(Sampler, RT_uv);
+	float4 FinalColor;
+	FinalColor.a = color.a;
+
+	FinalColor.r = RTcolor.r + color.r;
+	FinalColor.g = RTcolor.g + color.g;
+	FinalColor.b = RTcolor.b + color.b;
+
+	return FinalColor;
 }

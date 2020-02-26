@@ -10,6 +10,7 @@ enum Sprite_RenderMode {
 	Pattern,			//パターン
 	Sprite_Monochrome,	//モノクロ
 	Overlay,			//オーバーレイ
+	Add,				//加算
 };
 
 class Sprite
@@ -52,6 +53,8 @@ public:
 		float cut_line;
 		int slice_pattern;	//-1なら無効、スライス画像位置
 		int nowPattern;
+		float mHigh;
+		float mWide;			//画面の縦横
 	};
 	struct SpriteData {
 		ID3D11ShaderResourceView* Texture = NULL;		//テクスチャ
@@ -77,6 +80,7 @@ public:
 	Shader	m_ps_Pattern;		//!<パターン用ピクセルシェーダー。
 	Shader	m_ps_Monochrome;	//!<モノクロピクセルシェーダー。
 	Shader	m_ps_Overlay;		//!<オーバーレイピクセルシェーダー
+	Shader	m_ps_Add;			//!<加算ピクセルシェーダー
 	Shader	m_vs;				//!<頂点シェーダー。
 
 	ID3D11SamplerState* m_samplerState = NULL;	//サンプラステート

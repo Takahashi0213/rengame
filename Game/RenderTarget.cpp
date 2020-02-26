@@ -86,7 +86,9 @@ void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
 		//テクスチャを作成。
 		d3dDevice->CreateTexture2D(&texDesc, nullptr, &m_renderTargetTex);
 		//コピー先のテクスチャも作る！
+		texDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		d3dDevice->CreateTexture2D(&texDesc, nullptr, &m_resolveRenderTargetTex);
+		texDesc.Format = texFormat;
 	}
 	//2.レンダリングターゲットビューの作成
 	{
@@ -104,7 +106,9 @@ void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
 		//レンダリングターゲットビューの作成。
 		d3dDevice->CreateRenderTargetView(m_renderTargetTex, &viewDesc, &m_renderTargetView);
 		//resolveレンダリングターゲットビューの作成。
+		viewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		d3dDevice->CreateRenderTargetView(m_resolveRenderTargetTex, &viewDesc, &m_resolveRenderTargetView);
+		viewDesc.Format = texFormat;
 	}
 	//3.シェーダーリソースビューの作成
 	{
@@ -125,7 +129,9 @@ void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
 		//SRVを作成する。
 		d3dDevice->CreateShaderResourceView(m_renderTargetTex, &srvDesc, &m_renderTargetSRV);
 		//resolve用SRVを作成する。
+		srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		d3dDevice->CreateShaderResourceView(m_resolveRenderTargetTex, &srvDesc, &m_resolveRenderTargetSRV);
+		srvDesc.Format = texFormat;
 	}
 	//4.デプスステンシルテクスチャの作成
 	D3D11_TEXTURE2D_DESC depthTexDesc = texDesc;
@@ -174,7 +180,6 @@ void RenderTarget::ClearRenderTarget(float* clearColor)
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	//レンダリングターゲットをクリア。
 	d3dDeviceContext->ClearRenderTargetView(m_renderTargetView, clearColor);
-	d3dDeviceContext->ClearRenderTargetView(m_resolveRenderTargetView, clearColor);
 	d3dDeviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 

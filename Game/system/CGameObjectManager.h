@@ -219,6 +219,13 @@
 			return m_cgom_Graphics->GetEffekseerRender();
 		}
 
+		ID3D11Texture2D* GetFrameBufferTexture() {
+			return m_cgom_Graphics->GetFrameBufferTexture();
+		}
+		DXGI_FORMAT GetFormat() {
+			return m_cgom_Graphics->GetFormat();
+		}
+
 	private:
 
 		CGOM_Graphics * m_cgom_Graphics = nullptr;
