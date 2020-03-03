@@ -212,6 +212,11 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix ,EnRenderMode render
 	vsCb.mHigh = FRAME_BUFFER_H;
 	vsCb.mWide = FRAME_BUFFER_W;
 
+	//色
+	vsCb.emissionColor_R = m_emissionColor.x;
+	vsCb.emissionColor_G = m_emissionColor.y;
+	vsCb.emissionColor_B = m_emissionColor.z;
+
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 
 	//ライト用の定数バッファを更新。

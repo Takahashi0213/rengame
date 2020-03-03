@@ -187,6 +187,14 @@ public:
 		return DirectX::XMVector3Dot(xmv0, xmv1).m128_f32[0];
 	}
 	/*!
+	*@brief	ベクトル同士の内積。
+	*/
+	template< class TVector>
+	static inline float Dot(const TVector& v0, const TVector& v1)
+	{
+		return v0.Dot(v1);
+	}
+	/*!
 	 * @brief	外積。
 	 */
 	void Cross(const CVector3& _v)
@@ -498,6 +506,14 @@ public:
 		return DirectX::XMVector4Dot(xmv0, xmv1).m128_f32[0];
 	}
 	/*!
+	*@brief	ベクトル同士の内積。
+	*/
+	template< class TVector>
+	static inline float Dot(const TVector& v0, const TVector& v1)
+	{
+		return v0.Dot(v1);
+	}
+	/*!
 	 * @brief	長さを取得
 	 */
 	float Length()
@@ -568,6 +584,10 @@ public:
 	*@brief	行列からクォータニオンを作成。
 	*/
 	void SetRotation(const CMatrix& m);
+	/*!
+	*@brief	fromベクトルからtoベクトルに回転させるクォータニオンを作成。
+	*/
+	void SetRotation(CVector3 from, CVector3 to);
 	/*!
 	 *@brief	球面線形補完。
 	 */
@@ -708,4 +728,39 @@ static inline CQuaternion operator*(const CQuaternion& q1, const CQuaternion q2)
 	qRet.Multiply(q2, q1);
 	return qRet;
 }
-
+/*!
+*@brief	ベクトル同士の外積。
+*/
+template< class TVector>
+static inline TVector Cross(const TVector& v0, const TVector& v1)
+{
+	TVector result;
+	result.Cross(v0, v1);
+	return result;
+}
+inline void CQuaternion::SetRotation(CVector3 from, CVector3 to)
+{
+	from.Normalize();
+	to.Normalize();
+	auto t = Dot(from, to);
+	CVector3 rotAxis;
+	if (t > 0.998f) {
+		//ほぼ同じ向きなので単位クォータニオンにする。
+		*this = CQuaternion::Identity();
+	}
+	else if (t < -0.998f) {
+		//ほぼ逆向きなので、
+		if (fabsf(to.x) < 1.0f) {
+			//
+			rotAxis = Cross(CVector3::AxisX(), to);
+		}
+		else {
+			rotAxis = Cross(CVector3::AxisY(), to);
+		}
+	}
+	else {
+		rotAxis = Cross(from, to);
+	}
+	rotAxis.Normalize();
+	SetRotation(rotAxis, acos(t));
+}

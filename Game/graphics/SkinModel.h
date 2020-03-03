@@ -86,7 +86,14 @@ public:
 	/// <param name="color">自己発光色</param>
 	void SetEmissionColor(CVector3 color)
 	{
-		//m_emissionColor = color;
+		m_emissionColor = color;
+	}
+	/// <summary>
+	/// 自己発光色を取得
+	/// </summary>
+	/// <returns>自己発光色</returns>
+	CVector3 GetEmissionColor() {
+		return m_emissionColor;
 	}
 	/*!
 	*@brief	SRVのレジスタ番号。
@@ -189,6 +196,9 @@ private:
 		int isHasKirameki;		//きらめきを保持している？
 		float mHigh;
 		float mWide;			//画面の縦横
+		float emissionColor_R;
+		float emissionColor_G;
+		float emissionColor_B;
 	};
 
 	//環境光の定数バッファ

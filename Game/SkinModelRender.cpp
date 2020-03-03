@@ -131,6 +131,12 @@ void SkinModelRender::Model_Init(const wchar_t* filePath, CVector3 pos, CQuatern
 void SkinModelRender::Update() {
 	m_skinModelSupporter.SkinModelSupporterUpdate();
 	m_skinModel.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+	//キャスターフラグがオンなら登録
+	if (m_shadowCasterFlag == true) {
+		ShadowMap::GetInstance()->RegistShadowCaster(&m_skinModel);
+		ShadowMap::GetInstance()->Update(LightMaker::GetInstance()->GetLightCameraPosition(), 
+			LightMaker::GetInstance()->GetLightCameraTarget());
+	}
 }
 
 /// <summary>

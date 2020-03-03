@@ -62,6 +62,8 @@ private:
 	void Move();
 	void Jump();
 	void BoxCatch();
+	void BoxSearch();
+	void BoxMove();
 
 	//プレイヤー
 	CVector3 m_position = CVector3().Zero();
@@ -80,9 +82,25 @@ private:
 	const float m_gravity = 0.8f;		//重力ﾊﾟｩﾜｧ
 
 	//箱持ち上げ
-	GameBox* m_upBox = nullptr;		//持ち上げている箱
+	GameBox* m_upBox = nullptr;				//持ち上げている箱
+	GameBox* m_upKouho_Box = nullptr;		//持ち上げ候補の箱
 	bool m_boxUpFlag = false;		//箱持ち上げ中？
+	bool m_boxMoveFlag = false;		//箱上げ下ろし動作中？（動作中は動けません）
+	bool m_upOrDown = false;		//箱を上げているならfalse、下しているならtrue
 	bool m_boxButtonFlag = false;	//箱のボタン
-
+	const float m_boxPutHosei = 4.0f;	//箱を置くか投げるかの基準補正（大きくすると置きやすくなる）
+	const float m_boxUpRange = 200.0f;	//箱を持ち上げられる範囲
+	const float m_boxUp_Y_Max = 50.0f;	//箱を持ち上げられる高さの範囲
+	const float m_boxUp_Angle = 90.0f;	//箱を持ち上げる視野角範囲
+	//上げ下げ移動（catmull）（だったけどベジェ曲線に変更）
+	CVector3 m_point_1 = CVector3::Zero();	//終点寄り
+	CVector3 m_point_2 = CVector3::Zero();	//始点
+	CVector3 m_point_3 = CVector3::Zero();	//終点
+	CVector3 m_point_4 = CVector3::Zero();	//始点寄り
+	float m_catmull_U = 0.0f;
+	const float m_boxMove_Y_Hosei = 150.0f;		//箱を上げる際の最高到達点Y補正
+	const float m_boxMove_Y_Hosei_Put = 50.0f;	//箱を下ろす際の最高到達点Y補正
+	const float m_boxPos_Y_Hosei = 150.0f;		//箱を持ち上げているときのプレイヤーY補正
+	const float m_boxPut_Hosei = 150.0f;		//箱を置くときの移動量
 };
 

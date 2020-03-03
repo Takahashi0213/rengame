@@ -35,6 +35,25 @@ public:
 	}
 
 	/// <summary>
+	/// 色設定
+	/// </summary>
+	void SetColor(CVector3 color) {
+		m_model.SetEmissionColor(color);
+	}
+	CVector3 GetColor() {
+		return m_model.GetEmissionColor();
+	}
+	void SetAllColor(CVector3 color);
+
+	//移動量関連
+	CVector3 GetMoveSpeed() {
+		return m_moveSpeed;
+	}
+	void SetMoveSpeed(CVector3 speed) {
+		m_moveSpeed = speed;
+	}
+
+	/// <summary>
 	/// 子のボックスリストを追加する
 	/// </summary>
 	/// <param name="box">追加する箱のアドレス</param>
@@ -118,6 +137,15 @@ public:
 		return m_originBox;
 	}
 
+	/// <summary>
+	/// 箱を持つときの座標補正量を計算するZO
+	/// </summary>
+	CVector3 GetAnotherHosei();
+	/// <summary>
+	/// 箱を持つときの範囲補正量を計算するZE 
+	/// </summary>
+	float GetAnotherRangeHosei();
+
 private:
 	void GetTrianglePositionAndNormal(
 		int polyNo,
@@ -144,7 +172,7 @@ private:
 			Flag = true;
 		}	
 		if (fabsf(a.z - b.z) > 0.02f) {
-			Flag = true;
+			Flag = true; 
 		}
 		return Flag;
 	}
@@ -155,18 +183,20 @@ private:
 	RigidBody m_rb;				//剛体
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
 	CMatrix  m_World;
-
+	
 	LightMaker* m_lightMaker;
 
 	CVector3 m_position = CVector3().Zero();
 	CQuaternion m_rotation = CQuaternion().Identity();
 	CVector3 m_scale = CVector3().One(); //拡大率
+	CVector3 m_moveSpeed = CVector3().Zero();
 
 	//親の箱とのローカル座標
 	GameBox* m_originBox = nullptr;		//初代箱様！！！！
 	CVector3 m_localPosition = CVector3().Zero();	//親との相対座標
 	BoxTag m_boxTag = Another;
 
+	//Vector
 	std::vector<VertexBuffer>						m_vertexBufferArray;		//頂点バッファの配列。
 	std::vector<IndexBuffer>						m_indexBufferArray;		//インデックスバッファの配列。
 
@@ -179,11 +209,13 @@ private:
 	bool m_colli_InitFlag = false;
 
 	//子になるボックスども（OrizinBoxだけ変更される）
-	std::list<GameBox*> m_boxList;
+	std::vector<GameBox*> m_boxList;
 
 	//定数
 	const CVector3 BoxDefScale = { 100.0f,100.0f,100.0f };
-	const float m_gravity = 0.8f;		//重力ﾊﾟｩﾜｧ
+	const float m_gravity = 0.6f;		//重力ﾊﾟｩﾜｧ
+	const float Scale = 50.0f;		//補正計算用
+	const float Y_Hosei = 60.0f;	//高さ補正
 
 };
 

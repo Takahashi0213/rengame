@@ -94,6 +94,19 @@ public:
 	}
 	
 	/// <summary>
+	/// シャドウレシーバーフラグの変更
+	/// </summary>
+	void SetShadowReciever(bool flag) {
+		m_skinModel.SetShadowReciever(flag);
+	}
+	/// <summary>
+	/// シャドウキャスターフラグの変更
+	/// </summary>
+	void SetShadowCasterFlag(bool flag) {
+		m_shadowCasterFlag = flag;
+	}
+
+	/// <summary>
 	/// モデルを楽に動かすクラスを呼び出せるぞ
 	/// </summary>
 	/// <remarks>
@@ -116,5 +129,7 @@ private:
 	CQuaternion m_rotation = CQuaternion().Identity();		//!<回転。
 	CVector3 m_scale = CVector3().One();		//!<拡大率。
 	RenderMode m_renderMode = Default;			//描画モード
+
+	bool m_shadowCasterFlag = false;	//シャドウキャスターに登録する？
 };
 

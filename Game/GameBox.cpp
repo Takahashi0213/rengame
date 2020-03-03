@@ -64,8 +64,6 @@ GameBox::~GameBox()
 /// </summary>
 void GameBox::GameBox_Update() {
 
-	Game::GameMode NowGameMode = Game::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
-
 	CVector3 Pos;
 	CQuaternion Rot;
 	if (m_originBox == nullptr) {
@@ -77,6 +75,10 @@ void GameBox::GameBox_Update() {
 
 	//計算機
 	if (m_boxTag == Origin) {
+		m_position += m_moveSpeed;
+		if (m_moveSpeed.y != 0.0f) {
+			m_moveSpeed.y -= 3.0f;
+		}
 		Pos = m_position;
 	}
 	else if (m_boxTag == Another) {
@@ -361,4 +363,75 @@ void GameBox::MeshStandBy() {
 		}
 		
 	});
+}
+
+/// <summary>
+/// 子供全てに着色
+/// </summary>
+void GameBox::SetAllColor(CVector3 color) {
+
+	//初代箱でないなら中断
+	if (m_boxTag == BoxTag::Another) {
+		return;
+	}
+
+	m_model.SetEmissionColor(color);
+	//子供も色変更
+	for (int i = 0; i < m_boxList.size(); i++) {
+		m_boxList[i]->SetColor(color);
+	}
+}
+
+CVector3 GameBox::GetAnotherHosei() {
+
+	//オリジンなら無でいい
+	if (m_boxTag == BoxTag::Origin) {
+		return CVector3::Zero();
+	}
+
+	CVector3 Return_Hosei = CVector3::Zero();
+	bool Flag = false;
+
+	//回転から補正量を計算
+	if (m_rotation.x != 0.0f) {
+		Flag = true;
+		Return_Hosei.z = Scale * (m_scale.z / BoxDefScale.z);
+		if (m_rotation.x < 0.0f) {
+			//負の数ならマイナスに
+			Return_Hosei.z *= -1.0f;
+		}
+	}
+
+	if (m_rotation.z != 0.0f) {
+		Flag = true;
+		Return_Hosei.x = Scale * (m_scale.x / BoxDefScale.x);
+		if (m_rotation.z < 0.0f) {
+			//負の数ならマイナスに
+			Return_Hosei.x *= -1.0f;
+		}
+	}
+	
+	//高さ補正
+	if (Flag == true) {
+		Return_Hosei.y = -Y_Hosei;
+	}
+
+	return Return_Hosei;
+}
+
+float GameBox::GetAnotherRangeHosei() {
+
+	//オリジンなら無でいい
+	if (m_boxTag == BoxTag::Origin) {
+		return 0.0f;
+	}
+
+	float Return_Hosei = 0.0f;
+
+	//計算
+	Return_Hosei += (m_scale.x - BoxDefScale.x)*2.0f;
+	Return_Hosei += (m_scale.y - BoxDefScale.y)*2.0f;
+	Return_Hosei += (m_scale.z - BoxDefScale.z)*2.0f;
+
+	return Return_Hosei;
 }

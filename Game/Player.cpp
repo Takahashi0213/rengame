@@ -24,8 +24,7 @@ Player::Player()
 	m_charaCon.Init(25, 30, m_position);
 
 	//ライトメーカーの取得
-	int a = Hash::MakeHash("LightMaker");
-	m_lightMaker = CGameObjectManager::GetInstance()->FindGO<LightMaker>(a);
+	m_lightMaker = LightMaker::GetInstance();
 
 	//シャドウレシーバーにする。
 	m_model.SetShadowReciever(true);
@@ -47,14 +46,6 @@ Player::Player()
 	//MainSprite->InitSub(L"Assets/sprite/fukidasi.dds", 600.0f, 400.0f, 0);
 	//MainSprite->SetPosition({ 250.0f,-50.0f ,0.0f }, 0);
 	//MainSprite->GetSubSpriteSupporter(0)->SpriteRotation(10.0f, 600, 0, true);
-
-	//if (g_pad[0].IsTrigger(enButtonA)) {
-	//	CGameObjectManager::GetInstance()->DeleteGO(this);
-	//}
-	//if (g_pad[0].IsTrigger(enButtonB)) {
-	//	int s = CGameObjectManager::GetInstance()->ObjCount<Player>(a);
-	//	Player* p = CGameObjectManager::GetInstance()->FindGO<Player>(a,false);
-	//}
 
 	m_titan.Init(L"Assets/modelData/Titan.cmo");
 	m_titan.UpdateWorldMatrix({ 0.0f,30.0f,0.0f }, CQuaternion::Identity(), { 5.0f,5.0f,5.0f });
@@ -151,13 +142,19 @@ void Player::Update()
 
 	//処理
 
+	//持ち上げ中の箱の座標をプレイヤーに合わせる
 	BoxUp();
 
 	Move();
 
 	Jump();
 
+	//持ち上げる箱を探す
+	BoxSearch();
+	//キーが押されたら持ち上げたり下ろしたりする
 	BoxCatch();
+	//上げ下げ中の補完移動をする
+	BoxMove();
 
 	//ワールド行列の更新。
 	m_model_Sl.UpdateWorldMatrix(m_position, m_rotation, m_scale);
@@ -210,6 +207,10 @@ void Player::Move() {
 	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
 		return;
 	}
+	//箱の上げ下ろし中は強制終了
+	if (m_boxMoveFlag == true) {
+		return;
+	}
 
 	//左クリックの状態を判定
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
@@ -230,7 +231,7 @@ void Player::Move() {
 				m_nextPos = CRR_Callback.m_hitPointWorld;
 			}
 			else {
-				m_nextPos = m_position;
+				m_nextPos = m_position + (m_moveSpeed / 1000.0f);
 			}
 
 		}
@@ -267,6 +268,10 @@ void Player::Jump() {
 	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
 		return;
 	}
+	//箱の上げ下ろし中は強制終了
+	if (m_boxMoveFlag == true) {
+		return;
+	}
 
 	bool OnG_Flag = m_charaCon.IsOnGround();
 
@@ -298,6 +303,11 @@ void Player::BoxCatch() {
 		return;
 	}
 
+	//箱の上げ下ろし中は強制終了
+	if (m_boxMoveFlag == true) {
+		return;
+	}
+
 	//対応するボタンが押されてないなら強制終了
 	if (HIWORD(GetAsyncKeyState('C'))) {
 		if (m_boxButtonFlag == false) {
@@ -312,55 +322,216 @@ void Player::BoxCatch() {
 		return;
 	}
 
-	//ﾎﾞｯｸｽﾒｲｶｱ…
-	BoxMaker* BoxMaker = BoxMaker::GetInstance();
-
 	//箱を持ち上げているかどうかで分岐
 	if (m_boxUpFlag == false) {
 
-		//近くに箱があるか検索ｩ
-		std::list<GameBox*> boxList = BoxMaker->GetBoxList();
-		float FinalRange = 0.0f;		//距離保存用
-		GameBox* UpBox = nullptr;	//（持ち上げる）箱の名は。
+		//箱を持ちアゲアゲ↑
 
-		for (auto go : boxList) {
-
-			//そもそもOriginかな？
-			if (go->GetBoxTag() == GameBox::Origin) {
-
-				CVector3 P_B_Range = m_position - go->GetPosition();
-				float P_B_Range_Final = P_B_Range.Length();
-
-				if (UpBox == nullptr) {
-					UpBox = go;
-					FinalRange = P_B_Range_Final;
-				}
-				else {
-					//距離が近いかな？
-					if (FinalRange > P_B_Range_Final) {
-						UpBox = go;
-						FinalRange = P_B_Range_Final;
-					}
-				}
-
+		if (m_upKouho_Box != nullptr) { //持ち上げられる箱がある？
+			m_upBox = m_upKouho_Box;
+			m_boxUpFlag = true;
+			m_boxMoveFlag = true;
+			m_upOrDown = false;	//箱を上げてるよフラグ
+			m_moveSpeed.x = 0.0f;
+			m_moveSpeed.z = 0.0f;
+			
+			//箱の方を向く
+			{
+				CVector3 playerForward = { 0.0f, 0.0f, 1.0f };
+				//　向かせたい方向のベクトルを計算する。
+				CVector3 targetVector = m_upBox->GetPosition() - m_position;
+				//　Y成分は除去して正規化する。Y成分を入れると空を向いたりするよ。
+				targetVector.y = 0.0f;
+				targetVector.Normalize();
+				CQuaternion qRot;
+				qRot.SetRotation(playerForward, targetVector);
+				m_rotation = qRot;
+			}
+			//座標計算
+			{
+				m_point_2 = m_upBox->GetPosition();	//始点
+				CVector3 Pos = m_position;
+				Pos.y += m_boxPos_Y_Hosei;
+				m_point_3 = Pos;	//終点
+				CVector3 Vec = Pos - m_upBox->GetPosition();	//始点から終点に伸びるベクトル
+				Vec /= 4.0f;
+				CVector3 Pos2 = m_upBox->GetPosition() + Vec;
+				Pos2.y += m_boxMove_Y_Hosei;
+				m_point_4 = Pos2;	//始点寄り
+				Pos2 = Pos - Vec;
+				Pos2.y = m_point_4.y;
+				m_point_1 = Pos2;	//終点寄り
 			}
 
 		}
 
-		//箱を持ちアゲアゲ↑
-
-		m_upBox = UpBox;
-		m_boxUpFlag = true;
-
-
 	}
 	else {
 
-		//箱をおろす
+		//移動量に応じて箱を置くか投げるか変更
+		CVector3 Move = m_moveSpeed / m_boxPutHosei;
+		Move.y = 0.0f;
+		float MovePower = Move.Length();
+		if (MovePower > 0.999f) {
 
-		m_boxUpFlag = false;
-		m_upBox = nullptr;
+			//投げる
+			CVector3 MoveSpeed = m_moveSpeed;
+			MoveSpeed.Normalize();
+			MoveSpeed *= 100.0f;	//移動パワー
+			MoveSpeed.y = 1.0f;		//高さ
+			m_upBox->SetMoveSpeed(MoveSpeed);
 
+			//リセット
+			m_boxUpFlag = false;
+			m_upBox = nullptr;
+
+		}
+		else {
+			//箱をおろす
+
+			//座標は前方床
+			{
+				//座標計算
+				m_point_2 = m_upBox->GetPosition();	//始点
+				CVector3 Pos = m_position;
+				CVector3 Move_ = m_moveSpeed;
+				Move_.Normalize();
+				Pos += Move_ * m_boxPut_Hosei;
+				m_point_3 = Pos;	//終点
+				CVector3 Vec = Pos - m_upBox->GetPosition();	//始点から終点に伸びるベクトル
+				Vec /= 4.0f;
+				CVector3 Pos2 = m_upBox->GetPosition() + Vec;
+				Pos2.y += m_boxMove_Y_Hosei_Put;
+				m_point_4 = Pos2;	//始点寄り
+				Pos2 = Pos - Vec;
+				Pos2.y = m_point_4.y;
+				m_point_1 = Pos2;	//終点寄り
+			}
+
+			//リセット
+			m_boxUpFlag = false;
+			m_boxMoveFlag = true;
+			m_upOrDown = true;	//箱を下ろしてるよフラグ
+			m_moveSpeed.x = 0.0f;
+			m_moveSpeed.z = 0.0f;
+
+		}
+
+	}
+
+}
+
+void Player::BoxSearch() {
+
+	//イベント中なら強制終了
+	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+		return;
+	}
+	//アクションモードでないなら強制終了
+	if (Game::GetInstance()->GetGameMode() != Game::ActionMode) {
+		return;
+	}
+	//箱を持ち上げているなら強制終了
+	if (m_boxUpFlag == true) {
+		return;
+	}
+
+	//ﾎﾞｯｸｽﾒｲｶｱ…
+	BoxMaker* BoxMaker_p = BoxMaker::GetInstance();
+
+	//近くに箱があるか検索ｩ
+	std::list<GameBox*> boxList = BoxMaker_p->GetBoxList();
+	float FinalRange = 0.0f;		//距離保存用
+	GameBox* UpBox = nullptr;		//（持ち上げる）箱の名は。
+	CVector3 P_B_Range;				//高さ計算用です
+	float P_B_Range_Final;			//距離
+	GameBox* UpBox_Origin= nullptr;	//持ち上げる箱の親（nullならオリジン）
+	CVector3 Hosei;					//Another用座標補正
+	float Range_Hosei;				//距離補正
+
+	for (auto go : boxList) {
+
+		//Originかな？
+		if (go->GetBoxTag() == GameBox::Origin) {
+
+			UpBox_Origin = nullptr;	//こいつがオリジンなので初期化しておく
+			Hosei = CVector3::Zero();
+			Range_Hosei = 0.0f;
+
+			go->SetAllColor({ 0.0f,0.0f,0.0f });	//色も初期化しておく
+
+		}
+		else if (go->GetBoxTag() == GameBox::Another) {
+			//お前！！アナザー箱！！！
+			UpBox_Origin = go->GetOriginBox();
+			Hosei = go->GetAnotherHosei();
+			Range_Hosei = go->GetAnotherRangeHosei();
+		}
+
+		//移動量計算
+		P_B_Range = m_position - (go->GetPosition() + Hosei);
+		P_B_Range_Final = P_B_Range.Length();
+
+		//貴様が相応しいか判別してやる
+		bool Flag = false;
+
+		//近くにあるか？
+		if (P_B_Range_Final > m_boxUpRange + Range_Hosei) {
+			Flag = true;	//遠すぎ！アウト！
+		}
+		//高さが合うか？
+		if (fabsf(P_B_Range.y) > m_boxUp_Y_Max) {
+			Flag = true;	//高さ違いすぎ！アウト！
+		}
+		//角度が合うか？
+		CVector3 playerForward = CVector3::AxisZ();
+		m_rotation.Multiply(playerForward);
+		//箱からプレイヤーに伸びるベクトルを求める。
+		CVector3 toPlayerDir = m_position - (go->GetPosition() + Hosei);
+		toPlayerDir.Normalize();
+		//内積を計算する。
+		float d = playerForward.Dot(toPlayerDir);
+		//なす角を求める。
+		float angle = acos(d);
+		//視野角判定
+		if (fabsf(angle) < CMath::DegToRad(m_boxUp_Angle)) {
+			Flag = true;	//角度違いすぎ！アウト！
+		}
+
+		if (Flag == false) {	//審査に通った箱のみがここまで来れる
+
+			if (UpBox == nullptr) {
+				if (UpBox_Origin == nullptr) {
+					UpBox = go;
+				}
+				else {
+					UpBox = UpBox_Origin;
+				}
+				FinalRange = P_B_Range_Final;
+			}
+			else {
+				//距離が近いかな？
+				if (FinalRange > P_B_Range_Final) {
+					if (UpBox_Origin == nullptr) {
+						UpBox = go;
+					}
+					else {
+						UpBox = UpBox_Origin;
+					}
+					FinalRange = P_B_Range_Final;
+				}
+			}
+
+		}
+
+	}
+
+	//貴様だ！
+	m_upKouho_Box = UpBox;
+
+	//色変更
+	if (m_upKouho_Box != nullptr) {
+		m_upKouho_Box->SetAllColor({ 1.0f,0.0f,0.0f });
 	}
 
 }
@@ -371,11 +542,49 @@ void Player::BoxUp() {
 	if (m_upBox == nullptr) {
 		return;
 	}
+	//箱の上げ下ろし中なら強制終了
+	if (m_boxMoveFlag == true) {
+		return;
+	}
 
+	//箱移動
 	CVector3 BoxPos = m_upBox->GetPosition();
 	BoxPos = m_position;
-	BoxPos.y += 150.0f;
+	BoxPos.y += m_boxPos_Y_Hosei;	//箱をあるべき場所に動かす
 	m_upBox->GameBox_Set(BoxPos, m_rotation);
 	
+}
+
+void Player::BoxMove() {
+
+	//イベント中なら強制終了
+	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+		return;
+	}
+	//アクションモードでないなら強制終了
+	if (Game::GetInstance()->GetGameMode() != Game::ActionMode) {
+		return;
+	}
+	//箱の上げ下ろし中でないなら強制終了
+	if (m_boxMoveFlag == false) {
+		return;
+	}
+
+	//ベジェ曲線を使った計算
+	m_catmull_U += 0.1f;
+	CVector3 output_point = m_point_2 * (1 - m_catmull_U)*(1 - m_catmull_U)*(1 - m_catmull_U) + 3 * 
+							m_point_4 * m_catmull_U*(1 - m_catmull_U)*(1 - m_catmull_U) + 3 * 
+							m_point_1 * m_catmull_U*m_catmull_U*(1 - m_catmull_U) + 
+							m_point_3 * m_catmull_U*m_catmull_U*m_catmull_U;
+	m_upBox->GameBox_Set(output_point, m_upBox->GetRotation());
+
+	//移動終了
+	if (m_catmull_U >= 1.0f) {
+		m_boxMoveFlag = false;
+		m_catmull_U = 0.0f;
+		if (m_upOrDown == true) {
+			m_upBox = nullptr;
+		}
+	}
 
 }

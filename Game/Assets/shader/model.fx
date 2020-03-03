@@ -34,7 +34,6 @@ cbuffer VSPSCb : register(b0){
 	float4x4 mWorld;
 	float4x4 mView;
 	float4x4 mProj;
-	//CVector3 emissionColor;
 	float4x4 mLightView;	//ライトビュー行列。
 	float4x4 mLightProj;	//ライトプロジェクション行列。
 	int isShadowReciever;	//シャドウレシーバーフラグ。
@@ -44,6 +43,9 @@ cbuffer VSPSCb : register(b0){
 	int isHasKirameki;		//きらめきを保持している？
 	float mHigh;
 	float mWide;			//画面の縦横
+	float emissionColor_R;
+	float emissionColor_G;
+	float emissionColor_B;
 };
 /*!
 *@brief	ライト用の定数バッファ。
@@ -338,6 +340,11 @@ PSOutput PSMain(PSInput In)
 	psOut.color = finalColor;
 	//カメラ座標系でのZ値を出力。
 	psOut.depthInView = In.posInView.z;
+
+	//色変更
+	psOut.color.r += emissionColor_R;
+	psOut.color.g += emissionColor_G;
+	psOut.color.b += emissionColor_B;
 
 	return psOut;
 

@@ -113,6 +113,7 @@
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="Dof.cpp" />
     <ClCompile Include="EffekseerSupporter.cpp" />
+    <ClCompile Include="EnemySystem.cpp" />
     <ClCompile Include="FarShadow.cpp" />
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="FontSupporter.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="system\CGameObjectManager.cpp" />
     <ClCompile Include="system\IGameObject.cpp" />
     <ClCompile Include="system\system.cpp" />
+    <ClCompile Include="TestEnemy.cpp" />
     <ClCompile Include="TransitionGenerator.cpp" />
     <ClCompile Include="TransitionSprite.cpp" />
   </ItemGroup>
@@ -191,6 +193,7 @@
     <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="Dof.h" />
     <ClInclude Include="EffekseerSupporter.h" />
+    <ClInclude Include="EnemySystem.h" />
     <ClInclude Include="FarShadow.h" />
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="FontSupporter.h" />
@@ -257,6 +260,7 @@
     <ClInclude Include="system\CGameObjectManager.h" />
     <ClInclude Include="system\IGameObject.h" />
     <ClInclude Include="system\system.h" />
+    <ClInclude Include="TestEnemy.h" />
     <ClInclude Include="TransitionGenerator.h" />
     <ClInclude Include="TransitionSprite.h" />
   </ItemGroup>

@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "BackGround.h"
 #include "BoxMaker.h"
+#include "TestEnemy.h"
 
 #include "GameCamera.h"
 #include "GameUI.h"
@@ -35,6 +36,7 @@ Game::Game()
 	Player* pl = CGameObjectManager::GetInstance()->NewGO<Player>("Player", 1);
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
 	GameUI* ui = CGameObjectManager::GetInstance()->NewGO<GameUI>("GameUI", 8);
+	TestEnemy* test = CGameObjectManager::GetInstance()->NewGO<TestEnemy>("TestEnemy", 1);
 	m_ui = ui;
 
 	TransitionGenerator* tg = CGameObjectManager::GetInstance()->NewGO<TransitionGenerator>("TransitionGenerator", 10);
