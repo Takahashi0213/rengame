@@ -7,6 +7,7 @@
 
 /// <summary>
 /// ライト作るくん
+/// ・シングルトン
 /// </summary>
 class LightMaker : public IGameObject
 {
@@ -17,7 +18,7 @@ public:
 	void Update()override;
 	void Render()override;
 
-	void LightMaker::D_LightMake(int lightNo, CVector4 dir, CVector4 col);
+	void LightMaker::D_LightMake(int lightNo, CVector4 dir, CVector4 col,float spec);
 
 	void LightMaker::D_LightDelete(int lightNo);
 
@@ -29,6 +30,9 @@ public:
 	void LightMaker::D_Light_SetDirection(int lightNo, CVector4 dir) {
 		m_light.direction[lightNo] = dir;
 	}
+	CVector4 LightMaker::D_Light_GetDirection(int lightNo) {
+		return m_light.direction[lightNo];
+	}
 
 	/// <summary>
 	/// 引数に設定したライトの色を変更する
@@ -37,6 +41,21 @@ public:
 	/// <param name="col">ライトの色</param>
 	void LightMaker::D_Light_SetColer(int lightNo, CVector4 col) {
 		m_light.color[lightNo] = col;
+	}
+	CVector4 LightMaker::D_Light_GetColer(int lightNo) {
+		return m_light.color[lightNo];
+	}
+
+	/// <summary>
+	/// スペキュラの絞りを変更する
+	/// </summary>
+	/// <param name="lightNo">変更するライトの場所</param>
+	/// <param name="spec">スペキュラ</param>
+	void LightMaker::D_Light_SetSpec(int lightNo, float spec) {
+		m_light.specPower[lightNo] = spec;
+	}
+	float LightMaker::D_Light_GetSpec(int lightNo) {
+		return m_light.specPower[lightNo];
 	}
 
 	/// <summary>

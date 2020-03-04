@@ -144,11 +144,10 @@ void Player::Update()
 
 	//持ち上げ中の箱の座標をプレイヤーに合わせる
 	BoxUp();
-
+	//移動
 	Move();
-
+	//地上にいたらジャンプ
 	Jump();
-
 	//持ち上げる箱を探す
 	BoxSearch();
 	//キーが押されたら持ち上げたり下ろしたりする
@@ -280,8 +279,6 @@ void Player::Jump() {
 		if (m_jumpNow == false && OnG_Flag == true) {
 			m_moveSpeed.y = m_jumpPower;
 
-			EffekseerSupporter::GetInstance()->NewEffect(EffekseerSupporter::TestData, false, { 0.0f,50.0f,0.0f });
-			EffekseerSupporter::GetInstance()->NewEffect(EffekseerSupporter::TestData, true, { 0.0f,150.0f,0.0f });
 		}
 		m_jumpNow = true;
 	}

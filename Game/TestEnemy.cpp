@@ -45,7 +45,7 @@ void TestEnemy::Update() {
 	{
 	case TestEnemy::Move:
 		//ˆÚ“®
-		m_moveSpeed.z = 5.0f;
+		m_moveSpeed.z = 1.0f;
 		break;
 	case TestEnemy::Follow:
 		//’Ç”ö
@@ -58,6 +58,7 @@ void TestEnemy::Update() {
 		break;
 	}
 
+	//ˆÚ“®
 	m_position = m_charaCon.Execute(1.0f, m_moveSpeed);
 
 	//ModelRenderXV

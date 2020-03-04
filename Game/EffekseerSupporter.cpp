@@ -55,6 +55,30 @@ Effekseer::Handle EffekseerSupporter::NewEffect(const EffectData EffectFileName,
 
 }
 
+Effekseer::Handle EffekseerSupporter::NewEffect_Vector(const EffectData EffectFileName,
+	bool PostFlag, float X, float Y, float Z) {
+
+	//変換
+	Effekseer::Vector3D Pos;
+	Pos.X = X;
+	Pos.Y = Y;
+	Pos.Z = Z;
+
+	//サンプルのエフェクトをロードする。
+	Effekseer::Effect* m_effect = Effekseer::Effect::Create(CGameObjectManager::GetInstance()->GetEffekseerManager(),
+		(const EFK_CHAR*)EffectDetaBase[EffectFileName]);
+	//エフェクトを再生する。
+	Effekseer::Handle m_playEffectHandle = CGameObjectManager::GetInstance()->
+		GetEffekseerManager()->Play(m_effect, Pos.X, Pos.Y, Pos.Z);
+
+	//リストに追加や
+	Effect set = { m_playEffectHandle,PostFlag };
+	m_effectList.push_back(set);
+
+	return m_playEffectHandle;
+
+}
+
 void EffekseerSupporter::EffectClear() {
 
 	//削除処理

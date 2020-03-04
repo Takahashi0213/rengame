@@ -22,4 +22,7 @@ void CCamera2D::Camera2D_Update() {
 		m_far
 	);
 
+	//ビュープロジェクション行列の作成。
+	m_viewProjectionMatrix.Mul(m_viewMatrix, m_projMatrix);
+
 }

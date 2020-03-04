@@ -41,6 +41,13 @@ void SkinModel::LoadAmbientLight() {
 /// </summary>
 void SkinModel::D_LightUpdate() {
 
+	for (int i = 0; i < MAX_DIRECTION_LIGHT; i++) {
+		m_light.directionLight.direction[i] = LightMaker::GetInstance()->D_Light_GetDirection(i);
+		m_light.directionLight.direction[i].Normalize();	//正規化。
+		m_light.directionLight.color[i] = LightMaker::GetInstance()->D_Light_GetColer(i);
+		m_light.directionLight.specPower[i] = LightMaker::GetInstance()->D_Light_GetSpec(i);
+	}
+
 }
 
 void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
@@ -55,12 +62,7 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 	InitSamplerState();
 
 	//ディレクションライトの初期化。
-	for (int i = 0; i < MAX_DIRECTION_LIGHT; i++) {
-		m_light.directionLight.direction[i] = { 0.5f, -1.0f, 0.0f, 0.0f };
-		m_light.directionLight.direction[i].Normalize();	//正規化。
-		m_light.directionLight.color[i] = { 0.4f, 0.4f, 0.4f, 1.0f };
-		m_light.specPow = 10.0f;
-	}
+	D_LightUpdate();
 
 	LoadAmbientLight();
 
