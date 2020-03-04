@@ -56,7 +56,7 @@ Effekseer::Handle EffekseerSupporter::NewEffect(const EffectData EffectFileName,
 }
 
 Effekseer::Handle EffekseerSupporter::NewEffect_Vector(const EffectData EffectFileName,
-	bool PostFlag, float X, float Y, float Z) {
+	bool PostFlag, float X, float Y, float Z, float rotX, float rotY, float rotZ) {
 
 	//変換
 	Effekseer::Vector3D Pos;
@@ -70,6 +70,8 @@ Effekseer::Handle EffekseerSupporter::NewEffect_Vector(const EffectData EffectFi
 	//エフェクトを再生する。
 	Effekseer::Handle m_playEffectHandle = CGameObjectManager::GetInstance()->
 		GetEffekseerManager()->Play(m_effect, Pos.X, Pos.Y, Pos.Z);
+	//回転させる
+	CGameObjectManager::GetInstance()->GetEffekseerManager()->SetRotation(m_playEffectHandle, rotX, rotY, rotZ);
 
 	//リストに追加や
 	Effect set = { m_playEffectHandle,PostFlag };

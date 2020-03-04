@@ -29,6 +29,9 @@ TestEnemy::TestEnemy()
 
 TestEnemy::~TestEnemy()
 {
+	//•Ð•t‚¯‚é
+	CGameObjectManager::GetInstance()->DeleteGO(m_modelRender);
+	m_charaCon.RemoveRigidBoby();
 }
 
 void TestEnemy::Update() {
@@ -51,9 +54,7 @@ void TestEnemy::Update() {
 		//’Ç”ö
 		break;
 	case TestEnemy::Death:
-		//•Ð•t‚¯‚é
-		CGameObjectManager::GetInstance()->DeleteGO(m_modelRender);
-		m_charaCon.RemoveRigidBoby();
+		//Ž€–S
 		CGameObjectManager::GetInstance()->DeleteGO(this);
 		break;
 	}

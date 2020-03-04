@@ -176,9 +176,6 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="system\CGameObjectManager.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
     <ClCompile Include="system\IGameObject.cpp">
       <Filter>system</Filter>
     </ClCompile>
@@ -288,9 +285,6 @@
     <ClCompile Include="BackGround.cpp">
       <Filter>object\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="GameCamera.cpp">
-      <Filter>system\gameSystem</Filter>
-    </ClCompile>
     <ClCompile Include="CGOM_Graphics.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
@@ -335,6 +329,12 @@
     </ClCompile>
     <ClCompile Include="EnemySystem.cpp">
       <Filter>object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCamera.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="system\CGameObjectManager.cpp">
+      <Filter>system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

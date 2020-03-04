@@ -253,9 +253,24 @@ void CGOM_Graphics::PostRender() {
 }
 
 void CGOM_Graphics::EffectRender(bool Mode) {
+	
+	Effekseer::Matrix44 ViewMatrix;
+	Effekseer::Matrix44 ProjectionMatrix;
 
+	if (Mode == false) {
+		g_camera3D.GetViewMatrix().CopyTo(ViewMatrix);
+		g_camera3D.GetProjectionMatrix().CopyTo(ProjectionMatrix);
+	}
+	else {
+		g_camera2D.GetViewMatrix().CopyTo(ViewMatrix);
+		g_camera2D.GetProjectionMatrix().CopyTo(ProjectionMatrix);
+	}
+	m_effekseerRenderer->SetCameraMatrix(ViewMatrix);
+	m_effekseerRenderer->SetProjectionMatrix(ProjectionMatrix);
+	//€”õ
 	m_effekseerRenderer->BeginRendering();
 	
+	//•`‰æ
 	for (auto go = EffekseerSupporter::GetInstance()->g_effectList_P->begin();
 		go != EffekseerSupporter::GetInstance()->g_effectList_P->end();
 		go++) {
