@@ -35,6 +35,13 @@ public:
 		return m_rotation;
 	}
 
+	/// <summary>
+	/// ƒLƒƒƒ‰ƒRƒ“‚ğæ“¾
+	/// </summary>
+	CharacterController* GetCharaCon() {
+		return &m_charaCon;
+	}
+
 private:
 
 	//íŒÄ‚Î‚ê‚é

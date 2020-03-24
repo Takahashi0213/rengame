@@ -2,6 +2,7 @@
 #include "SystemData.h"
 #include "GameGraphic.h"
 #include "GameUI.h"
+#include "PhysicsGhostObject.h"
 
 /// <summary>
 /// ゲーム！
@@ -66,5 +67,7 @@ private:
 	CSoundEngine m_soundEngine;				//サウンドエンジン。
 
 	GameUI* m_ui = nullptr;
+
+	PhysicsGhostObject m_ghostObject;						//ゴーストオブジェクトとを４つ。
 };
 

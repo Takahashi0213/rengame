@@ -115,6 +115,9 @@
     <Filter Include="object\Enemy">
       <UniqueIdentifier>{b09804f2-c9d3-43ee-947c-f1207804faf0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="physics\Collider">
+      <UniqueIdentifier>{63c85806-5e61-4209-9594-387e5e910877}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -157,9 +160,6 @@
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="physics\MeshCollider.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
-    <ClCompile Include="physics\CapsuleCollider.cpp">
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="physics\PhysicsStaticObject.cpp">
@@ -336,6 +336,21 @@
     <ClCompile Include="system\CGameObjectManager.cpp">
       <Filter>system</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsGhostObject.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsObjectBase.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>physics\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\CapsuleCollider.cpp">
+      <Filter>physics\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>physics\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -380,13 +395,7 @@
     <ClInclude Include="physics\Physics.h">
       <Filter>physics</Filter>
     </ClInclude>
-    <ClInclude Include="physics\ICollider.h">
-      <Filter>physics</Filter>
-    </ClInclude>
     <ClInclude Include="physics\MeshCollider.h">
-      <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="physics\CapsuleCollider.h">
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="physics\CollisionAttr.h">
@@ -577,6 +586,24 @@
     </ClInclude>
     <ClInclude Include="EnemySystem.h">
       <Filter>object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsGhostObject.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsObjectBase.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>physics\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\CapsuleCollider.h">
+      <Filter>physics\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>physics\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\ICollider.h">
+      <Filter>physics\Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
