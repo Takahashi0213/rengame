@@ -32,11 +32,13 @@
 static const int MAX_BONE = 512;	//!<ボーンの最大数。
 static const int MAX_DIRECTION_LIGHT = 5;	//!<ディレクションライトの最大数。
 
-#include "physics/Physics.h"
+
 #include "HID/Pad.h"
 
 #include "math/Vector.h"
 #include "math/Matrix.h"
+#include "physics/Physics.h"
+
 #include "graphics/GraphicsEngine.h"
 
 #include "graphics/SkinModel.h"

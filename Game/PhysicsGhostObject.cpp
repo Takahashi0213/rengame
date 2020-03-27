@@ -20,6 +20,6 @@ void PhysicsGhostObject::CreateCommon(CVector3 pos, CQuaternion rot)
 	m_ghostObject.setWorldTransform(btTrans);
 
 	//ï®óùÉGÉìÉWÉìÇ…ìoò^ÅB
-	PhysicsWorld().AddCollisionObject(m_ghostObject);
+	g_physics.AddCollisionObject(m_ghostObject);
 	m_isRegistPhysicsWorld = true;
 }

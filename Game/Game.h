@@ -2,6 +2,7 @@
 #include "SystemData.h"
 #include "GameGraphic.h"
 #include "GameUI.h"
+
 #include "PhysicsGhostObject.h"
 
 /// <summary>
@@ -68,6 +69,7 @@ private:
 
 	GameUI* m_ui = nullptr;
 
+	CharacterController* m_charaCon;
 	PhysicsGhostObject m_ghostObject;						//ゴーストオブジェクトとを４つ。
 };
 

@@ -46,6 +46,15 @@ Game::Game()
 	m_box->SetPlayer(pl);
 	//背景に渡す
 	bg->SetGame(this);
+
+	//ボックス形状のゴーストを作成する。
+	m_ghostObject.CreateBox(
+		{ -500.0f, 100.0f, 0.0f },	//第一引数は座標。
+		CQuaternion::Identity(),		//第二引数は回転クォータニオン。
+		{ 200.0f, 200.0f, 200.0f }	//第三引数はボックスのサイズ。
+	);
+	//キャラコン取得
+	m_charaCon = pl->GetCharaCon();
 }
 
 
@@ -58,6 +67,16 @@ Game::~Game()
 void Game::Update() {
 
 	m_gameEffect.GameEffectUpdate();
+
+	int a = 0;
+	//キャラクターとゴーストのあたり判定を行う。
+	g_physics.ContactTest(*m_charaCon, [&](const btCollisionObject& contactObject) {
+		if (m_ghostObject.IsSelf(contactObject) == true) {
+			//m_ghostObjectとぶつかった
+			int hoge = 0;
+		}
+		});
+
 }
 
 void Game::Render() {
