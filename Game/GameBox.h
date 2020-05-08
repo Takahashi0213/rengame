@@ -138,6 +138,13 @@ public:
 	}
 
 	/// <summary>
+	/// „‘Ì‚ğ•Ô‚·
+	/// </summary>
+	RigidBody* GetRigidBody() {
+		return &m_rb;
+	}
+
+	/// <summary>
 	/// ” ‚ğ‚Â‚Æ‚«‚ÌÀ•W•â³—Ê‚ğŒvZ‚·‚éZO
 	/// </summary>
 	CVector3 GetAnotherHosei();

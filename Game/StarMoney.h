@@ -22,7 +22,7 @@ private:
 
 	CVector3 m_position = CVector3().Zero();
 	CQuaternion m_rotation = CQuaternion().Identity();
-	CVector3 m_scale = { 10.0f,10.0f,10.f }; //Šg‘å—¦
+	CVector3 m_scale = { 10.0f,10.0f,10.0f }; //Šg‘å—¦
 
 
 

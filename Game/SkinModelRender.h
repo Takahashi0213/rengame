@@ -24,6 +24,9 @@ public:
 	/// モデルを返す
 	/// </summary>
 	/// <returns>モデルのポインタ</returns>
+	SkinModel GetModel_() {
+		return m_skinModel;
+	}
 	SkinModel* GetModel() {
 		return &m_skinModel;
 	}
@@ -75,6 +78,15 @@ public:
 	const CVector3 GetScale() const
 	{
 		return m_scale;
+	}
+
+	/// <summary>
+	/// まとめてセット
+	/// </summary>
+	const void SetUp(CVector3 pos, CQuaternion rot, CVector3 scl) {
+		SetPosition(pos);
+		SetRotation(rot);
+		SetScale(scl);
 	}
 
 	/// <summary>

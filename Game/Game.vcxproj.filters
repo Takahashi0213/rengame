@@ -351,6 +351,9 @@
     <ClCompile Include="SphereCollider.cpp">
       <Filter>physics\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Switch.cpp">
+      <Filter>object\Gimmick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -604,6 +607,9 @@
     </ClInclude>
     <ClInclude Include="physics\ICollider.h">
       <Filter>physics\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Switch.h">
+      <Filter>object\Gimmick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
