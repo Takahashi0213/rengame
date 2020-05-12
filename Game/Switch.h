@@ -14,9 +14,18 @@ public:
 	~SwitchObj();
 	void SwitchObj_Init(CVector3 Pos);
 
-	void GhostCheck();
+	void SwitchUpdate();
+
+	/// <summary>
+	/// スイッチのオンオフ状態を返す
+	/// </summary>
+	bool GetSwitchState() {
+		return m_switchState;
+	}
 
 private:
+
+	void GhostCheck();
 
 	//スイッチ状態
 	enum SwitchState {
@@ -31,7 +40,7 @@ private:
 	PhysicsGhostObject m_ghostObject;	//ゴーストオブジェクト
 
 	const CVector3 Local = { 0.0f,1.0f,0.0f };	//ベースを基準にした赤い部分のローカル座標
-	const CVector3 GhostScale = { 100.0f,100.0f,10.0f };	//判定用ゴーストの範囲
+	const CVector3 GhostScale = { 160.0f,0.1f,160.0f };	//判定用ゴーストの範囲
 
 	CVector3 m_position = CVector3().Zero();
 	CQuaternion m_rotation = CQuaternion().Identity();
@@ -60,6 +69,13 @@ public:
 	/// </summary>
 	CVector3 GetPosition() {
 		return m_position;
+	}
+
+	/// <summary>
+	/// スイッチのオンオフ状態を返す
+	/// </summary>
+	bool GetSwitchState() {
+		return m_switchObj.GetSwitchState();
 	}
 
 private:

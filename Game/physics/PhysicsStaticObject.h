@@ -45,6 +45,14 @@ public:
 		m_rigidBody.SetPositionAndRotation(pos, rot);
 	}
 
+	MeshCollider* GetMeshCollider() {
+		return &m_meshCollider;
+	}
+
+	RigidBody* GetRigidBody() {
+		return &m_rigidBody;
+	}
+
 private:
 	/*!
 	* @brief	静的物理オブジェクト作成処理の共通処理。

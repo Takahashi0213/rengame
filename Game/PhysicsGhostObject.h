@@ -39,6 +39,11 @@ public:
 		rot.CopyTo(btRot);
 		btTrans.setRotation(btRot);
 	}
+
+	int GetUserIndex() {
+		return m_ghostObject.getUserIndex();
+	}
+
 private:
 	/// <summary>
 	/// ƒS[ƒXƒgì¬‚Ì‹¤’Êˆ—

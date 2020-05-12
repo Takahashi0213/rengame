@@ -138,10 +138,17 @@ public:
 	}
 
 	/// <summary>
+	/// コライダーの設定フラグを返す
+	/// </summary>
+	bool GetColli_InitFlag() {
+		return m_colli_InitFlag;
+	}
+
+	/// <summary>
 	/// 剛体を返す
 	/// </summary>
 	RigidBody* GetRigidBody() {
-		return &m_rb;
+		return m_physicsStaticObject.GetRigidBody();
 	}
 
 	/// <summary>
@@ -187,7 +194,6 @@ private:
 	void MeshStandBy();
 	SkinModel m_model;	//スキンモデル。
 
-	RigidBody m_rb;				//剛体
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
 	CMatrix  m_World;
 	

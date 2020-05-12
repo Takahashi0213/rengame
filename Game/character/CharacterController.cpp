@@ -24,6 +24,8 @@ namespace {
 		{
 			if (convexResult.m_hitCollisionObject == me
 				|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Character
+				|| convexResult.m_hitCollisionObject->getInternalType() == btCollisionObject::CO_GHOST_OBJECT
+				|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Ghost
 				) {
 				//自分に衝突した。or キャラクタ属性のコリジョンと衝突した。
 				return 0.0f;

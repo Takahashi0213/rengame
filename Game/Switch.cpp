@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Switch.h"
 
+#include "Game.h"
 #include "BoxMaker.h"
 
 
@@ -8,7 +9,7 @@ Switch::Switch()
 {
 	//はじまるよ
 	m_model.Init(L"Assets/modelData/Switch_Base.cmo");
-	m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation, m_scale);
+	//m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation, m_scale);
 
 }
 
@@ -20,8 +21,9 @@ void Switch::Update() {
 
 	//更新
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
-	m_physicsStaticObject.SetPositionAndRotation(m_position, m_rotation);
-	m_switchObj.GhostCheck();
+	//m_physicsStaticObject.SetPositionAndRotation(m_position, m_rotation);
+
+	m_switchObj.SwitchUpdate();
 
 }
 
@@ -48,7 +50,6 @@ void SwitchObj::SwitchObj_Init(CVector3 Pos) {
 
 	//おじゅんび
 	m_skinModel.Model_Init(L"Assets/modelData/Switch.cmo");
-	m_physicsStaticObject.CreateMeshObject(m_skinModel.GetModel_(), Pos, m_rotation, m_scale);
 
 	//座標計算
 	m_position = Pos + Local;
@@ -65,15 +66,24 @@ void SwitchObj::SwitchObj_Init(CVector3 Pos) {
 	//プレイヤー検索
 	m_pl = CGameObjectManager::GetInstance()->FindGO<Player>(Hash::MakeHash("Player"));
 
+	m_physicsStaticObject.CreateMeshObject(m_skinModel.GetModel_(), m_position, m_rotation, m_scale);
+
+}
+
+void SwitchObj::SwitchUpdate() {
+
+	//更新
+	m_physicsStaticObject.SetPositionAndRotation(m_position, m_rotation);
+
+	//アクションモードだけ実行
+	if (Game::GetInstance()->GetGameMode() == Game::ActionMode ) {
+		GhostCheck();
+	}
 }
 
 void SwitchObj::GhostCheck() {
 	
-	//更新
-	m_physicsStaticObject.SetPositionAndRotation(m_position, m_rotation);
-
 	//プレイヤーと箱チェック
-
 	bool OnFlag = false;
 
 	//プレイヤー
@@ -88,13 +98,17 @@ void SwitchObj::GhostCheck() {
 	//箱
 	std::list<GameBox*>boxList = BoxMaker::GetInstance()->GetBoxList();
 	for (auto go : boxList) {
-		RigidBody* rigidBody = go->GetRigidBody();
-		g_physics.ContactTest(*rigidBody, [&](const btCollisionObject& contactObject) {
-			if (m_ghostObject.IsSelf(contactObject) == true) {
-				//m_ghostObjectとぶつかった
-				OnFlag = true;
-			}
-			});
+
+		if (go->GetColli_InitFlag() == true) {
+
+			RigidBody* rigidBody = go->GetRigidBody();
+			g_physics.ContactTest(*rigidBody, [&](const btCollisionObject& contactObject) {
+				if (m_ghostObject.IsSelf(contactObject) == true) {
+					//m_ghostObjectとぶつかった
+					OnFlag = true;
+				}
+				});
+		}
 	}
 
 	//オンフラグチェック！

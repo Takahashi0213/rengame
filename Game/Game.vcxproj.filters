@@ -118,6 +118,9 @@
     <Filter Include="physics\Collider">
       <UniqueIdentifier>{63c85806-5e61-4209-9594-387e5e910877}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\Gimmick">
+      <UniqueIdentifier>{80024503-b165-4a38-a5ed-9ca88c8f6c09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -353,6 +356,9 @@
     </ClCompile>
     <ClCompile Include="Switch.cpp">
       <Filter>object\Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelSet.cpp">
+      <Filter>level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -611,6 +617,9 @@
     <ClInclude Include="Switch.h">
       <Filter>object\Gimmick</Filter>
     </ClInclude>
+    <ClInclude Include="LevelSet.h">
+      <Filter>level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\box.fbx">
@@ -627,6 +636,12 @@
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Gimmick\jewel.fbx">
       <Filter>Assets\modelData\Jewel</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Base.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
