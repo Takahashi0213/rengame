@@ -90,6 +90,7 @@ void GameBox::GameBox_Update() {
 	}
 	m_model.UpdateWorldMatrix(Pos, Rot, m_scale);
 
+	//コライダーが設定済みなら更新
 	if (m_colli_InitFlag == true) {
 		m_physicsStaticObject.SetPositionAndRotation(Pos, Rot);
 	}
@@ -126,7 +127,8 @@ void GameBox::GameBoxUpdate_Colli() {
 				Pos = m_originBox->GetPosition();
 				Pos += m_localPosition;
 			}
-			m_physicsStaticObject.CreateMeshObject(m_model, Pos, m_rotation, m_scale);
+			//m_physicsStaticObject.CreateMeshObject(m_model, Pos, m_rotation, m_scale);
+			m_physicsStaticObject.CreateBox(Pos, m_rotation, m_scale);
 		}
 		else {
 			CQuaternion Rot;
@@ -136,7 +138,8 @@ void GameBox::GameBoxUpdate_Colli() {
 			else {
 				Rot = m_rotation * m_originBox->GetRotation();
 			}
-			m_physicsStaticObject.CreateMeshObject(m_model, m_position, Rot, m_scale);
+			//m_physicsStaticObject.CreateMeshObject(m_model, m_position, Rot, m_scale);
+			m_physicsStaticObject.CreateBox(m_position, Rot, m_scale);
 		}
 
 		m_colli_InitFlag = true;

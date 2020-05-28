@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "LevelSet.h"
 
+//‚Ü‚Æ‚ß‚Ä
+#include "IncludeHeader.h"
+
 LevelSet* LevelSet::m_instance = nullptr;
 
 LevelSet::LevelSet()

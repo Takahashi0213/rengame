@@ -116,6 +116,7 @@ private:
 	SpriteRender* RedGage;
 	SpriteRender* Gage;
 	SpriteRender* MagicWindow;
+
 	//体力
 	//ハート1つで100扱い Y_Slice！
 	SpriteRender* Life1;

@@ -10,6 +10,8 @@ Switch::Switch()
 	//はじまるよ
 	m_model.Init(L"Assets/modelData/Switch_Base.cmo");
 	//m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation, m_scale);
+	//シャドウレシーバーにする。
+	m_model.SetShadowReciever(true);
 
 }
 
@@ -32,6 +34,8 @@ void Switch::Render() {
 		g_camera3D.GetViewMatrix(),
 		g_camera3D.GetProjectionMatrix()
 	);
+
+	m_switchObj.SwitchDraw();
 }
 
 /// <summary>
@@ -49,12 +53,14 @@ SwitchObj::~SwitchObj()
 void SwitchObj::SwitchObj_Init(CVector3 Pos) {
 
 	//おじゅんび
-	m_skinModel.Model_Init(L"Assets/modelData/Switch.cmo");
+	m_model.Init(L"Assets/modelData/Switch.cmo");
+	SkinModel Coli_Model;
+	Coli_Model.Init(L"Assets/modelData/Switch_Coli.cmo");
 
 	//座標計算
 	m_position = Pos + Local;
 	//設定
-	m_skinModel.SetUp(m_position, m_rotation, m_scale);
+	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 
 	//ボックス形状のゴーストを作成する。
 	m_ghostObject.CreateBox(
@@ -66,19 +72,31 @@ void SwitchObj::SwitchObj_Init(CVector3 Pos) {
 	//プレイヤー検索
 	m_pl = CGameObjectManager::GetInstance()->FindGO<Player>(Hash::MakeHash("Player"));
 
-	m_physicsStaticObject.CreateMeshObject(m_skinModel.GetModel_(), m_position, m_rotation, m_scale);
+	m_physicsStaticObject.CreateMeshObject(Coli_Model, m_position, m_rotation, m_scale);
+	//m_physicsStaticObject.CreateBox(m_position, m_rotation, m_scale);
+
+	//シャドウレシーバーにする。
+	m_model.SetShadowReciever(true);
 
 }
 
 void SwitchObj::SwitchUpdate() {
 
 	//更新
+	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	m_physicsStaticObject.SetPositionAndRotation(m_position, m_rotation);
 
 	//アクションモードだけ実行
 	if (Game::GetInstance()->GetGameMode() == Game::ActionMode ) {
 		GhostCheck();
 	}
+}
+
+void SwitchObj::SwitchDraw() {
+	m_model.Draw(
+		g_camera3D.GetViewMatrix(),
+		g_camera3D.GetProjectionMatrix()
+	);
 }
 
 void SwitchObj::GhostCheck() {
@@ -115,10 +133,18 @@ void SwitchObj::GhostCheck() {
 	if (OnFlag == false && m_switchState == On) {	//現在オンだけど、今何も乗ってないよ
 
 		m_switchState = Off;
+
+		//スイッチの赤い部分を動かす
+		m_position.y = m_position.y + SwitchMove;
+
 	}
 	else if (OnFlag == true && m_switchState == Off){	//現在オフだけど、なんか乗ってた！！
 
 		m_switchState = On;
+
+		//スイッチの赤い部分を動かす
+		m_position.y = m_position.y - SwitchMove;
+
 	}
 
 }

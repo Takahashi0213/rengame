@@ -228,7 +228,7 @@ private:
 		SpriteRender* SpriteRender_pt;
 		bool DeleteFlag = false;
 	};
-	std::list<SpriteRenderList> m_spriteRenderList;
+	std::list<SpriteRenderList> m_spriteRenderList;	//ここに保存される
 
 	int AnimationNom = 0;	//作成したアニメーション数
 

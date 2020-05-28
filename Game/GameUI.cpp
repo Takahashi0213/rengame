@@ -190,7 +190,7 @@ GameUI::GameUI()
 	Life10->SetScale(LifeScale);
 	Life10->Init(L"Assets/sprite/Life.dds", 190.0f, 160.0f, 7);
 
-	//Ý’è
+	//‘S•”Ý’è
 	m_spriteList.push_back(Accessory1);
 	m_spriteList.push_back(Accessory2);
 	m_spriteList.push_back(GageUnder);
@@ -269,6 +269,7 @@ void GameUI::ManaUpdate() {
 
 void GameUI::LifeUpdate() {
 
+	//Žæ“¾
 	int MaxHP = GameData::GetInstance()->GetMaxHP();
 	int NowHP = GameData::GetInstance()->GetHP();
 

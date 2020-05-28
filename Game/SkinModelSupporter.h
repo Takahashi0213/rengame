@@ -20,6 +20,10 @@ public:
 
 	//実行するコマンド
 	void SkinModelMove(CVector3 move, int moveTime, int moveDelay, bool relative = false);
+	//初期化
+	void SkinModelMoveClear() {
+		m_skinModelMoveList.clear();
+	}
 
 	void SkinModelSupporterUpdate();
 

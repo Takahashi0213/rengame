@@ -75,7 +75,9 @@ void PhysicsWorld::AddRigidBody(RigidBody& rb)
 }
 void PhysicsWorld::RemoveRigidBody(RigidBody& rb)
 {
-	dynamicWorld->removeRigidBody(rb.GetBody());
+	if (rb.GetBody()) {
+		dynamicWorld->removeRigidBody(rb.GetBody());
+	}
 }
 
 void PhysicsWorld::ContactTest(

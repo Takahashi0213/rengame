@@ -194,22 +194,22 @@ private:
 		bool m_equipmentFlag;	//装備変更
 		bool m_teleportFlag;	//メニューからのテレポート
 	};
-	GameFlag m_gameFlag;
+	GameFlag m_gameFlag;	//要素解放フラグ
 
 	//スターマネー
 	int m_starMoney = 0;
-	const int MAX_STAR_MONEY = 99999;
+	const int MAX_STAR_MONEY = 99999;	//最大所持金
 
 	//プレイヤーステータス
-	int m_level = 1;
-	int m_nextExp = 10;
-	int m_nowExp = 0;
-	int m_totalExp = 0;
+	int m_level = 1;		//レベル
+	int m_nextExp = 10;		//次のレベルに必要な経験値
+	int m_nowExp = 0;		//現在の経験値
+	int m_totalExp = 0;		//累計経験値
 	//
-	int m_magicPower = 100;
-	int m_magicPower_MAX = 100;
-	int m_hp = 300;
-	int m_hp_MAX = 300;
+	int m_magicPower = 100;	//現在マナ
+	int m_magicPower_MAX = 100;	//マナ最大値
+	int m_hp = 300;		//現在体力
+	int m_hp_MAX = 300;	//最大体力
 
 	//コンフィグ
 	int m_messageSpeed = 2;		//会話のメッセージ送りスピード

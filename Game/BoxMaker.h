@@ -52,7 +52,7 @@ public:
 		return m_instance;
 	}
 
-	//色々を取得する
+	//箱の色々を取得する
 	std::list<GameBox*> GetBoxList() {
 		return m_boxList;
 	}
@@ -71,7 +71,7 @@ private:
 
 	//箱リスト
 	std::list<GameBox*> m_boxList;					//箱ども
-	std::list<int>m_manaList;
+	std::list<int>m_manaList;						//この箱がどのくらいマナ圧迫してるかな？のリストでい
 	GameBox* m_nowBox = nullptr;					//現在見ているボックスさん
 	GameBox* m_nowBox_Stock = nullptr;				//以前見ていたボックスを一時保存！
 	std::list<GameBox*> m_nowBoxList;				//今変更中のボックスりすりす
@@ -102,7 +102,7 @@ private:
 	bool m_undoFlag = false;						//アンドゥボタンが押されているかフラグ
 
 	//マナ制御
-	int m_downMana = 0;
+	int m_downMana = 0;								//箱生成のマナ減少量
 	int m_startMana = 0;							//移行時のマナ
 	int m_downMana_Stock = 0;						//拡大縮小用一時保存
 	int m_manaHosei = 0;							//拡大縮小用補正
@@ -111,7 +111,7 @@ private:
 	const float PosHoseiY = 200.0f;									//レイがヒットしなかった時の補正
 	const float m_mouseMoveHosei = 0.5f;							//マウスの移動に応じた拡大率変更の補正値
 	const CVector3 m_surfaceScaleDef = { 100.0f,100.0f,100.0f };	//面のデフォルトサイズ
-	const CVector3 BoxDefScale = { 100.0f,100.0f,100.0f };
+	const CVector3 BoxDefScale = { 100.0f,100.0f,100.0f };			//箱の初期スケール
 
 };
 

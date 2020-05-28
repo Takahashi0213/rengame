@@ -121,6 +121,9 @@
     <Filter Include="Assets\modelData\Gimmick">
       <UniqueIdentifier>{80024503-b165-4a38-a5ed-9ca88c8f6c09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="system\gameSystem\UI\Menu">
+      <UniqueIdentifier>{4a06e158-e542-4c0c-b004-b477066c11bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -297,9 +300,6 @@
     <ClCompile Include="SliceSprite.cpp">
       <Filter>graphics\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="GameMenu.cpp">
-      <Filter>system\gameSystem\UI</Filter>
-    </ClCompile>
     <ClCompile Include="TransitionGenerator.cpp">
       <Filter>graphics\Transition</Filter>
     </ClCompile>
@@ -359,6 +359,12 @@
     </ClCompile>
     <ClCompile Include="LevelSet.cpp">
       <Filter>level</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMenu.cpp">
+      <Filter>system\gameSystem\UI\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu_BoxAllDelete.cpp">
+      <Filter>system\gameSystem\UI\Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -554,9 +560,6 @@
     <ClInclude Include="SliceSprite.h">
       <Filter>graphics\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="GameMenu.h">
-      <Filter>system\gameSystem\UI</Filter>
-    </ClInclude>
     <ClInclude Include="SystemData.h">
       <Filter>system\gameSystem</Filter>
     </ClInclude>
@@ -620,6 +623,15 @@
     <ClInclude Include="LevelSet.h">
       <Filter>level</Filter>
     </ClInclude>
+    <ClInclude Include="IncludeHeader.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMenu.h">
+      <Filter>system\gameSystem\UI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu_BoxAllDelete.h">
+      <Filter>system\gameSystem\UI\Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\box.fbx">
@@ -641,6 +653,9 @@
       <Filter>Assets\modelData\Gimmick</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Base.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Coli.fbx">
       <Filter>Assets\modelData\Gimmick</Filter>
     </MeshContentTask>
   </ItemGroup>

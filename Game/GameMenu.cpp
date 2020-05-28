@@ -200,6 +200,7 @@ void GameMenu::GameMenuUpdate() {
 	//他の更新
 	Update_Effect(GameMode);
 	Update_Command();
+	Update_CommandNow();
 
 	//フラグリセット
 	m_selectFlag = false;
@@ -237,6 +238,7 @@ void GameMenu::GameMenuUpdate() {
 				m_nowMenuCommand = MenuCommand::Create;	//カーソル位置リセリセ
 				m_menuMoveTimer = 0;
 				EffekseerSupporter::GetInstance()->NoPostStop();
+				m_commandNow = false;
 
 				//コマンドの描画をリセット
 				Update_CommandDraw(true);
@@ -545,6 +547,11 @@ void GameMenu::Update_Command() {
 /// </summary>
 void GameMenu::Update_CommandDelta(const int delta, bool& flag) {
 
+	//コマンド実行中は動かさない
+	if (m_commandNow == true) {
+		return;
+	}
+
 	if (delta < 0) {
 		flag = true;
 		switch (m_nowMenuCommand)
@@ -701,5 +708,36 @@ void GameMenu::Update_CommandDraw(bool drawStile) {
 
 	//説明文の設定
 	MenuSetumeiFont->SetText(SetumeiBun[m_nowMenuCommand]);
+
+}
+
+void GameMenu::Update_CommandNow() {
+
+	//そもそもメニュー開いてます？
+	if (Game::GetInstance()->GetGameMode() != Game::MenuMode) {
+		return;
+	}
+	//何も実行してないなら中断
+	if (m_commandNow == false) {
+		return;
+	}
+
+	//コマンドに応じて実行すっぞ
+	switch (m_nowMenuCommand)
+	{
+	case GameMenu::Create:
+
+		break;
+	case GameMenu::Box_Release:
+
+		break;
+	case GameMenu::Library:
+
+		break;
+	case GameMenu::Save:
+
+		break;
+	}
+
 
 }

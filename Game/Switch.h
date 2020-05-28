@@ -15,6 +15,7 @@ public:
 	void SwitchObj_Init(CVector3 Pos);
 
 	void SwitchUpdate();
+	void SwitchDraw();
 
 	/// <summary>
 	/// スイッチのオンオフ状態を返す
@@ -33,14 +34,16 @@ private:
 		Off,
 	};
 
-	SkinModelRender m_skinModel;	//赤いモデル
+	SkinModel m_model;	//スイッチのもで～～る
 	Player* m_pl = nullptr;			//プレイヤー
 
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
 	PhysicsGhostObject m_ghostObject;	//ゴーストオブジェクト
 
-	const CVector3 Local = { 0.0f,1.0f,0.0f };	//ベースを基準にした赤い部分のローカル座標
+	const CVector3 Local = { 0.0f,5.0f,0.0f };	//ベースを基準にした赤い部分のローカル座標
 	const CVector3 GhostScale = { 160.0f,0.1f,160.0f };	//判定用ゴーストの範囲
+	const float SwitchMove = 14.0f;		//押されたとき戻った時の移動量
+	const int SwitchMoveTime = 12;		//押されたとき戻った時の移動時間
 
 	CVector3 m_position = CVector3().Zero();
 	CQuaternion m_rotation = CQuaternion().Identity();

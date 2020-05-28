@@ -1,4 +1,8 @@
 #pragma once
+#include "Menu_BoxAllDelete.h"
+
+//項目内容
+#include "Menu_BoxAllDelete.h"
 
 /// <summary>
 /// メニューのアレコレを総括する…なんやろなあ
@@ -9,6 +13,7 @@ class GameMenu
 	static GameMenu* m_instance;
 public:
 	enum MenuCommand {	//メニューの項目
+		Null,			//どれでもねえ
 		Create,			//マナ、アイテム、スターマネーを使用して色々創造
 		Box_Release,	//全箱解放（箱を全て消去してマナを回復）
 		Library,		//図鑑やあらすじ
@@ -44,6 +49,7 @@ private:
 	void Update_Command();
 	void Update_CommandDelta(const int delta, bool& flag);
 	void Update_CommandDraw(bool drawStile);
+	void Update_CommandNow();
 
 	//メンバ変数
 	const int SpriteNo = 7;		//スプライトの基準となる優先度
@@ -53,10 +59,14 @@ private:
 	int m_menuMoveTimer = 0;
 	MenuCommand m_nowMenuCommand = MenuCommand::Create;	//現在のコマンドォ！
 	bool m_selectFlag = false;		//選択中
+	bool m_commandNow = false;		//コマンド内容実行中
 
 	//メニュー関連の画像が多すぎめんどい
 	std::vector<SpriteRender*> m_spriteRenderList;
 	std::vector<FontRender*> m_fontRenderList;
+
+	//各コマンドのポインタ保存用 実行中だけ保存される
+	Menu_BoxAllDelete* m_boxAllDelete = nullptr;	//箱消去用
 
 	//メニュー枠関連
 	const CVector2 DefMenuWindowSize = { 600.0f,742.0f };
@@ -77,14 +87,14 @@ private:
 	const float MenuMahojinRotSpeed = -0.2f;
 
 	//メニューロゴ
-	const CVector2 MenuLogoSize = { 450.0f,200.0f };
-	const CVector2 MenuLogoAccSize = { 70.0f,70.0f };	//星の部分
-	const CVector2 MenuLogoNami = { 450.0f,338.0f };
-	const float MenuLogoScale = 0.8f;
-	const CVector3 DefMenuLogoPosition = { 830.0f,280.0f,1.0f };
+	const CVector2 MenuLogoSize = { 450.0f,200.0f };	//メニューロゴの大きさ
+	const CVector2 MenuLogoAccSize = { 70.0f,70.0f };	//メニューロゴ、星の部分の大きさ
+	const CVector2 MenuLogoNami = { 450.0f,338.0f };	//メニューロゴの中身、波の大きさ
+	const float MenuLogoScale = 0.8f;					//メニューロゴのサイズ調整
+	const CVector3 DefMenuLogoPosition = { 830.0f,280.0f,1.0f };		//メニューロゴのデフォ座標
 	const CVector3 DefMenuLogo_AccPosition = { 980.0f,300.0f,1.0f };
-	const int MenuLogoMoveSpeed = 300;	//波の移動
-	const int MenuLogo_AccRotSpeed = 30;	//星の回転
+	const int MenuLogoMoveSpeed = 300;		//波の移動速度
+	const int MenuLogo_AccRotSpeed = 30;	//星の回転速度
 	int MenuLogoTimer = 0;
 	int MenuLogoRotTimer = 0;
 	const float MenuAccRot = 2.0f;		//1フレームごとの回転量
@@ -107,6 +117,7 @@ private:
 		L"セーブ",
 	};
 	//アクセサリー
+
 
 	//説明文
 	const CVector3 SetumeiTextColor = { 0.9f,0.9f,0.9f };		//説明文の色
@@ -141,6 +152,9 @@ private:
 	bool m_selectMode = false;
 	bool m_selectOverFlag = false;	//↑がtrueの時にホイールを操作されたよフラグ
 	bool m_selectOverFlag_ = false;	//予備
+
+	//コマンド関連
+	Menu_BoxAllDelete* m_menu_BoxAllDelete = nullptr;
 
 	//↓ここから↓スプライト↓
 
