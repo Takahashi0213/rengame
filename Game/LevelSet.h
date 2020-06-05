@@ -1,5 +1,6 @@
 #pragma once
 #include "level/Level.h"
+#include "LevelData.h"
 
 class LevelSet
 {
@@ -16,6 +17,8 @@ public:
 
 private:
 	Level m_level;	//レベルデータ。
+
+	//現在設置されているオブジェクトのデータ
 
 };
 

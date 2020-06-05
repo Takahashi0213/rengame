@@ -366,6 +366,9 @@
     <ClCompile Include="Menu_BoxAllDelete.cpp">
       <Filter>system\gameSystem\UI\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="LevelData.cpp">
+      <Filter>level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -631,6 +634,9 @@
     </ClInclude>
     <ClInclude Include="Menu_BoxAllDelete.h">
       <Filter>system\gameSystem\UI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelData.h">
+      <Filter>level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

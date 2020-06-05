@@ -139,6 +139,7 @@
     <ClCompile Include="graphics\SkinModelDataManager.cpp" />
     <ClCompile Include="graphics\SkinModelEffect.cpp" />
     <ClCompile Include="HID\Pad.cpp" />
+    <ClCompile Include="LevelData.cpp" />
     <ClCompile Include="LevelSet.cpp" />
     <ClCompile Include="level\Level.cpp" />
     <ClCompile Include="level\MapChip.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="Hash.h" />
     <ClInclude Include="HID\Pad.h" />
     <ClInclude Include="IncludeHeader.h" />
+    <ClInclude Include="LevelData.h" />
     <ClInclude Include="LevelSet.h" />
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\MapChip.h" />
