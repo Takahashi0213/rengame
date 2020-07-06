@@ -546,13 +546,13 @@ void GameMenu::Update_Command() {
 /// コマンドの上下移動
 /// </summary>
 void GameMenu::Update_CommandDelta(const int delta, bool& flag) {
-
+	
 	//コマンド実行中は動かさない
 	if (m_commandNow == true) {
 		return;
 	}
 
-	if (delta < 0) {
+	if (delta < 0) {	//ホイール上
 		flag = true;
 		switch (m_nowMenuCommand)
 		{
@@ -570,7 +570,7 @@ void GameMenu::Update_CommandDelta(const int delta, bool& flag) {
 			break;
 		}
 	}
-	else if (delta > 0) {
+	else if (delta > 0) {	//ホイール下
 		flag = true;
 		switch (m_nowMenuCommand)
 		{
@@ -614,7 +614,7 @@ void GameMenu::Update_CommandDraw(bool drawStile) {
 	if (drawStile == false) {
 		MenuCommand_Cursor->SetPosition({ DefCursorPosition.x ,
 			DefCursorPosition.y - (MenuCommand_YHosei * m_nowMenuCommand),DefCursorPosition.z });	//コマンドY位置は補正する
-																									//座標
+
 		float Y_Hosei = 0.0f;
 		MenuCommand_Sprite1->SetPosition({ DefMenuCommandPosition.x,
 			DefMenuCommandPosition.y + Y_Hosei,DefMenuCommandPosition.z });

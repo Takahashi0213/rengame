@@ -101,7 +101,8 @@ void InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 	g_pad[2].Init(2);
 	g_pad[3].Init(3);
 
-	g_physics.Init();
+	g_physics = new PhysicsWorld;
+	g_physics->Init();
 }
 //ウィンドウメッセージをディスパッチ。falseが返ってきたら、ゲーム終了。
 bool DispatchWindowMessage()

@@ -12,7 +12,7 @@ PhysicsStaticObject::PhysicsStaticObject()
 }
 void PhysicsStaticObject::Release()
 {
-	g_physics.RemoveRigidBody(m_rigidBody);
+	g_physics->RemoveRigidBody(m_rigidBody);
 }
 void PhysicsStaticObject::CreateCommon(CVector3 pos, CQuaternion rot)
 {
@@ -22,7 +22,7 @@ void PhysicsStaticObject::CreateCommon(CVector3 pos, CQuaternion rot)
 	rbInfo.pos = pos;
 	rbInfo.rot = rot;
 	m_rigidBody.Create(rbInfo);
-	g_physics.AddRigidBody(m_rigidBody);
+	g_physics->AddRigidBody(m_rigidBody);
 }
 
 void PhysicsStaticObject::CreateMeshObject(SkinModel& skinModel, CVector3 pos, CQuaternion rot)
@@ -37,7 +37,7 @@ void PhysicsStaticObject::CreateMeshObject(SkinModel& skinModel, CVector3 pos, C
 	rbInfo.rot = rot;
 	m_rigidBody.Create(rbInfo);
 	//剛体を物理ワールドに追加する。
-	g_physics.AddRigidBody(m_rigidBody);
+	g_physics->AddRigidBody(m_rigidBody);
 
 	m_rigidFlag = true;
 }
@@ -54,7 +54,7 @@ void PhysicsStaticObject::CreateMeshObject(SkinModel& skinModel, CVector3 pos, C
 	rbInfo.rot = rot;
 	m_rigidBody.Create(rbInfo);
 	//剛体を物理ワールドに追加する。
-	g_physics.AddRigidBody(m_rigidBody);
+	g_physics->AddRigidBody(m_rigidBody);
 
 	m_rigidFlag = true;
 

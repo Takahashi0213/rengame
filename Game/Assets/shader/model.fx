@@ -26,6 +26,7 @@ sampler Sampler : register(s0);
 /////////////////////////////////////////////////////////////
 /// 
 static const int MAX_DIRECTION_LIGHT = 5;	//!<ディレクションライトの最大数。
+static const int MAX_POINT_LIGHT = 16;		//!<ポイントライトの最大数。
 
 /*!
  * @brief	頂点シェーダーとピクセルシェーダー用の定数バッファ。
@@ -51,9 +52,14 @@ cbuffer VSPSCb : register(b0){
 *@brief	ライト用の定数バッファ。
 */
 struct SDirectionLight{
-	float3 direction[MAX_DIRECTION_LIGHT];
+	float4 direction[MAX_DIRECTION_LIGHT];
 	float4 color[MAX_DIRECTION_LIGHT];
 };
+struct SPointLight {
+	float3 position[MAX_POINT_LIGHT];
+	float4 color[MAX_POINT_LIGHT];
+};
+
 
 /// <summary>
 /// シャドウマップ用の定数バッファ。
@@ -76,6 +82,7 @@ cbuffer Ambient_LightCb : register(b2) {
 */
 cbuffer LightCb : register(b3) {
 	SDirectionLight		directionLight;		//ディレクションライト。
+	SPointLight			pointLight;			//ポイントライト。
 	float3				eyePos;				//カメラの視点。
 	float				specPow;			//スペキュラライトの絞り。
 };
@@ -130,7 +137,7 @@ struct PSInput_ShadowMap {
 /// </summary>
 struct PSOutput {
 	float4 color		: SV_Target0;	//0番目のレンダリングターゲットに出力される。
-	float depthInView : SV_Target1;	//1番目のレンダリングターゲットに出力される。
+	float depthInView	: SV_Target1;	//1番目のレンダリングターゲットに出力される。
 };
 /*!
  *@brief	スキン行列を計算。
@@ -211,6 +218,7 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	  	//頂点座標にスキン行列を乗算して、頂点をワールド空間に変換。
 		//mulは乗算命令。
 	    pos = mul(skinning, In.Position);
+		psInput.worldPos = pos;
 	}
 	psInput.Normal = normalize( mul(skinning, In.Normal) );
 	psInput.Tangent = normalize( mul(skinning, In.Tangent) );
@@ -262,6 +270,27 @@ float3 CalcAmbientLight(float4 albedoColor, float2 uv)
 	}
 }
 
+//ポイントライトを計算
+float3 CalcPointLight(float3 normal, float3 worldpos) {
+	float3 lig = 0.0f;
+
+	for (int i = 0; i < MAX_POINT_LIGHT; i++) {
+
+		//１．光源からサーフェイスに入射するベクトルを計算。
+		float3 ligDir = normalize(worldpos - pointLight.position[i]);
+		//２．光源からサーフェイスまでの距離を計算。
+		float distance = length(worldpos - pointLight.position[i]);
+		//３．光の入射ベクトルとサーフェイスの法線で内積を取って反射の強さを計算する。
+		float t = max(0.0f, dot(-ligDir, normal));
+		//４．影響率を計算する。影響率は0.0～1.0の範囲で、
+		//    指定した距離(pointsLights[i].range)を超えたら、影響率は0.0になる。
+		float affect = 1.0f - min(1.0f, distance / pointLight.color[i].w);
+		lig += pointLight.color[i] * t * affect;
+
+	}
+	return lig;
+}
+
 //--------------------------------------------------------------------------------------
 // ピクセルシェーダーのエントリ関数。
 //--------------------------------------------------------------------------------------
@@ -305,6 +334,9 @@ PSOutput PSMain(PSInput In)
 		}
 
 	}
+
+	//ポイントライトの拡散反射光を計算する。
+	lig += CalcPointLight(normal, In.worldPos);
 
 	//環境光をあてる。
 	//lig += float3(Ambient_R, Ambient_G, Ambient_B);

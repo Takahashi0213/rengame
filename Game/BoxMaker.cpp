@@ -342,7 +342,7 @@ void BoxMaker::ModeChange() {
 
 		m_boxPos = MouseSupporter::GetInstance()->GetMousePos_3D();
 
-		btDiscreteDynamicsWorld* dw = g_physics.GetDynamicWorld();
+		btDiscreteDynamicsWorld* dw = g_physics->GetDynamicWorld();
 		btCollisionWorld::ClosestRayResultCallback CRR_Callback(g_camera3D.GetPosition(), m_boxPos);
 		dw->rayTest((btVector3)g_camera3D.GetPosition(), m_boxPos, CRR_Callback);
 		if (CRR_Callback.hasHit()) {

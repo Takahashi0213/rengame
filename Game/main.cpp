@@ -11,7 +11,7 @@
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
-{
+{	
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
 	
@@ -72,7 +72,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 			pad.Update();
 		}
 		//物理エンジンの更新。
-		g_physics.Update();
+		g_physics->Update();
 		//カメラの更新。
 		//g_camera3D.Update();
 		g_camera2D.Camera2D_Update();

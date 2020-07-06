@@ -1,6 +1,7 @@
 #pragma once
 
 #include "character/CharacterController.h"
+#include "PhysicsDebugDraw.h"
 
 class RigidBody;
 
@@ -11,6 +12,8 @@ class PhysicsWorld
 	btBroadphaseInterface*					overlappingPairCache = nullptr;	//!<ブロードフェーズ。衝突判定の枝切り。
 	btSequentialImpulseConstraintSolver*	constraintSolver = nullptr;		//!<コンストレイントソルバー。拘束条件の解決処理。
 	btDiscreteDynamicsWorld*				dynamicWorld = nullptr;			//!<ワールド。
+	//デバッグ用
+	CPhysicsDebugDraw									 m_debugDraw;
 public:
 	~PhysicsWorld();
 	void Init();
@@ -78,8 +81,16 @@ public:
 		CharacterController& charaCon,
 		std::function<void(const btCollisionObject& contactCollisionObject)> cb
 	);
+
+	//デバッグモードに変更
+	void SetDebugDrawMode(int debugMode)
+	{
+		//ワイヤーフレーム描画のみ。
+		m_debugDraw.setDebugMode(debugMode);
+	}
+
 };
 
-extern PhysicsWorld g_physics;
+extern PhysicsWorld* g_physics;
 
 

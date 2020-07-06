@@ -16,6 +16,27 @@ LightMaker::LightMaker()
 	for (int i = 0; i < MAX_DIRECTION_LIGHT; i++) {
 		D_LightDelete(i);
 	}
+	//ポイントライトの初期化
+	for (int i = 0; i < MAX_POINT_LIGHT; i++) {
+		//P_LightDelete(i);
+
+		//CVector3 pos;
+		//pos.x = static_cast<float>(rand() % 1000) - 500.0f;
+		//pos.y = 20.0f; //高さは20固定。
+		//pos.z = static_cast<float>(rand() % 1000) - 500.0f;
+		//float range = 50.0f;		//影響範囲も50で固定しておく。
+		//CVector3 color;
+		//color.x = static_cast<float>(rand() % 255) / 255.0f;
+		//color.y = static_cast<float>(rand() % 255) / 255.0f;
+		//color.z = static_cast<float>(rand() % 255) / 255.0f;
+
+		P_LightMake(
+			i,
+			{0.0f, 30.0f, 0.0f},
+			{1.0f,0.0f,0.0f},
+			200.0f);
+
+	}
 
 	//ライトカメラの座標
 	SetLightCameraPosition({ 0.0f, 1000.0f, 0.0f });
@@ -48,7 +69,7 @@ void LightMaker::D_LightMake(int lightNo,CVector4 dir,CVector4 col, float spec) 
 
 	m_light.direction[lightNo] = dir;
 	m_light.color[lightNo] = col;
-	m_light.specPower[lightNo] = spec;
+	m_light.color[lightNo].w = spec;
 
 }
 
@@ -60,6 +81,29 @@ void LightMaker::D_LightDelete(int lightNo) {
 
 	m_light.direction[lightNo] = { 0.0f, -1.0f, 0.0f, 0.0f };
 	m_light.color[lightNo] = { 0.5f,0.5f, 0.5f, 1.0f };
-	m_light.specPower[lightNo] = 10.0f;
+	m_light.color[lightNo].w = 10.0f;
 
+}
+
+/// <summary>
+/// ポイントライトを作成する
+/// </summary>
+/// <param name="lightNo">ライト番号</param>
+/// <param name="pos">座標</param>
+/// <param name="col">カラー</param>
+/// <param name="range">範囲</param>
+void LightMaker::P_LightMake(int lightNo, CVector3 pos, CVector3 col, float range) {
+	m_pointLight.position[lightNo] = pos;
+	m_pointLight.color[lightNo] = col;
+	m_pointLight.color[lightNo].w = range;
+}
+
+/// <summary>
+/// ポイントライトを消去する
+/// </summary>
+/// <param name="lightNo">ライト番号</param>
+void LightMaker::P_LightDelete(int lightNo) {
+	m_pointLight.position[lightNo] = CVector3::Zero();
+	m_pointLight.color[lightNo] = CVector3::Zero();
+	m_pointLight.color[lightNo].w = 0.0f;
 }

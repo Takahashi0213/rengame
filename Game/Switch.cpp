@@ -106,7 +106,7 @@ void SwitchObj::GhostCheck() {
 
 	//ƒvƒŒƒCƒ„[
 	CharacterController* charaCon = m_pl->GetCharaCon();
-	g_physics.ContactTest(*charaCon, [&](const btCollisionObject& contactObject) {
+	g_physics->ContactTest(*charaCon, [&](const btCollisionObject& contactObject) {
 		if (m_ghostObject.IsSelf(contactObject) == true) {
 			//m_ghostObject‚Æ‚Ô‚Â‚©‚Á‚½
 			OnFlag = true;
@@ -120,7 +120,7 @@ void SwitchObj::GhostCheck() {
 		if (go->GetColli_InitFlag() == true) {
 
 			RigidBody* rigidBody = go->GetRigidBody();
-			g_physics.ContactTest(*rigidBody, [&](const btCollisionObject& contactObject) {
+			g_physics->ContactTest(*rigidBody, [&](const btCollisionObject& contactObject) {
 				if (m_ghostObject.IsSelf(contactObject) == true) {
 					//m_ghostObject‚Æ‚Ô‚Â‚©‚Á‚½
 					OnFlag = true;

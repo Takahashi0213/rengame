@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Skeleton.h"
+
 #include "DirectionLight.h"
+#include "PointLight.h"
 
 /*!
 *@brief	FBXの上方向。
@@ -180,6 +182,8 @@ private:
 	
 	//ディレクションライトをセット
 	void D_LightUpdate();
+	//ディレクションライトをセット
+	void P_LightUpdate();
 
 private:
 	//定数バッファ。
@@ -213,7 +217,8 @@ private:
 	*/
 	struct SLight {
 		SDirectionLight		directionLight;		//ディレクションライト
-		CVector3			eyePos;				//視点の座標。
+		SPointLight			pointLight;			//ポイントライト
+		CVector4			eyePos;				//視点の座標。
 		float				specPow;			//鏡面反射の絞り。
 	};
 
@@ -235,7 +240,6 @@ private:
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
 	ID3D11Buffer*		m_cb = nullptr;					//!<定数バッファ。
 	ID3D11Buffer*		m_lightCb = nullptr;			//!<ライト用の定数バッファ。
-	ID3D11Buffer*		m_lightCb2 = nullptr;			//!<ライト用の定数バッファ2。
 	ID3D11Buffer*		m_ambientlightCb = nullptr;		//!<ライト用の定数バッファ。
 	AmbientLight		m_AmbientLight;					//!<ライト構造体。
 	SLight				m_light;						//!<ライト構造体。

@@ -223,7 +223,7 @@ void Player::Move() {
 			m_nextPos = MouseSupporter::GetInstance()->GetMousePos_3D();
 
 			//btCollisionWorld::ClosestRayResultCallback ResultCallback();
-			btDiscreteDynamicsWorld* dw = g_physics.GetDynamicWorld();
+			btDiscreteDynamicsWorld* dw = g_physics->GetDynamicWorld();
 			btCollisionWorld::ClosestRayResultCallback CRR_Callback(g_camera3D.GetPosition(), m_nextPos);
 			dw->rayTest((btVector3)g_camera3D.GetPosition(), m_nextPos, CRR_Callback);
 			if (CRR_Callback.hasHit()) {

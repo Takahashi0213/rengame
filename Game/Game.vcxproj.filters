@@ -52,9 +52,6 @@
     <Filter Include="graphics\GameBox">
       <UniqueIdentifier>{7bc2d564-c6fe-4bd9-9578-099020b909fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="graphics\PostEffect">
-      <UniqueIdentifier>{bea0f45f-c0cc-435c-bfbc-763f0dd2f8f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="graphics\font">
       <UniqueIdentifier>{603848fd-d29f-4f41-b805-2c2161dd463a}</UniqueIdentifier>
     </Filter>
@@ -123,6 +120,9 @@
     </Filter>
     <Filter Include="system\gameSystem\UI\Menu">
       <UniqueIdentifier>{4a06e158-e542-4c0c-b004-b477066c11bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\PostEffect">
+      <UniqueIdentifier>{bea0f45f-c0cc-435c-bfbc-763f0dd2f8f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -333,9 +333,6 @@
     <ClCompile Include="EnemySystem.cpp">
       <Filter>object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="GameCamera.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
     <ClCompile Include="system\CGameObjectManager.cpp">
       <Filter>system</Filter>
     </ClCompile>
@@ -368,6 +365,15 @@
     </ClCompile>
     <ClCompile Include="LevelData.cpp">
       <Filter>level</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsDebugDraw.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCamera.cpp">
+      <Filter>system\gameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>graphics\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -637,6 +643,12 @@
     </ClInclude>
     <ClInclude Include="LevelData.h">
       <Filter>level</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsDebugDraw.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>graphics\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

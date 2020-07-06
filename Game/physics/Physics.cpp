@@ -3,7 +3,7 @@
 #include "Physics/RigidBody.h"
 
 
-PhysicsWorld g_physics;
+PhysicsWorld* g_physics = nullptr;
 
 namespace {
 	struct MyContactResultCallback : public btCollisionWorld::ContactResultCallback {

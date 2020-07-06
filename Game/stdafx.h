@@ -31,7 +31,7 @@
 
 static const int MAX_BONE = 512;	//!<ボーンの最大数。
 static const int MAX_DIRECTION_LIGHT = 5;	//!<ディレクションライトの最大数。
-
+static const int MAX_POINT_LIGHT = 16;	//!<ポイントライトの最大数。
 
 #include "HID/Pad.h"
 

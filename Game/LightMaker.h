@@ -2,6 +2,7 @@
 #include "system/CGameObjectManager.h"
 
 #include "DirectionLight.h"
+#include "PointLight.h"
 
 //IGameObjectを継承しているので開始時にNewGOしてくださいね～
 
@@ -19,14 +20,14 @@ public:
 	void Render()override;
 
 	void LightMaker::D_LightMake(int lightNo, CVector4 dir, CVector4 col,float spec);
-
 	void LightMaker::D_LightDelete(int lightNo);
+
+	void LightMaker::P_LightMake(int lightNo, CVector3 pos, CVector3 col, float range);
+	void LightMaker::P_LightDelete(int lightNo);
 
 	/// <summary>
 	/// 引数に設定したライトの方向を変更する
 	/// </summary>
-	/// <param name="light">変更するライトの場所</param>
-	/// <param name="dir">ライトの方向</param>
 	void LightMaker::D_Light_SetDirection(int lightNo, CVector4 dir) {
 		m_light.direction[lightNo] = dir;
 	}
@@ -37,8 +38,6 @@ public:
 	/// <summary>
 	/// 引数に設定したライトの色を変更する
 	/// </summary>
-	/// <param name="light">変更するライトの場所</param>
-	/// <param name="col">ライトの色</param>
 	void LightMaker::D_Light_SetColer(int lightNo, CVector4 col) {
 		m_light.color[lightNo] = col;
 	}
@@ -49,13 +48,45 @@ public:
 	/// <summary>
 	/// スペキュラの絞りを変更する
 	/// </summary>
-	/// <param name="lightNo">変更するライトの場所</param>
-	/// <param name="spec">スペキュラ</param>
 	void LightMaker::D_Light_SetSpec(int lightNo, float spec) {
-		m_light.specPower[lightNo] = spec;
+		m_light.color[lightNo].w = spec;
 	}
 	float LightMaker::D_Light_GetSpec(int lightNo) {
-		return m_light.specPower[lightNo];
+		return m_light.color[lightNo].w;
+	}
+
+	/// <summary>
+	/// ポイントライトの座標を取得・変更
+	/// </summary>
+	void LightMaker::P_Light_SetPos(int lightNo, CVector3 pos) {
+		m_pointLight.position[lightNo] = pos;
+	}
+	CVector3 LightMaker::P_Light_GetPos(int lightNo) {
+		CVector3 ret;
+		ret.Set(m_pointLight.position[lightNo]);
+		return ret;
+	}
+
+	/// <summary>
+	/// ポイントライトの色を取得・変更
+	/// </summary>
+	void LightMaker::P_Light_SetColor(int lightNo, CVector3 color) {
+		m_pointLight.color[lightNo] = color;
+	}
+	CVector3 LightMaker::P_Light_GetColor(int lightNo) {
+		CVector3 ret;
+		ret.Set(m_pointLight.color[lightNo]);
+		return ret;
+	}
+
+	/// <summary>
+	/// ポイントライトの範囲を取得・変更
+	/// </summary>
+	void LightMaker::P_Light_SetRange(int lightNo, float range) {
+		m_pointLight.color[lightNo].w = range;
+	}
+	float LightMaker::P_Light_GetRange(int lightNo) {
+		return m_pointLight.color[lightNo].w;
 	}
 
 	/// <summary>
@@ -65,13 +96,27 @@ public:
 	bool Get_D_LightFlag() {
 		return m_lightFlag_D;
 	}
-
 	/// <summary>
 	/// ディレクションライト有効フラグをセット
 	/// </summary>
 	/// <param name="flag">フラグ</param>
 	void Set_D_LightFlag(bool flag) {
 		m_lightFlag_D = flag;
+	}
+
+	/// <summary>
+	/// ポイントライト有効フラグを返す
+	/// </summary>
+	/// <returns>フラグ</returns>
+	bool Get_P_LightFlag() {
+		return m_lightFlag_P;
+	}
+	/// <summary>
+	/// ポイントライト有効フラグをセット
+	/// </summary>
+	/// <param name="flag">フラグ</param>
+	void Set_P_LightFlag(bool flag) {
+		m_lightFlag_P = flag;
 	}
 
 	/// <summary>
@@ -142,8 +187,13 @@ public:
 	}
 
 private:
+	//ライトたち！
 	SDirectionLight m_light;
-	bool m_lightFlag_D = false;
+	SPointLight m_pointLight;
+
+	//有効フラグ
+	bool m_lightFlag_D = false;	//ディレクションライト有効フラグ
+	bool m_lightFlag_P = false;	//ポイントライト有効フラグ
 
 	CVector3 m_ambientColor = { 0.4f,0.4f,0.4f };	//環境光の色
 

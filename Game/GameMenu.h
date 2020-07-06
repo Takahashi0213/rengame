@@ -13,7 +13,6 @@ class GameMenu
 	static GameMenu* m_instance;
 public:
 	enum MenuCommand {	//メニューの項目
-		Null,			//どれでもねえ
 		Create,			//マナ、アイテム、スターマネーを使用して色々創造
 		Box_Release,	//全箱解放（箱を全て消去してマナを回復）
 		Library,		//図鑑やあらすじ

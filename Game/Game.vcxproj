@@ -152,6 +152,7 @@
     <ClCompile Include="Menu_BoxAllDelete.cpp" />
     <ClCompile Include="MouseOver.cpp" />
     <ClCompile Include="MouseSupporter.cpp" />
+    <ClCompile Include="PhysicsDebugDraw.cpp" />
     <ClCompile Include="PhysicsGhostObject.cpp" />
     <ClCompile Include="PhysicsObjectBase.cpp" />
     <ClCompile Include="physics\MeshCollider.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="physics\CapsuleCollider.cpp" />
     <ClCompile Include="physics\PhysicsStaticObject.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="PostEffect.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
@@ -244,6 +246,7 @@
     <ClInclude Include="Menu_BoxAllDelete.h" />
     <ClInclude Include="MouseOver.h" />
     <ClInclude Include="MouseSupporter.h" />
+    <ClInclude Include="PhysicsDebugDraw.h" />
     <ClInclude Include="PhysicsGhostObject.h" />
     <ClInclude Include="PhysicsObjectBase.h" />
     <ClInclude Include="physics\ICollider.h" />
@@ -254,6 +257,7 @@
     <ClInclude Include="physics\CollisionAttr.h" />
     <ClInclude Include="physics\PhysicsStaticObject.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="PostEffect.h" />
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="resource.h" />
