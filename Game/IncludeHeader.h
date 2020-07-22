@@ -7,6 +7,7 @@
 //ƒMƒ~ƒbƒN
 #include "StarMoney.h"
 #include "Switch.h"
+#include "Door.h"
 
 //“G
 #include "TestEnemy.h"

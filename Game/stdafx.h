@@ -33,6 +33,11 @@ static const int MAX_BONE = 512;	//!<ボーンの最大数。
 static const int MAX_DIRECTION_LIGHT = 5;	//!<ディレクションライトの最大数。
 static const int MAX_POINT_LIGHT = 16;	//!<ポイントライトの最大数。
 
+const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
+const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
+const int MAX_OBJ_PRIORITY = 10;					//オブジェクト最大生成数
+const int MAX_LEVEL_OBJ = 100;						//レベルに設定できる最大オブジェクト数
+
 #include "HID/Pad.h"
 
 #include "math/Vector.h"
@@ -72,8 +77,6 @@ static const int MAX_POINT_LIGHT = 16;	//!<ポイントライトの最大数。
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 
-const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
-const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
-const int MAX_OBJ_PRIORITY = 10;	//オブジェクト最大生成数
+#include "ObjectClass.h"
 
 extern SpriteRender spRen;

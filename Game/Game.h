@@ -2,7 +2,6 @@
 #include "SystemData.h"
 #include "GameGraphic.h"
 #include "GameUI.h"
-
 #include "PhysicsGhostObject.h"
 
 /// <summary>

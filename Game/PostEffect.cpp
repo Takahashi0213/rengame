@@ -47,7 +47,8 @@ void PostEffect::Update()
 
 void PostEffect::Draw()
 {
-	Game::GameMode NowGameMode = Game::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
+	//Game::GameMode NowGameMode = Game::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
+	Game::GameMode NowGameMode = Game::GameMode::ActionMode;
 
 	if (NowGameMode == Game::CreateMode) {
 		//遠い場所を暗くする処理（クリエイト限定）

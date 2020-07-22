@@ -2,13 +2,17 @@
 #include "level/Level.h"
 #include "LevelData.h"
 
+/// <summary>
+/// レベルを設定するクラス
+/// Initでスターーート！！！です
+/// </summary>
 class LevelSet
 {
 	static LevelSet* m_instance;
 public:
 	LevelSet();
 	~LevelSet();
-	void Init(wchar_t LEVEL_Name[255]);
+	void Init(const wchar_t* LEVEL_Name);
 
 	//インスタンスの取得
 	static LevelSet* LevelSet::GetInstance() {
@@ -16,9 +20,25 @@ public:
 	}
 
 private:
-	Level m_level;	//レベルデータ。
+	
+	LevelData Level_Data;				//レベルデータ本体
+	Level m_level;						//レベルデータ。
+	int m_levelNo = -1;					//レベルの配列番号（-1で初期化しましょ！）
+
+	//オブジェクトの生成
+	void NewObj(LevelObjectData& data, LevelData::Obj_Tag tag);
+	//オブジェクトのリンク作業オブ作業
+	void LinkObj(int levelNo, int i);
 
 	//現在設置されているオブジェクトのデータ
+	struct Obj_Data
+	{
+		LevelData::Obj_Tag ObjTag;		//タグ
+		wchar_t ObjName[255];			//オブジェクトの名前
+		wchar_t LinkObjName[255] = L"";	//リンクされているオブジェクトの名前
+	};
+	//オブジェクトデータの配列
+	Obj_Data m_Obj_Data[MAX_LEVEL_OBJ];
 
 };
 

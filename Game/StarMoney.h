@@ -1,7 +1,10 @@
 #pragma once
 #include "system/CGameObjectManager.h"
 
-class StarMoney : public IGameObject
+/// <summary>
+/// 触れると手に入るお金
+/// </summary>
+class StarMoney : public IGameObject, public ObjectClass
 {
 public:
 	StarMoney();
@@ -19,12 +22,6 @@ private:
 	SkinModel m_model;	//スキンモデル。
 	SkinModel m_model_Kirameki;	//キラメキラリ
 	ID3D11ShaderResourceView* m_kiramekiSRV = nullptr;
-
-	CVector3 m_position = CVector3().Zero();
-	CQuaternion m_rotation = CQuaternion().Identity();
-	CVector3 m_scale = { 10.0f,10.0f,10.0f }; //拡大率
-
-
 
 };
 

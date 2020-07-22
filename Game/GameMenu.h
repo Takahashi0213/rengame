@@ -45,17 +45,18 @@ private:
 	//ｴﾌｪｸﾄｩ
 	void Update_Effect(int mode);
 	//こまんど
-	void Update_Command();
-	void Update_CommandDelta(const int delta, bool& flag);
-	void Update_CommandDraw(bool drawStile);
-	void Update_CommandNow();
+	void Update_Command();		//マウスカーソルの位置でコマンドの移動方法を変える
+	void Update_CommandDelta(const int delta, bool& flag);		//マウスホイールの動作からコマンド位置を上下させる
+	void Update_CommandDraw(bool drawStile);	//選択中のコマンドとそれ以外のコマンドで描画を変える処理
+	void Update_MenuEnter(int leftKey);	//メニューのコマンド決定処理
+	void Update_CommandNow();	//コマンド実行中、自動でアップデートする処理
 
 	//メンバ変数
 	const int SpriteNo = 7;		//スプライトの基準となる優先度
 	const float MenuMove = 370.0f;	//メニューを開閉する時の移動量
 	const float MenuMove_Over = 30.0f;	//メニューを開閉する時の移動量（オーバーラン用）
 	const int MenuMoveTime = 4;	//メニューを開閉する時間
-	int m_menuMoveTimer = 0;
+	int m_menuMoveTimer = 0;	//移動用タイマー
 	MenuCommand m_nowMenuCommand = MenuCommand::Create;	//現在のコマンドォ！
 	bool m_selectFlag = false;		//選択中
 	bool m_commandNow = false;		//コマンド内容実行中

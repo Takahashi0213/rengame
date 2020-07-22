@@ -22,6 +22,9 @@ void MeshCollider::CreateFromSkinModel( const SkinModel& model, const CMatrix* o
 	CMatrix mBias;
 	mBias.MakeRotationX(CMath::PI * -0.5f);
 	m_stridingMeshInterface = std::make_unique<btTriangleIndexVertexArray>();
+	if (offsetMatrix != nullptr) {
+		mBias.Mul(mBias, *offsetMatrix);
+	}
 
 	model.FindMesh([&](const auto& mesh){
 
@@ -95,6 +98,9 @@ void MeshCollider::CreateFromSkinModel(const SkinModel& model, const CMatrix* of
 	CMatrix mBias;
 	mBias.MakeRotationX(CMath::PI * -0.5f);
 	m_stridingMeshInterface = std::make_unique<btTriangleIndexVertexArray>();
+	if (offsetMatrix != nullptr) {
+		mBias.Mul(mBias, *offsetMatrix);
+	}
 
 	model.FindMesh([&](const auto& mesh) {
 

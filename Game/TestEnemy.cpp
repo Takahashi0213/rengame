@@ -5,11 +5,11 @@ TestEnemy::TestEnemy()
 {
 	//調整
 	m_position.Set(0.0f, 100.0f, 200.0f);
-	m_scale.Set(100.0f, 100.0f, 100.0f);
+	m_scale.Set(10.0f, 10.0f, 10.0f);
 
 	//モデル準備
 	m_modelRender = CGameObjectManager::GetInstance()->NewGO<SkinModelRender>("TestEnemy", 1);
-	m_modelRender->Model_Init(L"Assets/modelData/box.cmo",
+	m_modelRender->Model_Init(L"Assets/modelData/Test_Enemy.cmo",
 		m_position, m_rotation, m_scale);
 
 	//シャドウレシーバーにする。

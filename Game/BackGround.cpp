@@ -4,18 +4,9 @@
 
 BackGround::BackGround()
 {
-	m_model.Init(L"Assets/modelData/map.cmo");
-	m_model.UpdateWorldMatrix(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
-
-	//PhysicsStaticObjectの初期化
-	m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation);
-
 	//ライトメーカーの取得
 	int a = Hash::MakeHash("LightMaker");
 	m_lightMaker = CGameObjectManager::GetInstance()->FindGO<LightMaker>(a);
-
-	//シャドウレシーバーにする。
-	m_model.SetShadowReciever(true);
 
 }
 
@@ -24,8 +15,27 @@ BackGround::~BackGround()
 {
 }
 
+void BackGround::Init(const wchar_t* filePath) {
+
+	m_model.Init(filePath);
+	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+
+	//PhysicsStaticObjectの初期化
+	m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation, m_scale);
+
+	//シャドウレシーバーにする。
+	m_model.SetShadowReciever(true);
+
+	//Initしたよ！
+	m_initFlag = true;
+}
+
 void BackGround::Update() {
 
+	if (m_initFlag == false) {
+		return;
+	}
+	
 	if (m_game != nullptr) {
 		if (m_game->GetGameMode() == Game::CreateMode && m_monochromeFlag == false) {
 			m_model.SetRenderMode(RenderMode::Monochrome);
@@ -46,6 +56,12 @@ void BackGround::Update() {
 }
 
 void BackGround::Render() {
+
+	if (m_initFlag == false) {
+		return;
+	}
+
+	//描画
 	m_model.Draw(
 		g_camera3D.GetViewMatrix(),
 		g_camera3D.GetProjectionMatrix()

@@ -6,7 +6,6 @@
 #include "GameCamera.h"
 #include "Game.h"
 
-
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
@@ -74,6 +73,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//物理エンジンの更新。
 		g_physics->Update();
 		//カメラの更新。
+		//@todo テストで復活
 		//g_camera3D.Update();
 		g_camera2D.Camera2D_Update();
 		//マウスサポーターの更新

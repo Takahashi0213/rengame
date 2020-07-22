@@ -113,6 +113,7 @@
     <ClCompile Include="DebugLog.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="Dof.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="EffekseerSupporter.cpp" />
     <ClCompile Include="EnemySystem.cpp" />
     <ClCompile Include="FarShadow.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Menu_BoxAllDelete.cpp" />
     <ClCompile Include="MouseOver.cpp" />
     <ClCompile Include="MouseSupporter.cpp" />
+    <ClCompile Include="ObjectClass.cpp" />
     <ClCompile Include="PhysicsDebugDraw.cpp" />
     <ClCompile Include="PhysicsGhostObject.cpp" />
     <ClCompile Include="PhysicsObjectBase.cpp" />
@@ -177,6 +179,7 @@
     <ClCompile Include="SpriteRender.cpp" />
     <ClCompile Include="SpriteStandby.cpp" />
     <ClCompile Include="SpriteSupporter.cpp" />
+    <ClCompile Include="StageSet.cpp" />
     <ClCompile Include="StarMoney.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -203,6 +206,7 @@
     <ClInclude Include="DebugLog.h" />
     <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="Dof.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="EffekseerSupporter.h" />
     <ClInclude Include="EnemySystem.h" />
     <ClInclude Include="FarShadow.h" />
@@ -246,6 +250,7 @@
     <ClInclude Include="Menu_BoxAllDelete.h" />
     <ClInclude Include="MouseOver.h" />
     <ClInclude Include="MouseSupporter.h" />
+    <ClInclude Include="ObjectClass.h" />
     <ClInclude Include="PhysicsDebugDraw.h" />
     <ClInclude Include="PhysicsGhostObject.h" />
     <ClInclude Include="PhysicsObjectBase.h" />
@@ -274,6 +279,7 @@
     <ClInclude Include="SpriteRender.h" />
     <ClInclude Include="SpriteStandby.h" />
     <ClInclude Include="SpriteSupporter.h" />
+    <ClInclude Include="StageSet.h" />
     <ClInclude Include="StarMoney.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Switch.h" />
@@ -286,9 +292,11 @@
     <ClInclude Include="TransitionSprite.h" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Assets\modelData\0_0.fbx" />
     <MeshContentTask Include="Assets\modelData\box.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Door\Door.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\jewel.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Base.fbx" />
@@ -296,6 +304,7 @@
     <MeshContentTask Include="Assets\modelData\map.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Test_Enemy.fbx" />
     <MeshContentTask Include="Assets\modelData\Titan.fbx" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>

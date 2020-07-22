@@ -16,13 +16,14 @@ class CPhysicsDebugDraw : public btIDebugDraw {
 	ID3D11Buffer* m_cb;
 	static const int VERTEX_MAX = 100000;
 	std::array<CVector4, VERTEX_MAX> m_vertexBuffer;
+	ID3D11Buffer*	m_vertexBuffer_ = nullptr;	//!<頂点バッファ。
 
 	int m_numLine = 0;
 
 public:
 	void Init();
 
-	void BeginDraw(ID3D11DeviceContext& rc)
+	void BeginDraw(/*ID3D11DeviceContext& rc*/)
 	{
 		//m_deviceContext = &rc;
 		m_numLine = 0;

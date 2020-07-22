@@ -200,6 +200,7 @@ void GameMenu::GameMenuUpdate() {
 	//他の更新
 	Update_Effect(GameMode);
 	Update_Command();
+	Update_MenuEnter(Left_Key);
 	Update_CommandNow();
 
 	//フラグリセット
@@ -711,6 +712,45 @@ void GameMenu::Update_CommandDraw(bool drawStile) {
 
 }
 
+/// <summary>
+/// コマンドの決定受付
+/// </summary>
+void GameMenu::Update_MenuEnter(int leftKey) {
+
+	//何か実行いるなら中断
+	if (m_commandNow == true) {
+		return;
+	}
+
+	//もし決定されたらコマンドを決定（日本語がおかしいさん）
+	if (leftKey == MouseSupporter::Release_Push) {
+
+		//生成
+		switch (m_nowMenuCommand)
+		{
+		case GameMenu::Create:
+
+			break;
+		case GameMenu::Box_Release:
+			m_boxAllDelete = new Menu_BoxAllDelete;
+			break;
+		case GameMenu::Library:
+
+			break;
+		case GameMenu::Save:
+
+			break;
+		}
+
+		//フラグTrue
+		m_commandNow = true;
+	}
+
+}
+
+/// <summary>
+/// コマンド内容のアップデート
+/// </summary>
 void GameMenu::Update_CommandNow() {
 
 	//そもそもメニュー開いてます？
@@ -729,7 +769,7 @@ void GameMenu::Update_CommandNow() {
 
 		break;
 	case GameMenu::Box_Release:
-
+		m_boxAllDelete->DeleteCheckUpdate();
 		break;
 	case GameMenu::Library:
 

@@ -92,6 +92,9 @@ void GameBox::GameBox_Update() {
 
 	//コライダーが設定済みなら更新
 	if (m_colli_InitFlag == true) {
+		CVector3 offset = { 0.0f, m_scale.y * 0.5f , 0.0f };
+		Rot.Multiply(offset);
+		Pos += offset;
 		m_physicsStaticObject.SetPositionAndRotation(Pos, Rot);
 	}
 
@@ -127,6 +130,7 @@ void GameBox::GameBoxUpdate_Colli() {
 				Pos = m_originBox->GetPosition();
 				Pos += m_localPosition;
 			}
+			Pos.y += m_scale.y * 0.5f;
 			//m_physicsStaticObject.CreateMeshObject(m_model, Pos, m_rotation, m_scale);
 			m_physicsStaticObject.CreateBox(Pos, m_rotation, m_scale);
 		}

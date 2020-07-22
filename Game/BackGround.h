@@ -3,7 +3,7 @@
 #include "system/CGameObjectManager.h"
 #include "Game.h"
 
-class BackGround : public IGameObject
+class BackGround : public IGameObject, public ObjectClass
 {
 public:
 	BackGround();
@@ -19,7 +19,11 @@ public:
 		m_game = game;
 	}
 
+	void Init(const wchar_t* filePath);
+
 private:
+	bool m_initFlag = false;
+
 	SkinModel m_model;	//スキンモデル。
 	Game* m_game;
 	bool m_monochromeFlag = false;
@@ -27,9 +31,9 @@ private:
 
 	PhysicsStaticObject m_physicsStaticObject;				//静的物理オブジェクト。
 
-	CVector3 m_position = CVector3().Zero();
+	CVector3 m_position = { 0.0f,0.0f,0.0f };
 	CQuaternion m_rotation = CQuaternion().Identity();
-	CVector3 m_scale = CVector3().One(); //拡大率
+	CVector3 m_scale = { 10.0f,10.0f,10.0f }; //拡大率
 
 
 };

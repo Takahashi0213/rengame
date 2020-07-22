@@ -18,7 +18,7 @@ LightMaker::LightMaker()
 	}
 	//ポイントライトの初期化
 	for (int i = 0; i < MAX_POINT_LIGHT; i++) {
-		//P_LightDelete(i);
+		P_LightDelete(i);
 
 		//CVector3 pos;
 		//pos.x = static_cast<float>(rand() % 1000) - 500.0f;
@@ -30,11 +30,11 @@ LightMaker::LightMaker()
 		//color.y = static_cast<float>(rand() % 255) / 255.0f;
 		//color.z = static_cast<float>(rand() % 255) / 255.0f;
 
-		P_LightMake(
-			i,
-			{0.0f, 30.0f, 0.0f},
-			{1.0f,0.0f,0.0f},
-			200.0f);
+		//P_LightMake(
+		//	i,
+		//	{0.0f, 30.0f, 0.0f},
+		//	{1.0f,0.0f,0.0f},
+		//	200.0f);
 
 	}
 

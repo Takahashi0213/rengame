@@ -286,6 +286,10 @@ void CGOM_Graphics::EffectRender(bool Mode) {
 
 }
 
+void CGOM_Graphics::DebugDraw() {
+	g_physics->DebubDrawWorld();
+}
+
 void CGOM_Graphics::EndSet() {
 	float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	//半透明合成のブレンドステートを設定する。

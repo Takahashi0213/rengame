@@ -72,11 +72,16 @@
 			//フォワードレンダリング
 			ForwordRender();
 
+			//デバッグ
+			m_cgom_Graphics->DebugDraw();
+
 			//エフェクサー
 			m_cgom_Graphics->EffectRender(false);
 
 			//ポストレンダリング
 			PostRender();
+
+			
 
 		}
 

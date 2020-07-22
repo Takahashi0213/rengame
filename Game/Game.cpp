@@ -2,7 +2,6 @@
 #include "Game.h"
 
 #include "Player.h"
-#include "BackGround.h"
 #include "BoxMaker.h"
 #include "TestEnemy.h"
 
@@ -10,6 +9,7 @@
 #include "GameUI.h"
 
 #include "Switch.h"
+#include "StageSet.h"
 
 Game* Game::m_instance = nullptr;
 
@@ -33,12 +33,12 @@ Game::Game()
 	//カメラサポーターの生成
 	CGameObjectManager::GetInstance()->NewGO<CameraSupporter>("CameraSupporter");
 
-	BackGround* bg = CGameObjectManager::GetInstance()->NewGO<BackGround>("BackGround", 0);
+	//BackGround* bg = CGameObjectManager::GetInstance()->NewGO<BackGround>("BackGround", 0);
 	BoxMaker* m_box = CGameObjectManager::GetInstance()->NewGO<BoxMaker>("BoxMaker", 1);
 	Player* pl = CGameObjectManager::GetInstance()->NewGO<Player>("Player", 1);
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
 	GameUI* ui = CGameObjectManager::GetInstance()->NewGO<GameUI>("GameUI", 8);
-	TestEnemy* test = CGameObjectManager::GetInstance()->NewGO<TestEnemy>("TestEnemy", 1);
+	//TestEnemy* test = CGameObjectManager::GetInstance()->NewGO<TestEnemy>("TestEnemy", 1);
 	m_ui = ui;
 
 	TransitionGenerator* tg = CGameObjectManager::GetInstance()->NewGO<TransitionGenerator>("TransitionGenerator", 10);
@@ -47,10 +47,16 @@ Game::Game()
 	//ボックスメイカーに渡すよ
 	m_box->SetPlayer(pl);
 	//背景に渡す
-	bg->SetGame(this);
+	//bg->SetGame(this);
+
+	g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 
 	Switch* sw = CGameObjectManager::GetInstance()->NewGO<Switch>("Switch", 0);
-	sw->SetPosition({ -300.0f,20.0f,200.0f });
+	sw->SetPosition({ -300.0f,100.0f,200.0f });
+
+	StageSet m_stageSet;
+	m_stageSet.CriateStage(L"Assets/modelData/0_0.cmo",L"Assets/level/stage_00.tkl");
+	m_stageSet.SetGame(this);
 
 }
 

@@ -195,7 +195,7 @@ private:
 	bool m_lightFlag_D = false;	//ディレクションライト有効フラグ
 	bool m_lightFlag_P = false;	//ポイントライト有効フラグ
 
-	CVector3 m_ambientColor = { 0.4f,0.4f,0.4f };	//環境光の色
+	CVector3 m_ambientColor = { 0.1f,0.1f,0.2f };	//環境光の色
 
 	CVector3 m_lightCameraPosition;				//ライトカメラの視点。
 	CVector3 m_lightCameraTarget;				//ライトカメラの注視点。

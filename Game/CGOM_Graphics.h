@@ -39,6 +39,11 @@ public:
 	void EffectRender(bool Mode);
 
 	/// <summary>
+	/// デバッグ描画
+	/// </summary>
+	void CGOM_Graphics::DebugDraw();
+
+	/// <summary>
 	/// メインレンダリングターゲットを取得
 	/// </summary>
 	/// <returns></returns>

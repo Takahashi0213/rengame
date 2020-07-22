@@ -60,6 +60,7 @@ private:
 	void CreateCommon(CVector3 pos, CQuaternion rot) override final;
 
 	MeshCollider m_meshCollider;		//!<メッシュコライダー。
+	float m_mass = 1.0f;				//!<質量。
 	RigidBody m_rigidBody;				//!<剛体。
 	bool m_rigidFlag = false;
 };

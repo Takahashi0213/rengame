@@ -19,6 +19,8 @@ public:
 	void Init();
 	void Update();
 	void Release();
+	void DebubDrawWorld(/*ID3D11DeviceContext& rc*/);
+
 	/*!
 	* @brief	ダイナミックワールドを取得。
 	*/

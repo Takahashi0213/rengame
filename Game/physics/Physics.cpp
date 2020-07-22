@@ -64,6 +64,10 @@ void PhysicsWorld::Init()
 		);
 
 	dynamicWorld->setGravity(btVector3(0, -10, 0));
+
+	m_debugDraw.Init();
+	dynamicWorld->setDebugDrawer(&m_debugDraw);
+
 }
 void PhysicsWorld::Update()
 {
@@ -79,7 +83,13 @@ void PhysicsWorld::RemoveRigidBody(RigidBody& rb)
 		dynamicWorld->removeRigidBody(rb.GetBody());
 	}
 }
-
+void PhysicsWorld::DebubDrawWorld(/*ID3D11DeviceContext& rc*/)
+{
+	m_debugDraw.BeginDraw();
+	dynamicWorld->debugDrawWorld();
+	//dynamicWorld->getCollisionWorld()->debugDrawWorld();
+	m_debugDraw.EndDraw();
+}
 void PhysicsWorld::ContactTest(
 	btCollisionObject* colObj,
 	std::function<void(const btCollisionObject& contactCollisionObject)> cb

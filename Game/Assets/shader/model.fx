@@ -10,7 +10,7 @@
 Texture2D<float4> albedoTexture : register(t0);	
 //ボーン行列
 StructuredBuffer<float4x4> boneMatrix : register(t1);
-Texture2D<float4> g_shadowMap : register(t2);		//シャドウマップ
+Texture2D<float4> g_shadowMap : register(t2);		//　シャドウマップ
 Texture2D<float4> g_normalMap : register(t3);		//	法線マップ。
 Texture2D<float4> g_specMap : register(t4);			//	スペキュラマップ。
 Texture2D<float4> g_aoMap : register(t5);			//	AOマップ。

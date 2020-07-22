@@ -41,7 +41,8 @@ private:
 	PhysicsGhostObject m_ghostObject;	//ゴーストオブジェクト
 
 	const CVector3 Local = { 0.0f,5.0f,0.0f };	//ベースを基準にした赤い部分のローカル座標
-	const CVector3 GhostScale = { 160.0f,0.1f,160.0f };	//判定用ゴーストの範囲
+	const CVector3 GhostScale = { 160.0f,0.5f,160.0f };	//判定用ゴーストの範囲
+	const float GhostY_Up = 15.0f;		//判定用ゴーストを上に持ち上げておく移動量
 	const float SwitchMove = 14.0f;		//押されたとき戻った時の移動量
 	const int SwitchMoveTime = 12;		//押されたとき戻った時の移動時間
 
@@ -53,7 +54,10 @@ private:
 
 };
 
-class Switch : public IGameObject
+/// <summary>
+/// スイッチのベーース
+/// </summary>
+class Switch : public IGameObject, public ObjectClass
 {
 public:
 	Switch();
@@ -87,10 +91,6 @@ private:
 	SwitchObj m_switchObj;	//赤い方を所持
 
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
-
-	CVector3 m_position = CVector3().Zero();
-	CQuaternion m_rotation = CQuaternion().Identity();
-	CVector3 m_scale = { 5.0f,5.0f,5.0f }; //拡大率
 
 };
 

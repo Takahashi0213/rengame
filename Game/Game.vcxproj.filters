@@ -124,6 +124,12 @@
     <Filter Include="graphics\PostEffect">
       <UniqueIdentifier>{bea0f45f-c0cc-435c-bfbc-763f0dd2f8f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\Stage">
+      <UniqueIdentifier>{095e2ded-8f16-4b63-baff-3ab9c288ccd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\Enemy">
+      <UniqueIdentifier>{79a4e662-74cc-4e46-a30a-ebb76d1d1290}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -374,6 +380,15 @@
     </ClCompile>
     <ClCompile Include="PointLight.cpp">
       <Filter>graphics\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectClass.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>object\Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="StageSet.cpp">
+      <Filter>system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -650,6 +665,15 @@
     <ClInclude Include="PointLight.h">
       <Filter>graphics\Light</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectClass.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>object\Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="StageSet.h">
+      <Filter>system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\box.fbx">
@@ -674,6 +698,15 @@
       <Filter>Assets\modelData\Gimmick</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Coli.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\0_0.fbx">
+      <Filter>Assets\modelData\Stage</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Test_Enemy.fbx">
+      <Filter>Assets\modelData\Enemy</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Door\Door.fbx">
       <Filter>Assets\modelData\Gimmick</Filter>
     </MeshContentTask>
   </ItemGroup>

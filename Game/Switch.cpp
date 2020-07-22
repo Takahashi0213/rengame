@@ -8,11 +8,11 @@
 Switch::Switch()
 {
 	//はじまるよ
+	m_scale = CVector3{ 5.0f,5.0f,5.0f };
 	m_model.Init(L"Assets/modelData/Switch_Base.cmo");
 	//m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation, m_scale);
 	//シャドウレシーバーにする。
 	m_model.SetShadowReciever(true);
-
 }
 
 Switch::~Switch()
@@ -54,17 +54,21 @@ void SwitchObj::SwitchObj_Init(CVector3 Pos) {
 
 	//おじゅんび
 	m_model.Init(L"Assets/modelData/Switch.cmo");
-	SkinModel Coli_Model;
-	Coli_Model.Init(L"Assets/modelData/Switch_Coli.cmo");
+	//SkinModel Coli_Model;
+	//Coli_Model.Init(L"Assets/modelData/Switch_Coli.cmo", EnFbxUpAxis::enFbxUpAxisZ);
 
 	//座標計算
 	m_position = Pos + Local;
 	//設定
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 
+	//ゴーストの座標を作成
+	CVector3 ghostPos = m_position;
+	ghostPos.y += GhostY_Up;
+
 	//ボックス形状のゴーストを作成する。
 	m_ghostObject.CreateBox(
-		m_position,		//第一引数は座標。
+		ghostPos,		//第一引数は座標。
 		m_rotation,		//第二引数は回転クォータニオン。
 		GhostScale		//第三引数はボックスのサイズ。
 	);
@@ -72,7 +76,7 @@ void SwitchObj::SwitchObj_Init(CVector3 Pos) {
 	//プレイヤー検索
 	m_pl = CGameObjectManager::GetInstance()->FindGO<Player>(Hash::MakeHash("Player"));
 
-	m_physicsStaticObject.CreateMeshObject(Coli_Model, m_position, m_rotation, m_scale);
+	m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation, m_scale);
 	//m_physicsStaticObject.CreateBox(m_position, m_rotation, m_scale);
 
 	//シャドウレシーバーにする。
