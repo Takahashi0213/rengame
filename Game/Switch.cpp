@@ -7,8 +7,10 @@
 
 Switch::Switch()
 {
-	//はじまるよ
+	//テスト用
 	m_scale = CVector3{ 5.0f,5.0f,5.0f };
+
+	//はじまるよ
 	m_model.Init(L"Assets/modelData/Switch_Base.cmo");
 	//m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation, m_scale);
 	//シャドウレシーバーにする。
@@ -25,11 +27,16 @@ void Switch::Update() {
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	//m_physicsStaticObject.SetPositionAndRotation(m_position, m_rotation);
 
+	//拡大率の再設定
+	m_switchObj.SetScale(m_scale);
+	//赤い部分の更新
 	m_switchObj.SwitchUpdate();
 
 }
 
 void Switch::Render() {
+
+	//描画
 	m_model.Draw(
 		g_camera3D.GetViewMatrix(),
 		g_camera3D.GetProjectionMatrix()
@@ -97,6 +104,8 @@ void SwitchObj::SwitchUpdate() {
 }
 
 void SwitchObj::SwitchDraw() {
+
+	//描画
 	m_model.Draw(
 		g_camera3D.GetViewMatrix(),
 		g_camera3D.GetProjectionMatrix()

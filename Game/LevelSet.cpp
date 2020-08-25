@@ -50,8 +50,8 @@ void LevelSet::Init(const wchar_t* LEVEL_Name) {
 		//配列に登録（強引にキャストしてるけど大丈夫かは謎です）
 		m_Obj_Data[i] = Obj_Data{ 
 			ObjectTag,
-			(wchar_t)Level_Data.GetObjectName(m_levelNo, ObjNo),
-			(wchar_t)Level_Data.GetObject_LinkObj(m_levelNo, ObjNo) };
+			Level_Data.GetObjectName(m_levelNo, ObjNo),
+			Level_Data.GetObject_LinkObj(m_levelNo, ObjNo) };
 
 		//代入位置を1つ動かす
 		i++;
@@ -69,23 +69,23 @@ void LevelSet::NewObj(LevelObjectData& data, LevelData::Obj_Tag tag) {
 	//ポインタの名前はptで統一
 	if (tag == LevelData::Obj_Tag::Tag_Switch) {	//スイッチ
 		auto* pt = CGameObjectManager::GetInstance()->NewGO<Switch>((const char*)data.name, 0);
-		pt->SetPosition(data.position);
+		pt->SetPosition(data.position*10.0f);
 		pt->SetRotation(data.rotation);
-		pt->SetScale(data.scale);
+		pt->SetScale(data.scale*10.0f);
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Door) {	//ドア
 		auto* pt = CGameObjectManager::GetInstance()->NewGO<Door>((const char*)data.name, 0);
-		pt->SetPosition(data.position);
+		pt->SetPosition(data.position*10.0f);
 		pt->SetRotation(data.rotation);
-		pt->SetScale(data.scale);
+		pt->SetScale(data.scale*10.0f);
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Test_Enemy) {	//テストエネミー
 		auto* pt = CGameObjectManager::GetInstance()->NewGO<TestEnemy>((const char*)data.name, 0);
-		pt->SetPosition(data.position);
+		pt->SetPosition(data.position*10.0f);
 		pt->SetRotation(data.rotation);
-		pt->SetScale(data.scale);
+		pt->SetScale(data.scale*10.0f);
 	}
 
 }
@@ -96,16 +96,40 @@ void LevelSet::LinkObj(int levelNo, int i) {
 	for (int ii = 0; ii < i; ii++) {
 
 		//おなまえは
-		const wchar_t* linkObjName = m_Obj_Data[i].LinkObjName;
+		const wchar_t* nowObjName = m_Obj_Data[ii].ObjName;
+		const wchar_t* linkObjName = m_Obj_Data[ii].LinkObjName;
+		LevelData::Obj_Tag NowObjTag = m_Obj_Data[ii].ObjTag;
 
 		//リンクオブジェクトがないならスキップ
-		if (linkObjName == L"") {
-			break;
-		}
+		if (wcscmp(linkObjName, L"") != 0) {
 
-		//※リンクオブジェクトを探して追加する
-		int ObjNo = Level_Data.ObjName_Search(levelNo, linkObjName);
-		int hoge=0;
+			//※リンクオブジェクトを探して追加する
+			int ObjNo = Level_Data.ObjName_Search(levelNo, linkObjName);
+			LevelData::Obj_Tag LinkObjTag = Level_Data.GetObjectTag(levelNo, ObjNo);
+
+			//オブジェクトタグで分岐
+			if (LinkObjTag == LevelData::Obj_Tag::Tag_Door) {	//ドア
+
+				//今見てるオブジェクト
+				int now_hash = Hash::MakeHash((const char*)nowObjName);	//wchar_tからの変換
+				ObjectClass* now_objClass;
+				if (NowObjTag == LevelData::Obj_Tag::Tag_Switch) {
+					Switch* NowObj = CGameObjectManager::GetInstance()->FindGO<Switch>(now_hash);
+					now_objClass = NowObj->GetInstance();
+				}
+				if (NowObjTag == LevelData::Obj_Tag::Tag_Test_Enemy) {
+					TestEnemy* NowObj = CGameObjectManager::GetInstance()->FindGO<TestEnemy>(now_hash);
+					now_objClass = NowObj->GetInstance();
+				}
+
+				//リンクオブジェクト
+				int link_hash = Hash::MakeHash((const char*)linkObjName);	//wchar_tからの変換
+				Door* door = CGameObjectManager::GetInstance()->FindGO<Door>(link_hash);
+				ObjectClass* link_objClass = door->GetInstance();
+
+			}
+
+		}
 
 	}
 

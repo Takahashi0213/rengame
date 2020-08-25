@@ -100,6 +100,7 @@ private:
 				{ L"Switch3",Tag_Switch,L"Door3" },
 				{ L"Door1",Tag_Door,L"" },
 				{ L"Door2",Tag_Door,L"" },
+				{ L"Door3",Tag_Door,L"" },
 				{ L"Test_Enemy",Tag_Test_Enemy,L"Door2" },
 			}
 		}

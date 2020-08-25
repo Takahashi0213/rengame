@@ -24,6 +24,10 @@ public:
 		return m_switchState;
 	}
 
+	void SetScale(CVector3 scale) {
+		m_scale = scale;
+	}
+
 private:
 
 	void GhostCheck();

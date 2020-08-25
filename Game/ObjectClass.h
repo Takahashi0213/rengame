@@ -6,6 +6,11 @@ public:
 	ObjectClass();
 	~ObjectClass();
 
+	//インスタンス取得
+	ObjectClass* GetInstance() {
+		return this;
+	}
+
 	//座標
 	void SetPosition(CVector3 pos) {
 		m_position = pos;
@@ -38,5 +43,6 @@ public:
 	CQuaternion m_rotation = CQuaternion().Identity();
 	CVector3 m_scale = CVector3().One(); //拡大率
 
+	bool m_actionFlag = false;
 };
 

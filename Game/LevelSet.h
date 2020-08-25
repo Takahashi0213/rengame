@@ -34,8 +34,8 @@ private:
 	struct Obj_Data
 	{
 		LevelData::Obj_Tag ObjTag;		//タグ
-		wchar_t ObjName[255];			//オブジェクトの名前
-		wchar_t LinkObjName[255] = L"";	//リンクされているオブジェクトの名前
+		const wchar_t* ObjName;			//オブジェクトの名前
+		const wchar_t* LinkObjName;		//リンクされているオブジェクトの名前
 	};
 	//オブジェクトデータの配列
 	Obj_Data m_Obj_Data[MAX_LEVEL_OBJ];
