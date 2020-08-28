@@ -86,7 +86,13 @@ public:
 	/// スイッチのオンオフ状態を返す
 	/// </summary>
 	bool GetSwitchState() {
-		return m_switchObj.GetSwitchState();
+		if (m_switchObj.GetSwitchState() == false) {
+			return true;
+		}
+		if (m_switchObj.GetSwitchState() == true) {
+			return false;
+		}
+		return false;
 	}
 
 private:

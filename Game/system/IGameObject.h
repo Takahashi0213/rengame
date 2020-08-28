@@ -35,6 +35,10 @@
 			int m_name = Hash::MakeHash(name);
 			m_nameKey = m_name;
 		}
+		void SetObjectName(const wchar_t* name) {
+			int m_name = Hash::MakeHash(name);
+			m_nameKey = m_name;
+		}
 
 		/// <summary>
 		/// ネームキーを返す

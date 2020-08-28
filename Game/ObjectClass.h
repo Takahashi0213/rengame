@@ -44,5 +44,6 @@ public:
 	CVector3 m_scale = CVector3().One(); //Šg‘å—¦
 
 	bool m_actionFlag = false;
+
 };
 

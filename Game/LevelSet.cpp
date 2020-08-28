@@ -68,21 +68,21 @@ void LevelSet::NewObj(LevelObjectData& data, LevelData::Obj_Tag tag) {
 
 	//ポインタの名前はptで統一
 	if (tag == LevelData::Obj_Tag::Tag_Switch) {	//スイッチ
-		auto* pt = CGameObjectManager::GetInstance()->NewGO<Switch>((const char*)data.name, 0);
+		auto* pt = CGameObjectManager::GetInstance()->NewGO<Switch>(data.name, 0);
 		pt->SetPosition(data.position*10.0f);
 		pt->SetRotation(data.rotation);
 		pt->SetScale(data.scale*10.0f);
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Door) {	//ドア
-		auto* pt = CGameObjectManager::GetInstance()->NewGO<Door>((const char*)data.name, 0);
+		auto* pt = CGameObjectManager::GetInstance()->NewGO<Door>(data.name, 0);
 		pt->SetPosition(data.position*10.0f);
 		pt->SetRotation(data.rotation);
 		pt->SetScale(data.scale*10.0f);
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Test_Enemy) {	//テストエネミー
-		auto* pt = CGameObjectManager::GetInstance()->NewGO<TestEnemy>((const char*)data.name, 0);
+		auto* pt = CGameObjectManager::GetInstance()->NewGO<TestEnemy>(data.name, 0);
 		pt->SetPosition(data.position*10.0f);
 		pt->SetRotation(data.rotation);
 		pt->SetScale(data.scale*10.0f);
@@ -111,7 +111,7 @@ void LevelSet::LinkObj(int levelNo, int i) {
 			if (LinkObjTag == LevelData::Obj_Tag::Tag_Door) {	//ドア
 
 				//今見てるオブジェクト
-				int now_hash = Hash::MakeHash((const char*)nowObjName);	//wchar_tからの変換
+				int now_hash = Hash::MakeHash(nowObjName);
 				ObjectClass* now_objClass;
 				if (NowObjTag == LevelData::Obj_Tag::Tag_Switch) {
 					Switch* NowObj = CGameObjectManager::GetInstance()->FindGO<Switch>(now_hash);
@@ -123,10 +123,10 @@ void LevelSet::LinkObj(int levelNo, int i) {
 				}
 
 				//リンクオブジェクト
-				int link_hash = Hash::MakeHash((const char*)linkObjName);	//wchar_tからの変換
+				int link_hash = Hash::MakeHash(linkObjName);
 				Door* door = CGameObjectManager::GetInstance()->FindGO<Door>(link_hash);
-				ObjectClass* link_objClass = door->GetInstance();
-
+				//ObjectClass* link_objClass = door->GetInstance();
+				door->SetLinkObj(now_objClass);
 			}
 
 		}

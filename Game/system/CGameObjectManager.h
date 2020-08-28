@@ -32,6 +32,19 @@
 			//追加したオブジェクトを戻す
 			return newObj;
 		}
+		template<class T>
+		T* NewGO(const wchar_t* objName, const int priority = 0) {
+			//インスタンスを生成する
+			T* newObj = new T;
+			//生成したインスタンスを可変長配列に追加する
+			m_goList.push_back(newObj);
+			//オブジェクト名を設定する
+			newObj->SetObjectName(objName);
+			//優先度を設定する
+			newObj->SetPriority(priority);
+			//追加したオブジェクトを戻す
+			return newObj;
+		}
 
 		/// <summary>
 		/// オブジェクトの削除

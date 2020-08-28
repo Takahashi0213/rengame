@@ -27,6 +27,9 @@ void Switch::Update() {
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	//m_physicsStaticObject.SetPositionAndRotation(m_position, m_rotation);
 
+	//スイッチ状態の更新
+	m_actionFlag = GetSwitchState();
+
 	//拡大率の再設定
 	m_switchObj.SetScale(m_scale);
 	//赤い部分の更新

@@ -49,10 +49,8 @@ Game::Game()
 	//”wŒi‚É“n‚·
 	//bg->SetGame(this);
 
+	//ƒƒCƒ„[ƒtƒŒ[ƒ€‚ð•\Ž¦‚µ‚Ü‚·‚·‚¤‚·‚·‚·‚¤‚¤
 	g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
-
-	Switch* sw = CGameObjectManager::GetInstance()->NewGO<Switch>("Switch", 0);
-	sw->SetPosition({ -300.0f,100.0f,200.0f });
 
 	StageSet m_stageSet;
 	m_stageSet.CriateStage(L"Assets/modelData/0_0.cmo",L"Assets/level/stage_00.tkl");
