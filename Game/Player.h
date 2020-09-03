@@ -73,7 +73,7 @@ private:
 	void BoxMove();
 
 	//ÉvÉåÉCÉÑÅ[
-	CVector3 m_position = CVector3().Zero();
+	CVector3 m_position = /*CVector3().Zero()*/{ 0.0f,100.0f,-500.0f };
 	CQuaternion m_rotation = CQuaternion().Identity();
 	CVector3 m_scale = CVector3().One(); //ägëÂó¶
 	CVector3 m_moveSpeed = CVector3().Zero();

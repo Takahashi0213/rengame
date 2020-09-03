@@ -20,6 +20,10 @@ public:
 		m_setNom++;
 	}
 
+	SkinModelRender* GetSkinModelRender() {
+		return m_model;
+	}
+
 private:
 	//アクションフラグの変更
 	void UpdateActionFlag() {
@@ -33,7 +37,7 @@ private:
 
 		m_actionFlag = CheckFlag;
 	}
-	SkinModel m_model;	//スイッチの土台もで～～る
+	SkinModelRender* m_model;	//スイッチの土台もで～～る
 
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
 
@@ -41,6 +45,12 @@ private:
 
 	ObjectClass* m_LinkPt[10] = { nullptr };
 	int m_setNom = 0;
+
+	bool m_upDownFlag = false;		//上下フラグ（1回だけ実行するためのbool）
+
+	//定数
+	const CVector3 StaticSize = { 250.0f,300.0f,20.0f };	//扉の当たり判定サイズ
+	const float StaticY_Hosei = 100.0f;		//当たり判定が埋まるので上に補正する
 
 };
 

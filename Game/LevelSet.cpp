@@ -68,21 +68,22 @@ void LevelSet::NewObj(LevelObjectData& data, LevelData::Obj_Tag tag) {
 
 	//ポインタの名前はptで統一
 	if (tag == LevelData::Obj_Tag::Tag_Switch) {	//スイッチ
-		auto* pt = CGameObjectManager::GetInstance()->NewGO<Switch>(data.name, 0);
+		Switch* pt = CGameObjectManager::GetInstance()->NewGO<Switch>(data.name, 0);
 		pt->SetPosition(data.position*10.0f);
 		pt->SetRotation(data.rotation);
 		pt->SetScale(data.scale*10.0f);
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Door) {	//ドア
-		auto* pt = CGameObjectManager::GetInstance()->NewGO<Door>(data.name, 0);
+		Door* pt = CGameObjectManager::GetInstance()->NewGO<Door>(data.name, 0);
 		pt->SetPosition(data.position*10.0f);
 		pt->SetRotation(data.rotation);
 		pt->SetScale(data.scale*10.0f);
+		pt->GetSkinModelRender()->SetUp(pt->GetPosition(), pt->GetRotation(), pt->GetScale());
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Test_Enemy) {	//テストエネミー
-		auto* pt = CGameObjectManager::GetInstance()->NewGO<TestEnemy>(data.name, 0);
+		TestEnemy* pt = CGameObjectManager::GetInstance()->NewGO<TestEnemy>(data.name, 0);
 		pt->SetPosition(data.position*10.0f);
 		pt->SetRotation(data.rotation);
 		pt->SetScale(data.scale*10.0f);
