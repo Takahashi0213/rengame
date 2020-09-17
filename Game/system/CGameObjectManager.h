@@ -110,7 +110,7 @@
 						std::abort();
 					}
 #else
-					T* ret = (T*)go;
+						ret = (T*)go;
 #endif
 					}
 				}

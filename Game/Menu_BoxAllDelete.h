@@ -9,6 +9,7 @@ public:
 	Menu_BoxAllDelete();
 	~Menu_BoxAllDelete();
 
+	//あっぷでーーーーーーと
 	void DeleteCheckUpdate();
 
 private:

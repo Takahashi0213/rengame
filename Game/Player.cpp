@@ -279,10 +279,10 @@ void Player::Jump() {
 		if (m_jumpNow == false && OnG_Flag == true) {
 			m_moveSpeed.y = m_jumpPower;
 
-			EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::TestData, false, 100.0f, 100.0f, 0.0f);
-			EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::TestData, true,
-				300.0f, 100.0f, 0.0f,
-				180.0f, 180.0f, 180.0f);
+			//EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::TestData, false, 100.0f, 100.0f, 0.0f);
+			//EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::TestData, true,
+			//	300.0f, 100.0f, 0.0f,
+			//	180.0f, 180.0f, 180.0f);
 		}
 		m_jumpNow = true;
 	}

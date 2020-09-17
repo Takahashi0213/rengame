@@ -49,9 +49,6 @@
     <Filter Include="graphics\SkinModel">
       <UniqueIdentifier>{47cbe10d-94d6-492f-a801-710cb156d543}</UniqueIdentifier>
     </Filter>
-    <Filter Include="graphics\GameBox">
-      <UniqueIdentifier>{7bc2d564-c6fe-4bd9-9578-099020b909fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="graphics\font">
       <UniqueIdentifier>{603848fd-d29f-4f41-b805-2c2161dd463a}</UniqueIdentifier>
     </Filter>
@@ -129,6 +126,12 @@
     </Filter>
     <Filter Include="Assets\modelData\Enemy">
       <UniqueIdentifier>{79a4e662-74cc-4e46-a30a-ebb76d1d1290}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\GameBox">
+      <UniqueIdentifier>{7bc2d564-c6fe-4bd9-9578-099020b909fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object\Item">
+      <UniqueIdentifier>{9293dd20-2ea1-4d31-8606-fa27024e63be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -244,7 +247,7 @@
       <Filter>graphics\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="GameBox.cpp">
-      <Filter>graphics\GameBox</Filter>
+      <Filter>system\GameBox</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>object\Player</Filter>
@@ -275,9 +278,6 @@
     </ClCompile>
     <ClCompile Include="FontRender.cpp">
       <Filter>graphics\font</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxMaker.cpp">
-      <Filter>system\gameSystem</Filter>
     </ClCompile>
     <ClCompile Include="GameData.cpp">
       <Filter>system\gameSystem</Filter>
@@ -323,9 +323,6 @@
     </ClCompile>
     <ClCompile Include="sound\WaveFileBank.cpp">
       <Filter>sound</Filter>
-    </ClCompile>
-    <ClCompile Include="StarMoney.cpp">
-      <Filter>object\Gimmick</Filter>
     </ClCompile>
     <ClCompile Include="GameEffect.cpp">
       <Filter>system\gameSystem\UI</Filter>
@@ -389,6 +386,12 @@
     </ClCompile>
     <ClCompile Include="StageSet.cpp">
       <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxMaker.cpp">
+      <Filter>system\GameBox</Filter>
+    </ClCompile>
+    <ClCompile Include="StarMoney.cpp">
+      <Filter>object\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -515,7 +518,7 @@
     </ClInclude>
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameBox.h">
-      <Filter>graphics\GameBox</Filter>
+      <Filter>system\GameBox</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>object\Player</Filter>
@@ -546,9 +549,6 @@
     </ClInclude>
     <ClInclude Include="FontRender.h">
       <Filter>graphics\font</Filter>
-    </ClInclude>
-    <ClInclude Include="BoxMaker.h">
-      <Filter>system\gameSystem</Filter>
     </ClInclude>
     <ClInclude Include="GameData.h">
       <Filter>system\gameSystem</Filter>
@@ -607,9 +607,6 @@
     </ClInclude>
     <ClInclude Include="sound\WaveFileBank.h">
       <Filter>sound</Filter>
-    </ClInclude>
-    <ClInclude Include="StarMoney.h">
-      <Filter>object\Gimmick</Filter>
     </ClInclude>
     <ClInclude Include="GameEffect.h">
       <Filter>system\gameSystem\UI</Filter>
@@ -673,6 +670,12 @@
     </ClInclude>
     <ClInclude Include="StageSet.h">
       <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxMaker.h">
+      <Filter>system\GameBox</Filter>
+    </ClInclude>
+    <ClInclude Include="StarMoney.h">
+      <Filter>object\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

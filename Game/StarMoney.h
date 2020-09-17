@@ -23,5 +23,7 @@ private:
 	SkinModel m_model_Kirameki;	//キラメキラリ
 	ID3D11ShaderResourceView* m_kiramekiSRV = nullptr;
 
+	//定数
+	const CVector3 DefScale = { 10.0f,10.0f,10.0f };	//初期サイズ
 };
 

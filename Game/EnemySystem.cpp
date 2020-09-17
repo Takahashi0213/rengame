@@ -5,10 +5,11 @@
 
 bool EnemySystem::BoxAttackSearch(CVector3 position, float range) {
 
-	bool Return_Flag = false;
 	//ボックスメイカー
 	BoxMaker* BoxMaker_p = BoxMaker::GetInstance();
-	std::list<GameBox*> boxList = BoxMaker_p->GetBoxList();
+	std::list<GameBox*> boxList = BoxMaker_p->GetBoxList();	//箱リスト取得
+	
+	bool Return_Flag = false;
 	CVector3 MoveSpeed;
 	CVector3 Vec;
 	float Range;
@@ -34,14 +35,14 @@ bool EnemySystem::BoxAttackSearch(CVector3 position, float range) {
 
 		//箱との距離判定
 		if (Range < range + go->GetAnotherRangeHosei()) {
-			//衝突案件
+			//衝突案件！
 			Return_Flag = true;
 			//移動速度変更
 			MoveSpeed.x *= Gensui;
 			MoveSpeed.z *= Gensui;
 			MoveSpeed.x *= -1.0f;	//ひっくり返す
 			MoveSpeed.z *= -1.0f;
-			MoveSpeed.y = 2.0f;
+			MoveSpeed.y = Damage_Y;
 			if (go->GetBoxTag() == GameBox::BoxTag::Origin) {
 				go->SetMoveSpeed(MoveSpeed);
 			}

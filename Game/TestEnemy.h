@@ -2,6 +2,7 @@
 #include "character/CharacterController.h"
 #include "EnemySystem.h"
 
+//テスト用の敵
 class TestEnemy : public IGameObject, public EnemySystem,public ObjectClass
 {
 public:

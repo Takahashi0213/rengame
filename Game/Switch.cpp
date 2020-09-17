@@ -4,7 +4,6 @@
 #include "Game.h"
 #include "BoxMaker.h"
 
-
 Switch::Switch()
 {
 	//テスト用
@@ -15,6 +14,10 @@ Switch::Switch()
 	//m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation, m_scale);
 	//シャドウレシーバーにする。
 	m_model.SetShadowReciever(true);
+
+	//タグ設定
+	m_object = ObjectClass::ObjectClass_Tag::GimmickObj;
+
 }
 
 Switch::~Switch()

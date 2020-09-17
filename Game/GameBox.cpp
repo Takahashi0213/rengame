@@ -130,7 +130,7 @@ void GameBox::GameBoxUpdate_Colli() {
 				Pos = m_originBox->GetPosition();
 				Pos += m_localPosition;
 			}
-			Pos.y += m_scale.y * 0.5f;
+			Pos.y += m_scale.y * 0.5f;	//‚Ù‚¹‚¢‚³‚ñ
 			//m_physicsStaticObject.CreateMeshObject(m_model, Pos, m_rotation, m_scale);
 			m_physicsStaticObject.CreateBox(Pos, m_rotation, m_scale);
 		}

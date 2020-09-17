@@ -17,26 +17,27 @@ LightMaker::LightMaker()
 		D_LightDelete(i);
 	}
 	//ポイントライトの初期化
-	for (int i = 0; i < MAX_POINT_LIGHT; i++) {
-		P_LightDelete(i);
+	P_LightDeleteAll();
 
-		//CVector3 pos;
-		//pos.x = static_cast<float>(rand() % 1000) - 500.0f;
-		//pos.y = 20.0f; //高さは20固定。
-		//pos.z = static_cast<float>(rand() % 1000) - 500.0f;
-		//float range = 50.0f;		//影響範囲も50で固定しておく。
-		//CVector3 color;
-		//color.x = static_cast<float>(rand() % 255) / 255.0f;
-		//color.y = static_cast<float>(rand() % 255) / 255.0f;
-		//color.z = static_cast<float>(rand() % 255) / 255.0f;
+	//デバッグ用
+	//for (int i = 0; i < MAX_POINT_LIGHT; i++) {
+	//	CVector3 pos;
+	//	pos.x = static_cast<float>(rand() % 1000) - 500.0f;
+	//	pos.y = 20.0f; //高さは20固定。
+	//	pos.z = static_cast<float>(rand() % 1000) - 500.0f;
+	//	float range = 50.0f;		//影響範囲も50で固定しておく。
+	//	CVector3 color;
+	//	color.x = static_cast<float>(rand() % 255) / 255.0f;
+	//	color.y = static_cast<float>(rand() % 255) / 255.0f;
+	//	color.z = static_cast<float>(rand() % 255) / 255.0f;
 
-		//P_LightMake(
-		//	i,
-		//	{0.0f, 30.0f, 0.0f},
-		//	{1.0f,0.0f,0.0f},
-		//	200.0f);
+	//	P_LightMake(
+	//		i,
+	//		{0.0f, 30.0f, 0.0f},
+	//		{1.0f,0.0f,0.0f},
+	//		200.0f);
 
-	}
+	//}
 
 	//ライトカメラの座標
 	SetLightCameraPosition({ 0.0f, 1000.0f, 0.0f });
@@ -79,9 +80,8 @@ void LightMaker::D_LightMake(int lightNo,CVector4 dir,CVector4 col, float spec) 
 /// <param name="lightNo">削除するディレクションライトの場所</param>
 void LightMaker::D_LightDelete(int lightNo) {
 
-	m_light.direction[lightNo] = { 0.0f, -1.0f, 0.0f, 0.0f };
-	m_light.color[lightNo] = { 0.5f,0.5f, 0.5f, 1.0f };
-	m_light.color[lightNo].w = 10.0f;
+	m_light.direction[lightNo] = DirectionLight_Direction_Def;
+	m_light.color[lightNo] = DirectionLight_Color_Def;
 
 }
 
@@ -106,4 +106,12 @@ void LightMaker::P_LightDelete(int lightNo) {
 	m_pointLight.position[lightNo] = CVector3::Zero();
 	m_pointLight.color[lightNo] = CVector3::Zero();
 	m_pointLight.color[lightNo].w = 0.0f;
+}
+
+//ポイントライトを全部初期化
+void LightMaker::P_LightDeleteAll() {
+	//みんな きえる
+	for (int i = 0; i < MAX_POINT_LIGHT; i++) {
+		P_LightDelete(i);
+	}
 }

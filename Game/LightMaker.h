@@ -23,6 +23,7 @@ public:
 	void LightMaker::D_LightDelete(int lightNo);
 
 	void LightMaker::P_LightMake(int lightNo, CVector3 pos, CVector3 col, float range);
+	void LightMaker::P_LightDeleteAll();
 	void LightMaker::P_LightDelete(int lightNo);
 
 	/// <summary>
@@ -199,6 +200,10 @@ private:
 
 	CVector3 m_lightCameraPosition;				//ライトカメラの視点。
 	CVector3 m_lightCameraTarget;				//ライトカメラの注視点。
+
+	//定数
+	const CVector4 DirectionLight_Direction_Def = { 0.0f, -1.0f, 0.0f, 0.0f };	//ディレクションライトの初期化で使う
+	const CVector4 DirectionLight_Color_Def = { 0.5f,0.5f, 0.5f, 10.0f };		//ディレクションライトの初期化で使う
 
 };
 

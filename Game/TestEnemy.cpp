@@ -3,7 +3,7 @@
 
 TestEnemy::TestEnemy()
 {
-	//調整
+	//デバッグ用調整
 	m_position.Set(0.0f, 100.0f, 200.0f);
 	m_scale.Set(10.0f, 10.0f, 10.0f);
 
@@ -24,6 +24,9 @@ TestEnemy::TestEnemy()
 		60.0f,  //キャラクターの高さ。
 		m_position //キャラクターの初期座標。
 	);
+
+	//タグ設定
+	m_object = ObjectClass::ObjectClass_Tag::EnemyObj;
 
 }
 
@@ -48,13 +51,14 @@ void TestEnemy::Update() {
 	{
 	case TestEnemy::Move:
 		//移動
-		m_moveSpeed.z = 1.0f;
+		//m_moveSpeed.z = 1.0f;	//とりあえずの移動
 		break;
 	case TestEnemy::Follow:
 		//追尾
 		break;
 	case TestEnemy::Death:
 		//死亡
+		m_actionFlag = true;
 		CGameObjectManager::GetInstance()->DeleteGO(this);
 		break;
 	}

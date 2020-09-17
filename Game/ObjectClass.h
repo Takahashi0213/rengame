@@ -3,6 +3,14 @@
 class ObjectClass
 {
 public:
+	//オブジェクトの種類
+	enum ObjectClass_Tag {
+		NullObj,		//ダミー
+		ItemObj,		//アイテム
+		GimmickObj,		//ギミック系
+		EnemyObj,		//敵（そのまんま）
+	};
+
 	ObjectClass();
 	~ObjectClass();
 
@@ -37,13 +45,17 @@ public:
 
 	//一応パブリックのままで…
 
+	ObjectClass_Tag m_object = NullObj;	//こいつが何者かを示すやつです
+
 	SkinModelRender * m_modelRender = nullptr;	//スキンモデル。
 
+	//よくつかう群
 	CVector3 m_position = CVector3().Zero();
 	CQuaternion m_rotation = CQuaternion().Identity();
 	CVector3 m_scale = CVector3().One(); //拡大率
 
+	//反応フラグ
+	//なんかアクションさせたいとき用
 	bool m_actionFlag = false;
 
 };
-

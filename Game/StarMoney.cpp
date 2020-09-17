@@ -5,7 +5,7 @@
 StarMoney::StarMoney()
 {
 	//èâä˙ê›íË
-	m_scale = CVector3{ 10.0f,10.0f,10.0f };
+	m_scale = DefScale;
 	m_model.Init(L"Assets/modelData/jewel.cmo");
 	m_model_Kirameki.Init(L"Assets/modelData/jewel.cmo");
 	m_model_Kirameki.SetRenderMode(RenderMode::Kirameki);
@@ -16,6 +16,8 @@ StarMoney::StarMoney()
 		false, nullptr, &m_kiramekiSRV);
 	m_model_Kirameki.SetKirameki(m_kiramekiSRV);
 
+	//É^ÉOê›íË
+	m_object = ObjectClass::ObjectClass_Tag::ItemObj;
 
 }
 

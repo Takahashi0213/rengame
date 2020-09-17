@@ -10,6 +10,7 @@ public:
 private:
 
 	//’è”
-	const float Gensui = 0.2f;	//Õ“Ë‚µ‚½” ‚ÌˆÚ“®Œ¸Š
+	const float Gensui = 0.2f;		//Õ“Ë‚µ‚½” ‚ÌˆÚ“®Œ¸Š
+	const float Damage_Y = 2.0f;	//Õ“Ë‚µ‚½” ‚ÌYˆÚ“®
 };
 
