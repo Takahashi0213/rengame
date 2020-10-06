@@ -50,7 +50,7 @@ private:
 		m_actionFlag = CheckFlag;	//trueのままならｵｹ
 	}
 
-	SkinModelRender* m_model;	//スイッチの土台もで～～る
+	SkinModelRender* m_model;	//土台もで～～る
 
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
 

@@ -103,6 +103,7 @@
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Bloom.cpp" />
+    <ClCompile Include="Board.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="BoxMaker.cpp" />
     <ClCompile Include="CameraSupporter.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="PostEffect.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="SkinModelRender.cpp" />
     <ClCompile Include="SkinModelSupporter.cpp" />
@@ -190,12 +192,14 @@
     <ClCompile Include="system\IGameObject.cpp" />
     <ClCompile Include="system\system.cpp" />
     <ClCompile Include="TestEnemy.cpp" />
+    <ClCompile Include="Title.cpp" />
     <ClCompile Include="TransitionGenerator.cpp" />
     <ClCompile Include="TransitionSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="Bloom.h" />
+    <ClInclude Include="Board.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="BoxMaker.h" />
     <ClInclude Include="CameraSupporter.h" />
@@ -266,6 +270,7 @@
     <ClInclude Include="PostEffect.h" />
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="SkinModelRender.h" />
     <ClInclude Include="SkinModelSupporter.h" />
@@ -288,6 +293,7 @@
     <ClInclude Include="system\IGameObject.h" />
     <ClInclude Include="system\system.h" />
     <ClInclude Include="TestEnemy.h" />
+    <ClInclude Include="Title.h" />
     <ClInclude Include="TransitionGenerator.h" />
     <ClInclude Include="TransitionSprite.h" />
   </ItemGroup>
@@ -296,6 +302,7 @@
     <MeshContentTask Include="Assets\modelData\box.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Board\Board.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\Door.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\jewel.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch.fbx" />
@@ -421,6 +428,23 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\effect\jewel_mask.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Bikkuri.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Bu.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle1.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle2.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle3.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle4.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle5.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle6.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle7.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle8.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Ha.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_hakobun.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Ko.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_N.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

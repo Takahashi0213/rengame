@@ -8,6 +8,7 @@
 #include "StarMoney.h"
 #include "Switch.h"
 #include "Door.h"
+#include "Board.h"
 
 //“G
 #include "TestEnemy.h"

@@ -25,6 +25,7 @@ public:
 		wchar_t Obj_Name[255];		//レベル内のオブジェクト名
 		Obj_Tag Tag;				//種類を選択
 		wchar_t LinkObj_Name[255];	//関連するオブジェクトの名前
+		wchar_t Obj_Memo[255];		//看板とかのテキスト
 	};
 	//レベルデータ構造体
 	struct Level_Data

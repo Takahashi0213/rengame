@@ -3,6 +3,7 @@
 #include "GameGraphic.h"
 #include "GameUI.h"
 #include "PhysicsGhostObject.h"
+#include "system/CGameObjectManager.h"
 
 /// <summary>
 /// ゲーム！
@@ -23,6 +24,8 @@ public:
 	~Game();
 	void Update()override;
 	void Render()override;
+
+	void GameUpdate();
 
 	/// <summary>
 	/// ゲームモードをセット
@@ -57,6 +60,9 @@ public:
 	}
 
 private:
+
+	//ここからゲーム用
+
 	GameMode m_gameMode = ActionMode;
 	GameData m_gameData;
 	GameEffect m_gameEffect;
@@ -64,9 +70,9 @@ private:
 	SystemData m_systemData;
 	GameGraphic m_gameGraphic;
 
-	CSoundEngine m_soundEngine;				//サウンドエンジン。
-
 	GameUI* m_ui = nullptr;
+
+	CSoundEngine m_soundEngine;				//サウンドエンジン。
 
 	CharacterController* m_charaCon;
 	PhysicsGhostObject m_ghostObject;						//ゴーストオブジェクトとを４つ。

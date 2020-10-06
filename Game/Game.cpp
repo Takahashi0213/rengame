@@ -22,10 +22,10 @@ Game::Game()
 	//このインスタンスを唯一のインスタンスとして記録する
 	m_instance = this;
 
+	//生成
+	
 	//サウンドエンジンを初期化。
 	m_soundEngine.Init();
-
-	//生成
 
 	//ライトメーカーの生成
 	CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
@@ -33,16 +33,19 @@ Game::Game()
 	//カメラサポーターの生成
 	CGameObjectManager::GetInstance()->NewGO<CameraSupporter>("CameraSupporter");
 
+	//トランジション
+	TransitionGenerator* tg = CGameObjectManager::GetInstance()->NewGO<TransitionGenerator>("TransitionGenerator", 10);
+	tg->SetObjectTag(objectTag::t_Sprite);		//とにかく最後に実行されるようにする
+
 	//BackGround* bg = CGameObjectManager::GetInstance()->NewGO<BackGround>("BackGround", 0);
 	BoxMaker* m_box = CGameObjectManager::GetInstance()->NewGO<BoxMaker>("BoxMaker", 1);
 	Player* pl = CGameObjectManager::GetInstance()->NewGO<Player>("Player", 1);
-	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
 	GameUI* ui = CGameObjectManager::GetInstance()->NewGO<GameUI>("GameUI", 8);
 	//TestEnemy* test = CGameObjectManager::GetInstance()->NewGO<TestEnemy>("TestEnemy", 1);
 	m_ui = ui;
 
-	TransitionGenerator* tg = CGameObjectManager::GetInstance()->NewGO<TransitionGenerator>("TransitionGenerator", 10);
-	tg->SetObjectTag(objectTag::t_Sprite);		//とにかく最後に実行されるようにする
+	//カメラ
+	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
 
 	//ボックスメイカーに渡すよ
 	m_box->SetPlayer(pl);

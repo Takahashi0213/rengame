@@ -133,6 +133,15 @@
     <Filter Include="object\Item">
       <UniqueIdentifier>{9293dd20-2ea1-4d31-8606-fa27024e63be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{4e55b732-ca04-4dd7-b60f-48a3cf37a25c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\sprite\Title">
+      <UniqueIdentifier>{baa66333-73a2-46c2-8e4d-dfb1d949ad86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\sprite\Title\Logo">
+      <UniqueIdentifier>{d1cf5def-e854-47e0-8fc9-2dfee599acf1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -242,7 +251,6 @@
     <ClCompile Include="SkinModelSupporter.cpp">
       <Filter>graphics\SkinModel</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="graphics\Shader.cpp">
       <Filter>graphics\Sprite</Filter>
     </ClCompile>
@@ -393,6 +401,18 @@
     <ClCompile Include="StarMoney.cpp">
       <Filter>object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Board.cpp">
+      <Filter>object\Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -516,7 +536,6 @@
     <ClInclude Include="SkinModelSupporter.h">
       <Filter>graphics\SkinModel</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h" />
     <ClInclude Include="GameBox.h">
       <Filter>system\GameBox</Filter>
     </ClInclude>
@@ -677,6 +696,18 @@
     <ClInclude Include="StarMoney.h">
       <Filter>object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Board.h">
+      <Filter>object\Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\box.fbx">
@@ -710,6 +741,9 @@
       <Filter>Assets\modelData\Enemy</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\Door.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Board\Board.fbx">
       <Filter>Assets\modelData\Gimmick</Filter>
     </MeshContentTask>
   </ItemGroup>
@@ -827,6 +861,51 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\effect\jewel_mask.png">
       <Filter>Assets\sprite\effect</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Bikkuri.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Bu.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle1.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle2.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle3.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle4.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle5.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle6.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle7.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle8.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Ha.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_hakobun.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Ko.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_N.png">
+      <Filter>Assets\sprite\Title\Logo</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

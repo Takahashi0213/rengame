@@ -4,7 +4,8 @@
 #include "level/Level.h"
 
 #include "GameCamera.h"
-#include "Game.h"
+
+#include "SceneManager.h"
 
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
@@ -57,8 +58,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera2D.SetNear(0.1f);
 	g_camera2D.SetFar(1000.0f);
 
-	CGameObjectManager::GetInstance()->NewGO<Game>("main_Game");
-
+	//ゲーム
+	CGameObjectManager::GetInstance()->NewGO<Game>("Main_Game");
+	CGameObjectManager::GetInstance()->NewGO<SceneManager>("SceneManager");
+	
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{
