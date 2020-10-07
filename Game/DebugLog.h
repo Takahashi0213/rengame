@@ -11,7 +11,7 @@ public:
 	/// デバッグモードでないと実行されません
 	/// </summary>
 	/// <param name="mes">出力するログ</param>
-	static void DebugMessage(const char* mes) {
+	static void DebugMessage(const char* mes){
 #ifdef _DEBUG
 		OutputDebugString(mes);
 		OutputDebugString("\n");

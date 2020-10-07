@@ -17,7 +17,7 @@ public:
 	void SetBoardMessage(wchar_t* message) {
 		Message = message;
 	}
-	wchar_t* GetBoardMessage() {
+	const wchar_t* GetBoardMessage() const {
 		return Message;
 	}
 

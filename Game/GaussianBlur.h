@@ -16,7 +16,7 @@ public:
 	/// </summary>
 	/// <param name="srcTexture">ブラーをかけるテクスチャのSRV</param>
 	/// <param name="blurIntensity">ブラーの強さ。値が大きいほど強くブラーがかかる。</param>
-	void Init(ID3D11ShaderResourceView* srcTextureSRV, float blurIntensity);
+	void Init(ID3D11ShaderResourceView* srcTextureSRV, const float& blurIntensity);
 	/// <summary>
 	/// ブラーの実行
 	/// </summary>

@@ -8,7 +8,7 @@ public:
 	~TransitionSprite();
 
 	//メインスプライト
-	void Sprite_Init(const wchar_t* texFilePath, float w, float h);
+	void Sprite_Init(const wchar_t* texFilePath, const float w, const float h);
 	void Sprite_Update();
 	void Sprite_Draw();
 
@@ -48,13 +48,17 @@ private:
 	/// </summary>
 	/// <param name="n">切り上げたい整数</param>
 	/// <returns>16の倍数に切り上げた値</returns>
-	int Raundup16(int n)
+	const int& Raundup16(int n)
 	{
 		return (((n - 1) / 16) + 1) * 16;
 	}
 
 	void TransitionSprite::InitConstantBuffer();
-	void TransitionSprite::InitCommon(float w, float h, bool cutFlag = false);
+	void TransitionSprite::InitCommon(
+		const float& w, 
+		const float& h, 
+		const bool& cutFlag = false
+	);
 
 };
 

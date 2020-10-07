@@ -61,10 +61,11 @@ void PostEffect::Draw()
 	m_dof.Draw(*this);
 
 	//‰æ–Ê‚Éƒuƒ‰[‚ð‚©‚¯‚é
-	if (Game::GetInstance()->GetGameGraphicInstance()->m_blurIntensity > 0.0f) {
-		BlurDraw();
+	if (Game::GetInstance() != nullptr) {
+		if (Game::GetInstance()->GetGameGraphicInstance()->m_blurIntensity > 0.0f) {
+			BlurDraw();
+		}
 	}
-
 }
 
 void PostEffect::InitFullScreenQuadPrimitive()

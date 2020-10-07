@@ -36,7 +36,7 @@ void FarShadow::Draw(PostEffect& postEffect)
 	g_graphicsEngine->ChangeRenderTarget(mainRT, mainRT->GetViewport());
 
 	//深度テクスチャをt0レジスタに設定する。
-	auto depthTexSrv = CGameObjectManager::GetInstance()->GetDepthInViewRenderTarget()->GetRenderTargetSRV();
+	const auto& depthTexSrv = CGameObjectManager::GetInstance()->GetDepthInViewRenderTarget()->GetRenderTargetSRV();
 	deviceContext->PSSetShaderResources(0, 1, &depthTexSrv);
 
 	ID3D11BlendState* oldBlendState;

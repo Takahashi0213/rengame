@@ -25,8 +25,6 @@ public:
 	void Update()override;
 	void Render()override;
 
-	void GameUpdate();
-
 	/// <summary>
 	/// ゲームモードをセット
 	/// </summary>

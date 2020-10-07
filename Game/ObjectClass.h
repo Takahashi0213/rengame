@@ -20,7 +20,7 @@ public:
 	}
 
 	//ç¿ïW
-	void SetPosition(CVector3 pos) {
+	void SetPosition(const CVector3 pos) {
 		m_position = pos;
 	}
 	CVector3 GetPosition() {
@@ -28,7 +28,7 @@ public:
 	}
 
 	//âÒì]
-	void SetRotation(CQuaternion rot) {
+	void SetRotation(const CQuaternion rot) {
 		m_rotation = rot;
 	}
 	CQuaternion GetRotation() {
@@ -36,7 +36,7 @@ public:
 	}
 
 	//ägëÂó¶
-	void SetScale(CVector3 scl) {
+	void SetScale(const CVector3 scl) {
 		m_scale = scl;
 	}
 	CVector3 GetScale() {

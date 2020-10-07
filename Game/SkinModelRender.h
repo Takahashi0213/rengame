@@ -83,7 +83,7 @@ public:
 	/// <summary>
 	/// ‚Ü‚Æ‚ß‚ÄƒZƒbƒg
 	/// </summary>
-	const void SetUp(CVector3 pos, CQuaternion rot, CVector3 scl) {
+	void SetUp(CVector3 pos, CQuaternion rot, CVector3 scl) {
 		SetPosition(pos);
 		SetRotation(rot);
 		SetScale(scl);

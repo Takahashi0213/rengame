@@ -114,7 +114,7 @@ void Bloom::Draw(PostEffect& postEffect)
 		m_luminanceRT.ClearRenderTarget(clearColor);
 		
 		//シーンをテクスチャとする。
-		auto mainRTTexSRV = CGameObjectManager::GetInstance()->GetMainRenderTarget()->GetRenderTargetSRV();
+		const auto mainRTTexSRV = CGameObjectManager::GetInstance()->GetMainRenderTarget()->GetRenderTargetSRV();
 		deviceContext->PSSetShaderResources(0, 1, &mainRTTexSRV);
 
 		//フルスクリーン描画。

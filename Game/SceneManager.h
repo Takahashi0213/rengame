@@ -29,6 +29,11 @@ public:
 
 private:
 
+	void TitleUpdate();
+	void GameUpdate();
+
+	void TitleCommand(const Title::TitleCommand command);
+
 	NowScene m_nowScene = Title_Scene;
 	//ÉVÅ[Éì
 	Title* m_title = nullptr;

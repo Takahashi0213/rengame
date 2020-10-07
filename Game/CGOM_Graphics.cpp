@@ -252,7 +252,7 @@ void CGOM_Graphics::PostRender() {
 
 }
 
-void CGOM_Graphics::EffectRender(bool Mode) {
+void CGOM_Graphics::EffectRender(const bool& Mode) {
 	
 	Effekseer::Matrix44 ViewMatrix;
 	Effekseer::Matrix44 ProjectionMatrix;

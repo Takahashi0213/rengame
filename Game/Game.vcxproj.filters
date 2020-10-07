@@ -52,17 +52,11 @@
     <Filter Include="graphics\font">
       <UniqueIdentifier>{603848fd-d29f-4f41-b805-2c2161dd463a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="system\gameSystem">
-      <UniqueIdentifier>{84f0aef1-c4a6-4c0b-b6fc-8324262a13f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets\sprite\stand">
       <UniqueIdentifier>{19601a56-de18-42bb-94a4-4ccf6ccd85f3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets\sprite\system">
       <UniqueIdentifier>{1d553739-477e-464f-8dcf-de70048a43f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="system\gameSystem\UI">
-      <UniqueIdentifier>{a02c1fe1-d10b-45c6-bc42-1c95b3fb88c1}</UniqueIdentifier>
     </Filter>
     <Filter Include="object">
       <UniqueIdentifier>{478c104a-efe0-4c0d-8756-7fa85e2167a0}</UniqueIdentifier>
@@ -103,9 +97,6 @@
     <Filter Include="Assets\sprite\effect">
       <UniqueIdentifier>{2779139b-cc6f-4f51-a566-8305f0843b7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="system\gameSystem\Effekseer">
-      <UniqueIdentifier>{c7f840ca-59e4-49a2-873b-b33ca59ecd4a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="object\Enemy">
       <UniqueIdentifier>{b09804f2-c9d3-43ee-947c-f1207804faf0}</UniqueIdentifier>
     </Filter>
@@ -114,9 +105,6 @@
     </Filter>
     <Filter Include="Assets\modelData\Gimmick">
       <UniqueIdentifier>{80024503-b165-4a38-a5ed-9ca88c8f6c09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="system\gameSystem\UI\Menu">
-      <UniqueIdentifier>{4a06e158-e542-4c0c-b004-b477066c11bb}</UniqueIdentifier>
     </Filter>
     <Filter Include="graphics\PostEffect">
       <UniqueIdentifier>{bea0f45f-c0cc-435c-bfbc-763f0dd2f8f9}</UniqueIdentifier>
@@ -141,6 +129,24 @@
     </Filter>
     <Filter Include="Assets\sprite\Title\Logo">
       <UniqueIdentifier>{d1cf5def-e854-47e0-8fc9-2dfee599acf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\GameObject">
+      <UniqueIdentifier>{20b641d2-0713-4575-a01e-37ddea2cdaad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\GameSystem">
+      <UniqueIdentifier>{84f0aef1-c4a6-4c0b-b6fc-8324262a13f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\GameSystem\UI">
+      <UniqueIdentifier>{a02c1fe1-d10b-45c6-bc42-1c95b3fb88c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\GameSystem\UI\Menu">
+      <UniqueIdentifier>{4a06e158-e542-4c0c-b004-b477066c11bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\GameSystem\Effekseer">
+      <UniqueIdentifier>{c7f840ca-59e4-49a2-873b-b33ca59ecd4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\GameSystem\Mouse">
+      <UniqueIdentifier>{6e41837d-6b11-4edb-b448-1d051f5610c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -200,9 +206,6 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="system\IGameObject.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
     <ClCompile Include="DebugLog.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
@@ -217,9 +220,6 @@
     </ClCompile>
     <ClCompile Include="CameraSupporter.cpp">
       <Filter>graphics\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseSupporter.cpp">
-      <Filter>system</Filter>
     </ClCompile>
     <ClCompile Include="SpriteRender.cpp">
       <Filter>graphics\Sprite</Filter>
@@ -288,10 +288,7 @@
       <Filter>graphics\font</Filter>
     </ClCompile>
     <ClCompile Include="GameData.cpp">
-      <Filter>system\gameSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseOver.cpp">
-      <Filter>system\gameSystem</Filter>
+      <Filter>system\GameSystem</Filter>
     </ClCompile>
     <ClCompile Include="FontSupporter.cpp">
       <Filter>graphics\font</Filter>
@@ -300,7 +297,7 @@
       <Filter>graphics\PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="GameUI.cpp">
-      <Filter>system\gameSystem\UI</Filter>
+      <Filter>system\GameSystem\UI</Filter>
     </ClCompile>
     <ClCompile Include="BackGround.cpp">
       <Filter>object\Stage</Filter>
@@ -333,19 +330,16 @@
       <Filter>sound</Filter>
     </ClCompile>
     <ClCompile Include="GameEffect.cpp">
-      <Filter>system\gameSystem\UI</Filter>
+      <Filter>system\GameSystem\UI</Filter>
     </ClCompile>
     <ClCompile Include="EffekseerSupporter.cpp">
-      <Filter>system\gameSystem\Effekseer</Filter>
+      <Filter>system\GameSystem\Effekseer</Filter>
     </ClCompile>
     <ClCompile Include="TestEnemy.cpp">
       <Filter>object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="EnemySystem.cpp">
       <Filter>object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="system\CGameObjectManager.cpp">
-      <Filter>system</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsGhostObject.cpp">
       <Filter>physics</Filter>
@@ -369,10 +363,10 @@
       <Filter>level</Filter>
     </ClCompile>
     <ClCompile Include="GameMenu.cpp">
-      <Filter>system\gameSystem\UI\Menu</Filter>
+      <Filter>system\GameSystem\UI\Menu</Filter>
     </ClCompile>
     <ClCompile Include="Menu_BoxAllDelete.cpp">
-      <Filter>system\gameSystem\UI\Menu</Filter>
+      <Filter>system\GameSystem\UI\Menu</Filter>
     </ClCompile>
     <ClCompile Include="LevelData.cpp">
       <Filter>level</Filter>
@@ -381,7 +375,7 @@
       <Filter>Debug</Filter>
     </ClCompile>
     <ClCompile Include="GameCamera.cpp">
-      <Filter>system\gameSystem</Filter>
+      <Filter>system\GameSystem</Filter>
     </ClCompile>
     <ClCompile Include="PointLight.cpp">
       <Filter>graphics\Light</Filter>
@@ -391,9 +385,6 @@
     </ClCompile>
     <ClCompile Include="Door.cpp">
       <Filter>object\Gimmick</Filter>
-    </ClCompile>
-    <ClCompile Include="StageSet.cpp">
-      <Filter>system</Filter>
     </ClCompile>
     <ClCompile Include="BoxMaker.cpp">
       <Filter>system\GameBox</Filter>
@@ -412,6 +403,21 @@
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseOver.cpp">
+      <Filter>system\GameSystem\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseSupporter.cpp">
+      <Filter>system\GameSystem\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="StageSet.cpp">
+      <Filter>system\GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="system\CGameObjectManager.cpp">
+      <Filter>system\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="system\IGameObject.cpp">
+      <Filter>system\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -476,12 +482,6 @@
       <Filter>level</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="system\IGameObject.h">
-      <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="system\CGameObjectManager.h">
-      <Filter>system</Filter>
-    </ClInclude>
     <ClInclude Include="DebugLog.h">
       <Filter>Debug</Filter>
     </ClInclude>
@@ -499,9 +499,6 @@
     </ClInclude>
     <ClInclude Include="CameraSupporter.h">
       <Filter>graphics\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseSupporter.h">
-      <Filter>system</Filter>
     </ClInclude>
     <ClInclude Include="SpriteRender.h">
       <Filter>graphics\Sprite</Filter>
@@ -570,10 +567,7 @@
       <Filter>graphics\font</Filter>
     </ClInclude>
     <ClInclude Include="GameData.h">
-      <Filter>system\gameSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseOver.h">
-      <Filter>system\gameSystem</Filter>
+      <Filter>system\GameSystem</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="FontSupporter.h">
@@ -583,16 +577,13 @@
       <Filter>graphics\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="GameUI.h">
-      <Filter>system\gameSystem\UI</Filter>
+      <Filter>system\GameSystem\UI</Filter>
     </ClInclude>
     <ClInclude Include="BackGround.h">
       <Filter>object\Stage</Filter>
     </ClInclude>
     <ClInclude Include="GameCamera.h">
-      <Filter>system\gameSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Hash.h">
-      <Filter>system</Filter>
+      <Filter>system\GameSystem</Filter>
     </ClInclude>
     <ClInclude Include="CGOM_Graphics.h">
       <Filter>graphics</Filter>
@@ -604,10 +595,10 @@
       <Filter>graphics\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="SystemData.h">
-      <Filter>system\gameSystem</Filter>
+      <Filter>system\GameSystem</Filter>
     </ClInclude>
     <ClInclude Include="GameGraphic.h">
-      <Filter>system\gameSystem</Filter>
+      <Filter>system\GameSystem</Filter>
     </ClInclude>
     <ClInclude Include="TransitionGenerator.h">
       <Filter>graphics\Transition</Filter>
@@ -628,10 +619,10 @@
       <Filter>sound</Filter>
     </ClInclude>
     <ClInclude Include="GameEffect.h">
-      <Filter>system\gameSystem\UI</Filter>
+      <Filter>system\GameSystem\UI</Filter>
     </ClInclude>
     <ClInclude Include="EffekseerSupporter.h">
-      <Filter>system\gameSystem\Effekseer</Filter>
+      <Filter>system\GameSystem\Effekseer</Filter>
     </ClInclude>
     <ClInclude Include="TestEnemy.h">
       <Filter>object\Enemy</Filter>
@@ -667,10 +658,10 @@
       <Filter>system</Filter>
     </ClInclude>
     <ClInclude Include="GameMenu.h">
-      <Filter>system\gameSystem\UI\Menu</Filter>
+      <Filter>system\GameSystem\UI\Menu</Filter>
     </ClInclude>
     <ClInclude Include="Menu_BoxAllDelete.h">
-      <Filter>system\gameSystem\UI\Menu</Filter>
+      <Filter>system\GameSystem\UI\Menu</Filter>
     </ClInclude>
     <ClInclude Include="LevelData.h">
       <Filter>level</Filter>
@@ -686,9 +677,6 @@
     </ClInclude>
     <ClInclude Include="Door.h">
       <Filter>object\Gimmick</Filter>
-    </ClInclude>
-    <ClInclude Include="StageSet.h">
-      <Filter>system</Filter>
     </ClInclude>
     <ClInclude Include="BoxMaker.h">
       <Filter>system\GameBox</Filter>
@@ -707,6 +695,24 @@
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseOver.h">
+      <Filter>system\GameSystem\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseSupporter.h">
+      <Filter>system\GameSystem\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="StageSet.h">
+      <Filter>system\GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="system\CGameObjectManager.h">
+      <Filter>system\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="system\IGameObject.h">
+      <Filter>system\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash.h">
+      <Filter>system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -50,7 +50,11 @@ void TransitionGenerator::Render() {
 /// <summary>
 /// トランジションの開始
 /// </summary>
-void TransitionGenerator::TransitionInit(TransitionName name, int MoveTime, bool mode) {
+void TransitionGenerator::TransitionInit(
+	const TransitionName& name, 
+	const int& MoveTime,
+	const bool& mode
+) {
 
 	//せってぃんぐ
 	m_nowTransitionFlag = true;

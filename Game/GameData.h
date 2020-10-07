@@ -39,7 +39,7 @@ public:
 	/// 現在位置変更
 	/// </summary>
 	/// <param name="pd">新しい現在位置</param>
-	void SetPlace(Place_Data pd) {
+	void SetPlace(const Place_Data pd) {
 		m_nowPlace = pd;
 	}
 	/// <summary>
@@ -53,7 +53,7 @@ public:
 	/// <summary>
 	/// メニューフラグの変更と取得
 	/// </summary>
-	void SetMenuFlag(bool flag) {
+	void SetMenuFlag(const bool flag) {
 		m_menuFlag = flag;
 	}
 	bool GetMenuFlag() {
@@ -64,7 +64,7 @@ public:
 	/// スターマネーの変更
 	/// </summary>
 	/// <param name="money">加算値（負の数も可）</param>
-	void StarMoneyPlus(int money) {
+	void StarMoneyPlus(const int money) {
 		m_starMoney += money;
 		if (m_starMoney > MAX_STAR_MONEY) {	//上限
 			m_starMoney = MAX_STAR_MONEY;
@@ -85,7 +85,7 @@ public:
 	/// 現在魔力の設定
 	/// </summary>
 	/// <param name="power">これ</param>
-	void SetMagicPower(int power) {
+	void SetMagicPower(const int power) {
 		m_magicPower = power;
 		if (m_magicPower > m_magicPower_MAX) {	//上限
 			m_magicPower = m_magicPower_MAX;
@@ -98,7 +98,7 @@ public:
 	/// 現在魔力の加算
 	/// </summary>
 	/// <param name="power">加算値（負の数も可）</param>
-	void MagicPowerPlus(int power) {
+	void MagicPowerPlus(const int power) {
 		m_magicPower += power;
 		if (m_magicPower > m_magicPower_MAX) {	//上限
 			m_magicPower = m_magicPower_MAX;
@@ -118,7 +118,7 @@ public:
 	/// <summary>
 	/// 最大魔力の設定と取得
 	/// </summary>
-	void SetMaxMagic(int max) {
+	void SetMaxMagic(const int max) {
 		m_magicPower_MAX = max;
 	}
 	int GetMaxMagic() {
@@ -129,14 +129,14 @@ public:
 	/// 現在体力の設定
 	/// </summary>
 	/// <param name="hp">これ</param>
-	void SetHP(int hp) {
+	void SetHP(const int hp) {
 		m_hp = hp;
 	}
 	/// <summary>
 	/// 現在体力の加算
 	/// </summary>
 	/// <param name="hp">加算値（負の数も可）</param>
-	void HP_Plus(int hp) {
+	void HP_Plus(const int hp) {
 		m_hp += hp;
 		if (m_hp > m_hp_MAX) {	//上限
 			m_hp = m_hp_MAX;
@@ -156,7 +156,7 @@ public:
 	/// <summary>
 	/// 最大体力の設定と取得
 	/// </summary>
-	void SetMaxHP(int max) {
+	void SetMaxHP(const int max) {
 		m_hp_MAX = max;
 	}
 	int GetMaxHP() {
@@ -166,11 +166,19 @@ public:
 	/// <summary>
 	/// メッセージスピードの設定と取得
 	/// </summary>
-	void SetMessageSpeed(int speed) {
+	void SetMessageSpeed(const int speed) {
 		m_messageSpeed = speed;
 	}
 	int GetMessageSpeed() {
 		return m_messageSpeed;
+	}
+
+	//キーコンフィグ～～～～！！！
+	void SetBoxCatchKey(const char key) {
+		m_boxCatchKey = key;
+	}
+	const char GetBoxCatchKey() {
+		return m_boxCatchKey;
 	}
 
 	/// <summary>
@@ -184,9 +192,9 @@ public:
 private:
 
 	//基本
-	int m_progress = 0;		//進行度
+	int m_progress = 0;						//進行度
 	Place_Data m_nowPlace = Null_Place;		//現在位置
-	bool m_menuFlag = false;				//今メニュー開ける？
+	bool m_menuFlag = false;				//今メニュー開ける？（trueだと開けない）
 
 	//解放要素
 	struct GameFlag {
@@ -201,10 +209,11 @@ private:
 	const int MAX_STAR_MONEY = 99999;	//最大所持金
 
 	//プレイヤーステータス
-	int m_level = 1;		//レベル
-	int m_nextExp = 10;		//次のレベルに必要な経験値
-	int m_nowExp = 0;		//現在の経験値
-	int m_totalExp = 0;		//累計経験値
+	int m_level = 1;			//レベル
+	const int MAX_LEVEL = 99;	//最大れべーる
+	int m_nextExp = 10;			//次のレベルに必要な経験値
+	int m_nowExp = 0;			//現在の経験値
+	int m_totalExp = 0;			//累計経験値
 	//
 	int m_magicPower = 100;	//現在マナ
 	int m_magicPower_MAX = 100;	//マナ最大値
@@ -213,6 +222,7 @@ private:
 
 	//コンフィグ
 	int m_messageSpeed = 2;		//会話のメッセージ送りスピード
+	char m_boxCatchKey = 'C';	//箱を持ち上げるキー
 
 };
 

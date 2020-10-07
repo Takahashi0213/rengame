@@ -30,7 +30,11 @@ public:
 	}
 
 	//トランジションの実行
-	void TransitionInit(TransitionName name, int MoveTime,bool mode);
+	void TransitionInit(
+		const TransitionName& name,
+		const int& MoveTime,
+		const bool& mode
+	);
 
 private:
 	TransitionSprite m_transitionSprite;

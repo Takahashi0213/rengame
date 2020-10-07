@@ -310,7 +310,7 @@ void Player::BoxCatch() {
 	}
 
 	//‘Î‰ž‚·‚éƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚È‚¢‚È‚ç‹­§I—¹
-	if (HIWORD(GetAsyncKeyState('C'))) {
+	if (HIWORD(GetAsyncKeyState(GameData::GetInstance()->GetBoxCatchKey()))) {
 		if (m_boxButtonFlag == false) {
 			m_boxButtonFlag = true;
 		}

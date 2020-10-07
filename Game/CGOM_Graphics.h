@@ -36,7 +36,7 @@ public:
 	/// <summary>
 	/// エフェクサー描画
 	/// </summary>
-	void EffectRender(bool Mode);
+	void EffectRender(const bool& Mode);
 
 	/// <summary>
 	/// デバッグ描画
@@ -64,24 +64,25 @@ public:
 	/// フレームバッファのデプスステンシルビューを取得
 	/// </summary>
 	/// <returns></returns>
-	ID3D11DepthStencilView* GetFrameBufferDepthStencilView() {
+	ID3D11DepthStencilView* GetFrameBufferDepthStencilView() const 
+	{
 		return m_frameBufferDepthStencilView;
 	}
 
 	/// <summary>
 	/// エフェクサーマネージャーを取得
 	/// </summary>
-	Effekseer::Manager* GetEffekseerManager() {
+	Effekseer::Manager* GetEffekseerManager()const {
 		return m_effekseerManager;
 	}
-	EffekseerRenderer::Renderer* GetEffekseerRender() {
+	EffekseerRenderer::Renderer* GetEffekseerRender() const {
 		return m_effekseerRenderer;
 	}
-
-	ID3D11Texture2D* GetFrameBufferTexture() {
+	//フレームバッファテクスチャを取得
+	ID3D11Texture2D* GetFrameBufferTexture() const {
 		return m_frameBufferTexture;
 	}
-	DXGI_FORMAT GetFormat() {
+	const DXGI_FORMAT& GetFormat()const {
 		return m_format;
 	}
 

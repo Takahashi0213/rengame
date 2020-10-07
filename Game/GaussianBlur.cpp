@@ -2,7 +2,7 @@
 #include "GaussianBlur.h"
 #include "PostEffect.h"
 
-void GaussianBlur::Init(ID3D11ShaderResourceView* srcTextureSRV, float blurIntensity)
+void GaussianBlur::Init(ID3D11ShaderResourceView* srcTextureSRV, const float& blurIntensity)
 {
 	//ソーステクスチャのSRVをコピー。
 	m_srcTextureSRV = srcTextureSRV;

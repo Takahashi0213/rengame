@@ -27,8 +27,11 @@ TransitionSprite::~TransitionSprite()
 /// <summary>
 /// 初期化の共通処理。
 /// </summary>
-void TransitionSprite::InitCommon(float w, float h, bool cutFlag)
-{
+void TransitionSprite::InitCommon(
+	const float& w,
+	const float& h,
+	const bool& cutFlag
+){
 	m_mainSprite.Size.x = w;
 	m_mainSprite.Size.y = h;
 	//頂点バッファの初期化
@@ -58,7 +61,7 @@ void TransitionSprite::InitCommon(float w, float h, bool cutFlag)
 /// <param name="texFilePath">ファイルパス</param>
 /// <param name="w">幅</param>
 /// <param name="h">高さ</param>
-void TransitionSprite::Sprite_Init(const wchar_t* texFilePath, float w, float h) {
+void TransitionSprite::Sprite_Init(const wchar_t* texFilePath, const float w, const float h) {
 
 	InitCommon(w, h);
 

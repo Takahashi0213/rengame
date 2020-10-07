@@ -59,7 +59,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera2D.SetFar(1000.0f);
 
 	//ゲーム
-	CGameObjectManager::GetInstance()->NewGO<Game>("Main_Game");
+	//CGameObjectManager::GetInstance()->NewGO<Game>("Main_Game");
 	CGameObjectManager::GetInstance()->NewGO<SceneManager>("SceneManager");
 	
 	//ゲームループ。
