@@ -1,6 +1,6 @@
 #include "stdafx.h"
-#include "graphics/SkinModelEffect.h"
-#include "graphics/SkinModelShaderConst.h"
+#include "graphics/skinModel/SkinModelEffect.h"
+#include "graphics/skinModel/SkinModelShaderConst.h"
 
 ModelEffect::ModelEffect()
 {

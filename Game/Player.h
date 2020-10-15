@@ -8,7 +8,7 @@
 
 #include "StarMoney.h"
 
-class Player : public IGameObject
+class Player final: public IGameObject
 {
 public:
 	Player();

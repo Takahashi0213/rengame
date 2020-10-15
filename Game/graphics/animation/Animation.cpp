@@ -6,7 +6,7 @@
 #include "stdafx.h"
 #include "graphics/animation/Animation.h"
 #include "graphics/skeleton.h"
-#include "graphics/skinModel.h"
+#include "graphics/skinModel/skinModel.h"
 
 Animation::Animation()
 {

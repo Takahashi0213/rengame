@@ -241,7 +241,7 @@ void GameUI::Render() {
 
 void GameUI::ManaUpdate() {
 
-	Game::GameMode NowGameMode = Game::GetInstance()->GetGameMode();
+	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();
 	int MaxMana = GameData::GetInstance()->GetMaxMagic();
 	int NowMana = GameData::GetInstance()->GetMagicPower();
 
@@ -250,7 +250,7 @@ void GameUI::ManaUpdate() {
 	Gage->SetCutLine(Mana);
 
 	//赤い部分は現在モードで分岐
-	if (NowGameMode == Game::ActionMode) {
+	if (NowGameMode == SceneManager::ActionMode) {
 		//アクションモードなら宇宙色のカットラインに近づけていく
 		RedGage->SetMulColor({ 10.0f,10.0f,10.0f,1.0f });
 		float nowLine = RedGage->GetCutLine();
@@ -260,7 +260,7 @@ void GameUI::ManaUpdate() {
 		}
 		RedGage->SetCutLine(nowLine);
 	}
-	else if (NowGameMode == Game::CreateMode) {
+	else if (NowGameMode == SceneManager::CreateMode) {
 		//クリエイトモードなら色が赤いだけで長さは変化しない
 		RedGage->SetMulColor(RedGageColor);
 	}

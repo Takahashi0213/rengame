@@ -2,7 +2,10 @@
 #include "MouseOver.h"
 
 
-bool MouseOver::MouseOverCheck(SkinModelRender* smr , CVector3 pos , CQuaternion rot,CVector3 scl) {
+bool MouseOver::MouseOverCheck(const SkinModelRender* smr ,
+	const CVector3 pos , 
+	const  CQuaternion rot, 
+	const CVector3 scl) {
 
 	bool CheckFlag = false;
 

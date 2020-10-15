@@ -1,6 +1,6 @@
 #pragma once
 #include "system/CGameObjectManager.h"
-#include "SkinModelRender.h"
+#include "graphics/skinModel/SkinModelRender.h"
 #include "PhysicsGhostObject.h"
 #include "Player.h"
 

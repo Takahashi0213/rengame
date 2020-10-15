@@ -69,11 +69,7 @@ void SpriteSupporter::SpriteDelayReset() {
 	m_spriteRotationTimer = -1; //スプライトの回転タイマー
 	m_spriteLoopRotationFlag = false;		//trueなら永遠に延々にフォーエバー回る回る回る
 	//Scale
-	m_spriteScale = CVector3().Zero();			//目標の大きさ
-	m_spriteScaleMove = CVector3().Zero();		//1フレームの変化量
-	m_spriteScaleLimit = -1;	//スプライトの拡大時間（-1は移動中ではない）
-	m_spriteScaleDelay = -1;	//スプライトの拡大ディレイ
-	m_spriteScaleTimer = -1;	//スプライトの拡大タイマー
+	m_spriteScaleList.clear();
 	//MulColor
 	m_spriteColor = CVector4().White();		//目標の色
 	m_spriteColorMove = CVector4().White();	//1フレームの変化量
@@ -140,10 +136,18 @@ void SpriteSupporter::SpriteRotation(float rot, int moveTime, int moveDelay, boo
 /// <param name="moveDelay">動作ディレイ</param>
 void SpriteSupporter::SpriteScale(CVector3 scale, int moveTime, int moveDelay) {
 
-	m_spriteScale = scale;
-	m_spriteScaleLimit = moveTime;
-	m_spriteScaleDelay = moveDelay;
-	m_spriteScaleTimer = 0;
+	//リストに追加や
+	SpriteScaleSet set = { scale ,CVector3::Zero(),moveTime,moveDelay , 0 ,false };
+	m_spriteScaleList.push_back(set);
+
+}
+void SpriteSupporter::SpriteScale(const float scale, const int moveTime, const int moveDelay) {
+	CVector3 Scale = { scale ,scale ,1.0f };
+
+	//リストに追加や
+	SpriteScaleSet set = { Scale ,CVector3::Zero(),moveTime,moveDelay , 0 ,false };
+	m_spriteScaleList.push_back(set);
+
 }
 
 /// <summary>
@@ -281,26 +285,44 @@ void SpriteSupporter::SpriteRotationUpdate() {
 /// </summary>
 void SpriteSupporter::SpriteScaleUpdate() {
 
-	//タイマーが0以上なら実行中
-	if (m_spriteScaleTimer >= 0) {
+	for (auto go = m_spriteScaleList.begin();
+		go != m_spriteScaleList.end();
+		go++) {
+		//タイマーが0以上なら実行中
+		if (go->m_spriteScaleTimer >= 0) {
 
-		if (m_spriteScaleTimer >= m_spriteScaleDelay) { //ディレイを考慮
+			if (go->m_spriteScaleTimer >= go->m_spriteScaleDelay) { //ディレイを考慮
 
-			if (m_spriteScaleTimer == m_spriteScaleDelay) {
-				//計算タイム
-				m_spriteScaleMove = m_spriteScale - m_scale;
-				m_spriteScaleMove /= (float)m_spriteScaleLimit;
+				if (go->m_spriteScaleTimer == go->m_spriteScaleDelay) {
+					//計算タイム
+					go->m_spriteScaleMove = go->m_spriteScale - m_scale;
+					go->m_spriteScaleMove /= (float)go->m_spriteScaleLimit;
+				}
+
+				m_scale += go->m_spriteScaleMove;
+
 			}
 
-			m_scale += m_spriteScaleMove;
+			go->m_spriteScaleTimer++;
 
+			if (go->m_spriteScaleTimer >= go->m_spriteScaleLimit + go->m_spriteScaleDelay) {
+				//おしまひ
+				go->m_spriteScaleDeleteFlag = true;
+				go->m_spriteScaleTimer = -1;
+			}
 		}
 
-		m_spriteScaleTimer++;
-
-		if (m_spriteScaleTimer >= m_spriteScaleLimit + m_spriteScaleDelay) {
-			//おしまひ
-			m_spriteScaleTimer = -1;
+	}
+	
+	//削除処理
+	std::list<SpriteScaleSet>::iterator it;
+	it = m_spriteScaleList.begin();
+	while (it != m_spriteScaleList.end()) {
+		if (it->m_spriteScaleDeleteFlag == true) {
+			it = m_spriteScaleList.erase(it); //erase関数は削除されたイテレータの次を返してくるので、eraseの戻り値を使う。
+		}
+		else {
+			it++; //それ以外は次へ。
 		}
 	}
 

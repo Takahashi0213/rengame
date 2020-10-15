@@ -119,7 +119,7 @@ void MouseSupporter::MouseUpdate() {
 /// 現在のマウス座標を取得
 /// </summary>
 /// <returns>マウス座標</returns>
-CVector2 MouseSupporter::GetMousePos() {
+const CVector2 MouseSupporter::GetMousePos() {
 
 	POINT po;
 	CVector2 m_pointPos = CVector2().Zero();
@@ -155,7 +155,7 @@ CVector3 MouseSupporter::GetMousePos_3D() {
 /// マウス座標を画面座標に変換する
 /// </summary>
 /// <returns>座標</returns>
-CVector2 MouseSupporter::GetMousePos_Sprite() {
+const CVector2 MouseSupporter::GetMousePos_Sprite() {
 
 	CVector2 pos = GetMousePos();
 
@@ -171,7 +171,7 @@ CVector2 MouseSupporter::GetMousePos_Sprite() {
 /// </summary>
 /// <param name="p">取得する位置（0は常時実行、1はｶｧﾒｨﾗｧ）</param>
 /// <returns>差</returns>
-CVector2 MouseSupporter::GetBeforeMouse(int p) {
+CVector2 MouseSupporter::GetBeforeMouse(const int p) {
 	CVector2 pos = GetMousePos();
 	CVector2 return_pos = { 0.0f,0.0f };
 

@@ -37,11 +37,11 @@ void BackGround::Update() {
 	}
 	
 	if (m_game != nullptr) {
-		if (m_game->GetGameMode() == Game::CreateMode && m_monochromeFlag == false) {
+		if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode && m_monochromeFlag == false) {
 			m_model.SetRenderMode(RenderMode::Monochrome);
 			m_monochromeFlag = true;
 		}
-		else if (m_game->GetGameMode() != Game::CreateMode && m_monochromeFlag == true) {
+		else if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode && m_monochromeFlag == true) {
 			m_model.SetRenderMode(RenderMode::Default);
 			m_monochromeFlag = false;
 		}

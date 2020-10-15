@@ -15,9 +15,16 @@ SceneManager::SceneManager()
 	//このインスタンスを唯一のインスタンスとして記録する
 	m_instance = this;
 
+	//サウンドエンジンを初期化。
+	m_soundEngine.Init();
+
 	//最初はタイトル！
 	m_title = CGameObjectManager::GetInstance()->NewGO<Title>("Game_Title");
-
+	//タイトルがいらない時用
+	//{
+	//	m_game = CGameObjectManager::GetInstance()->NewGO<Game>("Main_Game");
+	//	m_nowScene = Game_Sence;
+	//}
 }
 
 
@@ -70,7 +77,9 @@ void SceneManager::TitleCommand(const Title::TitleCommand command) {
 		break;
 	case Title::Game_Start:
 		//ニューゲーム
-
+		CGameObjectManager::GetInstance()->DeleteGO(m_title);
+		m_title = nullptr;
+		CGameObjectManager::GetInstance()->NewGO<Game>("Main_Game");
 		break;
 	case Title::Game_Continue:
 		//ロード画面へ

@@ -22,13 +22,17 @@ Game::Game()
 	//このインスタンスを唯一のインスタンスとして記録する
 	m_instance = this;
 
+	//現在をゲーム（アクションモード）にする
+	SceneManager::GetInstance()->SetGameMode(SceneManager::ActionMode);
+	//Dofを有効にする
+	SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag = false;
+
 	//生成
 	
-	//サウンドエンジンを初期化。
-	m_soundEngine.Init();
-
-	//ライトメーカーの生成
-	CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
+	//ライトメーカー
+	if(LightMaker::GetInstance() == nullptr) {
+		CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
+	}
 
 	//カメラサポーターの生成
 	CGameObjectManager::GetInstance()->NewGO<CameraSupporter>("CameraSupporter");
@@ -41,7 +45,6 @@ Game::Game()
 	BoxMaker* m_box = CGameObjectManager::GetInstance()->NewGO<BoxMaker>("BoxMaker", 1);
 	Player* pl = CGameObjectManager::GetInstance()->NewGO<Player>("Player", 1);
 	GameUI* ui = CGameObjectManager::GetInstance()->NewGO<GameUI>("GameUI", 8);
-	//TestEnemy* test = CGameObjectManager::GetInstance()->NewGO<TestEnemy>("TestEnemy", 1);
 	m_ui = ui;
 
 	//カメラ
@@ -55,6 +58,7 @@ Game::Game()
 	//ワイヤーフレームを表示しますすうすすすうう
 	g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 
+	//ステージ
 	StageSet m_stageSet;
 	m_stageSet.CriateStage(L"Assets/modelData/0_0.cmo",L"Assets/level/stage_00.tkl");
 	m_stageSet.SetGame(this);

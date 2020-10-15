@@ -33,7 +33,7 @@ void GameEffect_Stand::StandInit() {
 	m_standSprite->SetMulColor({ 1.0f,1.0f,1.0f,0.0f });
 }
 
-void GameEffect_Stand::StandControl(Stand_Name stand, Stand_Command command) {
+void GameEffect_Stand::StandControl(Stand_Name stand, const Stand_Command command) {
 
 	//もし立ち絵がNullの場合現在の立ち絵を引っ張ってくる（変化なし）
 	if (stand == Stand_Null) {
@@ -158,7 +158,7 @@ void GameEffect_Message::MessageInit() {
 		0);
 
 	//テキストに影（という名のフチ）を設定
-	m_messageFont->GetGameFont()->SetShadowParam(true, 3.0f, { 1.0f,1.0f,1.0f,1.0f });
+	m_messageFont->GetGameFont()->SetShadowParam(true, MessageFontOffset, { 1.0f,1.0f,1.0f,1.0f });
 
 	//スケール調整
 	m_messageFont->SetScale(0.6f);
@@ -183,10 +183,10 @@ void GameEffect_Message::MessageEffect(wchar_t* Message) {
 m_messageFont->SetTextOkuri(Message, 2);
 
 //色々と準備が必要です
-
 m_windowOkuriSprite->SetAlpha(0.0f);
 
 if (m_windowSprite->GetAlpha() < 1.0f) {
+
 	//初回表示処理
 	m_windowSprite->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,1.0f }, 6, 0);
 	m_windowSprite->SetPosition({ WindowDefPos.x,WindowDefPos.y - 30.0f,WindowDefPos.z });
@@ -195,8 +195,11 @@ if (m_windowSprite->GetAlpha() < 1.0f) {
 	m_messageSkipOshiraseFont->SetPosition({ TextSkipDefPos.x,TextSkipDefPos.y - 200.0f });
 	m_messageSkipOshiraseFont->m_fontSupporter.FontMoveSet({ TextSkipDefPos.x,TextSkipDefPos.y }, 12, 0, false);
 
+	//邪魔なのでステータスを消しておく
+	Game::GetInstance()->GetUI()->CloseUI();
+
 	//イベントフラグをtrueにする
-	Game::GetInstance()->GetSystemInstance()->m_eventNowFlag = true;
+	SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag = true;
 
 	//ログ関連の初期化
 	for (int i = 0; i < 4096; i++) {
@@ -334,7 +337,9 @@ void GameEffect_Message::MessageUpdate() {
 			m_messageSkipSprite->SetAlpha(0.0f);
 			m_messageSkipOshiraseFont->m_fontSupporter.FontMoveSet({ TextSkipDefPos.x,TextSkipDefPos.y - 200.0f }, 12, 0, false);
 			m_skipFlag = false;
-			Game::GetInstance()->GetSystemInstance()->m_eventNowFlag = false;
+			SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag = false;
+			//消したステータスを戻す
+			Game::GetInstance()->GetUI()->OpenUI();
 		}
 	}
 }

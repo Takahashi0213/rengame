@@ -79,9 +79,6 @@
     <Filter Include="Assets\sprite\Transition">
       <UniqueIdentifier>{2ed49e2a-daef-4284-9bd4-d786674bc835}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\modelData\Titan">
-      <UniqueIdentifier>{c4bd8911-7ff6-4c63-81f1-4c0c982a3c57}</UniqueIdentifier>
-    </Filter>
     <Filter Include="sound">
       <UniqueIdentifier>{645e286f-d38c-4077-9c21-ac9ae0dd85c0}</UniqueIdentifier>
     </Filter>
@@ -90,9 +87,6 @@
     </Filter>
     <Filter Include="object\Gimmick">
       <UniqueIdentifier>{c2d1b38a-7b2e-4328-a05d-d12408cadab8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\modelData\Jewel">
-      <UniqueIdentifier>{b614d219-f094-480d-b123-116c8927972c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets\sprite\effect">
       <UniqueIdentifier>{2779139b-cc6f-4f51-a566-8305f0843b7b}</UniqueIdentifier>
@@ -147,6 +141,21 @@
     </Filter>
     <Filter Include="system\GameSystem\Mouse">
       <UniqueIdentifier>{6e41837d-6b11-4edb-b448-1d051f5610c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\Title">
+      <UniqueIdentifier>{f9e4e457-232c-4f1d-93d2-239021daf6c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\Item">
+      <UniqueIdentifier>{b614d219-f094-480d-b123-116c8927972c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\System">
+      <UniqueIdentifier>{48e23a6d-a153-4379-89fa-0bb42bea55c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\TestModel">
+      <UniqueIdentifier>{ee032b4d-9a28-472b-a24d-4c34ffc00b34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\TestModel\Titan">
+      <UniqueIdentifier>{c4bd8911-7ff6-4c63-81f1-4c0c982a3c57}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -235,21 +244,6 @@
     </ClCompile>
     <ClCompile Include="SpriteSupporter.cpp">
       <Filter>graphics\Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\SkinModel.cpp">
-      <Filter>graphics\SkinModel</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\SkinModelDataManager.cpp">
-      <Filter>graphics\SkinModel</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\SkinModelEffect.cpp">
-      <Filter>graphics\SkinModel</Filter>
-    </ClCompile>
-    <ClCompile Include="SkinModelRender.cpp">
-      <Filter>graphics\SkinModel</Filter>
-    </ClCompile>
-    <ClCompile Include="SkinModelSupporter.cpp">
-      <Filter>graphics\SkinModel</Filter>
     </ClCompile>
     <ClCompile Include="graphics\Shader.cpp">
       <Filter>graphics\Sprite</Filter>
@@ -419,6 +413,21 @@
     <ClCompile Include="system\IGameObject.cpp">
       <Filter>system\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="graphics\skinModel\SkinModelDataManager.cpp">
+      <Filter>graphics\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\skinModel\SkinModelEffect.cpp">
+      <Filter>graphics\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\skinModel\SkinModelRender.cpp">
+      <Filter>graphics\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\skinModel\SkinModelSupporter.cpp">
+      <Filter>graphics\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\skinModel\SkinModel.cpp">
+      <Filter>graphics\SkinModel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -514,24 +523,6 @@
     </ClInclude>
     <ClInclude Include="SpriteSupporter.h">
       <Filter>graphics\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModel.h">
-      <Filter>graphics\SkinModel</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModelDataManager.h">
-      <Filter>graphics\SkinModel</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModelEffect.h">
-      <Filter>graphics\SkinModel</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModelShaderConst.h">
-      <Filter>graphics\SkinModel</Filter>
-    </ClInclude>
-    <ClInclude Include="SkinModelRender.h">
-      <Filter>graphics\SkinModel</Filter>
-    </ClInclude>
-    <ClInclude Include="SkinModelSupporter.h">
-      <Filter>graphics\SkinModel</Filter>
     </ClInclude>
     <ClInclude Include="GameBox.h">
       <Filter>system\GameBox</Filter>
@@ -714,22 +705,31 @@
     <ClInclude Include="Hash.h">
       <Filter>system</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\skinModel\SkinModel.h">
+      <Filter>graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\skinModel\SkinModelDataManager.h">
+      <Filter>graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\skinModel\SkinModelEffect.h">
+      <Filter>graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\skinModel\SkinModelShaderConst.h">
+      <Filter>graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\skinModel\SkinModelRender.h">
+      <Filter>graphics\SkinModel</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\skinModel\SkinModelSupporter.h">
+      <Filter>graphics\SkinModel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\modelData\box.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\map.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\unityChan.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Titan.fbx">
-      <Filter>Assets\modelData\Titan</Filter>
+      <Filter>Assets\modelData\TestModel\Titan</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Gimmick\jewel.fbx">
-      <Filter>Assets\modelData\Jewel</Filter>
+      <Filter>Assets\modelData\Item</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch.fbx">
       <Filter>Assets\modelData\Gimmick</Filter>
@@ -751,6 +751,18 @@
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Gimmick\Board\Board.fbx">
       <Filter>Assets\modelData\Gimmick</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\box.fbx">
+      <Filter>Assets\modelData\System</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\map.fbx">
+      <Filter>Assets\modelData\TestModel</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\unityChan.fbx">
+      <Filter>Assets\modelData\TestModel</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Title\Title_Ball.fbx">
+      <Filter>Assets\modelData\Title</Filter>
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
@@ -824,13 +836,13 @@
       <Filter>Assets\sprite\Transition</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\Titan__Albedo.tga">
-      <Filter>Assets\modelData\Titan</Filter>
+      <Filter>Assets\modelData\TestModel\Titan</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\Titan_normals.tga">
-      <Filter>Assets\modelData\Titan</Filter>
+      <Filter>Assets\modelData\TestModel\Titan</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\Titan_Metallic.tga">
-      <Filter>Assets\modelData\Titan</Filter>
+      <Filter>Assets\modelData\TestModel\Titan</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\window\window4.png">
       <Filter>Assets\sprite\window</Filter>
@@ -839,7 +851,7 @@
       <Filter>Assets\sprite\system</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\Titan__Ao.tga">
-      <Filter>Assets\modelData\Titan</Filter>
+      <Filter>Assets\modelData\TestModel\Titan</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo.png">
       <Filter>Assets\sprite\Menu\Logo</Filter>
@@ -912,6 +924,18 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_N.png">
       <Filter>Assets\sprite\Title\Logo</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\White.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\End.png">
+      <Filter>Assets\sprite\Title</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Hazimekara.png">
+      <Filter>Assets\sprite\Title</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Tudukikara.png">
+      <Filter>Assets\sprite\Title</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

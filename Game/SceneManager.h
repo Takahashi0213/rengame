@@ -21,10 +21,54 @@ public:
 		Title_Scene,
 		Game_Sence
 	};
+	enum GameMode {	//ゲーム中です
+		Null_Mode,	//ダミーモード（初期用）
+		TitleMode,
+		ActionMode,
+		CreateMode,
+		MenuMode,
+	};
+
+	/// <summary>
+	/// 現在シーンの取得
+	/// 今がタイトルかゲーム中かを確認できる
+	/// </summary>
+	NowScene GetNowScene() {
+		return m_nowScene;
+	}
+
+	/// <summary>
+	/// ゲームモードをセット
+	/// </summary>
+	/// <param name="mode">モード</param>
+	void SetGameMode(const GameMode mode) {
+		m_gameMode = mode;
+	}
+	/// <summary>
+	/// ゲームモードを取得
+	/// </summary>
+	/// <returns>モード</returns>
+	GameMode GetGameMode() {
+		return m_gameMode;
+	}
 
 	//タイトル終了時に呼ぶ
 	void EndTitle() {
 		m_title = nullptr;
+	}
+
+	/// <summary>
+	/// インスタンスを取得！
+	/// </summary>
+	/// <returns>インスタンスです</returns>
+	static SceneManager* SceneManager::GetInstance() {
+		return m_instance;
+	}
+	SystemData* SceneManager::GetSystemInstance() {
+		return &m_systemData;
+	}
+	GameGraphic* SceneManager::GetGameGraphicInstance() {
+		return &m_gameGraphic;
 	}
 
 private:
@@ -34,7 +78,15 @@ private:
 
 	void TitleCommand(const Title::TitleCommand command);
 
-	NowScene m_nowScene = Title_Scene;
+	//状況
+	NowScene m_nowScene = Title_Scene;		//こっちはSceneManager専用
+	GameMode m_gameMode = Null_Mode;		//こっちは外部から変更可能
+
+	//全体で使うもの
+	SystemData m_systemData;
+	GameGraphic m_gameGraphic;
+	CSoundEngine m_soundEngine;				//サウンドエンジン。
+
 	//シーン
 	Title* m_title = nullptr;
 	Game* m_game = nullptr;

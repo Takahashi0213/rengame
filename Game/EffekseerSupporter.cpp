@@ -20,8 +20,8 @@ EffekseerSupporter::~EffekseerSupporter()
 	m_instance = nullptr;
 }
 
-Effekseer::Handle EffekseerSupporter::NewEffect(const wchar_t* EffectFileName, bool PostFlag,
-	Effekseer::Vector3D DefPos) {
+Effekseer::Handle EffekseerSupporter::NewEffect(const wchar_t* EffectFileName, const bool& PostFlag,
+	const Effekseer::Vector3D& DefPos) {
 
 	//サンプルのエフェクトをロードする。
 	Effekseer::Effect* m_effect = Effekseer::Effect::Create(CGameObjectManager::GetInstance()->GetEffekseerManager(),
@@ -37,8 +37,8 @@ Effekseer::Handle EffekseerSupporter::NewEffect(const wchar_t* EffectFileName, b
 	return m_playEffectHandle;
 }
 
-Effekseer::Handle EffekseerSupporter::NewEffect(const EffectData EffectFileName, bool PostFlag,
-	Effekseer::Vector3D DefPos) {
+Effekseer::Handle EffekseerSupporter::NewEffect(const EffectData EffectFileName, const bool& PostFlag,
+	const Effekseer::Vector3D& DefPos) {
 
 	//サンプルのエフェクトをロードする。
 	Effekseer::Effect* m_effect = Effekseer::Effect::Create(CGameObjectManager::GetInstance()->GetEffekseerManager(),
@@ -56,7 +56,8 @@ Effekseer::Handle EffekseerSupporter::NewEffect(const EffectData EffectFileName,
 }
 
 Effekseer::Handle EffekseerSupporter::NewEffect_Vector(const EffectData EffectFileName,
-	bool PostFlag, float X, float Y, float Z, float rotX, float rotY, float rotZ) {
+	const bool& PostFlag, const float& X, const float& Y, const float& Z, 
+	const float& rotX, const float& rotY, const float& rotZ) {
 
 	//変換
 	Effekseer::Vector3D Pos;

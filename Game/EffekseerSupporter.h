@@ -34,14 +34,14 @@ public:
 	/// エフェクトの生成
 	/// </summary>
 	Effekseer::Handle NewEffect(const wchar_t* EffectFileName, 
-		bool PostFlag = false,
-		Effekseer::Vector3D DefPos = { 0.0f,0.0f,0.0f });
+		const bool& PostFlag = false,
+		const Effekseer::Vector3D& DefPos = { 0.0f,0.0f,0.0f });
 	Effekseer::Handle NewEffect(const EffectData EffectFileName,
-		bool PostFlag = false,
-		Effekseer::Vector3D DefPos = { 0.0f,0.0f,0.0f });
+		const bool& PostFlag = false,
+		const Effekseer::Vector3D& DefPos = { 0.0f,0.0f,0.0f });
 	Effekseer::Handle NewEffect_Vector(const EffectData EffectFileName,
-		bool PostFlag = false, float X = 0.0f, float Y = 0.0f, float Z = 0.0f,
-		float rotX=0.0f, float rotY = 0.0f, float rotZ = 0.0f);
+		const bool& PostFlag = false, const float& X = 0.0f, const float& Y = 0.0f, const float& Z = 0.0f,
+		const float& rotX=0.0f, const float& rotY = 0.0f, const float& rotZ = 0.0f);
 
 	/// <summary>
 	/// ここからエフェクト調整

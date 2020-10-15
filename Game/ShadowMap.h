@@ -1,6 +1,6 @@
 #pragma once
 #include "RenderTarget.h"
-#include "graphics/SkinModel.h"
+#include "graphics/skinModel/SkinModel.h"
 
 //・シングルトン
 class ShadowMap

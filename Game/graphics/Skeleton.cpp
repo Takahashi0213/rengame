@@ -3,7 +3,7 @@
  */
 #include "stdafx.h"
 #include "graphics/skeleton.h"
-#include "graphics/SkinModelShaderConst.h"
+#include "graphics/skinModel/SkinModelShaderConst.h"
 #include <comdef.h> 
 
 void Bone::CalcWorldTRS(CVector3& trans, CQuaternion& rot, CVector3& scale)

@@ -92,13 +92,11 @@ Player::~Player()
 
 void Player::Update()
 {
-	hoge = 10;
 	if (hoge == 0) {
 		//GameEffect::GetInstance()->EasyEffect(L"ああ感\Rいい\Dうう\n\Rええ\Dおお",
 		GameEffect::GetInstance()->EasyEffect(L"ああ感いいうう\nええ\nおお",
 			GameEffect_Stand::Stand_Normal,
 			GameEffect_Stand::New_Stand);
-		Game::GetInstance()->GetUI()->CloseUI();
 		hoge++;
 	}
 	if (hoge == 2) {
@@ -130,11 +128,11 @@ void Player::Update()
 
 	//モノクロになーる
 	if (m_gameObj != nullptr) {
-		if (m_gameObj->GetGameMode() == Game::CreateMode && m_monochromeFlag == false) {
+		if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode && m_monochromeFlag == false) {
 			m_model.SetRenderMode(RenderMode::Monochrome);
 			m_monochromeFlag = true;
 		}
-		else if (m_gameObj->GetGameMode() != Game::CreateMode && m_monochromeFlag == true) {
+		else if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode && m_monochromeFlag == true) {
 			m_model.SetRenderMode(RenderMode::Default);
 			m_monochromeFlag = false;
 		}
@@ -159,7 +157,7 @@ void Player::Update()
 	m_model_Sl.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 
-	if (m_gameObj->GetGameMode() == Game::ActionMode){ //アクションモードでなければ更新しない！
+	if (SceneManager::GetInstance()->GetGameMode() == SceneManager::ActionMode){ //アクションモードでなければ更新しない！
 
 		//重力
 		m_moveSpeed.y -= m_gravity;
@@ -203,7 +201,7 @@ void Player::Render()
 void Player::Move() {
 
 	//イベント中なら強制終了
-	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
 		return;
 	}
 	//箱の上げ下ろし中は強制終了
@@ -216,7 +214,7 @@ void Player::Move() {
 	bool OnG_Flag = m_charaCon.IsOnGround();
 	GameUI* ui = CGameObjectManager::GetInstance()->FindGO<GameUI>(Game_UI);
 
-	if (key == MouseSupporter::Release_Push && m_gameObj->GetGameMode() == Game::ActionMode
+	if (key == MouseSupporter::Release_Push && SceneManager::GetInstance()->GetGameMode() == SceneManager::ActionMode
 		&& ui->GetGemeMenu()->GetSelectFlag() == false) {
 		if (MouseSupporter::GetInstance()->GetMouseTimer(MouseSupporter::Left_Key) < 12) {
 
@@ -264,7 +262,7 @@ void Player::Move() {
 void Player::Jump() {
 	
 	//イベント中なら強制終了
-	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
 		return;
 	}
 	//箱の上げ下ろし中は強制終了
@@ -295,12 +293,12 @@ void Player::Jump() {
 void Player::BoxCatch() {
 
 	//イベント中なら強制終了
-	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
 		return;
 	}
 
 	//アクションモードでないなら強制終了
-	if (Game::GetInstance()->GetGameMode() != Game::ActionMode) {
+	if (SceneManager::GetInstance()->GetGameMode() != SceneManager::ActionMode) {
 		return;
 	}
 
@@ -425,11 +423,11 @@ void Player::BoxCatch() {
 void Player::BoxSearch() {
 
 	//イベント中なら強制終了
-	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
 		return;
 	}
 	//アクションモードでないなら強制終了
-	if (Game::GetInstance()->GetGameMode() != Game::ActionMode) {
+	if (SceneManager::GetInstance()->GetGameMode() != SceneManager::ActionMode) {
 		return;
 	}
 	//箱を持ち上げているなら強制終了
@@ -559,11 +557,11 @@ void Player::BoxUp() {
 void Player::BoxMove() {
 
 	//イベント中なら強制終了
-	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
 		return;
 	}
 	//アクションモードでないなら強制終了
-	if (Game::GetInstance()->GetGameMode() != Game::ActionMode) {
+	if (SceneManager::GetInstance()->GetGameMode() != SceneManager::ActionMode) {
 		return;
 	}
 	//箱の上げ下ろし中でないなら強制終了

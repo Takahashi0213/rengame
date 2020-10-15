@@ -8,7 +8,7 @@
 /// ゲームカメラと操作色々
 /// ・シングルトン
 /// </summary>
-class GameCamera : public IGameObject
+class GameCamera final : public IGameObject
 {
 	static GameCamera* m_instance;
 public:

@@ -10,7 +10,7 @@
 /// ライト作るくん
 /// ・シングルトン
 /// </summary>
-class LightMaker : public IGameObject
+class LightMaker final : public IGameObject
 {
 	static LightMaker* m_instance;
 public:

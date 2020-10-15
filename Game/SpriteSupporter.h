@@ -30,6 +30,7 @@ public:
 	void SpriteMove(CVector2 move, int moveTime, int moveDelay, bool relative = false);
 	void SpriteRotation(float rot, int moveTime, int moveDelay, bool loopflag = false);
 	void SpriteScale(CVector3 scale, int moveTime, int moveDelay);
+	void SpriteScale(const float scale, const int moveTime, const int moveDelay);
 	void SpriteColor(CVector4 color, int moveTime, int moveDelay);
 	void SpriteShake(CVector2 move, int moveTime, int moveCount);
 	void SpritePattern(int moveTime, bool loopflag = false ,int overLimit = 0);
@@ -73,11 +74,15 @@ private:
 	int m_spriteRotationTimer = -1; //スプライトの回転タイマー
 	bool m_spriteLoopRotationFlag = false;		//trueなら永遠に延々にフォーエバー回る回る回る
 	//Scale
-	CVector3 m_spriteScale = CVector3().Zero();			//目標の大きさ
-	CVector3 m_spriteScaleMove = CVector3().Zero();		//1フレームの変化量
-	int m_spriteScaleLimit = -1;	//スプライトの拡大時間（-1は移動中ではない）
-	int m_spriteScaleDelay = -1;	//スプライトの拡大ディレイ
-	int m_spriteScaleTimer = -1;	//スプライトの拡大タイマー
+	struct SpriteScaleSet {
+		CVector3 m_spriteScale = CVector3().Zero();			//目標の大きさ
+		CVector3 m_spriteScaleMove = CVector3().Zero();		//1フレームの変化量
+		int m_spriteScaleLimit = -1;	//スプライトの拡大時間（-1は移動中ではない）
+		int m_spriteScaleDelay = -1;	//スプライトの拡大ディレイ
+		int m_spriteScaleTimer = -1;	//スプライトの拡大タイマー
+		bool m_spriteScaleDeleteFlag = false;	//削除フラグ（いじらないでね）
+	};
+	std::list<SpriteScaleSet> m_spriteScaleList; //拡大縮小のリスト
 	//MulColor
 	CVector4 m_spriteColor = CVector4().White();		//目標の色
 	CVector4 m_spriteColorMove = CVector4().White();	//1フレームの変化量

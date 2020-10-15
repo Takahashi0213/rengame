@@ -46,7 +46,7 @@ const int MAX_LEVEL_OBJ = 100;						//レベルに設定できる最大オブジェクト数
 
 #include "graphics/GraphicsEngine.h"
 
-#include "graphics/SkinModel.h"
+#include "graphics/skinModel/SkinModel.h"
 #include "graphics/Skeleton.h"
 
 #include "graphics/animation/Animation.h"
@@ -64,7 +64,7 @@ const int MAX_LEVEL_OBJ = 100;						//レベルに設定できる最大オブジェクト数
 #include "SpriteStandby.h"
 #include "SpriteRender.h"
 
-#include "SkinModelRender.h"
+#include "graphics/skinModel/SkinModelRender.h"
 #include "ShadowMap.h"
 
 #include "FontRender.h"
@@ -78,5 +78,7 @@ const int MAX_LEVEL_OBJ = 100;						//レベルに設定できる最大オブジェクト数
 #include "sound/SoundSource.h"
 
 #include "ObjectClass.h"
+
+#include "SceneManager.h"
 
 extern SpriteRender spRen;

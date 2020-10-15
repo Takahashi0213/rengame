@@ -27,7 +27,7 @@ void BoxMaker::Update() {
 
 	//中クリックの状態を判定
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Center_Key);
-	Game::GameMode NowGameMode = m_game->GetGameMode();		//現在のゲームモードを呼び出す
+	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
 
 	ModeChange();
 	bool result = false;
@@ -39,7 +39,7 @@ void BoxMaker::Update() {
 
 	//箱の追加処理
 	key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
-	if (key == MouseSupporter::New_Push && NowGameMode == Game::CreateMode 
+	if (key == MouseSupporter::New_Push && NowGameMode == SceneManager::CreateMode
 		&& m_boxMakerMode == NomalMode) {	//左クリックされた瞬間かつクリエイトモードかつ箱拡大中でない
 
 		//選択中の箱だけ実行する
@@ -185,7 +185,7 @@ void BoxMaker::Update() {
 	}
 
 	//フォーカスモード用の処理～～～～～～～
-	if (NowGameMode == Game::CreateMode && m_boxMakerMode == FocusMode) {
+	if (NowGameMode == SceneManager::CreateMode && m_boxMakerMode == FocusMode) {
 		
 		key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
 		
@@ -204,7 +204,7 @@ void BoxMaker::Update() {
 				m_boxScale.y - m_boxScaleDef.y ,
 				m_boxScale.z - m_boxScaleDef.z };
 			float ManaHosei = Scale.x + Scale.y + Scale.z;
-			ManaHosei /= 5.0f;
+			ManaHosei /= ManaHosei;
 			int ManaHosei2 = (int)floor(ManaHosei);
 			m_manaHosei = ManaHosei2;
 			m_downMana = m_downMana_Stock + m_manaHosei;
@@ -263,7 +263,7 @@ void BoxMaker::Update() {
 	}
 
 	//アンドゥ処理！！！！
-	if (NowGameMode == Game::CreateMode && m_box_Nom > 1) {
+	if (NowGameMode == SceneManager::CreateMode && m_box_Nom > 1) {
 		//CTRL+Z
 		if (GetAsyncKeyState(VK_CONTROL) & 0x8000 && GetAsyncKeyState('Z') & 0x8000) {
 
@@ -290,7 +290,7 @@ void BoxMaker::Update() {
 	}
 
 	//マナ処理
-	if (NowGameMode == Game::CreateMode) {
+	if (NowGameMode == SceneManager::CreateMode) {
 		GameData::GetInstance()->SetMagicPower(m_startMana - m_downMana);
 	}
 
@@ -302,13 +302,13 @@ void BoxMaker::Update() {
 /// ボックスを全部アップデートする
 /// </summary>
 void BoxMaker::BoxUpdate() {
-	Game::GameMode NowGameMode = m_game->GetGameMode();		//現在のゲームモードを呼び出す
+	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
 
 	for (auto go : m_boxList) {
 	
 		go->GameBox_Update();
 
-		if (NowGameMode == Game::ActionMode) {
+		if (NowGameMode == SceneManager::ActionMode) {
 			go->GameBoxUpdate_Colli();
 		}
 	}
@@ -331,14 +331,11 @@ void BoxMaker::ModeChange() {
 
 	//中クリックの状態を判定
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Center_Key);
-	Game::GameMode NowGameMode = m_game->GetGameMode();		//現在のゲームモードを呼び出す
+	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
 	int Mana = GameData::GetInstance()->GetMagicPower();
 
-	//中クリックされた瞬間かつアクションモードかつマナが10以上ある
-	if (key == MouseSupporter::New_Push && NowGameMode == Game::ActionMode && Mana >= 10) {
-
-		//クリエイトモードへ変更
-		m_game->SetGameMode(Game::CreateMode);
+	//中クリックされた瞬間かつアクションモードかつマナが(CriateModeChangeBorder)以上ある
+	if (key == MouseSupporter::New_Push && NowGameMode == SceneManager::ActionMode && Mana >= CriateModeChangeBorder) {
 
 		m_boxPos = MouseSupporter::GetInstance()->GetMousePos_3D();
 
@@ -358,40 +355,51 @@ void BoxMaker::ModeChange() {
 			//m_boxPos.y += m_bp.y;
 			//m_boxPos.z += m_bp.z;
 		}
+		
+		const bool flag = BoxCriateCheck();
 
-		GameBox* m_box = new GameBox;
-		m_box->GameBox_Set(m_boxPos);
-		m_box->SetBoxTag(GameBox::Origin);	//箱のタグを「最初の箱」に変更する
-		m_boxList.push_back(m_box);
-		m_nowBoxList.clear();
-		m_nowBoxList.push_back(m_box);
-		m_nowBox = m_box;
-		m_originBox = m_box;
+		if (flag == true) {
 
-		m_box_Nom = 1;				//箱の数をリセット
+			//クリエイトモードへ変更
+			SceneManager::GetInstance()->SetGameMode(SceneManager::CreateMode);
 
-		//マナ設定
-		m_downMana = 10;
-		m_startMana = GameData::GetInstance()->GetMagicPower();
+			//初代箱処理
+			GameBox* m_box = new GameBox;		//初代箱を作成
+			m_box->GameBox_Set(m_boxPos);
+			m_box->SetBoxTag(GameBox::Origin);	//箱のタグを「最初の箱」に変更する
+			m_boxList.push_back(m_box);
+			m_nowBoxList.clear();
+			m_nowBoxList.push_back(m_box);
+			m_nowBox = m_box;
+			m_originBox = m_box;
 
-		//ゲームカメラに渡す
-		int a = Hash::MakeHash("GameCamera");
-		GameCamera* GC = CGameObjectManager::GetInstance()->FindGO<GameCamera>(a);
-		GC->SetGameBox(m_box);
+			m_box_Nom = 1;				//箱の数をリセット
+
+										//マナ設定
+			m_downMana = CriateModeChangeBorder;
+			m_startMana = GameData::GetInstance()->GetMagicPower();
+
+			//ゲームカメラに渡す
+			int a = Hash::MakeHash("GameCamera");
+			GameCamera* GC = CGameObjectManager::GetInstance()->FindGO<GameCamera>(a);
+			GC->SetGameBox(m_box);
+
+		}
 
 	}
-	if (key == MouseSupporter::New_Push && NowGameMode == Game::ActionMode && Mana < 10) {
-		//マナが足りません！
+	//クリエイトモードに移行したいけどマナが(CriateModeChangeBorder)に足りない場合
+	else if (key == MouseSupporter::New_Push && NowGameMode == SceneManager::ActionMode && Mana < CriateModeChangeBorder) {
+		//マナが足りません！のシェイクだけする
 		GameUI::GetInstance()->ManaShake();
 	}
 	//クリエイトモードからアクションモードへ戻りマス
-	else if (key == MouseSupporter::New_Push && NowGameMode == Game::CreateMode) {	//中クリックされた瞬間かつアクションモード
+	else if (key == MouseSupporter::New_Push && NowGameMode == SceneManager::CreateMode) {	//中クリックされた瞬間かつアクションモード
 
 		//魔力減少
 		GameData::GetInstance()->SetMagicPower(m_startMana - m_downMana);
 
 		//アクションモードへ変更
-		m_game->SetGameMode(Game::ActionMode);
+		SceneManager::GetInstance()->SetGameMode(SceneManager::ActionMode);
 
 		//カメラ移動を制御する
 		int a = Hash::MakeHash("GameCamera");
@@ -399,5 +407,21 @@ void BoxMaker::ModeChange() {
 		GC->PlayerCameraMove();
 
 	}
+
+}
+
+bool BoxMaker::BoxCriateCheck() {
+
+	bool ReturnFlag = false;
+
+	CVector3 PlayerPos = m_player->GetPosition();
+	CVector3 PlayerToBox_Diff = m_boxPos - PlayerPos;	//プレイヤーから箱作成予定地に向かうベクトルを作成
+
+	//距離を測定
+	if (PlayerToBox_Diff.Length() < Player_Box_MaxRange) {
+		ReturnFlag = true;
+	}
+
+	return ReturnFlag;
 
 }

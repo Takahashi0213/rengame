@@ -49,8 +49,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	EffekseerSupporter efSup;
 
 	//カメラを初期化。
-	g_camera3D.SetPosition({ 0.0f, 0.0f, -500.0f });
-	g_camera3D.SetTarget({ 0.0f, 0.0f, 0.0f });
+	g_camera3D.SetPosition({ 0.0f, 100.0f, 300.0f });
+	g_camera3D.SetTarget({ 0.0f, 100.0f, 0.0f });
 	g_camera3D.SetFar(10000.0f);
 	//2Dカメラを初期化。
 	g_camera2D.SetTarget(CVector3::Zero());
@@ -59,6 +59,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera2D.SetFar(1000.0f);
 
 	//ゲーム
+	//CGameObjectManager::GetInstance()->NewGO<Game>("Main_Game");
 	CGameObjectManager::GetInstance()->NewGO<SceneManager>("SceneManager");
 	
 	//ゲームループ。
@@ -66,10 +67,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	{
 		//描画開始。
 		g_graphicsEngine->BegineRender();
-		if (SceneManager::GetInstance()->GetGameMode() != SceneManager::TitleMode) {
-			//手前に描画を行うデプスステンシルステートを設定する。
-			g_graphicsEngine->GetD3DDeviceContext()->OMSetDepthStencilState(depthStencilState, 0);
-		}
+		//手前に描画を行うデプスステンシルステートを設定する。
+		g_graphicsEngine->GetD3DDeviceContext()->OMSetDepthStencilState(depthStencilState, 0);
 		//ゲームパッドの更新。	
 		for (auto& pad : g_pad) {
 			pad.Update();

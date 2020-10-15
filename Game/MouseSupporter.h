@@ -4,7 +4,7 @@
 /// マウスの色々を楽にする
 /// ・シングルトン
 /// </summary>
-class MouseSupporter
+class MouseSupporter final
 {
 	static MouseSupporter* m_instance;
 public:
@@ -13,9 +13,9 @@ public:
 
 	//カーソルの状態
 	enum mouse_state {
-		Not_Push,	//押されていない
+		Not_Push,		//押されていない
 		Now_Pushing,	//押されている
-		New_Push,	//新規に押された
+		New_Push,		//新規に押された
 		Release_Push,	//押していた状態から離された
 	};
 	//キーの種類
@@ -32,7 +32,7 @@ public:
 	/// </summary>
 	/// <param name="key">取得したいキーの種類</param>
 	/// <returns>キーの状態</returns>
-	mouse_state MouseSupporter::GetMouseKey(mouse_key key) {
+	mouse_state MouseSupporter::GetMouseKey(const mouse_key& key) {
 		mouse_state re;
 		switch (key)
 		{
@@ -54,7 +54,7 @@ public:
 	/// </summary>
 	/// <param name="key">取得したいキーの種類</param>
 	/// <returns>フレーム数</returns>
-	int MouseSupporter::GetMouseTimer(mouse_key key) {
+	int MouseSupporter::GetMouseTimer(const mouse_key& key) {
 		int re;
 		switch (key)
 		{
@@ -72,14 +72,14 @@ public:
 	/// 前フレームと比較したマウスの移動量を返す！！
 	/// </summary>
 	/// <returns>移動量</returns>
-	CVector2 MouseSupporter::GetMouseMove() {
+	const CVector2& MouseSupporter::GetMouseMove() {
 		return m_mouseMove;
 	}
 
-	CVector2 MouseSupporter::GetMousePos();
+	const CVector2 MouseSupporter::GetMousePos();
 	CVector3 MouseSupporter::GetMousePos_3D();
-	CVector2 MouseSupporter::GetMousePos_Sprite();
-	CVector2 MouseSupporter::GetBeforeMouse(int p = 0);
+	const CVector2 MouseSupporter::GetMousePos_Sprite();
+	CVector2 MouseSupporter::GetBeforeMouse(const int p = 0);
 
 	/// <summary>
 	/// マウス移動量を設定
@@ -90,14 +90,14 @@ public:
 	/// 
 	/// </remarks>
 	/// <param name="move">移動量</param>
-	void MouseSupporter::SetWheelMove(int move) {
+	void MouseSupporter::SetWheelMove(const int& move) {
 		m_wheelMove = move;
 	}
 	/// <summary>
 	/// マウス移動量を返す
 	/// </summary>
 	/// <returns>移動量</returns>
-	int MouseSupporter::GetWheelMove() {
+	const int& MouseSupporter::GetWheelMove() {
 		return m_wheelMove;
 	}
 

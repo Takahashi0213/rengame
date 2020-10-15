@@ -116,12 +116,12 @@ void GameBox::GameBox_Render() {
 
 void GameBox::GameBoxUpdate_Colli() {
 
-	Game::GameMode NowGameMode = Game::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
+	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
 
 	if (m_colli_InitFlag == false) {
 		
 		//コライダーを作成。
-		if (NowGameMode == Game::ActionMode) {
+		if (NowGameMode == SceneManager::ActionMode) {
 			CVector3 Pos;
 			if (m_boxTag == Origin) {
 				Pos = m_position;
@@ -131,7 +131,6 @@ void GameBox::GameBoxUpdate_Colli() {
 				Pos += m_localPosition;
 			}
 			Pos.y += m_scale.y * 0.5f;	//ほせいさん
-			//m_physicsStaticObject.CreateMeshObject(m_model, Pos, m_rotation, m_scale);
 			m_physicsStaticObject.CreateBox(Pos, m_rotation, m_scale);
 		}
 		else {
@@ -142,7 +141,6 @@ void GameBox::GameBoxUpdate_Colli() {
 			else {
 				Rot = m_rotation * m_originBox->GetRotation();
 			}
-			//m_physicsStaticObject.CreateMeshObject(m_model, m_position, Rot, m_scale);
 			m_physicsStaticObject.CreateBox(m_position, Rot, m_scale);
 		}
 
@@ -382,6 +380,7 @@ void GameBox::SetAllColor(CVector3 color) {
 		return;
 	}
 
+	//初代箱の色を変更
 	m_model.SetEmissionColor(color);
 	//子供も色変更
 	for (int i = 0; i < m_boxList.size(); i++) {

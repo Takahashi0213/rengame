@@ -9,7 +9,7 @@ public:
 	Menu_BoxAllDelete();
 	~Menu_BoxAllDelete();
 
-	//あっぷでーーーーーーと
+	//あっぷでーと
 	void DeleteCheckUpdate();
 
 private:
@@ -24,10 +24,10 @@ private:
 	const wchar_t* NoText = L"やめる";
 
 	//れんだ～～
-	SpriteRender* MenuWindow;		//ウィンドウ
+	SpriteRender* MenuWindow;			//ウィンドウ
 	SpriteRender* ButtonWindow_Left;	//左ウィンドウ
 	SpriteRender* ButtonWindow_Right;	//右ウィンドウ
-	//
+	//フォント
 	FontRender* Check_Font;	//消しますか？のテキスト
 	FontRender* Yes_Font;	//はいのテキスト
 	FontRender* No_Font;	//いいえのテキスト

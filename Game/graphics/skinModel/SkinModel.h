@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Skeleton.h"
+#include "graphics/Skeleton.h"
 
 #include "DirectionLight.h"
 #include "PointLight.h"

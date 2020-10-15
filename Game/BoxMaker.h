@@ -9,7 +9,7 @@
 /// 箱を生成したり操作したり
 /// ・シングルトン
 /// </summary>
-class BoxMaker : public IGameObject
+class BoxMaker final : public IGameObject
 {
 	static BoxMaker* m_instance;
 public:
@@ -60,10 +60,13 @@ public:
 private:
 	void BoxUpdate();
 	void ModeChange();
+	//作成地点とプレイヤーの距離が一定以下じゃないと作れないよ
+	bool BoxCriateCheck();
 
 	Game* m_game = nullptr;
-	CVector3 m_boxPos = CVector3().Zero();
 	Player* m_player = nullptr;
+
+	CVector3 m_boxPos = CVector3().Zero();			//箱座標
 
 	BoxMakerMode m_boxMakerMode = NomalMode;		//ボックスメイカーモ～～ド
 
@@ -98,7 +101,7 @@ private:
 	//CVector3 m_boxPoint_Stock[4];					//比較用の格納場所
 
 	//クリエイト制御
-	int m_box_Nom = 1;								//箱の数
+	int m_box_Nom = 1;								//存在する箱の数
 	bool m_undoFlag = false;						//アンドゥボタンが押されているかフラグ
 
 	//マナ制御
@@ -112,6 +115,10 @@ private:
 	const float m_mouseMoveHosei = 0.5f;							//マウスの移動に応じた拡大率変更の補正値
 	const CVector3 m_surfaceScaleDef = { 100.0f,100.0f,100.0f };	//面のデフォルトサイズ
 	const CVector3 BoxDefScale = { 100.0f,100.0f,100.0f };			//箱の初期スケール
+	const float Player_Box_MaxRange = 500.0f;						//箱作成の限界距離
+	//クリエイトモードに移行するために必要な最低マナ数、初代箱を生成するときに消費するマナ数でもある
+	const int CriateModeChangeBorder = 10;
+	const float ManaHosei = 5.0f;									//箱作成の消費マナ補正 結果に除算→値が大きいほど安くなる
 
 };
 

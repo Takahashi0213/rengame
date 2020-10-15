@@ -49,7 +49,7 @@ public:
 	/// コマンドが空白の場合、自動でNew_Standが入ります
 	/// 
 	/// </remarks>
-	void StandControl(Stand_Name stand = Stand_Null, Stand_Command command = Stand_Command::New_Stand);
+	void StandControl(Stand_Name stand = Stand_Null, const Stand_Command command = Stand_Command::New_Stand);
 
 private:
 
@@ -143,6 +143,7 @@ private:
 
 	FontRender* m_messageFont;				//メッセージ
 	const int MessageFontPriority = 7;		//メッセージの優先度
+	const float MessageFontOffset = 3.0f;	//メッセージのフチの大きさ（オフセット）
 
 	FontRender* m_messageSkipOshiraseFont;				//スキップのお知らせ
 	const int MessageSkipOshiraseFontPriority = 7;		//スキップお知らせの優先度
@@ -253,7 +254,7 @@ private:
 /// ゲームの演出サポート
 /// ※シングルトン
 /// </summary>
-class GameEffect
+class GameEffect final
 {
 	static GameEffect* m_instance;
 public:

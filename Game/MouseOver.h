@@ -12,7 +12,7 @@ public:
 	/// </summary>
 	/// <param name="smr">スキンモデルレンダー</param>
 	/// <returns>結果（trueならマウスカーソルは衝突しているゾイ）</returns>
-	bool MouseOverCheck(SkinModelRender* smr, CVector3 pos, CQuaternion rot, CVector3 scl);
+	bool MouseOverCheck(const SkinModelRender* smr, const CVector3 pos, const CQuaternion rot, const CVector3 scl);
 
 private:
 

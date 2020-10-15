@@ -298,4 +298,5 @@ void CGOM_Graphics::EndSet() {
 		blendFactor,				//ブレンディングファクター。気にしなくてよい
 		0xffffffff					//サンプリングマスク。気にしなくてよい。
 	);
+
 }

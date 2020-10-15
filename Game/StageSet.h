@@ -38,9 +38,9 @@ public:
 	}
 
 private:
-	LevelSet m_levelSet;
+	LevelSet m_levelSet;		//レベルセットクラス
 
-	BackGround* m_bg = nullptr;
+	BackGround* m_bg = nullptr;	//ステージ
 
 };
 

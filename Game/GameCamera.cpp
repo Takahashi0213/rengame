@@ -31,19 +31,19 @@ GameCamera::~GameCamera()
 
 void GameCamera::Update() {
 
-	Game::GameMode NowGameMode = m_game->GetGameMode();		//現在のゲームモードを呼び出す
+	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
 
-	if (Game::GetInstance()->GetSystemInstance()->m_eventNowFlag == false) {	//イベント中はどれも実行しない
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == false) {	//イベント中はどれも実行しない
 
-		if (NowGameMode == Game::ActionMode || NowGameMode == Game::CreateMode) {
+		if (NowGameMode == SceneManager::ActionMode || NowGameMode == SceneManager::CreateMode) {
 			//共通のカメラ処理
 			CommonMove();
 		}
 
-		if (NowGameMode == Game::ActionMode) {
+		if (NowGameMode == SceneManager::ActionMode) {
 			ActionMode();
 		}
-		else if (NowGameMode == Game::CreateMode) {
+		else if (NowGameMode == SceneManager::CreateMode) {
 			CreateMode();
 		}
 

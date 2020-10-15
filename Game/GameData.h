@@ -31,7 +31,7 @@ public:
 	/// 進行度取得
 	/// </summary>
 	/// <returns>進行度</returns>
-	int GetProgress() {
+	int GetProgress() const {
 		return m_progress;
 	}
 
@@ -39,24 +39,24 @@ public:
 	/// 現在位置変更
 	/// </summary>
 	/// <param name="pd">新しい現在位置</param>
-	void SetPlace(const Place_Data pd) {
+	void SetPlace(const Place_Data& pd) {
 		m_nowPlace = pd;
 	}
 	/// <summary>
 	/// 現在位置取得
 	/// </summary>
 	/// <returns>イマココ！</returns>
-	Place_Data GetPlace() {
+	const Place_Data GetPlace()const {
 		return m_nowPlace;
 	}
 
 	/// <summary>
 	/// メニューフラグの変更と取得
 	/// </summary>
-	void SetMenuFlag(const bool flag) {
+	void SetMenuFlag(const bool& flag) {
 		m_menuFlag = flag;
 	}
-	bool GetMenuFlag() {
+	const bool GetMenuFlag() const {
 		return m_menuFlag;
 	}
 
@@ -64,7 +64,7 @@ public:
 	/// スターマネーの変更
 	/// </summary>
 	/// <param name="money">加算値（負の数も可）</param>
-	void StarMoneyPlus(const int money) {
+	void StarMoneyPlus(const int& money) {
 		m_starMoney += money;
 		if (m_starMoney > MAX_STAR_MONEY) {	//上限
 			m_starMoney = MAX_STAR_MONEY;
@@ -77,7 +77,7 @@ public:
 	/// スターマネーを取得
 	/// </summary>
 	/// <returns>おかね</returns>
-	int GetStarMoney() {
+	const int GetStarMoney()const {
 		return m_starMoney;
 	}
 
@@ -85,7 +85,7 @@ public:
 	/// 現在魔力の設定
 	/// </summary>
 	/// <param name="power">これ</param>
-	void SetMagicPower(const int power) {
+	void SetMagicPower(const int& power) {
 		m_magicPower = power;
 		if (m_magicPower > m_magicPower_MAX) {	//上限
 			m_magicPower = m_magicPower_MAX;
@@ -98,7 +98,7 @@ public:
 	/// 現在魔力の加算
 	/// </summary>
 	/// <param name="power">加算値（負の数も可）</param>
-	void MagicPowerPlus(const int power) {
+	void MagicPowerPlus(const int& power) {
 		m_magicPower += power;
 		if (m_magicPower > m_magicPower_MAX) {	//上限
 			m_magicPower = m_magicPower_MAX;
@@ -111,17 +111,17 @@ public:
 	/// 魔力の取得
 	/// </summary>
 	/// <returns>現在値</returns>
-	int GetMagicPower() {
+	const int GetMagicPower()const {
 		return m_magicPower;
 	}
 
 	/// <summary>
 	/// 最大魔力の設定と取得
 	/// </summary>
-	void SetMaxMagic(const int max) {
+	void SetMaxMagic(const int& max) {
 		m_magicPower_MAX = max;
 	}
-	int GetMaxMagic() {
+	const int GetMaxMagic() const {
 		return m_magicPower_MAX;
 	}
 
@@ -129,14 +129,14 @@ public:
 	/// 現在体力の設定
 	/// </summary>
 	/// <param name="hp">これ</param>
-	void SetHP(const int hp) {
+	void SetHP(const int& hp) {
 		m_hp = hp;
 	}
 	/// <summary>
 	/// 現在体力の加算
 	/// </summary>
 	/// <param name="hp">加算値（負の数も可）</param>
-	void HP_Plus(const int hp) {
+	void HP_Plus(const int& hp) {
 		m_hp += hp;
 		if (m_hp > m_hp_MAX) {	//上限
 			m_hp = m_hp_MAX;
@@ -149,35 +149,37 @@ public:
 	/// 体力の取得
 	/// </summary>
 	/// <returns>現在値</returns>
-	int GetHP() {
+	const int GetHP() const {
 		return m_hp;
 	}
 
 	/// <summary>
 	/// 最大体力の設定と取得
 	/// </summary>
-	void SetMaxHP(const int max) {
+	void SetMaxHP(const int& max) {
 		m_hp_MAX = max;
 	}
-	int GetMaxHP() {
+	const int GetMaxHP() const {
 		return m_hp_MAX;
 	}
+
+	//コンフィグシリーズ
 
 	/// <summary>
 	/// メッセージスピードの設定と取得
 	/// </summary>
-	void SetMessageSpeed(const int speed) {
+	void SetMessageSpeed(const int& speed) {
 		m_messageSpeed = speed;
 	}
-	int GetMessageSpeed() {
+	const int GetMessageSpeed()const {
 		return m_messageSpeed;
 	}
 
 	//キーコンフィグ～～～～！！！
-	void SetBoxCatchKey(const char key) {
+	void SetBoxCatchKey(const char& key) {
 		m_boxCatchKey = key;
 	}
-	const char GetBoxCatchKey() {
+	const char GetBoxCatchKey()const {
 		return m_boxCatchKey;
 	}
 

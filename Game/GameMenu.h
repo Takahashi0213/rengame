@@ -8,7 +8,7 @@
 /// メニューのアレコレを総括する…なんやろなあ
 /// ・シングルトン
 /// </summary>
-class GameMenu
+class GameMenu final
 {
 	static GameMenu* m_instance;
 public:

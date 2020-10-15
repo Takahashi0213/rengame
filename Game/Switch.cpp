@@ -104,7 +104,7 @@ void SwitchObj::SwitchUpdate() {
 	m_physicsStaticObject.SetPositionAndRotation(m_position, m_rotation);
 
 	//アクションモードだけ実行
-	if (Game::GetInstance()->GetGameMode() == Game::ActionMode ) {
+	if (SceneManager::GetInstance()->GetGameMode() == SceneManager::ActionMode ) {
 		GhostCheck();
 	}
 }

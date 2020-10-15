@@ -23,14 +23,16 @@ public:
 	/// </summary>
 	/// <param name="pos">座標</param>
 	/// <param name="rot">回転</param>
-	void GameBox_Set(CVector3 pos, CQuaternion rot = CQuaternion::Identity()) {
+	void GameBox_Set(const CVector3 pos, const CQuaternion rot = CQuaternion::Identity()) {
 		m_position = pos;
 		m_rotation = rot;
 	}
 
+	//レイが当たってるかをチェック
 	bool CheckHitRayToPlane(CVector3 startPos, CVector3 endPos,CVector3* boxPos,CVector3& box_N, CVector3& plane_scale);
 	
-	CVector3 GetPosition() {
+	//座標を返す
+	const CVector3& GetPosition() const {
 		return m_position;
 	}
 
@@ -43,6 +45,7 @@ public:
 	CVector3 GetColor() {
 		return m_model.GetEmissionColor();
 	}
+	//まとめて着色
 	void SetAllColor(CVector3 color);
 
 	//移動量関連
@@ -115,6 +118,11 @@ public:
 		return m_rotation;
 	}
 
+	/// <summary>
+	/// 箱が完成したらコライダーを設定して
+	/// それ以降座標に応じてコライダーを移動させる
+	/// コライダー専用アップデート
+	/// </summary>
 	void GameBoxUpdate_Colli();
 
 	/// <summary>
@@ -192,43 +200,44 @@ private:
 	}
 
 	void MeshStandBy();
+
 	SkinModel m_model;	//スキンモデル。
 
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
 	CMatrix  m_World;
 	
-	LightMaker* m_lightMaker;
+	LightMaker* m_lightMaker;		//ライトメーカー（影を落とすなら必要）
 
 	CVector3 m_position = CVector3().Zero();
 	CQuaternion m_rotation = CQuaternion().Identity();
-	CVector3 m_scale = CVector3().One(); //拡大率
+	CVector3 m_scale = CVector3().One();				//拡大率
 	CVector3 m_moveSpeed = CVector3().Zero();
 
 	//親の箱とのローカル座標
-	GameBox* m_originBox = nullptr;		//初代箱様！！！！
+	GameBox* m_originBox = nullptr;					//初代箱様！！！！（基準になる）
 	CVector3 m_localPosition = CVector3().Zero();	//親との相対座標
-	BoxTag m_boxTag = Another;
+	BoxTag m_boxTag = Another;						//箱のタグ
 
 	//Vector
-	std::vector<VertexBuffer>						m_vertexBufferArray;		//頂点バッファの配列。
+	std::vector<VertexBuffer>						m_vertexBufferArray;	//頂点バッファの配列。
 	std::vector<IndexBuffer>						m_indexBufferArray;		//インデックスバッファの配列。
 
-	//無茶な計算
+	//無茶な計算用
 	CVector3 m_N;
 	CVector3 m_vPos_0;
 	CVector3 m_vPos_1;
 	CVector3 m_vPos_2;
 
-	bool m_colli_InitFlag = false;
+	bool m_colli_InitFlag = false;		//コライダー設定した？？
 
-	//子になるボックスども（OrizinBoxだけ変更される）
+	//子になるボックスども（OrizinBoxだけ変更される、Anotherは不要）
 	std::vector<GameBox*> m_boxList;
 
 	//定数
-	const CVector3 BoxDefScale = { 100.0f,100.0f,100.0f };
+	const CVector3 BoxDefScale = { 100.0f,100.0f,100.0f };		//箱の初期スケール
 	const float m_gravity = 0.6f;		//重力ﾊﾟｩﾜｧ
-	const float Scale = 50.0f;		//補正計算用
-	const float Y_Hosei = 60.0f;	//高さ補正
+	const float Scale = 50.0f;			//補正計算用
+	const float Y_Hosei = 60.0f;		//高さ補正
 
 };
 

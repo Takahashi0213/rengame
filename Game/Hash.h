@@ -28,8 +28,6 @@ public:
 		if (string == nullptr) {
 			return 0;
 		}
-		//wchar_t hoge = *string;
-		//std::hash<wchar_t>()(hoge);
 		int hash = 0;
 		int l = (int)wcslen(string);
 		for (int i = 0; i < l; i++) {

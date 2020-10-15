@@ -192,7 +192,7 @@ GameMenu::~GameMenu()
 void GameMenu::GameMenuUpdate() {
 
 	//取得
-	Game::GameMode GameMode = Game::GetInstance()->GetGameMode();
+	SceneManager::GameMode GameMode = SceneManager::GetInstance()->GetGameMode();
 	CVector2 MousePos = MouseSupporter::GetInstance()->GetMousePos_Sprite();
 	int Left_Key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
 	int Right_Key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Right_Key);
@@ -215,14 +215,14 @@ void GameMenu::GameMenuUpdate() {
 	//まずはメニューフラグの更新
 	switch (GameMode)
 	{
-	case Game::ActionMode:
+	case SceneManager::ActionMode:
 
 		//座標補正
 		PosX += MenuMove;
 		PosX2 += MenuMove;
 		//ボタンと座標一致 かつ アクションモードならボタンのスプライトを大きくする
 		if (MenuButton->MouseOverMouse() == true &&
-			GameMode == Game::GameMode::ActionMode) {
+			GameMode == SceneManager::GameMode::ActionMode) {
 
 			//調整
 			MenuButton->SetScale(1.1f);
@@ -233,7 +233,7 @@ void GameMenu::GameMenuUpdate() {
 			//左クリックされたらメニューを開き、モードをメニューモードに変更する
 			if (Left_Key == MouseSupporter::Release_Push) {
 
-				Game::GetInstance()->SetGameMode(Game::GameMode::MenuMode);
+				SceneManager::GetInstance()->SetGameMode(SceneManager::GameMode::MenuMode);
 				MenuLogoTimer = -1;
 				MenuCommand_Cursor->SetAlpha(1.0f);
 				m_nowMenuCommand = MenuCommand::Create;	//カーソル位置リセリセ
@@ -280,10 +280,10 @@ void GameMenu::GameMenuUpdate() {
 		}
 
 		break;
-	case Game::MenuMode:
+	case SceneManager::MenuMode:
 		//ボタンと座標一致 かつ メニューモードならボタンのスプライトを大きくする
 		if ((MenuButton->MouseOverMouse() == true &&
-			GameMode == Game::GameMode::MenuMode) || 
+			GameMode == SceneManager::GameMode::MenuMode) ||
 			Right_Key == MouseSupporter::New_Push) {
 
 			//調整
@@ -296,7 +296,7 @@ void GameMenu::GameMenuUpdate() {
 			if (Left_Key == MouseSupporter::Release_Push ||
 				Right_Key == MouseSupporter::New_Push) {
 
-				Game::GetInstance()->SetGameMode(Game::GameMode::ActionMode);
+				SceneManager::GetInstance()->SetGameMode(SceneManager::GameMode::ActionMode);
 				MenuCommand_Cursor->SetAlpha(0.0f);
 				EffekseerSupporter::GetInstance()->NoPostMove();
 
@@ -341,7 +341,7 @@ void GameMenu::GameMenuUpdate() {
 	}
 
 	//タイマー更新
-	if (GameMode == Game::MenuMode) {
+	if (GameMode == SceneManager::MenuMode) {
 		m_menuMoveTimer++;
 	}
 
@@ -350,31 +350,31 @@ void GameMenu::GameMenuUpdate() {
 void GameMenu::Update_Effect(int mode) {
 
 	//メニューモードなら！画面にブラーをかけるゥ！
-	if (mode == Game::GameMode::MenuMode) {
+	if (mode == SceneManager::GameMode::MenuMode) {
 
-		float blur = Game::GetInstance()->GetGameGraphicInstance()->m_blurIntensity;
+		float blur = SceneManager::GetInstance()->GetGameGraphicInstance()->m_blurIntensity;
 		blur += BlurSpeed;
 		if (blur > MaxBlur) {
 			blur = MaxBlur;
 		}
-		Game::GetInstance()->GetGameGraphicInstance()->m_blurIntensity = blur;
+		SceneManager::GetInstance()->GetGameGraphicInstance()->m_blurIntensity = blur;
 
 	}
 	//違うなら戻すｯ！！！！
-	if (mode != Game::GameMode::MenuMode) {
+	if (mode != SceneManager::GameMode::MenuMode) {
 
-		float blur = Game::GetInstance()->GetGameGraphicInstance()->m_blurIntensity;
+		float blur = SceneManager::GetInstance()->GetGameGraphicInstance()->m_blurIntensity;
 		blur -= BlurSpeed;
 		if (blur < 0.0f) {
 			blur = 0.0f;
 		}
-		Game::GetInstance()->GetGameGraphicInstance()->m_blurIntensity = blur;
+		SceneManager::GetInstance()->GetGameGraphicInstance()->m_blurIntensity = blur;
 	}
 
 	//メニューの波です
 
 	//メニューモードなら波をシームレス移動
-	if (mode == Game::GameMode::MenuMode) {
+	if (mode == SceneManager::GameMode::MenuMode) {
 
 		if (MenuLogoTimer == -1) {
 			//初回移動！
@@ -449,7 +449,7 @@ void GameMenu::Update_Effect(int mode) {
 void GameMenu::Update_Command() {
 
 	//そもそもメニュー開いてます？
-	if (Game::GetInstance()->GetGameMode() != Game::MenuMode) {
+	if (SceneManager::GetInstance()->GetGameMode() != SceneManager::MenuMode) {
 		return;
 	}
 	//移動完了してないなら実行させません
@@ -754,7 +754,7 @@ void GameMenu::Update_MenuEnter(int leftKey) {
 void GameMenu::Update_CommandNow() {
 
 	//そもそもメニュー開いてます？
-	if (Game::GetInstance()->GetGameMode() != Game::MenuMode) {
+	if (SceneManager::GetInstance()->GetGameMode() != SceneManager::MenuMode) {
 		return;
 	}
 	//何も実行してないなら中断

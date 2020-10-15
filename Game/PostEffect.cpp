@@ -39,7 +39,11 @@ PostEffect::~PostEffect()
 void PostEffect::Init() 
 {
 	m_farShadow.Init();
-	m_dof.Init();
+	if (SceneManager::GetInstance() != nullptr) {
+		if (SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag == true) {
+			m_dof.Init();
+		}
+	}
 }
 void PostEffect::Update()
 {
@@ -48,9 +52,9 @@ void PostEffect::Update()
 void PostEffect::Draw()
 {
 	//Game::GameMode NowGameMode = Game::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
-	Game::GameMode NowGameMode = Game::GameMode::ActionMode;
+	SceneManager::GameMode NowGameMode = SceneManager::GameMode::ActionMode;
 
-	if (NowGameMode == Game::CreateMode) {
+	if (NowGameMode == SceneManager::CreateMode) {
 		//遠い場所を暗くする処理（クリエイト限定）
 		//m_farShadow.Draw(*this);
 	}
@@ -58,13 +62,15 @@ void PostEffect::Draw()
 	//ブルーム。
 	m_bloom.Draw(*this);
 	//ドフ。
-	m_dof.Draw(*this);
+	if (SceneManager::GetInstance() != nullptr) {
+		if (SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag == true) {
+			m_dof.Draw(*this);
+		}
+	}
 
 	//画面にブラーをかける
-	if (Game::GetInstance() != nullptr) {
-		if (Game::GetInstance()->GetGameGraphicInstance()->m_blurIntensity > 0.0f) {
-			BlurDraw();
-		}
+	if (SceneManager::GetInstance()->GetGameGraphicInstance()->m_blurIntensity > 0.0f) {
+		BlurDraw();
 	}
 }
 
@@ -144,7 +150,7 @@ void PostEffect::BlurDraw() {
 	//ガウシアンブラーの初期化と実行
 	if (m_blurInitFlag == false) {
 		m_gaussianBlur.Init(CGameObjectManager::GetInstance()->GetMainRenderTarget()->GetRenderTargetSRV(),
-			Game::GetInstance()->GetGameGraphicInstance()->m_blurIntensity);
+			SceneManager::GetInstance()->GetGameGraphicInstance()->m_blurIntensity);
 		m_blurInitFlag = true;
 	}
 	m_gaussianBlur.Execute(*this);
