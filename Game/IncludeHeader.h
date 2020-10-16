@@ -4,11 +4,16 @@
 /// レベル生成で必要になる敵やギミックをまとめたものです
 /// </summary>
 
-//ギミック
+//アイテム
 #include "StarMoney.h"
+
+//ギミック
 #include "Switch.h"
 #include "Door.h"
 #include "Board.h"
 
 //敵
 #include "TestEnemy.h"
+
+//システムオブジェクト
+#include "SystemBox.h"

@@ -196,7 +196,10 @@ if (m_windowSprite->GetAlpha() < 1.0f) {
 	m_messageSkipOshiraseFont->m_fontSupporter.FontMoveSet({ TextSkipDefPos.x,TextSkipDefPos.y }, 12, 0, false);
 
 	//邪魔なのでステータスを消しておく
-	Game::GetInstance()->GetUI()->CloseUI();
+	GameUI* ui = Game::GetInstance()->GetUI();
+	if (ui != nullptr) {
+		ui->CloseUI();
+	}
 
 	//イベントフラグをtrueにする
 	SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag = true;
@@ -339,7 +342,10 @@ void GameEffect_Message::MessageUpdate() {
 			m_skipFlag = false;
 			SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag = false;
 			//消したステータスを戻す
-			Game::GetInstance()->GetUI()->OpenUI();
+			GameUI* ui = Game::GetInstance()->GetUI();
+			if (ui != nullptr) {
+				ui->OpenUI();
+			}
 		}
 	}
 }

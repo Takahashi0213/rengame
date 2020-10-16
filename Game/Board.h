@@ -22,9 +22,11 @@ public:
 	}
 
 private:
-	SkinModelRender * m_model;	//‚à‚Å``‚é
+	SkinModelRender * m_model;			//‚à‚Å``‚é
 
-	wchar_t* Message = L"";		//ŠÅ”Â‚Ì“à—e
+	wchar_t* Message = L"";				//ŠÅ”Â‚Ì“à—e
+
+	const float BoardRange = 300.0f;	//’²‚×‚ç‚ê‚é”ÍˆÍ
 
 };
 

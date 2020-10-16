@@ -21,6 +21,10 @@ SceneManager::SceneManager()
 	//トランジション
 	TransitionGenerator* tg = CGameObjectManager::GetInstance()->NewGO<TransitionGenerator>("TransitionGenerator", 10);
 	tg->SetObjectTag(objectTag::t_Sprite);		//とにかく最後に実行されるようにする
+	//カメラサポーターの生成
+	CGameObjectManager::GetInstance()->NewGO<CameraSupporter>("CameraSupporter");
+	//ライトメーカーの生成
+	CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
 
 	//最初はタイトル！
 	m_title = CGameObjectManager::GetInstance()->NewGO<Title>("Game_Title");

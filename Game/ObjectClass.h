@@ -9,6 +9,7 @@ public:
 		ItemObj,		//アイテム
 		GimmickObj,		//ギミック系
 		EnemyObj,		//敵（そのまんま）
+		SystemObj,		//ゲームシステム系（ゴーストなど）
 	};
 
 	ObjectClass();

@@ -4,6 +4,7 @@
 #include "GameUI.h"
 #include "PhysicsGhostObject.h"
 #include "system/CGameObjectManager.h"
+#include "OP.h"
 
 /// <summary>
 /// ゲーム！
@@ -19,6 +20,11 @@ public:
 	void Update()override;
 	void Render()override;
 
+	enum GameState {	//OPからゲーム開始まで
+		GameState_OP,		//オープニング
+		GamaState_Game,		//ゲーム開始！
+	};
+
 	/// <summary>
 	/// インスタンスを取得！
 	/// </summary>
@@ -32,11 +38,19 @@ public:
 
 private:
 
+	//OPが終わってゲームが始まるときのやーつ
+	void GameSetUp();
+
+	GameState m_gameState = GameState_OP;		//最初はOPから入ります
+
 	//ここからゲーム用
 
 	GameData m_gameData;
 	GameEffect m_gameEffect;
 
 	GameUI* m_ui = nullptr;
+
+	OP* m_op = nullptr;
+
 };
 

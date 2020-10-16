@@ -3,12 +3,9 @@
 
 #include "Player.h"
 #include "BoxMaker.h"
-#include "TestEnemy.h"
 
 #include "GameCamera.h"
-#include "GameUI.h"
 
-#include "Switch.h"
 #include "StageSet.h"
 
 Game* Game::m_instance = nullptr;
@@ -26,42 +23,22 @@ Game::Game()
 	SceneManager::GetInstance()->SetGameMode(SceneManager::ActionMode);
 	//Dofを有効にする
 	SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag = true;
-
-	//生成
-	
-	//ライトメーカー
-	if(LightMaker::GetInstance() == nullptr) {
-		CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
-	}
 	//アンビエントライトを初期化する
 	LightMaker::GetInstance()->ResetAmbientColor();
 
-	//カメラサポーターの生成
-	CGameObjectManager::GetInstance()->NewGO<CameraSupporter>("CameraSupporter");
-
-	//BackGround* bg = CGameObjectManager::GetInstance()->NewGO<BackGround>("BackGround", 0);
-	BoxMaker* m_box = CGameObjectManager::GetInstance()->NewGO<BoxMaker>("BoxMaker", 1);
-	Player* pl = CGameObjectManager::GetInstance()->NewGO<Player>("Player", 1);
-	GameUI* ui = CGameObjectManager::GetInstance()->NewGO<GameUI>("GameUI", 8);
-	m_ui = ui;
-
-	//カメラ
-	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
-
-	//ボックスメイカーに渡すよ
-	m_box->SetPlayer(pl);
+	//生成
+	
+	//OPを生成
+	m_op = new OP;
 
 	//トランジション
 	TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::NanameBox, 
 		SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime, true);
 
+#ifdef _DEBUG
 	//ワイヤーフレームを表示しますすうすすすうう
 	g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
-
-	//ステージ
-	StageSet m_stageSet;
-	m_stageSet.CriateStage(L"Assets/modelData/0_0.cmo",L"Assets/level/stage_00.tkl");
-	m_stageSet.SetGame(this);
+#endif
 
 }
 
@@ -74,10 +51,47 @@ Game::~Game()
 
 void Game::Update() {
 
+	switch (m_gameState)
+	{
+	case Game::GameState_OP:
+		//OPクラスアップデート
+		m_op->OP_Update();
+		//OPが終わったら切り替える
+		if (m_op->GetEndFlag() == true) {
+			//切り替え
+
+		}
+
+		break;
+	case Game::GamaState_Game:
+		//ゲーム中専用
+
+		break;
+	}
+
+	//どのステートでもエフェクト更新はする
 	m_gameEffect.GameEffectUpdate();
 
 }
 
 void Game::Render() {
+
+}
+
+void Game::GameSetUp() {
+
+	//ボックスメイカーの作成
+	BoxMaker* m_box = CGameObjectManager::GetInstance()->NewGO<BoxMaker>("BoxMaker", 1);
+	//プレイヤーの作成
+	Player* pl = CGameObjectManager::GetInstance()->NewGO<Player>("Player", 1);
+	//ボックスメイカーに渡すよ
+	m_box->SetPlayer(pl);
+	//UIの作成
+	m_ui = CGameObjectManager::GetInstance()->NewGO<GameUI>("GameUI", 8);
+	//カメラ
+	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
+	//ステージ
+	StageSet m_stageSet;
+	m_stageSet.CriateStage(L"Assets/modelData/0_0.cmo", L"Assets/level/stage_00.tkl");
 
 }

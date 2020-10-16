@@ -169,6 +169,9 @@
     <Filter Include="Scene\GameScene">
       <UniqueIdentifier>{e052878d-39d9-471c-bdf7-d679e45eba79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="object\SystemObject">
+      <UniqueIdentifier>{042f1fff-fd25-437b-8058-5f587f7f2fa3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -445,6 +448,9 @@
     </ClCompile>
     <ClCompile Include="Tutorial.cpp">
       <Filter>Scene\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemBox.cpp">
+      <Filter>object\SystemObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -747,6 +753,9 @@
     <ClInclude Include="Tutorial.h">
       <Filter>Scene\GameScene</Filter>
     </ClInclude>
+    <ClInclude Include="SystemBox.h">
+      <Filter>object\SystemObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Titan.fbx">
@@ -798,6 +807,12 @@
       <Filter>Assets\modelData\Stage\Stage0</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_2.fbx">
+      <Filter>Assets\modelData\Stage\Stage1</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Scaffold\Scaffold1.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_3.fbx">
       <Filter>Assets\modelData\Stage\Stage1</Filter>
     </MeshContentTask>
   </ItemGroup>

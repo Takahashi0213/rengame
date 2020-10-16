@@ -32,11 +32,6 @@ Player::Player()
 	//ゲームのポインタ
 	m_gameObj = Game::GetInstance();
 
-	//ニセプレイヤーの作成
-	//SkinModelRender* smr = NewGO<SkinModelRender>("Player2", 0);
-	//smr->Model_Init(L"Assets/modelData/unityChan.cmo");
-	//smr->SetPosition({ 100.0f,50.0f,100.0f });
-
 	//スプライトマスクのテスト
 
 	//SpriteRender* MainSprite = NewGO<SpriteRender>("TEST", 0);
@@ -93,39 +88,11 @@ Player::~Player()
 void Player::Update()
 {
 	if (hoge == 0) {
-		//GameEffect::GetInstance()->EasyEffect(L"ああ感\Rいい\Dうう\n\Rええ\Dおお",
 		GameEffect::GetInstance()->EasyEffect(L"ああ感いいうう\nええ\nおお",
 			GameEffect_Stand::Stand_Normal,
 			GameEffect_Stand::New_Stand);
 		hoge++;
 	}
-	if (hoge == 2) {
-		GameEffect::GetInstance()->EasyEffect(L"今日もいい天気", GameEffect_Stand::Stand_Happy);
-		hoge++;
-	}
-	if (hoge == 4) {
-		GameEffect::GetInstance()->EasyEffect(L"ご飯食ってて\n喋れません\nほげ～～",
-			GameEffect_Stand::Stand_Sad,
-			GameEffect_Stand::Shake_Stand);
-		hoge++;
-	}	
-	if (hoge == 6) {
-		GameEffect::GetInstance()->GetInstance_Stand()->StandControl(
-			GameEffect_Stand::Stand_Happy,
-			GameEffect_Stand::Jump_Stand);
-		GameEffect::GetInstance()->GetInstance_Message()->MessageEffect(L"笑いやがった\nはははは\nはは　は");
-		hoge++;
-	}
-	if (hoge == 8) {
-		GameEffect::GetInstance()->GetInstance_Stand()->StandControl(
-			GameEffect_Stand::Stand_Normal,
-			GameEffect_Stand::Delete_Stand);
-		hoge++;
-	}
-	if (GameEffect::GetInstance()->GetInstance_Message()->GetMessageOkuriFlag() == true) {
-		hoge++;
-	}
-
 	//モノクロになーる
 	if (m_gameObj != nullptr) {
 		if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode && m_monochromeFlag == false) {

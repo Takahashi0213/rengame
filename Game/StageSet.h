@@ -18,11 +18,6 @@ public:
 
 	void CriateStage(const wchar_t* stage_filePath, const wchar_t* level_filePath);
 
-	//ƒQ[ƒ€‚ÌƒAƒhƒŒƒX‚ð’@‚«•t‚¯‚Ä‚â‚ê
-	void SetGame(Game* game) {
-		m_bg->SetGame(game);
-	}
-
 	/// <summary>
 	/// ”wŒi‚ð•Ô‚·
 	/// </summary>

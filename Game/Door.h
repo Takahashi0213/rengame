@@ -50,15 +50,15 @@ private:
 		m_actionFlag = CheckFlag;	//trueのままならｵｹ
 	}
 
-	SkinModelRender* m_model;	//土台もで～～る
+	SkinModelRender* m_model;						//土台もで～～る
 
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
 
-	void DoorUpDowmUpdate();	//ドアの上下移動あっぷでーーーーーーと
+	void DoorUpDowmUpdate();						//ドアの上下移動あっぷでーーーーーーと
 
-	ObjectClass* m_LinkPt[10] = { nullptr };	//ドア上下トリガー
-	int m_setNom = 0;							//イマドコ
-	bool m_upDownFlag = false;					//上下フラグ（1回だけ実行するためのbool）
+	ObjectClass* m_LinkPt[10] = { nullptr };		//ドア上下トリガー
+	int m_setNom = 0;								//イマドコ
+	bool m_upDownFlag = false;						//上下フラグ（1回だけ実行するためのbool）
 
 	//反応の仕様を決めるくん
 	//ギミック系→オフになったら閉じる
@@ -67,10 +67,10 @@ private:
 
 	//定数
 	const CVector3 StaticSize = { 250.0f,300.0f,20.0f };	//扉の当たり判定サイズ
-	const float StaticY_Hosei = 100.0f;		//当たり判定が埋まるので上に補正する
+	const float StaticY_Hosei = 100.0f;						//当たり判定が埋まるので上に補正する
 
-	const float UpDown_Y = 500.0f;			//扉の上下移動量
-	const int UpDownTime = 20;				//扉の上下移動時間
+	const float UpDown_Y = 500.0f;							//扉の上下移動量
+	const int UpDownTime = 20;								//扉の上下移動時間
 
 };
 

@@ -10,3 +10,7 @@ OP::OP()
 OP::~OP()
 {
 }
+
+void OP::OP_Update() {
+
+}

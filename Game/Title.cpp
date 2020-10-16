@@ -18,9 +18,8 @@ Title::Title()
 	//Dofを無効にする
 	SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag = false;
 
-	//ライトメーカーの生成
-	lm = CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
-	lm->SetAmbientColor({ 1.0f, 1.0f, 1.0f });
+	//明るくする
+	LightMaker::GetInstance()->SetAmbientColor({ 1.0f, 1.0f, 1.0f });
 
 	//初期設定
 	SetUp();

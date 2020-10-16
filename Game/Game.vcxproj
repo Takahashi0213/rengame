@@ -189,6 +189,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Switch.cpp" />
+    <ClCompile Include="SystemBox.cpp" />
     <ClCompile Include="system\CGameObjectManager.cpp" />
     <ClCompile Include="system\IGameObject.cpp" />
     <ClCompile Include="system\system.cpp" />
@@ -291,6 +292,7 @@
     <ClInclude Include="StarMoney.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Switch.h" />
+    <ClInclude Include="SystemBox.h" />
     <ClInclude Include="SystemData.h" />
     <ClInclude Include="system\CGameObjectManager.h" />
     <ClInclude Include="system\IGameObject.h" />
@@ -311,6 +313,7 @@
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor2.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\Door.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\jewel.fbx" />
+    <MeshContentTask Include="Assets\modelData\Gimmick\Scaffold\Scaffold1.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Base.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Coli.fbx" />
@@ -319,6 +322,7 @@
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_1.fbx" />
     <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_2.fbx" />
+    <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_3.fbx" />
     <MeshContentTask Include="Assets\modelData\Test_Enemy.fbx" />
     <MeshContentTask Include="Assets\modelData\Titan.fbx" />
     <MeshContentTask Include="Assets\modelData\Title\Title_Ball.fbx" />

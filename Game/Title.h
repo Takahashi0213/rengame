@@ -17,7 +17,7 @@ public:
 	const CVector2 RogoSpriteSize = { 1000.0f,400.0f };		//ロゴ画像の大きさ
 	const CVector3 RogoDefPos = { 0.0f,0.0f,0.0f };			//ロゴの基準
 	const int RogoCirclePriority = 9;						//サイクルの優先度
-	const int RogoMoziPriority = 10;						//文字の優先度（ミニ文字含む）
+	const int RogoMoziPriority = 4;							//文字の優先度（ミニ文字含む）
 	//演出編 サイクル
 	const int RogoCircleDelay = 2;							//サイクルごとのディレイ
 	const float RogoCircleMaxScale = 1.2f;					//サイクルの最大サイズ
@@ -114,7 +114,7 @@ private:
 
 	//スプライト
 	SpriteRender* m_black;					//土台
-	const int Black_Priority = 8;			//優先度
+	const int Black_Priority = 3;			//優先度
 
 	SpriteRender* m_bg1;					//ループ背景1（モデルより先に描く）
 	const int BG1_Priority = 0;				//優先度
@@ -134,7 +134,7 @@ private:
 	const CVector3 Command_DefPos = { -400.0f,0.0f,0.0f };		//初期座標
 	const float Command_Y_Hosei = 120.0f;						//コマンド同士の間隔
 	const CVector2 CommandSpriteSize = { 350.0f,120.0f };		//コマンド画像の大きさ
-	const int Command_Priority = 5;								//優先度
+	const int Command_Priority = 1;								//優先度
 	const float Command_Y_Up = 800.0f;							//コマンドの初期位置Y補正（落とす用）
 
 	//ロゴエフェクト
