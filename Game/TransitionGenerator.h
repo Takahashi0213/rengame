@@ -50,9 +50,9 @@ private:
 	};
 
 	//トランジション用
-	int m_transitionLimit = 0;	//トランジション実行時間
-	float m_borderLine = 0.0f;	//描画されるライン
-	bool m_transitionMode = false;	//falseなら表示、trueなら消去
+	int m_transitionLimit = 0;			//トランジション実行時間
+	float m_borderLine = 0.0f;			//描画されるライン
+	bool m_transitionMode = false;		//falseなら表示、trueなら消去
 	bool m_nowTransitionFlag = false;	//トランジションちう
 	const float MoveSpeed = 10.0f;		//計算用
 

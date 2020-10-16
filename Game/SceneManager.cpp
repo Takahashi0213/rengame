@@ -18,6 +18,10 @@ SceneManager::SceneManager()
 	//サウンドエンジンを初期化。
 	m_soundEngine.Init();
 
+	//トランジション
+	TransitionGenerator* tg = CGameObjectManager::GetInstance()->NewGO<TransitionGenerator>("TransitionGenerator", 10);
+	tg->SetObjectTag(objectTag::t_Sprite);		//とにかく最後に実行されるようにする
+
 	//最初はタイトル！
 	m_title = CGameObjectManager::GetInstance()->NewGO<Title>("Game_Title");
 	//タイトルがいらない時用
@@ -79,7 +83,8 @@ void SceneManager::TitleCommand(const Title::TitleCommand command) {
 		//ニューゲーム
 		CGameObjectManager::GetInstance()->DeleteGO(m_title);
 		m_title = nullptr;
-		CGameObjectManager::GetInstance()->NewGO<Game>("Main_Game");
+		m_nowScene = Game_Sence;
+		m_game = CGameObjectManager::GetInstance()->NewGO<Game>("Main_Game");
 		break;
 	case Title::Game_Continue:
 		//ロード画面へ

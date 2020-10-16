@@ -16,7 +16,11 @@ public:
 	enum Obj_Tag {
 		Tag_Switch,			//スイッチ 対応したドアなどのギミックをLinkObjに設定する
 		Tag_Door,			//ドア スイッチから信号を受け取った場合移動する
-		Tag_Test_Enemy		//テストエネミー 水でできた鳩さん
+		Tag_BigDoor1,		//巨大ドア（向かって左側）
+		Tag_BigDoor2,		//巨大ドア（向かって右側）
+		Tag_Test_Enemy,		//テストエネミー 水でできた鳩さん
+		Tag_Jewel,			//スタージュエル
+		Tag_Board,			//看板 Obj_Memoに内容を書く
 	};
 
 	//レベルごとにこいつがオブジェクトの数だけ必要
@@ -91,7 +95,7 @@ public:
 private:
 
 	//レベルデータ本体（手動入力）
-	const Level_Data m_levelData[2]{
+	const Level_Data m_levelData[5]{
 		//チュートリアル
 		{
 			L"Assets/level/stage_00.tkl",	//レベルファイル名
@@ -104,7 +108,28 @@ private:
 				{ L"Door3",Tag_Door,L"" },
 				{ L"Test_Enemy",Tag_Test_Enemy,L"Door2" },
 			}
+		},
+		//草原1
+		{
+			L"Assets/level/stage_1_1.tkl",	//レベルファイル名
+			{
+				{ L"Test_Enemy",Tag_Test_Enemy,L"" },
+				{ L"jewel1",Tag_Jewel,L"" },
+				{ L"jewel2",Tag_Jewel,L"" },
+				{ L"jewel3",Tag_Jewel,L"" },
+				{ L"jewel4",Tag_Jewel,L"" },
+				{ L"jewel5",Tag_Jewel,L"" },
+			}
+		},
+		//草原2
+		{
+			L"Assets/level/stage_1_2.tkl",	//レベルファイル名
+			{
+				{ L"jewel1",Tag_Jewel,L"" },
+				{ L"jewel2",Tag_Jewel,L"" },
+			}
 		}
+
 	};
 
 };

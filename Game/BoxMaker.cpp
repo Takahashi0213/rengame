@@ -425,3 +425,16 @@ bool BoxMaker::BoxCriateCheck() {
 	return ReturnFlag;
 
 }
+
+void BoxMaker::BoxAllDelete() {
+
+	//削除
+	for (auto go : m_boxList) {
+		delete go;
+	}
+	//リストの初期化
+	m_boxList.clear();
+	//マナを戻す
+	GameData::GetInstance()->SetMagicPower(GameData::GetInstance()->GetMaxMagic());
+
+}

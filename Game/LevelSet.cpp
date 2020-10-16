@@ -38,6 +38,9 @@ void LevelSet::Init(const wchar_t* LEVEL_Name) {
 		}
 	}
 
+	//レベルNoを渡す
+	GameData::GetInstance()->SetNowMapLevel(m_levelNo);
+
 	//レベル読み込みますますますの
 	m_level.Init(LEVEL_Name, [&](LevelObjectData& objData) {
 		
@@ -47,7 +50,7 @@ void LevelSet::Init(const wchar_t* LEVEL_Name) {
 
 		//生成
 		NewObj(objData, ObjectTag);
-		//配列に登録（強引にキャストしてるけど大丈夫かは謎です）
+		//配列に登録
 		m_Obj_Data[i] = Obj_Data{ 
 			ObjectTag,
 			Level_Data.GetObjectName(m_levelNo, ObjNo),
@@ -89,6 +92,12 @@ void LevelSet::NewObj(LevelObjectData& data, LevelData::Obj_Tag tag) {
 		pt->SetScale(data.scale*10.0f);
 	}
 
+	if (tag == LevelData::Obj_Tag::Tag_Jewel) {	//ジュエル
+		StarMoney* pt = CGameObjectManager::GetInstance()->NewGO<StarMoney>(data.name, 0);
+		pt->SetPosition(data.position*10.0f);
+		pt->SetRotation(data.rotation);
+		pt->SetScale(data.scale*10.0f);
+	}
 }
 
 void LevelSet::LinkObj(int levelNo, int i) {

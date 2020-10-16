@@ -126,6 +126,30 @@ void SkinModelRender::Model_Init(const wchar_t* filePath, CVector3 pos, CQuatern
 }
 
 /// <summary>
+/// 初期化する
+/// </summary>
+/// <param name="filePath">モデルのファイルパス</param>
+/// <param name="animationClips">アニメーションクリップの配列の先頭アドレス</param>
+/// <param name="numAnimationClips">アニメーションクリップの数</param>
+void SkinModelRender::Model_Init_Anim(const wchar_t* filePath,
+	AnimationClip* animationClips,
+	int numAnimationClips)
+{
+	m_skinModel.Init(filePath);
+	InitAnimation(animationClips, numAnimationClips);
+}
+
+//アニメーションの初期化
+void SkinModelRender::InitAnimation(AnimationClip* animationClips, int numAnimationClips)
+{
+	m_animationClips = animationClips;
+	m_numAnimationClips = numAnimationClips;
+	if (m_animationClips != nullptr) {
+		m_animation.Init(m_skinModel, m_animationClips, m_numAnimationClips);
+	}
+}
+
+/// <summary>
 /// アップデート
 /// </summary>
 void SkinModelRender::Update() {

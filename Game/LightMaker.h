@@ -19,50 +19,50 @@ public:
 	void Update()override;
 	void Render()override;
 
-	void LightMaker::D_LightMake(int lightNo, CVector4 dir, CVector4 col,float spec);
-	void LightMaker::D_LightDelete(int lightNo);
+	void LightMaker::D_LightMake(const int lightNo, const CVector4 dir, const CVector4 col, const float spec);
+	void LightMaker::D_LightDelete(const int lightNo);
 
-	void LightMaker::P_LightMake(int lightNo, CVector3 pos, CVector3 col, float range);
+	void LightMaker::P_LightMake(const int lightNo, const CVector3 pos, const CVector3 col, const float range);
 	void LightMaker::P_LightDeleteAll();
-	void LightMaker::P_LightDelete(int lightNo);
+	void LightMaker::P_LightDelete(const int lightNo);
 
 	/// <summary>
 	/// 引数に設定したライトの方向を変更する
 	/// </summary>
-	void LightMaker::D_Light_SetDirection(int lightNo, CVector4 dir) {
+	void LightMaker::D_Light_SetDirection(const int lightNo, const CVector4 dir) {
 		m_light.direction[lightNo] = dir;
 	}
-	CVector4 LightMaker::D_Light_GetDirection(int lightNo) {
+	CVector4 LightMaker::D_Light_GetDirection(const int lightNo) {
 		return m_light.direction[lightNo];
 	}
 
 	/// <summary>
 	/// 引数に設定したライトの色を変更する
 	/// </summary>
-	void LightMaker::D_Light_SetColer(int lightNo, CVector4 col) {
+	void LightMaker::D_Light_SetColer(const int lightNo, const CVector4 col) {
 		m_light.color[lightNo] = col;
 	}
-	CVector4 LightMaker::D_Light_GetColer(int lightNo) {
+	CVector4 LightMaker::D_Light_GetColer(const int lightNo) {
 		return m_light.color[lightNo];
 	}
 
 	/// <summary>
 	/// スペキュラの絞りを変更する
 	/// </summary>
-	void LightMaker::D_Light_SetSpec(int lightNo, float spec) {
+	void LightMaker::D_Light_SetSpec(const int lightNo, const  float spec) {
 		m_light.color[lightNo].w = spec;
 	}
-	float LightMaker::D_Light_GetSpec(int lightNo) {
+	float LightMaker::D_Light_GetSpec(const int lightNo) {
 		return m_light.color[lightNo].w;
 	}
 
 	/// <summary>
 	/// ポイントライトの座標を取得・変更
 	/// </summary>
-	void LightMaker::P_Light_SetPos(int lightNo, CVector3 pos) {
+	void LightMaker::P_Light_SetPos(const int lightNo, const CVector3 pos) {
 		m_pointLight.position[lightNo] = pos;
 	}
-	CVector3 LightMaker::P_Light_GetPos(int lightNo) {
+	CVector3 LightMaker::P_Light_GetPos(const int lightNo) {
 		CVector3 ret;
 		ret.Set(m_pointLight.position[lightNo]);
 		return ret;
@@ -124,8 +124,15 @@ public:
 	/// 環境光をセットする
 	/// </summary>
 	/// <param name="color">環境光</param>
-	void SetAmbientColor(CVector3 color) {
+	void SetAmbientColor(const CVector3 color) {
 		m_ambientColor = color;
+	}
+
+	/// <summary>
+	/// 環境甲をリセットする
+	/// </summary>
+	void ResetAmbientColor() {
+		m_ambientColor = AmbientDefColor;
 	}
 
 	/// <summary>
@@ -140,7 +147,7 @@ public:
 	/// ライトカメラの座標を指定
 	/// </summary>
 	/// <param name="pos">座標</param>
-	void SetLightCameraPosition(CVector3 pos) {
+	void SetLightCameraPosition(const CVector3 pos) {
 		m_lightCameraPosition = pos;
 	}
 
@@ -156,7 +163,7 @@ public:
 	/// ライトカメラの注視点を指定
 	/// </summary>
 	/// <param name="pos">注視点</param>
-	void SetLightCameraTarget(CVector3 pos) {
+	void SetLightCameraTarget(const CVector3 pos) {
 		m_lightCameraTarget = pos;
 	}
 
@@ -196,7 +203,8 @@ private:
 	bool m_lightFlag_D = false;	//ディレクションライト有効フラグ
 	bool m_lightFlag_P = false;	//ポイントライト有効フラグ
 
-	CVector3 m_ambientColor = { 0.1f,0.1f,0.2f };	//環境光の色
+	const CVector3 AmbientDefColor = { 0.1f,0.1f,0.2f };	//環境光デフォルトカラー
+	CVector3 m_ambientColor = AmbientDefColor;	//環境光の色
 
 	CVector3 m_lightCameraPosition;				//ライトカメラの視点。
 	CVector3 m_lightCameraTarget;				//ライトカメラの注視点。

@@ -20,6 +20,7 @@ void SkinModelSupporter::SkinModelSupporterUpdate() {
 
 	//ここからモデル更新
 	SkinModelMoveUpdate();
+	SkinModelRotationUpdate();
 
 	//最後に更新したデータを返す
 	SkinModelDataReturn();
@@ -56,6 +57,35 @@ void SkinModelSupporter::SkinModelMove(CVector3 move, int moveTime, int moveDela
 	//リストに追加や
 	SkinModelMoveSet set = { move,CVector3().Zero(),moveTime,moveDelay,0,relative,false };
 	m_skinModelMoveList.push_back(set);
+}
+
+/// <summary>
+/// 回転移動をセットする
+/// </summary>
+/// <remarks>
+/// 
+/// 永久回転をセットしていて停止したい場合のサンプルコード
+/// SkinModelRotation(0.0f, 0,0);
+/// 
+/// </remarks>
+/// <param name="rot">1フレームの回転量（float）</param>
+/// <param name="axis">回転軸（CVector3::AxisY()など）</param>
+/// <param name="moveTime">回転時間（loopflagがtrueなら無効）</param>
+/// <param name="moveDelay">回転ディレイ</param>
+/// <param name="loopflag">trueにすると停止命令までずっと回転</param>
+void SkinModelSupporter::SkinModelRotation(const float rot, CVector3 axis, 
+	const int moveTime, const int moveDelay, const bool loopflag) {
+
+	//現在の回転に合わせる
+	CQuaternion rotation = m_skinModelRender->GetRotation();
+	rotation.Multiply(axis);
+	rotation.SetRotationDeg(axis, rot);
+
+	m_skinModelRotation = rotation;
+	m_skinModelRotationLimit = moveTime;
+	m_skinModelRotationDelay = moveDelay;
+	m_skinModelLoopRotationFlag = loopflag;
+	m_skinModelRotationTimer = 0;
 }
 
 /// <summary>
@@ -115,6 +145,31 @@ void SkinModelSupporter::SkinModelMoveUpdate() {
 		}
 		else {
 			it++; //それ以外は次へ。
+		}
+	}
+
+}
+
+/// <summary>
+/// モデルの回転を実行
+/// </summary>
+void SkinModelSupporter::SkinModelRotationUpdate() {
+
+	//タイマーが0以上なら実行中
+	if (m_skinModelRotationTimer >= 0) {
+
+		if (m_skinModelRotationTimer >= m_skinModelRotationDelay) { //ディレイを考慮
+
+															  //回転を計算
+			m_rotation *= m_skinModelRotation;
+
+		}
+
+		m_skinModelRotationTimer++;
+
+		if (m_skinModelRotationTimer >= m_skinModelRotationLimit + m_skinModelRotationDelay && m_skinModelLoopRotationFlag == false) {
+			//おしまひ
+			m_skinModelRotationTimer = -1;
 		}
 	}
 

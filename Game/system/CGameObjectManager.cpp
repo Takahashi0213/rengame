@@ -34,7 +34,7 @@
 		///////////////////////////////////////////////
 
 		//登録されている背景スプライトの更新関数を呼び出す
-		for (int i = 0; i < MAX_OBJ_PRIORITY; i++) { //優先度
+		for (int i = 0; i <= MAX_OBJ_PRIORITY; i++) { //優先度
 			for (auto go : m_goList) {
 				if (go->GetActiveFlag() == true && go->GetObjectTag() == IGameObject::t_BackSprite && go->GetPriority() == i) {
 					go->Update();
@@ -42,7 +42,7 @@
 			}
 		}
 		//登録されているゲームオブジェクトの更新関数を呼び出す
-		for (int i = 0; i < MAX_OBJ_PRIORITY; i++) { //優先度
+		for (int i = 0; i <= MAX_OBJ_PRIORITY; i++) { //優先度
 			for (auto go : m_goList) {
 				if (go->GetActiveFlag() == true && go->GetObjectTag() == IGameObject::t_Other && go->GetPriority() == i) {
 					go->Update();
@@ -50,7 +50,7 @@
 			}
 		}
 		//登録されているスプライトの更新関数を呼び出す
-		for (int i = 0; i < MAX_OBJ_PRIORITY; i++) { //優先度
+		for (int i = 0; i <= MAX_OBJ_PRIORITY; i++) { //優先度
 			for (auto go : m_goList) {
 				if (go->GetActiveFlag() == true && go->GetObjectTag() == IGameObject::t_Sprite && go->GetPriority() == i) {
 					go->Update();
@@ -90,7 +90,7 @@
 		m_cgom_Graphics->EndSet();
 
 		//登録されているスプライトの描画関数を呼び出す
-		for (int i = 0; i < MAX_OBJ_PRIORITY; i++) { //優先度
+		for (int i = 0; i <= MAX_OBJ_PRIORITY; i++) { //優先度
 			for (auto go : m_goList) {
 				if (go->GetActiveFlag() == true && go->GetObjectTag() == IGameObject::t_Sprite && go->GetPriority() == i) {
 					go->Render();
@@ -148,7 +148,7 @@
 		m_cgom_Graphics->ForwordRender();
 
 		//登録されているスプライトの描画関数を呼び出す
-		for (int i = 0; i < MAX_OBJ_PRIORITY; i++) { //優先度
+		for (int i = 0; i <= MAX_OBJ_PRIORITY; i++) { //優先度
 			for (auto go : m_goList) {
 				if (go->GetActiveFlag() == true && go->GetObjectTag() == IGameObject::t_BackSprite && go->GetPriority() == i) {
 					go->Render();
@@ -157,7 +157,7 @@
 		}
 
 		//登録されているゲームオブジェクトの描画関数を呼び出す
-		for (int i = 0; i < MAX_OBJ_PRIORITY; i++) { //優先度
+		for (int i = 0; i <= MAX_OBJ_PRIORITY; i++) { //優先度
 			for (auto go : m_goList) {
 				if (go->GetActiveFlag() == true && go->GetObjectTag() == IGameObject::t_Other && go->GetPriority() == i) {
 					go->Render();

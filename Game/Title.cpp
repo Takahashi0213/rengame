@@ -19,7 +19,7 @@ Title::Title()
 	SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag = false;
 
 	//ライトメーカーの生成
-	LightMaker* lm = CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
+	lm = CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
 	lm->SetAmbientColor({ 1.0f, 1.0f, 1.0f });
 
 	//初期設定
@@ -31,6 +31,25 @@ Title::~Title()
 {
 	//インスタンスが破棄されたので、nullptrを代入
 	m_instance = nullptr;
+
+	//全て片付ける！！！
+	DeleteGO(m_black);
+	DeleteGO(m_bg1);
+	DeleteGO(m_bg2);
+	DeleteGO(m_ball);
+	DeleteGO(m_player);
+	DeleteGO(m_dummyBox);
+	for (auto iter = Rogo.TitleRogo_Circle.begin(); iter != Rogo.TitleRogo_Circle.end(); iter++) {
+		DeleteGO(iter->second);
+	}
+	for (auto iter = Rogo.TitleRogo_Mozi.begin(); iter != Rogo.TitleRogo_Mozi.end(); iter++) {
+		DeleteGO(iter->second);
+	}
+	DeleteGO(Rogo.m_titleRogo_Mozi_Hakobun);
+	DeleteGO(m_command_Start);
+	DeleteGO(m_command_Continue);
+	DeleteGO(m_command_End);
+
 }
 
 void Title::Update() {
@@ -45,14 +64,22 @@ void Title::Update() {
 		break;
 	case Title::Command_Wait:
 		EffectUpdate_CommandWait();
+		CommandSelect();	//コマンド選択待ち
 		break;
 	case Title::Command_Effect:
 		EffectUpdate_CommandEffect();
 		break;
 	}
 
+	//背景更新
+	BG_Update();
+
 	//カメラ
 	g_camera3D.Update();
+	//シャドウマップ
+	//ShadowMap::GetInstance()->RegistShadowCaster(&m_player->GetModel_());
+	//ShadowMap::GetInstance()->RegistShadowCaster(&m_dummyBox->GetModel_());
+	//ShadowMap::GetInstance()->Update(lm->GetLightCameraPosition(), lm->GetLightCameraTarget());
 }
 
 void Title::Render() {
@@ -68,8 +95,13 @@ void Title::SetUp() {
 	//背景
 	m_bg1 = NewGO<SpriteRender>("TitleSprite_BG1", 0);
 	m_bg1->SetObjectTag(objectTag::t_BackSprite);
-	m_bg1->Init(L"Assets/sprite/White.dds", FRAME_BUFFER_W, FRAME_BUFFER_H, BG1_Priority);
+	m_bg1->Init(L"Assets/sprite/Title_BG.dds", FRAME_BUFFER_W, FRAME_BUFFER_H, BG1_Priority);
 	m_bg1->SetPosition(CVector3::Zero());
+
+	m_bg2 = NewGO<SpriteRender>("TitleSprite_BG2", 0);
+	m_bg2->SetObjectTag(objectTag::t_BackSprite);
+	m_bg2->Init(L"Assets/sprite/Title_BG.dds", FRAME_BUFFER_W, FRAME_BUFFER_H, BG2_Priority);
+	m_bg2->SetPosition(CVector3::Zero());
 
 	//ボール
 	m_ball = NewGO<SkinModelRender>("TitleModel_Ball", 0);
@@ -78,17 +110,50 @@ void Title::SetUp() {
 	CQuaternion rot;
 	rot.SetRotationDeg(Ball_RotAxis, Ball_RotAngle);
 	m_ball->SetRotation(rot);
+	m_ball->m_skinModelSupporter.SkinModelRotation(Ball_AutoRotAngle, Ball_AutoRotAxis, 1, 0, true);
+	m_ball->SetShadowReciever(true);
+
+	//プレイヤー	
+	m_player = NewGO<SkinModelRender>("TitleModel_Player", 0);
+	m_player->Model_Init(L"Assets/modelData/unityChan.cmo");
+	m_player->SetPosition({ Ball_DefPos.x + Player_DefPos.x,
+		Ball_DefPos.y + Player_DefPos.y,
+		Ball_DefPos.z + Player_DefPos.z });
+	m_player->SetScale(Player_Scale);
+	//プレイヤーの回転
+	CQuaternion p_rot, p_rot2;
+	p_rot.SetRotationDeg(CVector3::AxisX(), Plyer_RotAngleX);
+	p_rot2.SetRotationDeg(CVector3::AxisY(), 180.0f + Ball_RotAngle);	//モデルが後ろを向いているので正面+ボールの回転
+	p_rot *= p_rot2;
+	m_player->SetRotation(p_rot);
+	m_player->SetShadowReciever(true);
+
+	//ボックス
+	m_dummyBox = NewGO<SkinModelRender>("TitleModel_Box", 0);
+	m_dummyBox->Model_Init(L"Assets/modelData/box.cmo");
+	CVector3 Pl_Pos = m_player->GetPosition();
+	m_dummyBox->SetPosition({ Pl_Pos.x - 20.0f,
+		Pl_Pos.y + 55.0f,
+		Pl_Pos.z - 40.0f });
+	m_dummyBox->SetRotation(p_rot);
+	m_dummyBox->SetScale(40.0f);
 
 	//コマンド
 	m_command_Start = NewGO<SpriteRender>("TitleSprite_Command1", 0);
 	m_command_Start->Init(L"Assets/sprite/Hazimekara.dds", CommandSpriteSize.x, CommandSpriteSize.y, Command_Priority);
-	m_command_Start->SetPosition(Command_DefPos);
+	m_command_Start->SetPosition({ Command_DefPos.x, Command_DefPos.y + Command_Y_Up, Command_DefPos.z });
+
 	m_command_Continue = NewGO<SpriteRender>("TitleSprite_Command2", 0);
 	m_command_Continue->Init(L"Assets/sprite/Tudukikara.dds", CommandSpriteSize.x, CommandSpriteSize.y, Command_Priority);
-	m_command_Continue->SetPosition({ Command_DefPos.x,Command_DefPos.y - Command_Y_Hosei,Command_DefPos.z });
+	m_command_Continue->SetPosition({ Command_DefPos.x,
+		Command_DefPos.y - Command_Y_Hosei + Command_Y_Up,
+		Command_DefPos.z });
+
 	m_command_End = NewGO<SpriteRender>("TitleSprite_Command3", 0);
 	m_command_End->Init(L"Assets/sprite/End.dds", CommandSpriteSize.x, CommandSpriteSize.y, Command_Priority);
-	m_command_End->SetPosition({ Command_DefPos.x,Command_DefPos.y - (Command_Y_Hosei*2.0f),Command_DefPos.z });
+	m_command_End->SetPosition({ Command_DefPos.x,
+		Command_DefPos.y - (Command_Y_Hosei*2.0f) + Command_Y_Up,
+		Command_DefPos.z });
 
 	//ロゴ土台
 	m_black = NewGO<SpriteRender>("TitleSprite_Black", 0);
@@ -251,6 +316,29 @@ void Title::EffectUpdate_TitleEffect() {
 		m_black->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,0.0f }, TitleFadeTime, 0);
 	}
 
+	//コマンド落下
+	if (m_titleEffectTimer >= TitleCommandEffectRimit && m_commandMoveFlag == false) {
+
+		//コマンド落下演出
+		{
+			m_command_End->m_spriteSupporter.SpriteMove({ 0.0f,-(Command_Y_Up + TitleCommandDrop_YHosei) },
+				TitleCommandDrop_Time, 0, true);
+			m_command_End->m_spriteSupporter.SpriteMove({ 0.0f,TitleCommandDrop_YHosei },
+				TitleCommandDrop_Time / 2, TitleCommandDrop_Time, true);
+			//
+			m_command_Continue->m_spriteSupporter.SpriteMove({ 0.0f,-(Command_Y_Up + TitleCommandDrop_YHosei) },
+				TitleCommandDrop_Time, TitleCommandDrop_Delay, true);
+			m_command_Continue->m_spriteSupporter.SpriteMove({ 0.0f,TitleCommandDrop_YHosei },
+				TitleCommandDrop_Time / 2, TitleCommandDrop_Time + TitleCommandDrop_Delay, true);
+			//
+			m_command_Start->m_spriteSupporter.SpriteMove({ 0.0f,-(Command_Y_Up + TitleCommandDrop_YHosei) },
+				TitleCommandDrop_Time, TitleCommandDrop_Delay * 2, true);
+			m_command_Start->m_spriteSupporter.SpriteMove({ 0.0f,TitleCommandDrop_YHosei },
+				TitleCommandDrop_Time / 2, TitleCommandDrop_Time + (TitleCommandDrop_Delay * 2), true);
+		}
+		m_commandMoveFlag = true;
+	}
+
 	//終了
 	m_titleEffectTimer += CGameTime::GetFrameDeltaTime();
 
@@ -262,8 +350,150 @@ void Title::EffectUpdate_TitleEffect() {
 
 void Title::EffectUpdate_CommandWait() {
 
+	//選択待ち
+
 }
 
 void Title::EffectUpdate_CommandEffect() {
+
+	//演出
+	if (m_commandStartEffectTimer == 0.0f) {
+
+		//トランジション
+		TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::NanameBox, 
+			SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime, false);
+
+		switch (m_memberCommand)
+		{
+		case Title::No_Select:
+			std::abort();	//ありえないこと
+			break;
+		case Title::Game_Start:
+			m_command_Continue->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,0.0f }, CommandAlphaTime, 0);
+			m_command_End->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,0.0f }, CommandAlphaTime, 0);
+			break;
+		case Title::Game_Continue:
+			m_command_Start->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,0.0f }, CommandAlphaTime, 0);
+			m_command_End->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,0.0f }, CommandAlphaTime, 0);
+			break;
+		case Title::Game_End:
+			m_command_Start->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,0.0f }, CommandAlphaTime, 0);
+			m_command_Continue->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,0.0f }, CommandAlphaTime, 0);
+			break;
+		}
+	}
+
+	//終了
+	m_commandStartEffectTimer += CGameTime::GetFrameDeltaTime();
+
+	if (m_commandStartEffectTimer >= CommandStartEffectRimit) {
+		//ゲームマネージャーに処理をしてもらう
+		m_nowCommand = m_memberCommand;
+	}
+
+}
+
+void Title::BG_Update() {
+
+	if (m_bgMoveTimer == 0.0f) {
+
+		m_bg1->m_spriteSupporter.SpriteDelayReset();
+		m_bg2->m_spriteSupporter.SpriteDelayReset();
+
+		if (m_BG_MoveMode == false) {
+			m_bg1->SetPosition(CVector3::Zero());
+			m_bg2->SetPosition({ -FRAME_BUFFER_W,0.0f,0.0f });
+			m_BG_MoveMode = true;
+		}
+		else {
+			m_bg2->SetPosition(CVector3::Zero());
+			m_bg1->SetPosition({ -FRAME_BUFFER_W,0.0f,0.0f });
+			m_BG_MoveMode = false;
+		}
+
+		//移動の指示を出す
+		m_bg1->m_spriteSupporter.SpriteMove({ FRAME_BUFFER_W,0.0f }, BG_MoveTime, 0, true);
+		m_bg2->m_spriteSupporter.SpriteMove({ FRAME_BUFFER_W,0.0f }, BG_MoveTime, 0, true);
+	}
+
+	//時間経過
+	m_bgMoveTimer++;
+
+	//リセット
+	if (m_bgMoveTimer >= BG_MoveTime) {
+		m_bgMoveTimer = 0;
+	}
+
+}
+
+void Title::CommandSelect() {
+
+	//どのコマンドにもマウスカーソルが重なってない場合用
+	bool HitFlag = false;
+
+	//各コマンド受付
+	//スタート
+	if (m_command_Start->MouseOverMouse() == true) {
+
+		HitFlag = true;
+
+		if (m_memberCommand != Game_Start) {
+			//初回演出
+			m_command_Start->SetMulColor(CommandMulColor);
+			m_command_Start->m_spriteSupporter.SpriteMove({ 0.0f,CommandSelectMove }, CommandSelectMoveTime, 0, true);
+			m_command_Start->m_spriteSupporter.SpriteMove({ 0.0f,-CommandSelectMove }, CommandSelectMoveTime, CommandSelectMoveTime, true);
+			m_memberCommand = Game_Start;
+		}
+
+	}
+	else {
+		//戻す
+		m_command_Start->SetMulColor({ 1.0f,1.0f,1.0f,1.0f });
+
+	}
+	//コンティニュー
+	if (m_command_Continue->MouseOverMouse() == true) {
+		HitFlag = true;
+
+		if (m_memberCommand != Game_Continue) {
+			//初回演出
+			m_command_Continue->SetMulColor(CommandMulColor);
+			m_command_Continue->m_spriteSupporter.SpriteMove({ 0.0f,CommandSelectMove }, CommandSelectMoveTime, 0, true);
+			m_command_Continue->m_spriteSupporter.SpriteMove({ 0.0f,-CommandSelectMove }, CommandSelectMoveTime, CommandSelectMoveTime, true);
+			m_memberCommand = Game_Continue;
+		}
+
+	}
+	else {
+		m_command_Continue->SetMulColor({ 1.0f,1.0f,1.0f,1.0f });
+	}
+	//エンド
+	if (m_command_End->MouseOverMouse() == true) {
+		HitFlag = true;
+
+		if (m_memberCommand != Game_End) {
+			//初回演出
+			m_command_End->SetMulColor(CommandMulColor);
+			m_command_End->m_spriteSupporter.SpriteMove({ 0.0f,CommandSelectMove }, CommandSelectMoveTime, 0, true);
+			m_command_End->m_spriteSupporter.SpriteMove({ 0.0f,-CommandSelectMove }, CommandSelectMoveTime, CommandSelectMoveTime, true);
+			m_memberCommand = Game_End;
+		}
+
+	}
+	else {
+		m_command_End->SetMulColor({ 1.0f,1.0f,1.0f,1.0f });
+	}
+
+	//共通処理
+	if (HitFlag == false) {
+		//どこにも重なってないので初期化する
+		m_memberCommand = No_Select;
+	}
+	else {
+		//左クリックされたら確定させる
+		if (MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key) == MouseSupporter::Release_Push) {
+			m_titleEffect = Command_Effect;
+		}
+	}
 
 }

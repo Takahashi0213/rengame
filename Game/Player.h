@@ -91,14 +91,14 @@ private:
 	//箱持ち上げ
 	GameBox* m_upBox = nullptr;				//持ち上げている箱
 	GameBox* m_upKouho_Box = nullptr;		//持ち上げ候補の箱
-	bool m_boxUpFlag = false;		//箱持ち上げ中？
-	bool m_boxMoveFlag = false;		//箱上げ下ろし動作中？（動作中は動けません）
-	bool m_upOrDown = false;		//箱を上げているならfalse、下しているならtrue
-	bool m_boxButtonFlag = false;	//箱のボタン
-	const float m_boxPutHosei = 4.0f;	//箱を置くか投げるかの基準補正（大きくすると置きやすくなる）
-	const float m_boxUpRange = 200.0f;	//箱を持ち上げられる範囲
-	const float m_boxUp_Y_Max = 50.0f;	//箱を持ち上げられる高さの範囲
-	const float m_boxUp_Angle = 90.0f;	//箱を持ち上げる視野角範囲
+	bool m_boxUpFlag = false;				//箱持ち上げ中？
+	bool m_boxMoveFlag = false;				//箱上げ下ろし動作中？（動作中は動けません）
+	bool m_upOrDown = false;				//箱を上げているならfalse、下しているならtrue
+	bool m_boxButtonFlag = false;			//箱のボタン
+	const float m_boxPutHosei = 4.0f;		//箱を置くか投げるかの基準補正（大きくすると置きやすくなる）
+	const float m_boxUpRange = 200.0f;		//箱を持ち上げられる範囲
+	const float m_boxUp_Y_Max = 50.0f;		//箱を持ち上げられる高さの範囲
+	const float m_boxUp_Angle = 90.0f;		//箱を持ち上げる視野角範囲
 	//上げ下げ移動（catmull）（だったけどベジェ曲線に変更）
 	CVector3 m_point_1 = CVector3::Zero();	//終点寄り
 	CVector3 m_point_2 = CVector3::Zero();	//始点

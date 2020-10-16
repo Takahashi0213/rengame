@@ -57,6 +57,9 @@ public:
 		return m_boxList;
 	}
 
+	//” ‚Ì‘SÁ‹
+	void BoxAllDelete();
+
 private:
 	void BoxUpdate();
 	void ModeChange();

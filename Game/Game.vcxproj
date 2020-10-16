@@ -157,6 +157,7 @@
     <ClCompile Include="MouseOver.cpp" />
     <ClCompile Include="MouseSupporter.cpp" />
     <ClCompile Include="ObjectClass.cpp" />
+    <ClCompile Include="OP.cpp" />
     <ClCompile Include="PhysicsDebugDraw.cpp" />
     <ClCompile Include="PhysicsGhostObject.cpp" />
     <ClCompile Include="PhysicsObjectBase.cpp" />
@@ -195,6 +196,7 @@
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="TransitionGenerator.cpp" />
     <ClCompile Include="TransitionSprite.cpp" />
+    <ClCompile Include="Tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
@@ -257,6 +259,7 @@
     <ClInclude Include="MouseOver.h" />
     <ClInclude Include="MouseSupporter.h" />
     <ClInclude Include="ObjectClass.h" />
+    <ClInclude Include="OP.h" />
     <ClInclude Include="PhysicsDebugDraw.h" />
     <ClInclude Include="PhysicsGhostObject.h" />
     <ClInclude Include="PhysicsObjectBase.h" />
@@ -296,6 +299,7 @@
     <ClInclude Include="Title.h" />
     <ClInclude Include="TransitionGenerator.h" />
     <ClInclude Include="TransitionSprite.h" />
+    <ClInclude Include="Tutorial.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\0_0.fbx" />
@@ -303,6 +307,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Gimmick\Board\Board.fbx" />
+    <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor.fbx" />
+    <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor2.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\Door.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\jewel.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch.fbx" />
@@ -311,6 +317,8 @@
     <MeshContentTask Include="Assets\modelData\map.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_1.fbx" />
+    <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_2.fbx" />
     <MeshContentTask Include="Assets\modelData\Test_Enemy.fbx" />
     <MeshContentTask Include="Assets\modelData\Titan.fbx" />
     <MeshContentTask Include="Assets\modelData\Title\Title_Ball.fbx" />
@@ -328,66 +336,96 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\stand\keis_ang.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\stand\keis_happy.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\stand\keis_sad.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\stand\keis_wow.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\system_sprite\fukidasi.png" />
+    <ImageContentTask Include="Assets\sprite\system_sprite\fukidasi.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\system_sprite\okuri.png" />
+    <ImageContentTask Include="Assets\sprite\system_sprite\okuri.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\system_sprite\skipNow.png" />
+    <ImageContentTask Include="Assets\sprite\system_sprite\skipNow.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\window\window1.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\window\window2.png" />
+    <ImageContentTask Include="Assets\sprite\window\window2.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\system_sprite\Gage1.png" />
+    <ImageContentTask Include="Assets\sprite\system_sprite\Gage1.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\system_sprite\Gage1_Under.png" />
+    <ImageContentTask Include="Assets\sprite\system_sprite\Gage1_Under.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\system_sprite\Life.png" />
-    <ImageContentTask Include="Assets\sprite\system_sprite\Life_Waku.png" />
+    <ImageContentTask Include="Assets\sprite\system_sprite\Life.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Life_Waku.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\system_sprite\Accessory1.png" />
+    <ImageContentTask Include="Assets\sprite\system_sprite\Accessory1.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\system_sprite\levelUp_8F.png" />
+    <ImageContentTask Include="Assets\sprite\system_sprite\levelUp_8F.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\system_sprite\Accessory2.png" />
+    <ImageContentTask Include="Assets\sprite\system_sprite\Accessory2.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuButton.png" />
-    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuButton_Back.png" />
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuButton.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuButton_Back.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\window\window3.png" />
+    <ImageContentTask Include="Assets\sprite\window\window3.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\stand\keis.png" />
+    <ImageContentTask Include="Assets\sprite\stand\keis.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\transition\under.png" />
@@ -403,57 +441,118 @@
     <ImageContentTask Include="Assets\modelData\Titan_normals.tga" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\window\window4.png" />
+    <ImageContentTask Include="Assets\sprite\window\window4.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\system_sprite\black.png" />
+    <ImageContentTask Include="Assets\sprite\system_sprite\black.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\Titan__Ao.tga" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo.png" />
-    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogoLight.png" />
-    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo_Nami.png" />
-    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo_Under.png" />
-    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo_Up.png" />
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogoLight.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo_Nami.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo_Under.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuLogo\MenuLogo_Up.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\menu_sprite\mahojin.png" />
+    <ImageContentTask Include="Assets\sprite\menu_sprite\mahojin.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuCursor.png" />
+    <ImageContentTask Include="Assets\sprite\menu_sprite\MenuCursor.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\window\window5.png" />
+    <ImageContentTask Include="Assets\sprite\window\window5.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\effect\jewel_mask.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Bikkuri.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Bu.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle1.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle2.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle3.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle4.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle5.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle6.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle7.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle8.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Ha.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_hakobun.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Ko.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_N.png" />
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Bikkuri.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Bu.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle1.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle2.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle3.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle4.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle5.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle6.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle7.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Circle8.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Ha.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_hakobun.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_Ko.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Logo\Logo_N.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\White.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\Title\End.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Hazimekara.png" />
-    <ImageContentTask Include="Assets\sprite\Title\Tudukikara.png" />
+    <ImageContentTask Include="Assets\sprite\Title\End.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Hazimekara.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Tudukikara.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\Title\Title_BG.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ImageContentTask>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

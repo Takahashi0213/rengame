@@ -71,14 +71,22 @@ public:
 private:
 	//関数
 	void SetUp();
+	void CommandSelect();
 	//エフェクトアップデート
 	void EffectUpdate_RogoEffect();
 	void EffectUpdate_TitleEffect();
 	void EffectUpdate_CommandWait();
 	void EffectUpdate_CommandEffect();
+	//ループ背景
+	void BG_Update();
 
 	//コマンドじゃん
-	TitleCommand m_nowCommand = No_Select;	//最初は未選択
+	TitleCommand m_nowCommand = No_Select;		//最初は未選択
+	TitleCommand m_memberCommand = No_Select;	//内部用
+
+	//ライトメーカー
+	LightMaker* lm = nullptr;
+
 	//表示状態
 	enum TitleEffect {	//エフェクトの状況
 		Rogo_Effect,	//ロゴ出し中
@@ -93,10 +101,13 @@ private:
 	const CVector3 Ball_DefPos = { 150.0f,-150.0f,-200.0f };	//初期座標
 	const CVector3 Ball_RotAxis = CVector3::AxisY();			//初期回転軸
 	const float Ball_RotAngle = 35.0f;							//初期回転量
-	const float Ball_RotSpeed = 10.0f;							//回転速度
+	const float Ball_AutoRotAngle = 1.0f;						//自動回転速度
+	const CVector3 Ball_AutoRotAxis = CVector3::AxisX();		//自動回転軸
 
 	SkinModelRender* m_player;				//プレイヤー
-
+	const CVector3 Player_DefPos = { -70.0f,146.0f,-100.0f };	//初期座標（ボールを基準にする）
+	const float Player_Scale = 0.5f;							//拡大率
+	const float Plyer_RotAngleX = 20.0f;						//X回転量
 
 	SkinModelRender* m_dummyBox;			//ダミーボックス
 
@@ -110,6 +121,9 @@ private:
 
 	SpriteRender* m_bg2;					//ループ背景2（モデルより先に描く）
 	const int BG2_Priority = 0;				//優先度
+	int m_bgMoveTimer = 0;					//背景用タイマー
+	const int BG_MoveTime = 600;			//背景移動時間
+	bool m_BG_MoveMode = false;				//移動状態
 
 	//タイトルロゴ
 	TitleRogo Rogo;												//ロゴ
@@ -121,6 +135,7 @@ private:
 	const float Command_Y_Hosei = 120.0f;						//コマンド同士の間隔
 	const CVector2 CommandSpriteSize = { 350.0f,120.0f };		//コマンド画像の大きさ
 	const int Command_Priority = 5;								//優先度
+	const float Command_Y_Up = 800.0f;							//コマンドの初期位置Y補正（落とす用）
 
 	//ロゴエフェクト
 	float m_rogoEffectTimer = 0.0f;								//ロゴエフェクト用タイマー
@@ -129,10 +144,22 @@ private:
 	float m_titleEffectTimer = 0.0f;							//タイトルエフェクト用タイマー
 	const int TitleMoveTime = 60;								//タイトルエフェクト中の文字の移動時間
 	const int TitleFadeTime = 80;								//タイトルエフェクト中のフェード時間
-	const CVector2 TitleRogoPos = { -380.0f,250.0f };			//ロゴの最終移動先
+	const CVector2 TitleRogoPos = { -380.0f,230.0f };			//ロゴの最終移動先
 	const float TitleRogoScale = 0.5f;							//ロゴの最終拡大率
+	const float TitleCommandEffectRimit = 1.0f;					//コマンドが落下するタイミング
+	bool m_commandMoveFlag = false;								//コマンド落下フラグ
+	const float TitleCommandDrop_YHosei = 15.0f;				//コマンドがオーバーに落下する移動量
+	const int TitleCommandDrop_Time = 20;						//コマンドごとの移動時間
+	const int TitleCommandDrop_Delay = 10;						//コマンドごとのディレイ
 	const float TitleEffectRimit = 2.0f;						//このエフェクトが終わって次に切り替わるまでの時間
-
+	//コマンド選択エフェクト
+	const CVector4 CommandMulColor = { 1.0f,0.4f,0.4f,1.0f };	//コマンド選択時の色
+	const float CommandSelectMove = 10.0f;						//コマンド選択時の移動量
+	const int CommandSelectMoveTime = 3;						//コマンド選択時の移動時間
+	//コマンド開始エフェクト
+	float m_commandStartEffectTimer = 0.0f;						//コマンドエフェクト用タイマー
+	const int CommandAlphaTime = 12;							//選択外のコマンドが消去される時間
+	const float CommandStartEffectRimit = 1.0f;					//コマンドが決定されてゲームマネージャーへ返却されるまでの時間
 
 	//定数
 

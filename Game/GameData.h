@@ -10,7 +10,7 @@ class GameData
 public:
 	enum Place_Data {		//場所データ
 		Null_Place,		//空白
-		Warehouse,		//倉庫
+		Warehouse,		//倉庫的牢屋
 		Meadow,			//草原
 	};
 
@@ -48,6 +48,16 @@ public:
 	/// <returns>イマココ！</returns>
 	const Place_Data GetPlace()const {
 		return m_nowPlace;
+	}
+
+	/// <summary>
+	/// ロード中のマップレベル番号の変更と取得
+	/// </summary>
+	void SetNowMapLevel(const int& level) {
+		m_nowMapLevel = level;
+	}
+	const int GetNowMapLevel() {
+		return m_nowMapLevel;
 	}
 
 	/// <summary>
@@ -197,6 +207,7 @@ private:
 	int m_progress = 0;						//進行度
 	Place_Data m_nowPlace = Null_Place;		//現在位置
 	bool m_menuFlag = false;				//今メニュー開ける？（trueだと開けない）
+	int m_nowMapLevel = -1;					//現在ロード中のレベル
 
 	//解放要素
 	struct GameFlag {

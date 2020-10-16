@@ -25,7 +25,7 @@ Game::Game()
 	//現在をゲーム（アクションモード）にする
 	SceneManager::GetInstance()->SetGameMode(SceneManager::ActionMode);
 	//Dofを有効にする
-	SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag = false;
+	SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag = true;
 
 	//生成
 	
@@ -33,13 +33,11 @@ Game::Game()
 	if(LightMaker::GetInstance() == nullptr) {
 		CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
 	}
+	//アンビエントライトを初期化する
+	LightMaker::GetInstance()->ResetAmbientColor();
 
 	//カメラサポーターの生成
 	CGameObjectManager::GetInstance()->NewGO<CameraSupporter>("CameraSupporter");
-
-	//トランジション
-	TransitionGenerator* tg = CGameObjectManager::GetInstance()->NewGO<TransitionGenerator>("TransitionGenerator", 10);
-	tg->SetObjectTag(objectTag::t_Sprite);		//とにかく最後に実行されるようにする
 
 	//BackGround* bg = CGameObjectManager::GetInstance()->NewGO<BackGround>("BackGround", 0);
 	BoxMaker* m_box = CGameObjectManager::GetInstance()->NewGO<BoxMaker>("BoxMaker", 1);
@@ -52,8 +50,10 @@ Game::Game()
 
 	//ボックスメイカーに渡すよ
 	m_box->SetPlayer(pl);
-	//背景に渡す
-	//bg->SetGame(this);
+
+	//トランジション
+	TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::NanameBox, 
+		SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime, true);
 
 	//ワイヤーフレームを表示しますすうすすすうう
 	g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);

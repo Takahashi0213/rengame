@@ -157,6 +157,18 @@
     <Filter Include="Assets\modelData\TestModel\Titan">
       <UniqueIdentifier>{c4bd8911-7ff6-4c63-81f1-4c0c982a3c57}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\Stage\Stage1">
+      <UniqueIdentifier>{082a478a-12c9-4196-948c-2f5f64a88d16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\Stage\Stage0">
+      <UniqueIdentifier>{cafa470a-de92-4129-9436-59c49d1627dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\StageSet">
+      <UniqueIdentifier>{fa71f95d-d67f-4d54-8ed9-e0ce86ce8892}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\GameScene">
+      <UniqueIdentifier>{e052878d-39d9-471c-bdf7-d679e45eba79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -404,9 +416,6 @@
     <ClCompile Include="MouseSupporter.cpp">
       <Filter>system\GameSystem\Mouse</Filter>
     </ClCompile>
-    <ClCompile Include="StageSet.cpp">
-      <Filter>system\GameSystem</Filter>
-    </ClCompile>
     <ClCompile Include="system\CGameObjectManager.cpp">
       <Filter>system\GameObject</Filter>
     </ClCompile>
@@ -427,6 +436,15 @@
     </ClCompile>
     <ClCompile Include="graphics\skinModel\SkinModel.cpp">
       <Filter>graphics\SkinModel</Filter>
+    </ClCompile>
+    <ClCompile Include="StageSet.cpp">
+      <Filter>system\StageSet</Filter>
+    </ClCompile>
+    <ClCompile Include="OP.cpp">
+      <Filter>Scene\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Tutorial.cpp">
+      <Filter>Scene\GameScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -693,9 +711,6 @@
     <ClInclude Include="MouseSupporter.h">
       <Filter>system\GameSystem\Mouse</Filter>
     </ClInclude>
-    <ClInclude Include="StageSet.h">
-      <Filter>system\GameSystem</Filter>
-    </ClInclude>
     <ClInclude Include="system\CGameObjectManager.h">
       <Filter>system\GameObject</Filter>
     </ClInclude>
@@ -723,6 +738,15 @@
     <ClInclude Include="graphics\skinModel\SkinModelSupporter.h">
       <Filter>graphics\SkinModel</Filter>
     </ClInclude>
+    <ClInclude Include="StageSet.h">
+      <Filter>system\StageSet</Filter>
+    </ClInclude>
+    <ClInclude Include="OP.h">
+      <Filter>Scene\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Tutorial.h">
+      <Filter>Scene\GameScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Titan.fbx">
@@ -739,9 +763,6 @@
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Coli.fbx">
       <Filter>Assets\modelData\Gimmick</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\0_0.fbx">
-      <Filter>Assets\modelData\Stage</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Test_Enemy.fbx">
       <Filter>Assets\modelData\Enemy</Filter>
@@ -763,6 +784,21 @@
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Title\Title_Ball.fbx">
       <Filter>Assets\modelData\Title</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_1.fbx">
+      <Filter>Assets\modelData\Stage\Stage1</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor2.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\0_0.fbx">
+      <Filter>Assets\modelData\Stage\Stage0</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_2.fbx">
+      <Filter>Assets\modelData\Stage\Stage1</Filter>
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
@@ -935,6 +971,9 @@
       <Filter>Assets\sprite\Title</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\Title\Tudukikara.png">
+      <Filter>Assets\sprite\Title</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Title_BG.png">
       <Filter>Assets\sprite\Title</Filter>
     </ImageContentTask>
   </ItemGroup>

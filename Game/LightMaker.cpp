@@ -66,7 +66,7 @@ void LightMaker::Render() {
 /// <param name="col">ライトの色</param>
 /// <param name="spec">スペキュラ</param>
 /// <returns>作成したライトのポインタ</returns>
-void LightMaker::D_LightMake(int lightNo,CVector4 dir,CVector4 col, float spec) {
+void LightMaker::D_LightMake(const int lightNo, const CVector4 dir, const CVector4 col, const float spec) {
 
 	m_light.direction[lightNo] = dir;
 	m_light.color[lightNo] = col;
@@ -78,7 +78,7 @@ void LightMaker::D_LightMake(int lightNo,CVector4 dir,CVector4 col, float spec) 
 /// ディレクションライトを消去する
 /// </summary>
 /// <param name="lightNo">削除するディレクションライトの場所</param>
-void LightMaker::D_LightDelete(int lightNo) {
+void LightMaker::D_LightDelete(const int lightNo) {
 
 	m_light.direction[lightNo] = DirectionLight_Direction_Def;
 	m_light.color[lightNo] = DirectionLight_Color_Def;
@@ -92,7 +92,7 @@ void LightMaker::D_LightDelete(int lightNo) {
 /// <param name="pos">座標</param>
 /// <param name="col">カラー</param>
 /// <param name="range">範囲</param>
-void LightMaker::P_LightMake(int lightNo, CVector3 pos, CVector3 col, float range) {
+void LightMaker::P_LightMake(const int lightNo, const CVector3 pos, const CVector3 col, const float range) {
 	m_pointLight.position[lightNo] = pos;
 	m_pointLight.color[lightNo] = col;
 	m_pointLight.color[lightNo].w = range;
@@ -102,7 +102,7 @@ void LightMaker::P_LightMake(int lightNo, CVector3 pos, CVector3 col, float rang
 /// ポイントライトを消去する
 /// </summary>
 /// <param name="lightNo">ライト番号</param>
-void LightMaker::P_LightDelete(int lightNo) {
+void LightMaker::P_LightDelete(const int lightNo) {
 	m_pointLight.position[lightNo] = CVector3::Zero();
 	m_pointLight.color[lightNo] = CVector3::Zero();
 	m_pointLight.color[lightNo].w = 0.0f;

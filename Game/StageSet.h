@@ -3,6 +3,7 @@
 #include "LevelSet.h"
 #include "BackGround.h"
 
+class StageData;
 /// <summary>
 /// ステージとレベルを同時に作成する
 /// マップ切り替えの度に呼び出す
@@ -40,7 +41,14 @@ public:
 private:
 	LevelSet m_levelSet;		//レベルセットクラス
 
+	//StageData m_stageData;		//ステージごとの処理をする場所
+
 	BackGround* m_bg = nullptr;	//ステージ
 
 };
 
+class StageData {
+
+
+
+};
