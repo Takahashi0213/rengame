@@ -16,9 +16,21 @@ GameCamera::GameCamera()
 	g_camera3D.SetFar(30000.0f);
 	//画角を変更
 	g_camera3D.SetViewAngle(CMath::DegToRad(60.0f));
-
+	//取得タイム
 	m_player = CGameObjectManager::GetInstance()->FindGO<Player>(Hash::MakeHash("Player"), false);
 	m_game = Game::GetInstance();
+
+	//注視点を動かす
+	CVector3 P_Position = m_player->Getm_Position();
+
+	m_cameraTarget.x = P_Position.x;
+	m_cameraTarget.y = P_Position.y + 100.0f;	//プレイヤーのちょっと上にする
+	m_cameraTarget.z = P_Position.z;
+
+	//視点をカメラに伝える
+	m_cameraPos.x = P_Position.x + m_cameraHosei.x;
+	m_cameraPos.y = P_Position.y + m_cameraHosei.y;
+	m_cameraPos.z = P_Position.z + m_cameraHosei.z;
 
 }
 

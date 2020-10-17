@@ -4,54 +4,6 @@
 #include "PhysicsGhostObject.h"
 #include "Player.h"
 
-class SwitchObj;
-/// <summary>
-/// スイッチのベーース
-/// 基準になるのはこっちです
-/// </summary>
-class Switch : public IGameObject, public ObjectClass
-{
-public:
-	Switch();
-	~Switch();
-	void Update()override;
-	void Render()override;
-
-	//設定
-	void SetPosition(CVector3 pos) {
-		m_position = pos;
-		m_switchObj.SwitchObj_Init(m_position);
-	}
-
-	/// <summary>
-	/// 座標を返す
-	/// </summary>
-	CVector3 GetPosition() {
-		return m_position;
-	}
-
-	/// <summary>
-	/// スイッチのオンオフ状態を返す
-	/// </summary>
-	bool GetSwitchState() {
-		if (m_switchObj.GetSwitchState() == false) {
-			return true;
-		}
-		if (m_switchObj.GetSwitchState() == true) {
-			return false;
-		}
-		return false;
-	}
-
-private:
-
-	SkinModel m_model;		//スイッチの土台もで～～る
-	SwitchObj m_switchObj;	//赤い方を所持
-
-	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
-
-};
-
 /// <summary>
 /// スイッチの赤いやつ
 /// スイッチ土台にアップデート・レンダーを呼んでもらっている
@@ -107,3 +59,51 @@ private:
 	const int SwitchMoveTime = 12;					//押されたとき戻った時の移動時間
 
 };
+
+/// <summary>
+/// スイッチのベーース
+/// 基準になるのはこっちです
+/// </summary>
+class Switch : public IGameObject, public ObjectClass
+{
+public:
+	Switch();
+	~Switch();
+	void Update()override;
+	void Render()override;
+
+	//設定
+	void SetPosition(CVector3 pos) {
+		m_position = pos;
+		m_switchObj.SwitchObj_Init(m_position);
+	}
+
+	/// <summary>
+	/// 座標を返す
+	/// </summary>
+	CVector3 GetPosition() {
+		return m_position;
+	}
+
+	/// <summary>
+	/// スイッチのオンオフ状態を返す
+	/// </summary>
+	bool GetSwitchState() {
+		if (m_switchObj.GetSwitchState() == false) {
+			return true;
+		}
+		if (m_switchObj.GetSwitchState() == true) {
+			return false;
+		}
+		return false;
+	}
+
+private:
+
+	SkinModel m_model;		//スイッチの土台もで～～る
+	SwitchObj m_switchObj;	//赤い方を所持
+
+	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
+
+};
+

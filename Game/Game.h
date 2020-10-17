@@ -45,12 +45,10 @@ private:
 
 	//ここからゲーム用
 
-	GameData m_gameData;
-	GameEffect m_gameEffect;
-
+	GameData m_gameData;		//保存するデータ色々
+	GameEffect m_gameEffect;	//ここでアップデートする
 	GameUI* m_ui = nullptr;
-
-	OP* m_op = nullptr;
+	OP* m_op = nullptr;			//OPが終わったら削除される
 
 };
 

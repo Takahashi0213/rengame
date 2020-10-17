@@ -13,6 +13,7 @@ public:
 	LevelSet();
 	~LevelSet();
 	void Init(const wchar_t* LEVEL_Name);
+	void LevelDelete();
 
 	//インスタンスの取得
 	static LevelSet* LevelSet::GetInstance() {
@@ -33,12 +34,12 @@ private:
 	//現在設置されているオブジェクトのデータ
 	struct Obj_Data
 	{
-		LevelData::Obj_Tag ObjTag;		//タグ
-		const wchar_t* ObjName;			//オブジェクトの名前
-		const wchar_t* LinkObjName;		//リンクされているオブジェクトの名前
+		LevelData::Obj_Tag ObjTag = LevelData::Obj_Tag::Tag_NULL;		//タグ
+		const wchar_t* ObjName = L"";									//オブジェクトの名前
+		const wchar_t* LinkObjName = L"";								//リンクされているオブジェクトの名前
 	};
 	//オブジェクトデータの配列
 	Obj_Data m_Obj_Data[MAX_LEVEL_OBJ];
-
+	//名前データの配列（削除に使います）
 };
 

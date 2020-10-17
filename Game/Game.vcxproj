@@ -288,6 +288,7 @@
     <ClInclude Include="SpriteRender.h" />
     <ClInclude Include="SpriteStandby.h" />
     <ClInclude Include="SpriteSupporter.h" />
+    <ClInclude Include="StageData.h" />
     <ClInclude Include="StageSet.h" />
     <ClInclude Include="StarMoney.h" />
     <ClInclude Include="stdafx.h" />
@@ -312,7 +313,9 @@
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor2.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\Door.fbx" />
+    <MeshContentTask Include="Assets\modelData\Gimmick\GhostBox.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\jewel.fbx" />
+    <MeshContentTask Include="Assets\modelData\Gimmick\Key\Key1.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Scaffold\Scaffold1.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Base.fbx" />

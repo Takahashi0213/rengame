@@ -756,6 +756,9 @@
     <ClInclude Include="SystemBox.h">
       <Filter>object\SystemObject</Filter>
     </ClInclude>
+    <ClInclude Include="StageData.h">
+      <Filter>system\StageSet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Titan.fbx">
@@ -814,6 +817,12 @@
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_3.fbx">
       <Filter>Assets\modelData\Stage\Stage1</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Key\Key1.fbx">
+      <Filter>Assets\modelData\Item</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\GhostBox.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>

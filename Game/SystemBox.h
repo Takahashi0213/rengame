@@ -15,10 +15,21 @@ public:
 	void Update()override;
 	void Render()override;
 
+	void SetStageName(const wchar_t* stageName) {
+		m_LoadStageName = stageName;
+	}
+
+	/// <summary>
+	/// 呼び出すとゴーストを生成する
+	/// </summary>
+	void CreateGhost();
+
 private:
 	PhysicsGhostObject m_ghostObject;	//ゴーストオブジェクト
 
 	Player* m_player = nullptr;
+
+	const wchar_t* m_LoadStageName;		//ステージの名前
 
 };
 

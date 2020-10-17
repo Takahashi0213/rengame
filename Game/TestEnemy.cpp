@@ -4,7 +4,7 @@
 TestEnemy::TestEnemy()
 {
 	//デバッグ用調整
-	m_position.Set(0.0f, 100.0f, 200.0f);
+	//m_position.Set(0.0f, 100.0f, 200.0f);
 	m_scale.Set(10.0f, 10.0f, 10.0f);
 
 	//モデル準備

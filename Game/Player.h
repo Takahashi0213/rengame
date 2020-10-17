@@ -81,7 +81,6 @@ private:
 
 	//ˆÚ“®
 	const float m_moveMax = 30.0f;
-	int hoge = 0;
 
 	//ƒWƒƒƒ“ƒv
 	bool m_jumpNow = false;

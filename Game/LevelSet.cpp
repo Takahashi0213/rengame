@@ -28,14 +28,24 @@ void LevelSet::Init(const wchar_t* LEVEL_Name) {
 	//レベルの要素数を取得（レベル自体がいくつ存在するか）
 	int Size = Level_Data.GetLevelDataSize();
 	int i = 0;	//配列セット用
+	m_levelNo = -1;		//初期化
+	//全部初期化
+	for (int j = 0; j < MAX_LEVEL_OBJ; j++) {
+		m_Obj_Data[j] = {};
+	}
 
 	//どのレベルかチェックするためのループ
-	for (int i = 0; i < Size; i++) {
+	for (int j = 0; j < Size; j++) {
 		//一致する場合そいつに決定する
-		if ( wcscmp(Level_Data.GetLevelName(i), LEVEL_Name) == 0) {
-			m_levelNo = i;	//お前しか…いない！
+		if ( wcscmp(Level_Data.GetLevelName(j), LEVEL_Name) == 0) {
+			m_levelNo = j;	//お前しか…いない！
 			break;
 		}
+	}
+	//エラーチェック
+	if (m_levelNo == -1) {
+		//どれにも引っかかっていないためエラー
+		std::abort();
 	}
 
 	//レベルNoを渡す
@@ -98,6 +108,17 @@ void LevelSet::NewObj(LevelObjectData& data, LevelData::Obj_Tag tag) {
 		pt->SetRotation(data.rotation);
 		pt->SetScale(data.scale*10.0f);
 	}
+
+	if (tag == LevelData::Obj_Tag::Tag_GhostBox_MapMove) {	//ゴーストボックス…移動
+		//const wchar_t* hoge = Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo);	//テストメッセージ
+		GhostBox* pt = CGameObjectManager::GetInstance()->NewGO<GhostBox>(data.name, 0);
+		pt->SetPosition(data.position*10.0f);
+		pt->SetRotation(data.rotation);
+		pt->SetScale(data.scale*10.0f);
+		pt->CreateGhost();
+		int ObjNo = Level_Data.ObjName_Search(m_levelNo, data.name);
+		pt->SetStageName(Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo));
+	}
 }
 
 void LevelSet::LinkObj(int levelNo, int i) {
@@ -123,6 +144,8 @@ void LevelSet::LinkObj(int levelNo, int i) {
 				//今見てるオブジェクト
 				int now_hash = Hash::MakeHash(nowObjName);
 				ObjectClass* now_objClass;
+
+				//ここに追加するオブジェクトは他のオブジェクトに「干渉する側」です
 				if (NowObjTag == LevelData::Obj_Tag::Tag_Switch) {
 					Switch* NowObj = CGameObjectManager::GetInstance()->FindGO<Switch>(now_hash);
 					now_objClass = NowObj->GetInstance();
@@ -141,6 +164,41 @@ void LevelSet::LinkObj(int levelNo, int i) {
 
 		}
 
+	}
+
+}
+
+void LevelSet::LevelDelete() {
+
+	//全部検索アンド削除である！
+	for (int i = 0; i < MAX_LEVEL_OBJ; i++) {
+		if (wcscmp(m_Obj_Data[i].ObjName, L"") == 0) {
+			//名前がない！強制終了
+			break;
+		}
+		else {
+			//検索して消す
+			LevelData::Obj_Tag tag = m_Obj_Data[i].ObjTag;
+			//削除作業
+			if (tag == LevelData::Obj_Tag::Tag_Switch) {
+				Switch* pt = CGameObjectManager::GetInstance()->FindGO<Switch>(Hash::MakeHash(m_Obj_Data[i].ObjName));
+				CGameObjectManager::GetInstance()->DeleteGO(pt);
+			}
+			if (tag == LevelData::Obj_Tag::Tag_Door) {
+				Door* pt = CGameObjectManager::GetInstance()->FindGO<Door>(Hash::MakeHash(m_Obj_Data[i].ObjName));
+				CGameObjectManager::GetInstance()->DeleteGO(pt);
+			}
+			if (tag == LevelData::Obj_Tag::Tag_Test_Enemy) {
+				TestEnemy* pt = CGameObjectManager::GetInstance()->FindGO<TestEnemy>(Hash::MakeHash(m_Obj_Data[i].ObjName));
+				CGameObjectManager::GetInstance()->DeleteGO(pt);
+			}
+			if (tag == LevelData::Obj_Tag::Tag_Jewel) {
+				StarMoney* pt = CGameObjectManager::GetInstance()->FindGO<StarMoney>(Hash::MakeHash(m_Obj_Data[i].ObjName));
+				CGameObjectManager::GetInstance()->DeleteGO(pt);
+			}
+
+
+		}
 	}
 
 }

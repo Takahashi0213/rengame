@@ -37,7 +37,7 @@ Game::Game()
 
 #ifdef _DEBUG
 	//ワイヤーフレームを表示しますすうすすすうう
-	g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
+	//g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 #endif
 
 }
@@ -59,7 +59,9 @@ void Game::Update() {
 		//OPが終わったら切り替える
 		if (m_op->GetEndFlag() == true) {
 			//切り替え
-
+			delete m_op;
+			m_op = nullptr;
+			GameSetUp();
 		}
 
 		break;
@@ -80,6 +82,8 @@ void Game::Render() {
 
 void Game::GameSetUp() {
 
+	//モード変更
+	SceneManager::GetInstance()->SetGameMode(SceneManager::GameMode::ActionMode);
 	//ボックスメイカーの作成
 	BoxMaker* m_box = CGameObjectManager::GetInstance()->NewGO<BoxMaker>("BoxMaker", 1);
 	//プレイヤーの作成
@@ -91,7 +95,7 @@ void Game::GameSetUp() {
 	//カメラ
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
 	//ステージ
-	StageSet m_stageSet;
-	m_stageSet.CriateStage(L"Assets/modelData/0_0.cmo", L"Assets/level/stage_00.tkl");
+	StageSet::GetInstance()->InitStage(L"Tutorial");
 
+	m_gameState = GamaState_Game;
 }

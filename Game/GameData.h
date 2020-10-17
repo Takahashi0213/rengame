@@ -51,6 +51,16 @@ public:
 	}
 
 	/// <summary>
+	/// ロード中のステージ番号の変更と取得
+	/// </summary>
+	void SetNowStageNo(const int& stageNo) {
+		m_nowStageNo = stageNo;
+	}
+	const int GetNowStageNo() {
+		return m_nowStageNo;
+	}
+
+	/// <summary>
 	/// ロード中のマップレベル番号の変更と取得
 	/// </summary>
 	void SetNowMapLevel(const int& level) {
@@ -207,6 +217,7 @@ private:
 	int m_progress = 0;						//進行度
 	Place_Data m_nowPlace = Null_Place;		//現在位置
 	bool m_menuFlag = false;				//今メニュー開ける？（trueだと開けない）
+	int m_nowStageNo = -1;					//現在ロード中のステージ番号
 	int m_nowMapLevel = -1;					//現在ロード中のレベル
 
 	//解放要素

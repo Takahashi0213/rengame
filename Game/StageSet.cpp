@@ -14,16 +14,43 @@ StageSet::StageSet()
 
 }
 
-
 StageSet::~StageSet()
 {
 }
 
-void StageSet::CriateStage(const wchar_t* stage_filePath, const wchar_t* level_filePath) {
+void StageSet::InitStage(const wchar_t* stage_name) {
+	
+	DeleteStage();
 
-	if (m_bg != nullptr) {
-		CGameObjectManager::GetInstance()->DeleteGO(m_bg);
+	int Size = m_stageData.GetStageListSize();
+	
+	//どのレベルかチェックするためのループ
+	for (int i = 0; i < Size; i++) {
+		//一致する場合そいつに決定する
+		if (wcscmp(m_stageData.GetStageName(i), stage_name) == 0) {
+			m_stageNo = i;	//お前しか…いない！
+			break;
+		}
 	}
+
+	//エラーチェック
+	if (m_stageNo == -1) {
+		//どれにも引っかかっていないためエラー
+		std::abort();
+	}
+
+	//ここから生成処理
+
+	//ステージ番号をセット
+	GameData::GetInstance()->SetNowStageNo(m_stageNo);
+
+	//生成タイム
+	CriateStage(m_stageData.GetStageModel(m_stageNo),
+		m_stageData.GetStageLevel(m_stageNo));
+
+}
+
+void StageSet::CriateStage(const wchar_t* stage_filePath, const wchar_t* level_filePath) {
 
 	//ステージの生成
 	m_bg = CGameObjectManager::GetInstance()->NewGO<BackGround>("BackGround", 0);
@@ -31,5 +58,24 @@ void StageSet::CriateStage(const wchar_t* stage_filePath, const wchar_t* level_f
 
 	//レベルの生成
 	m_levelSet.Init(level_filePath);
+
+}
+
+void StageSet::DeleteStage() {
+
+	//メンバステージ番号をリセット
+	m_stageNo = -1;
+	//ステージ番号をリセット
+	GameData::GetInstance()->SetNowStageNo(-1);
+	//レベル番号をリセット
+	GameData::GetInstance()->SetNowMapLevel(-1);
+
+	//背景の削除
+	if (m_bg != nullptr) {
+		CGameObjectManager::GetInstance()->DeleteGO(m_bg);
+	}
+
+	//レベルの削除
+	m_levelSet.LevelDelete();
 
 }

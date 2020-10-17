@@ -30,5 +30,8 @@ private:
 	int m_opShinkou = 0;			//OP進行度
 	bool m_opEffectFlag = false;	//何度もメッセージが表示されないようにするフラグ
 
+	//定数
+	const int EndShinkou = 2;
+
 };
 

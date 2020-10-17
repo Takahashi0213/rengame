@@ -87,12 +87,6 @@ Player::~Player()
 
 void Player::Update()
 {
-	if (hoge == 0) {
-		GameEffect::GetInstance()->EasyEffect(L"‚ ‚ Š´‚¢‚¢‚¤‚¤\n‚¦‚¦\n‚¨‚¨",
-			GameEffect_Stand::Stand_Normal,
-			GameEffect_Stand::New_Stand);
-		hoge++;
-	}
 	//ƒ‚ƒmƒNƒ‚É‚È[‚é
 	if (m_gameObj != nullptr) {
 		if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode && m_monochromeFlag == false) {
