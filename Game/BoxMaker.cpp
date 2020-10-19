@@ -204,9 +204,12 @@ void BoxMaker::Update() {
 				m_boxScale.y - m_boxScaleDef.y ,
 				m_boxScale.z - m_boxScaleDef.z };
 			float ManaHosei = Scale.x + Scale.y + Scale.z;
-			ManaHosei /= ManaHosei;
-			int ManaHosei2 = (int)floor(ManaHosei);
+			ManaHosei /= DefManaHosei;
+			int ManaHosei2 = static_cast<int>( floor(ManaHosei));
 			m_manaHosei = ManaHosei2;
+			if (m_manaHosei < 0) {	//バグ防止下限
+				m_manaHosei = 0;
+			}
 			m_downMana = m_downMana_Stock + m_manaHosei;
 
 			//箱の向きに合わせて拡大率を色々する
@@ -347,7 +350,7 @@ void BoxMaker::ModeChange() {
 		}
 		else {
 			//プレイヤーのちょい上
-			m_boxPos = m_player->Getm_Position();
+			m_boxPos = m_player->GetPosition();
 			m_boxPos.y += PosHoseiY;
 			//CVector3 m_bp = MouseSupporter::GetInstance()->GetMousePos_3D();
 			//m_bp.Normalize();
@@ -375,7 +378,7 @@ void BoxMaker::ModeChange() {
 
 			m_box_Nom = 1;				//箱の数をリセット
 
-										//マナ設定
+			//マナ設定
 			m_downMana = CriateModeChangeBorder;
 			m_startMana = GameData::GetInstance()->GetMagicPower();
 
@@ -396,6 +399,7 @@ void BoxMaker::ModeChange() {
 	else if (key == MouseSupporter::New_Push && NowGameMode == SceneManager::CreateMode) {	//中クリックされた瞬間かつアクションモード
 
 		//魔力減少
+		m_originBox->SetManaPower(m_downMana);
 		GameData::GetInstance()->SetMagicPower(m_startMana - m_downMana);
 
 		//アクションモードへ変更
@@ -423,6 +427,34 @@ bool BoxMaker::BoxCriateCheck() {
 	}
 
 	return ReturnFlag;
+
+}
+
+/// <summary>
+/// 削除系
+/// </summary>
+
+void BoxMaker::BoxDelete(GameBox* deleteBox) {
+
+	//この箱がオリジンじゃなかったらエラー
+	if (deleteBox->GetBoxTag() == GameBox::BoxTag::Another) {
+		std::abort();
+	}
+	//マナを回復する
+	GameData::GetInstance()->SetMagicPower(
+		GameData::GetInstance()->GetMagicPower() + deleteBox->GetManaPower()
+	);
+	//子供たちをリストから削除
+	std::vector<GameBox*> AnotherBoxs = deleteBox->GetBoxList();
+	for (int i = 0; i < AnotherBoxs.size(); i++) {
+		m_boxList.remove(AnotherBoxs[i]);
+	}
+	//この箱の子供を全削除
+	deleteBox->DeleteBox();
+	//この箱自体を削除
+	delete deleteBox;
+	//リストからも削除
+	m_boxList.remove(deleteBox);
 
 }
 

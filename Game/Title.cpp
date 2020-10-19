@@ -17,7 +17,6 @@ Title::Title()
 	SceneManager::GetInstance()->SetGameMode(SceneManager::TitleMode);
 	//Dof‚ð–³Œø‚É‚·‚é
 	SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag = false;
-
 	//–¾‚é‚­‚·‚é
 	LightMaker::GetInstance()->SetAmbientColor({ 1.0f, 1.0f, 1.0f });
 

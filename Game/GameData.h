@@ -196,11 +196,19 @@ public:
 	}
 
 	//キーコンフィグ～～～～！！！
+	//箱キャッチ
 	void SetBoxCatchKey(const char& key) {
 		m_boxCatchKey = key;
 	}
 	const char GetBoxCatchKey()const {
 		return m_boxCatchKey;
+	}
+	//箱削除
+	void SetBoxDeleteKey(const char& key) {
+		m_boxDeleteKey = key;
+	}
+	const char GetBoxDeleteKey()const {
+		return m_boxDeleteKey;
 	}
 
 	/// <summary>
@@ -247,6 +255,7 @@ private:
 	//コンフィグ
 	int m_messageSpeed = 2;		//会話のメッセージ送りスピード
 	char m_boxCatchKey = 'C';	//箱を持ち上げるキー
+	char m_boxDeleteKey = 'D';	//箱を削除するキー
 
 };
 

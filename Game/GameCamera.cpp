@@ -21,7 +21,7 @@ GameCamera::GameCamera()
 	m_game = Game::GetInstance();
 
 	//注視点を動かす
-	CVector3 P_Position = m_player->Getm_Position();
+	CVector3 P_Position = m_player->GetPosition();
 
 	m_cameraTarget.x = P_Position.x;
 	m_cameraTarget.y = P_Position.y + 100.0f;	//プレイヤーのちょっと上にする
@@ -74,8 +74,8 @@ void GameCamera::Render() {
 
 void GameCamera::ActionMode() {
 
-	CVector3 P_Position = m_player->Getm_Position();
-	CQuaternion P_qRot = m_player->Getm_Rotation();
+	CVector3 P_Position = m_player->GetPosition();
+	CQuaternion P_qRot = m_player->GetRotation();
 	CVector3 vBase = { 0.0f,0.0f,1.0f };
 	CVector3 Camera_Position = g_camera3D.GetTarget();
 
@@ -109,7 +109,7 @@ void GameCamera::ActionMode() {
 void GameCamera::CreateMode() {
 
 	//注視点を動かす
-	CVector3 P_Position = m_player->Getm_Position();
+	CVector3 P_Position = m_player->GetPosition();
 	if (m_gamebox != nullptr) {
 		CVector3 Box_Position = m_gamebox->GetPosition();
 		CVector3 Camera_Position = g_camera3D.GetTarget();

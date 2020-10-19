@@ -179,75 +179,79 @@ void GameEffect_Message::MessageInit() {
 
 void GameEffect_Message::MessageEffect(wchar_t* Message) {
 
-//メッセージ送り
-m_messageFont->SetTextOkuri(Message, 2);
+	//メッセージ送り
+	m_messageFont->SetTextOkuri(Message, 2);
 
-//色々と準備が必要です
-m_windowOkuriSprite->SetAlpha(0.0f);
+	//色々と準備が必要です
+	m_windowOkuriSprite->SetAlpha(0.0f);
 
 if (m_windowSprite->GetAlpha() < 1.0f) {
 
-	//初回表示処理
-	m_windowSprite->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,1.0f }, 6, 0);
-	m_windowSprite->SetPosition({ WindowDefPos.x,WindowDefPos.y - 30.0f,WindowDefPos.z });
-	m_windowSprite->m_spriteSupporter.SpriteMove({ 0.0f, 30.0f }, 6, 0, true);
+		//初回表示処理
+		m_windowSprite->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,1.0f }, 6, 0);
+		m_windowSprite->SetPosition({ WindowDefPos.x,WindowDefPos.y - 30.0f,WindowDefPos.z });
+		m_windowSprite->m_spriteSupporter.SpriteMove({ 0.0f, 30.0f }, 6, 0, true);
 
-	m_messageSkipOshiraseFont->SetPosition({ TextSkipDefPos.x,TextSkipDefPos.y - 200.0f });
-	m_messageSkipOshiraseFont->m_fontSupporter.FontMoveSet({ TextSkipDefPos.x,TextSkipDefPos.y }, 12, 0, false);
+		m_messageSkipOshiraseFont->SetPosition({ TextSkipDefPos.x,TextSkipDefPos.y - 200.0f });
+		m_messageSkipOshiraseFont->m_fontSupporter.FontMoveSet({ TextSkipDefPos.x,TextSkipDefPos.y }, 12, 0, false);
 
-	//邪魔なのでステータスを消しておく
-	GameUI* ui = Game::GetInstance()->GetUI();
-	if (ui != nullptr) {
-		ui->CloseUI();
+		//邪魔なのでステータスを消しておく
+		GameUI* ui = Game::GetInstance()->GetUI();
+		if (ui != nullptr) {
+			ui->CloseUI();
+			m_uiMoveFlag = true;
+		}
+		else {
+			m_uiMoveFlag = false;
+		}
+
+		//イベントフラグをtrueにする
+		SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag = true;
+
+		//ログ関連の初期化
+		for (int i = 0; i < 4096; i++) {
+			m_logText[i] = L'\0';
+		}
+		m_logHigh = 0;
 	}
 
-	//イベントフラグをtrueにする
-	SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag = true;
+	//行数を計算
+	int high = 0;
+	wchar_t* MessageStock = Message;
+	while (true) {	//改行がなくなるまでループ
 
-	//ログ関連の初期化
-	for (int i = 0; i < 4096; i++) {
-		m_logText[i] = L'\0';
+		MessageStock = wcsstr(MessageStock, L"\n");
+		high++;
+
+		if (MessageStock == NULL) {
+			break;
+		}
+		MessageStock++;
 	}
-	m_logHigh = 0;
-}
+	m_logHigh += high + 2;
 
-//行数を計算
-int high = 0;
-wchar_t* MessageStock = Message;
-while (true) {	//改行がなくなるまでループ
+	//ログに追加する
+	const wchar_t* text = nullptr;
+	std::wstring m_text = Message;
+	text = m_text.c_str();
+	wchar_t character[2];
 
-	MessageStock = wcsstr(MessageStock, L"\n");
-	high++;
+	for (; *text; text++) {
+		character[0] = *text;
+		character[1] = L'\0';
 
-	if (MessageStock == NULL) {
-		break;
+		wcscat(m_logText, character);
+
 	}
-	MessageStock++;
-}
-m_logHigh += high + 2;
-
-//ログに追加する
-const wchar_t* text = nullptr;
-std::wstring m_text = Message;
-text = m_text.c_str();
-wchar_t character[2];
-
-for (; *text; text++) {
-	character[0] = *text;
+	character[0] = L'\n';
 	character[1] = L'\0';
-
+	wcscat(m_logText, character);
 	wcscat(m_logText, character);
 
-}
-character[0] = L'\n';
-character[1] = L'\0';
-wcscat(m_logText, character);
-wcscat(m_logText, character);
-
-//フラグとか
-m_nowMessage = true; 
-m_messageOkuriWait = false;
-m_messageTimer = 0;
+	//フラグとか
+	m_nowMessage = true; 
+	m_messageOkuriWait = false;
+	m_messageTimer = 0;
 
 }
 
@@ -343,7 +347,7 @@ void GameEffect_Message::MessageUpdate() {
 			SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag = false;
 			//消したステータスを戻す
 			GameUI* ui = Game::GetInstance()->GetUI();
-			if (ui != nullptr) {
+			if (ui != nullptr && m_uiMoveFlag == true) {
 				ui->OpenUI();
 			}
 		}

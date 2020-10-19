@@ -14,7 +14,7 @@ public:
 	/// <summary>
 	/// ŠÅ”Â‚Ì“à—e‚ğİ’è‚µ‚½‚èæ“¾‚µ‚½‚è
 	/// </summary>
-	void SetBoardMessage(wchar_t* message) {
+	void SetBoardMessage(const wchar_t* message) {
 		Message = message;
 	}
 	const wchar_t* GetBoardMessage() const {
@@ -22,9 +22,9 @@ public:
 	}
 
 private:
-	SkinModelRender * m_model;			//‚à‚Å``‚é
+	SkinModel m_model;			//‚à‚Å``‚é
 
-	wchar_t* Message = L"";				//ŠÅ”Â‚Ì“à—e
+	const wchar_t* Message = L"";				//ŠÅ”Â‚Ì“à—e
 
 	const float BoardRange = 300.0f;	//’²‚×‚ç‚ê‚é”ÍˆÍ
 

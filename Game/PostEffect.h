@@ -40,20 +40,26 @@ private:
 	/// </summary>
 	void InitFullScreenQuadPrimitive();
 private:
-	FarShadow m_farShadow;	//遠くの影
-	Bloom m_bloom;	//ブルーム。
-	Dof m_dof;			//DoF
+
+	void BlurDraw();
+
+	FarShadow m_farShadow;			//遠くの影
+	Bloom m_bloom;					//ブルーム。
+	Dof m_dof;						//DoF
 	GaussianBlur m_gaussianBlur;	//ブラー補正
+
 	//フルスクリーン描画用のメンバ変数。
 	ID3D11Buffer*	m_vertexBuffer = nullptr;		//頂点バッファ。
 	ID3D11InputLayout* m_inputLayout = nullptr;		//入力レイアウト。
 
-	void BlurDraw();
 	ID3D11BlendState* m_blendState = nullptr;		//最終合成用のブレンディングステート。
+
 	Shader m_vs;			//頂点シェーダー。
 	Shader m_ps;			//ピクセルシェーダー。
 
+	//設定フラグ
 	bool m_blurInitFlag = false;
+	bool m_dofInitFlag = false;
 
 };
 

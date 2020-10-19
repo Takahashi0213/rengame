@@ -14,10 +14,6 @@ public:
 
 private:
 
-	//がぞん
-	std::vector<SpriteRender*> m_spriteRenderList;
-	std::vector<FontRender*> m_fontRenderList;
-
 	//箱を消すときの確認メッセ
 	const wchar_t* CheckText = L"全ての箱を破壊して\nマナを全回復しますか？";
 	const wchar_t* YesText = L"破壊";

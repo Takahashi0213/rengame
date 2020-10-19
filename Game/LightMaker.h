@@ -129,7 +129,7 @@ public:
 	}
 
 	/// <summary>
-	/// 環境甲をリセットする
+	/// 環境光をリセットする
 	/// </summary>
 	void ResetAmbientColor() {
 		m_ambientColor = AmbientDefColor;
@@ -203,7 +203,7 @@ private:
 	bool m_lightFlag_D = false;	//ディレクションライト有効フラグ
 	bool m_lightFlag_P = false;	//ポイントライト有効フラグ
 
-	const CVector3 AmbientDefColor = { 0.1f,0.1f,0.2f };	//環境光デフォルトカラー
+	const CVector3 AmbientDefColor = { 0.5f,0.5f,0.5f };	//環境光デフォルトカラー
 	CVector3 m_ambientColor = AmbientDefColor;	//環境光の色
 
 	CVector3 m_lightCameraPosition;				//ライトカメラの視点。

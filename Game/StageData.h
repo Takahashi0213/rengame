@@ -15,6 +15,7 @@ public:
 		wchar_t LoadStageModel[255];	//ステージモデルのファイルパス
 		wchar_t LoadStageLevel[255];	//ステージレベルのファイルパス
 		GameData::Place_Data ThisPlace;	//ここはどこ
+		CVector3 AmbientColor;			//このマップの環境光
 	};
 
 	//取得ゾーン
@@ -38,6 +39,14 @@ public:
 	const wchar_t* GetStageLevel(const int stageNo) {
 		return StageList[stageNo].LoadStageLevel;
 	}
+	//ステージの場所データ
+	const GameData::Place_Data GetStagePlace(const int stageNo) {
+		return StageList[stageNo].ThisPlace;
+	}
+	//ステージの環境光
+	const CVector3 GetStageAmbientColor(const int stageNo) {
+		return StageList[stageNo].AmbientColor;
+	}
 
 	//計算ゾーン
 
@@ -57,6 +66,7 @@ private:
 			L"Assets/modelData/0_0.cmo",
 			L"Assets/level/stage_00.tkl",
 			GameData::Place_Data::Warehouse,
+			{ 0.1f,0.1f,0.2f }
 		},
 		//草原1
 		{
@@ -65,6 +75,7 @@ private:
 			L"Assets/modelData/Sougen_1_1.cmo",
 			L"Assets/level/stage_1_1.tkl",
 			GameData::Place_Data::Meadow,
+			{ 0.5f,0.5f,0.5f }
 		},
 		//草原2
 		{
@@ -73,6 +84,7 @@ private:
 			L"Assets/modelData/Sougen_1_2.cmo",
 			L"Assets/level/stage_1_2.tkl",
 			GameData::Place_Data::Meadow,
+			{ 0.5f,0.5f,0.5f }
 		},
 		//草原3
 		{
@@ -81,6 +93,7 @@ private:
 			L"Assets/modelData/Sougen_1_3.cmo",
 			L"Assets/level/stage_1_3.tkl",
 			GameData::Place_Data::Meadow,
+			{ 0.5f,0.5f,0.5f }
 		},
 
 

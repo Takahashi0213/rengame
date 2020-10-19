@@ -14,6 +14,6 @@ Menu_BoxAllDelete::~Menu_BoxAllDelete()
 void Menu_BoxAllDelete::DeleteCheckUpdate() {
 
 
-
+	int hoge = 0;
 
 }

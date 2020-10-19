@@ -37,7 +37,7 @@ public:
 	}
 
 	/// <summary>
-	/// 色設定
+	/// 色取得＆削除
 	/// </summary>
 	void SetColor(CVector3 color) {
 		m_model.SetEmissionColor(color);
@@ -45,10 +45,10 @@ public:
 	CVector3 GetColor() {
 		return m_model.GetEmissionColor();
 	}
-	//まとめて着色
-	void SetAllColor(CVector3 color);
+	//（子供含め）まとめて着色
+	void SetAllColor(const CVector3 color);
 
-	//移動量関連
+	//移動量取得＆削除
 	CVector3 GetMoveSpeed() {
 		return m_moveSpeed;
 	}
@@ -63,59 +63,58 @@ public:
 	void SetBox(GameBox* box) {
 		m_boxList.push_back(box);
 	}
-
 	/// <summary>
 	/// 子のボックスリストを削除する
 	/// </summary>
 	void SetBox_Delete() {
 		m_boxList.pop_back();
 	}
-
 	/// <summary>
-	/// 箱のタグを変更する
+	/// 子のボックスリストを返す
 	/// </summary>
-	/// <param name="box_tag">たぐ</param>
-	void SetBoxTag(BoxTag box_tag) {
-		m_boxTag = box_tag;
+	/// <returns></returns>
+	std::vector<GameBox*> GetBoxList() {
+		return m_boxList;
 	}
 
 	/// <summary>
-	/// 箱のタグを取得する
+	/// 箱のタグを変更＆取得
 	/// </summary>
-	/// <returns>タグです</returns>
+	void SetBoxTag(const BoxTag box_tag) {
+		m_boxTag = box_tag;
+	}
 	BoxTag GetBoxTag() {
 		return m_boxTag;
 	}
 
 	/// <summary>
-	/// 箱の拡大率を変更する
+	/// 箱の拡大率 設定＆取得
 	/// </summary>
-	/// <param name="scl">拡大率！</param>
-	void SetScale(CVector3 scl) {
+	void SetScale(const CVector3 scl) {
 		m_scale = scl;
 	}
-
-	/// <summary>
-	/// 箱の拡大率を返す
-	/// </summary>
-	/// <returns>拡大率！！！！！！</returns>
 	CVector3 GetScale() {
 		return m_scale;
 	}
 
 	/// <summary>
-	/// 回転を設定
+	/// 回転を設定＆取得
 	/// </summary>
-	/// <param name="rot">回転</param>
-	void SetRotation(CQuaternion rot) {
+	void SetRotation(const CQuaternion rot) {
 		m_rotation = rot;
 	}
-	/// <summary>
-	/// 回転を取得
-	/// </summary>
-	/// <returns>回転</returns>
 	CQuaternion GetRotation() {
 		return m_rotation;
+	}
+
+	/// <summary>
+	/// マナパワーの設定と取得（箱の削除に使います）
+	/// </summary>
+	void SetManaPower(const int mana) {
+		m_manaPower = mana;
+	}
+	int GetManaPower() {
+		return m_manaPower;
 	}
 
 	/// <summary>
@@ -128,7 +127,7 @@ public:
 	/// <summary>
 	/// 箱のローカル座標！
 	/// </summary>
-	void SetLocalPos(CVector3 pos) {
+	void SetLocalPos(const CVector3 pos) {
 		m_localPosition = pos;
 	}
 	CVector3 GetLocalPos() {
@@ -158,6 +157,11 @@ public:
 	RigidBody* GetRigidBody() {
 		return m_physicsStaticObject.GetRigidBody();
 	}
+
+	/// <summary>
+	/// 呼ばれたら子供箱を全て削除
+	/// </summary>
+	void DeleteBox();
 
 	/// <summary>
 	/// 箱を持つときの座標補正量を計算するZO
@@ -232,6 +236,8 @@ private:
 
 	//子になるボックスども（OrizinBoxだけ変更される、Anotherは不要）
 	std::vector<GameBox*> m_boxList;
+	//マナパワー総数（こちらもOrizin専用）
+	int m_manaPower = 0;
 
 	//定数
 	const CVector3 BoxDefScale = { 100.0f,100.0f,100.0f };		//箱の初期スケール

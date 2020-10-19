@@ -201,6 +201,9 @@ private:
 	const float LogOffsetY = 38;								//1行ごとのY補正
 	const int DeltaHoseiY = 10;									//ログでホイール入力された時の移動量補正
 
+	//UIフラグ
+	bool m_uiMoveFlag = false;									//UIを動かしてないのに動かすの防止
+
 };
 
 class GameEffect_AnimationSprite {

@@ -8,11 +8,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2020
 		Month: 10
-		Day: 16
-		Hour: 17
-		Minute: 36
-		Second: 55
-		Millisecond: 205
+		Day: 18
+		Hour: 20
+		Minute: 40
+		Second: 45
+		Millisecond: 783
 	}
 	Creator: "FBX SDK/FBX Plugins version 2018.1"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -28,21 +28,21 @@ FBXHeaderExtension:  {
 			Comment: ""
 		}
 		Properties70:  {
-			P: "DocumentUrl", "KString", "Url", "", "C:\Users\GC1835\Desktop\GameTemplate\Game\Assets\modelData\Gimmick\Door\BigDoor2.fbx"
-			P: "SrcDocumentUrl", "KString", "Url", "", "C:\Users\GC1835\Desktop\GameTemplate\Game\Assets\modelData\Gimmick\Door\BigDoor2.fbx"
+			P: "DocumentUrl", "KString", "Url", "", "C:\Users\GC1835\Desktop\GameTemplate\Game\Assets\modelData\Gimmick\Door\BigDoor_.fbx"
+			P: "SrcDocumentUrl", "KString", "Url", "", "C:\Users\GC1835\Desktop\GameTemplate\Game\Assets\modelData\Gimmick\Door\BigDoor_.fbx"
 			P: "Original", "Compound", "", ""
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "3ds Max"
 			P: "Original|ApplicationVersion", "KString", "", "", "2018"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "16/10/2020 08:36:55.202"
-			P: "Original|FileName", "KString", "", "", "C:\Users\GC1835\Desktop\GameTemplate\Game\Assets\modelData\Gimmick\Door\BigDoor2.fbx"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "18/10/2020 11:40:45.729"
+			P: "Original|FileName", "KString", "", "", "C:\Users\GC1835\Desktop\GameTemplate\Game\Assets\modelData\Gimmick\Door\BigDoor_.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "3ds Max"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "2018"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "16/10/2020 08:36:55.202"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "18/10/2020 11:40:45.729"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\GC1835\Documents\3dsMax"
-			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\GC1835\Documents\3dsMax\scenes\Hako_Gimmick\BigDoor2.max"
+			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\GC1835\Documents\3dsMax\scenes\Hako_Gimmick\BigDoor_.max"
 		}
 	}
 }
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 2794478844064, "", "Scene" {
+	Document: 2190013635472, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", ""
@@ -305,7 +305,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 2794417538480, "Geometry::", "Mesh" {
+	Geometry: 2190202065088, "Geometry::", "Mesh" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.894117647058823,0.72156862745098,0.6
 		}
@@ -418,7 +418,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 2794420543152, "Model::Box001", "Mesh" {
+	Model: 2190199971024, "Model::Box001", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
@@ -429,7 +429,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 2794244983664, "Material::Material #30", "" {
+	Material: 2190203217200, "Material::Material #30", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -452,7 +452,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Material: 2794244987024, "Material::Material #29", "" {
+	Material: 2190203233520, "Material::Material #29", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -475,7 +475,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Video: 2794244975504, "Video::マップ #13", "Clip" {
+	Video: 2190203229680, "Video::マップ #13", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1835\Desktop\GameTemplate\Game\Assets\modelData\Gimmick\Door\bricks_002x16.jpg"
@@ -485,7 +485,7 @@ Objects:  {
 		Filename: "C:\Users\GC1835\Desktop\GameTemplate\Game\Assets\modelData\Gimmick\Door\bricks_002x16.jpg"
 		RelativeFilename: "bricks_002x16.jpg"
 	}
-	Video: 2794244988944, "Video::マップ #12", "Clip" {
+	Video: 2190203227280, "Video::マップ #12", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1835\Desktop\GameTemplate\Game\Assets\modelData\Gimmick\Door\bricks__002x16.jpg"
@@ -495,7 +495,7 @@ Objects:  {
 		Filename: "C:\Users\GC1835\Desktop\GameTemplate\Game\Assets\modelData\Gimmick\Door\bricks__002x16.jpg"
 		RelativeFilename: "bricks__002x16.jpg"
 	}
-	Texture: 2794244998064, "Texture::マップ #13", "" {
+	Texture: 2190203204240, "Texture::マップ #13", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::マップ #13"
@@ -511,7 +511,7 @@ Objects:  {
 		Texture_Alpha_Source: "Alpha_Black"
 		Cropping: 0,0,0,0
 	}
-	Texture: 2794244987504, "Texture::マップ #12", "" {
+	Texture: 2190203214800, "Texture::マップ #12", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::マップ #12"
@@ -527,13 +527,13 @@ Objects:  {
 		Texture_Alpha_Source: "Alpha_Black"
 		Cropping: 0,0,0,0
 	}
-	AnimationStack: 2794425945056, "AnimStack::Take 001", "" {
+	AnimationStack: 2190282370560, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",153953860000
 			P: "ReferenceStop", "KTime", "Time", "",153953860000
 		}
 	}
-	AnimationLayer: 2794489099904, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 2189996754592, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -543,31 +543,31 @@ Objects:  {
 Connections:  {
 	
 	;Model::Box001, Model::RootNode
-	C: "OO",2794420543152,0
+	C: "OO",2190199971024,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",2794489099904,2794425945056
+	C: "OO",2189996754592,2190282370560
 	
 	;Material::Material #30, Model::Box001
-	C: "OO",2794244983664,2794420543152
+	C: "OO",2190203217200,2190199971024
 	
 	;Material::Material #29, Model::Box001
-	C: "OO",2794244987024,2794420543152
+	C: "OO",2190203233520,2190199971024
 	
 	;Geometry::, Model::Box001
-	C: "OO",2794417538480,2794420543152
+	C: "OO",2190202065088,2190199971024
 	
 	;Texture::マップ #13, Material::Material #30
-	C: "OP",2794244998064,2794244983664, "DiffuseColor"
+	C: "OP",2190203204240,2190203217200, "DiffuseColor"
 	
 	;Video::マップ #13, Texture::マップ #13
-	C: "OO",2794244975504,2794244998064
+	C: "OO",2190203229680,2190203204240
 	
 	;Texture::マップ #12, Material::Material #29
-	C: "OP",2794244987504,2794244987024, "DiffuseColor"
+	C: "OP",2190203214800,2190203233520, "DiffuseColor"
 	
 	;Video::マップ #12, Texture::マップ #12
-	C: "OO",2794244988944,2794244987504
+	C: "OO",2190203227280,2190203214800
 }
 ;Takes section
 ;----------------------------------------------------

@@ -28,8 +28,16 @@ StarMoney::~StarMoney()
 
 void StarMoney::Update() {
 
+	StarMoneyMove();
+
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	m_model_Kirameki.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+
+	//シャドウキャスター
+	ShadowMap::GetInstance()->RegistShadowCaster(&m_model);	
+	ShadowMap::GetInstance()->Update(LightMaker::GetInstance()->GetLightCameraPosition(), 
+		LightMaker::GetInstance()->GetLightCameraTarget());
+
 }
 
 void StarMoney::Render() {
@@ -40,4 +48,30 @@ void StarMoney::Render() {
 	m_model_Kirameki.Draw(g_camera3D.GetViewMatrix(),
 		g_camera3D.GetProjectionMatrix()
 	);
+}
+
+void StarMoney::StarMoneyMove() {
+
+	//タイマー加算
+	m_upDowmTimer += CGameTime::GetFrameDeltaTime();
+
+	//移動処理
+	if (m_upDowmFlag == false) {
+		m_position.y += UpDownMove;
+	}
+	else {
+		m_position.y -= UpDownMove;
+	}
+
+	//リミット
+	if (m_upDowmTimer >= UpDownLimit) {
+		m_upDowmTimer = 0.0f;
+		if (m_upDowmFlag == false) {
+			m_upDowmFlag = true;
+		}
+		else {
+			m_upDowmFlag = false;
+		}
+	}
+
 }

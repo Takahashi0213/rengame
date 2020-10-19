@@ -27,7 +27,7 @@ SceneManager::SceneManager()
 	//ライトメーカーの生成
 	CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
 	//ステージセットの生成
-	new StageSet;
+	//new StageSet;
 
 	//最初はタイトル！
 	m_title = CGameObjectManager::GetInstance()->NewGO<Title>("Game_Title");

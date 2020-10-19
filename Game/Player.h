@@ -6,8 +6,6 @@
 #include "MouseOver.h"
 #include "GameBox.h"
 
-#include "StarMoney.h"
-
 class Player final: public IGameObject
 {
 public:
@@ -17,21 +15,27 @@ public:
 	void Render()override;
 
 	/// <summary>
+	/// プレイヤーが落下したら呼びましょう！
+	/// </summary>
+	void PlayerMiss();
+
+	/// <summary>
 	/// プレイヤーのポジションを返す
 	/// </summary>
 	/// <returns>プレイヤーの場所</returns>
-	CVector3 Getm_Position() {
-		return m_position;
-	}
 	CVector3 GetPosition() {
 		return m_position;
+	}
+	//プレイヤーの座標を設定
+	void SetPosition(const CVector3 pos) {
+		m_position = pos;
 	}
 
 	/// <summary>
 	/// プレイヤーの回転を返す
 	/// </summary>
 	/// <returns>回転</returns>
-	CQuaternion Getm_Rotation() {
+	CQuaternion GetRotation() {
 		return m_rotation;
 	}
 
@@ -47,20 +51,12 @@ private:
 	//常時呼ばれる
 	void BoxUp();
 
-	SkinModel m_model;	//スキンモデル。
-	SkinModel m_model_Sl;	//スキンモデル（シルエット）
+	SkinModel m_model;					//スキンモデル。
+	SkinModel m_model_Sl;				//スキンモデル（シルエット）
 	CharacterController m_charaCon;		//キャラクターコントローラー。
 	Game* m_gameObj;
 	LightMaker* m_lightMaker;
-	MouseOver ms;
-
-	//巨人
-	SkinModel m_titan;	//スキンモデル。
-	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;
-	ID3D11ShaderResourceView* m_specMapSRV = nullptr;
-	ID3D11ShaderResourceView* m_aoMapSRV = nullptr;
-	//宝石
-	StarMoney* m_starMoney;
+	//MouseOver ms;
 
 	//モノクロフラグ
 	bool m_monochromeFlag = false;
@@ -68,12 +64,14 @@ private:
 	//行動
 	void Move();
 	void Jump();
+	//行動 箱関連
 	void BoxCatch();
 	void BoxSearch();
 	void BoxMove();
+	void BoxDelete();
 
 	//プレイヤー
-	CVector3 m_position = /*CVector3().Zero()*/{ 0.0f,100.0f,-500.0f };
+	CVector3 m_position = { 0.0f,100.0f,-500.0f };
 	CQuaternion m_rotation = CQuaternion().Identity();
 	CVector3 m_scale = CVector3().One(); //拡大率
 	CVector3 m_moveSpeed = CVector3().Zero();
@@ -84,8 +82,8 @@ private:
 
 	//ジャンプ
 	bool m_jumpNow = false;
-	const float m_jumpPower = 16.0f;	//ジャンプﾊﾟｩﾜｧ
-	const float m_gravity = 0.8f;		//重力ﾊﾟｩﾜｧ
+	const float m_jumpPower = 16.0f;		//ジャンプﾊﾟｩﾜｧ
+	const float m_gravity = 0.8f;			//重力ﾊﾟｩﾜｧ
 
 	//箱持ち上げ
 	GameBox* m_upBox = nullptr;				//持ち上げている箱
@@ -94,6 +92,7 @@ private:
 	bool m_boxMoveFlag = false;				//箱上げ下ろし動作中？（動作中は動けません）
 	bool m_upOrDown = false;				//箱を上げているならfalse、下しているならtrue
 	bool m_boxButtonFlag = false;			//箱のボタン
+	bool m_boxDeleteButtonFlag = false;		//箱のボタン
 	const float m_boxPutHosei = 4.0f;		//箱を置くか投げるかの基準補正（大きくすると置きやすくなる）
 	const float m_boxUpRange = 200.0f;		//箱を持ち上げられる範囲
 	const float m_boxUp_Y_Max = 50.0f;		//箱を持ち上げられる高さの範囲

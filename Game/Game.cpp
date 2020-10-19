@@ -19,13 +19,6 @@ Game::Game()
 	//このインスタンスを唯一のインスタンスとして記録する
 	m_instance = this;
 
-	//現在をゲーム（アクションモード）にする
-	SceneManager::GetInstance()->SetGameMode(SceneManager::ActionMode);
-	//Dofを有効にする
-	SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag = true;
-	//アンビエントライトを初期化する
-	LightMaker::GetInstance()->ResetAmbientColor();
-
 	//生成
 	
 	//OPを生成
@@ -37,7 +30,7 @@ Game::Game()
 
 #ifdef _DEBUG
 	//ワイヤーフレームを表示しますすうすすすうう
-	//g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
+	g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 #endif
 
 }
@@ -84,6 +77,9 @@ void Game::GameSetUp() {
 
 	//モード変更
 	SceneManager::GetInstance()->SetGameMode(SceneManager::GameMode::ActionMode);
+	//Dofを有効にする
+	SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag = true;
+
 	//ボックスメイカーの作成
 	BoxMaker* m_box = CGameObjectManager::GetInstance()->NewGO<BoxMaker>("BoxMaker", 1);
 	//プレイヤーの作成
@@ -95,7 +91,9 @@ void Game::GameSetUp() {
 	//カメラ
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
 	//ステージ
-	StageSet::GetInstance()->InitStage(L"Tutorial");
-
+	StageSet m_stageSet;
+	m_stageSet.InitStage(L"Sougen1");
+	//StageSet::GetInstance()->InitStage(L"Tutorial");
+	//処理変更
 	m_gameState = GamaState_Game;
 }

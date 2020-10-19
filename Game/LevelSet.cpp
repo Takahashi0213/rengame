@@ -109,6 +109,15 @@ void LevelSet::NewObj(LevelObjectData& data, LevelData::Obj_Tag tag) {
 		pt->SetScale(data.scale*10.0f);
 	}
 
+	if (tag == LevelData::Obj_Tag::Tag_Board) {	//看板
+		Board* pt = CGameObjectManager::GetInstance()->NewGO<Board>(data.name, 0);
+		pt->SetPosition(data.position*10.0f);
+		pt->SetRotation(data.rotation);
+		pt->SetScale(data.scale*10.0f);
+		int ObjNo = Level_Data.ObjName_Search(m_levelNo, data.name);
+		pt->SetBoardMessage(Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo));
+	}
+
 	if (tag == LevelData::Obj_Tag::Tag_GhostBox_MapMove) {	//ゴーストボックス…移動
 		//const wchar_t* hoge = Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo);	//テストメッセージ
 		GhostBox* pt = CGameObjectManager::GetInstance()->NewGO<GhostBox>(data.name, 0);
@@ -118,7 +127,16 @@ void LevelSet::NewObj(LevelObjectData& data, LevelData::Obj_Tag tag) {
 		pt->CreateGhost();
 		int ObjNo = Level_Data.ObjName_Search(m_levelNo, data.name);
 		pt->SetStageName(Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo));
+		pt->SetPlayerMoveTarget(Level_Data.GetObject_Vector3Memo(m_levelNo, ObjNo));
 	}
+	if (tag == LevelData::Obj_Tag::Tag_StaticBox) {	//スタティックボックス
+		StaticBox* pt = CGameObjectManager::GetInstance()->NewGO<StaticBox>(data.name, 0);
+		pt->SetPosition(data.position*10.0f);
+		pt->SetRotation(data.rotation);
+		pt->SetScale(data.scale*10.0f);
+		pt->CreateStaticBox();
+	}
+
 }
 
 void LevelSet::LinkObj(int levelNo, int i) {
@@ -194,6 +212,18 @@ void LevelSet::LevelDelete() {
 			}
 			if (tag == LevelData::Obj_Tag::Tag_Jewel) {
 				StarMoney* pt = CGameObjectManager::GetInstance()->FindGO<StarMoney>(Hash::MakeHash(m_Obj_Data[i].ObjName));
+				CGameObjectManager::GetInstance()->DeleteGO(pt);
+			}
+			if (tag == LevelData::Obj_Tag::Tag_Board) {
+				Board* pt = CGameObjectManager::GetInstance()->FindGO<Board>(Hash::MakeHash(m_Obj_Data[i].ObjName));
+				CGameObjectManager::GetInstance()->DeleteGO(pt);
+			}
+			if (tag == LevelData::Obj_Tag::Tag_GhostBox_MapMove) {
+				GhostBox* pt = CGameObjectManager::GetInstance()->FindGO<GhostBox>(Hash::MakeHash(m_Obj_Data[i].ObjName));
+				CGameObjectManager::GetInstance()->DeleteGO(pt);
+			}
+			if (tag == LevelData::Obj_Tag::Tag_StaticBox) {
+				StaticBox* pt = CGameObjectManager::GetInstance()->FindGO<StaticBox>(Hash::MakeHash(m_Obj_Data[i].ObjName));
 				CGameObjectManager::GetInstance()->DeleteGO(pt);
 			}
 

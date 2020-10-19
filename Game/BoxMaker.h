@@ -57,6 +57,11 @@ public:
 		return m_boxList;
 	}
 
+	/// <summary>
+	/// 箱の消去
+	/// </summary>
+	/// <param name="deleteBox"></param>
+	void BoxDelete(GameBox* deleteBox);
 	//箱の全消去
 	void BoxAllDelete();
 
@@ -119,9 +124,10 @@ private:
 	const CVector3 m_surfaceScaleDef = { 100.0f,100.0f,100.0f };	//面のデフォルトサイズ
 	const CVector3 BoxDefScale = { 100.0f,100.0f,100.0f };			//箱の初期スケール
 	const float Player_Box_MaxRange = 500.0f;						//箱作成の限界距離
+
 	//クリエイトモードに移行するために必要な最低マナ数、初代箱を生成するときに消費するマナ数でもある
 	const int CriateModeChangeBorder = 10;
-	const float ManaHosei = 5.0f;									//箱作成の消費マナ補正 結果に除算→値が大きいほど安くなる
+	const float DefManaHosei = 5.0f;									//箱作成の消費マナ補正 結果に除算→値が大きいほど安くなる
 
 };
 

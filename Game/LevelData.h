@@ -35,6 +35,7 @@ public:
 		Obj_Tag Tag;				//種類を選択
 		wchar_t LinkObj_Name[255];	//関連するオブジェクトの名前
 		wchar_t Obj_Memo[255];		//看板とかのテキスト
+		CVector3 Position_Memo;		//移動先などの設定用
 	};
 	//レベルデータ構造体
 	struct Level_Data
@@ -50,7 +51,7 @@ public:
 	/// </summary>
 	/// <param name="num">レベル番号</param>
 	/// <returns>ファイル名</returns>
-	const wchar_t* GetLevelName(int num) {
+	const wchar_t* GetLevelName(const int num) {
 		return m_levelData[num].Level_Name;
 	}
 
@@ -60,7 +61,7 @@ public:
 	/// <param name="num">レベル番号</param>
 	/// <param name="obj_num">オブジェクト番号</param>
 	/// <returns>オブジェクトの名前</returns>
-	const wchar_t* GetObjectName(int num, int obj_num) {
+	const wchar_t* GetObjectName(const int num, const int obj_num) {
 		return m_levelData[num].Obj_Array[obj_num].Obj_Name;
 	}
 
@@ -68,7 +69,7 @@ public:
 	/// オブジェクトのタグ取得
 	/// </summary>
 	/// <returns>オブジェクトキー</returns>	
-	Obj_Tag GetObjectTag(int num, int obj_num) {
+	Obj_Tag GetObjectTag(const int num, const int obj_num) {
 		return m_levelData[num].Obj_Array[obj_num].Tag;
 	}
 
@@ -77,7 +78,7 @@ public:
 	/// </summary>
 	/// <param name="num">レベル番号</param>
 	/// <returns>obj_numから設定されているリンク先オブジェクトの名前</returns>	
-	const wchar_t* GetObject_LinkObj(int num, int obj_num) {
+	const wchar_t* GetObject_LinkObj(const int num, const int obj_num) {
 		return m_levelData[num].Obj_Array[obj_num].LinkObj_Name;
 	}
 
@@ -87,8 +88,19 @@ public:
 	/// <param name="num">レベル番号</param>
 	/// <param name="obj_num">オブジェクト番号</param>
 	/// <returns></returns>
-	const wchar_t* GetObject_ObjMemo(int num, int obj_num) {
+	const wchar_t* GetObject_ObjMemo(const int num, const int obj_num) {
 		return m_levelData[num].Obj_Array[obj_num].Obj_Memo;
+	}
+
+	/// <summary>
+	/// Vector3メモを取得
+	/// マップ移動時のプレイヤー移動先座標など
+	/// </summary>
+	/// <param name="num">レベル番号</param>
+	/// <param name="obj_num">オブジェクト番号</param>
+	/// <returns>Vector3メモ</returns>
+	const CVector3 GetObject_Vector3Memo(const int num, const int obj_num) {
+		return m_levelData[num].Obj_Array[obj_num].Position_Memo;
 	}
 
 	/// <summary>
@@ -122,7 +134,7 @@ private:
 				{ L"Door2",Tag_Door,L"" },
 				{ L"Door3",Tag_Door,L"" },
 				{ L"Test_Enemy",Tag_Test_Enemy,L"Door2" },
-				{ L"GhostBox",Tag_GhostBox_MapMove,L"",L"Sougen1" },
+				{ L"GhostBox",Tag_GhostBox_MapMove,L"",L"Sougen1",{0.0f,0.0f,0.0f} },	//移動先マップ名＆移動先座標
 		}
 		},
 		//草原1
@@ -135,6 +147,16 @@ private:
 				{ L"jewel3",Tag_Jewel,L"" },
 				{ L"jewel4",Tag_Jewel,L"" },
 				{ L"jewel5",Tag_Jewel,L"" },
+				{ L"Board1",Tag_Board,L"",L"テスト看板\nメッセージ" },
+				{ L"StaticBox1",Tag_StaticBox,L"" },
+				{ L"StaticBox2",Tag_StaticBox,L"" },
+				{ L"StaticBox3",Tag_StaticBox,L"" },
+				{ L"StaticBox4",Tag_StaticBox,L"" },
+				{ L"StaticBox5",Tag_StaticBox,L"" },
+				{ L"StaticBox6",Tag_StaticBox,L"" },
+				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen2",{ 0.0f,0.0f,0.0f } },	//移動先マップ名＆移動先座標
+				{ L"GhostBox2",Tag_GhostBox_MapMove,L"",L"Sougen3",{ 0.0f,0.0f,0.0f } },	//移動先マップ名＆移動先座標
+				{ L"GhostBox3",Tag_GhostBox_MapMove,L"",L"Tutorial",{ 0.0f,0.0f,0.0f } },	//移動先マップ名＆移動先座標
 			}
 		},
 		//草原2

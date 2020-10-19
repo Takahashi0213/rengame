@@ -452,6 +452,9 @@
     <ClCompile Include="SystemBox.cpp">
       <Filter>object\SystemObject</Filter>
     </ClCompile>
+    <ClCompile Include="Menu_Create.cpp">
+      <Filter>system\GameSystem\UI\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -759,6 +762,9 @@
     <ClInclude Include="StageData.h">
       <Filter>system\StageSet</Filter>
     </ClInclude>
+    <ClInclude Include="Menu_Create.h">
+      <Filter>system\GameSystem\UI\Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Titan.fbx">
@@ -800,9 +806,6 @@
     <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_1.fbx">
       <Filter>Assets\modelData\Stage\Stage1</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor2.fbx">
-      <Filter>Assets\modelData\Gimmick</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor.fbx">
       <Filter>Assets\modelData\Gimmick</Filter>
     </MeshContentTask>
@@ -822,6 +825,12 @@
       <Filter>Assets\modelData\Item</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Gimmick\GhostBox.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor_.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\StaticBox.fbx">
       <Filter>Assets\modelData\Gimmick</Filter>
     </MeshContentTask>
   </ItemGroup>

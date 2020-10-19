@@ -21,7 +21,15 @@ void GhostBox::Update() {
 	g_physics->ContactTest(*charaCon, [&](const btCollisionObject& contactObject) {
 		if (m_ghostObject.IsSelf(contactObject) == true) {
 			//m_ghostObjectとぶつかった
-			StageSet::GetInstance()->InitStage(m_LoadStageName);
+			if (m_LoadStageName != nullptr) {
+				//マップ移動
+				StageSet::GetInstance()->InitStage(m_LoadStageName);	//ステージ読み込み
+				m_player->SetPosition(m_playerMoveTarget);				//プレイヤー移動
+			}
+			else {
+				//ゲームオーバー
+
+			}
 		}
 		});
 
@@ -48,21 +56,23 @@ void GhostBox::CreateGhost() {
 
 StaticBox::StaticBox()
 {
-	//箱を作成
-	m_physicsStaticObject.CreateBox(m_position, m_rotation, m_scale);
-}
 
+}
 
 StaticBox::~StaticBox()
 {
 }
 
 void StaticBox::Update() {
-
 	//箱を更新
 	m_physicsStaticObject.SetPositionAndRotation(m_position, m_rotation);
 }
 
 void StaticBox::Render() {
 
+}
+
+void StaticBox::CreateStaticBox() {
+	//箱を作成
+	m_physicsStaticObject.CreateBox(m_position, m_rotation, m_scale);
 }

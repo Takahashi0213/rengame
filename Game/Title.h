@@ -11,7 +11,7 @@ public:
 	std::map<std::string, SpriteRender*> TitleRogo_Circle;
 	std::map<std::string, SpriteRender*> TitleRogo_Mozi;
 
-	SpriteRender* m_titleRogo_Mozi_Hakobun;	//右上ミニ文字「HAKOBUN」
+	SpriteRender* m_titleRogo_Mozi_Hakobun;					//右上ミニ文字「HAKOBUN」
 
 	//ロゴ関連の定数 描画編
 	const CVector2 RogoSpriteSize = { 1000.0f,400.0f };		//ロゴ画像の大きさ

@@ -15,8 +15,12 @@ public:
 	void Update()override;
 	void Render()override;
 
+	//設定用（レベル生成時に同時に呼ぶのが基本）
 	void SetStageName(const wchar_t* stageName) {
 		m_LoadStageName = stageName;
+	}
+	void SetPlayerMoveTarget(const CVector3 pos) {
+		m_playerMoveTarget = pos;
 	}
 
 	/// <summary>
@@ -25,11 +29,16 @@ public:
 	void CreateGhost();
 
 private:
-	PhysicsGhostObject m_ghostObject;	//ゴーストオブジェクト
+	PhysicsGhostObject m_ghostObject;				//ゴーストオブジェクト
 
-	Player* m_player = nullptr;
+	Player* m_player = nullptr;						//プレイヤーはここ！
 
-	const wchar_t* m_LoadStageName;		//ステージの名前
+	//レベルセット時に設定するもの
+	//マップ移動編
+	const wchar_t* m_LoadStageName = nullptr;		//ステージの名前
+	CVector3 m_playerMoveTarget;					//プレイヤーの移動先
+	//ゲームオーバー編
+
 
 };
 
@@ -44,6 +53,11 @@ public:
 	~StaticBox();
 	void Update()override;
 	void Render()override;
+
+	/// <summary>
+	/// 呼び出すと静的物理オブジェクトを生成する
+	/// </summary>
+	void CreateStaticBox();
 
 private:
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト

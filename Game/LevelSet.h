@@ -40,6 +40,5 @@ private:
 	};
 	//オブジェクトデータの配列
 	Obj_Data m_Obj_Data[MAX_LEVEL_OBJ];
-	//名前データの配列（削除に使います）
 };
 

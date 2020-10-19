@@ -40,8 +40,10 @@ void PostEffect::Init()
 {
 	m_farShadow.Init();
 	if (SceneManager::GetInstance() != nullptr) {
-		if (SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag == true) {
+		if (SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag == true &&
+			m_dofInitFlag == false) {
 			m_dof.Init();
+			m_dofInitFlag = true;
 		}
 	}
 }
@@ -64,6 +66,10 @@ void PostEffect::Draw()
 	//ƒhƒtB
 	if (SceneManager::GetInstance() != nullptr) {
 		if (SceneManager::GetInstance()->GetGameGraphicInstance()->m_dofFlag == true) {
+			if (m_dofInitFlag == false) {
+				m_dof.Init();
+				m_dofInitFlag = true;
+			}
 			m_dof.Draw(*this);
 		}
 	}

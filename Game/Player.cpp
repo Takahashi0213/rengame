@@ -42,42 +42,6 @@ Player::Player()
 	//MainSprite->SetPosition({ 250.0f,-50.0f ,0.0f }, 0);
 	//MainSprite->GetSubSpriteSupporter(0)->SpriteRotation(10.0f, 600, 0, true);
 
-	//m_titan.Init(L"Assets/modelData/Titan.cmo");
-	//m_titan.UpdateWorldMatrix({ 0.0f,30.0f,0.0f }, CQuaternion::Identity(), { 5.0f,5.0f,5.0f });
-
-	////法線マップをロード。
-	////ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
-	//DirectX::CreateDDSTextureFromFileEx(
-	//	g_graphicsEngine->GetD3DDevice(), L"Assets/sprite/Titan_normals.dds", 0,
-	//	D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
-	//	false, nullptr, &m_normalMapSRV);
-
-	////モデルに法線マップを設定する。
-	//m_titan.SetNormalMap(m_normalMapSRV);
-
-	////スペキュラマップをロード。
-	////ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
-	//DirectX::CreateDDSTextureFromFileEx(
-	//	g_graphicsEngine->GetD3DDevice(), L"Assets/sprite/Titan_Metallic.dds", 0,
-	//	D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
-	//	false, nullptr, &m_specMapSRV);
-
-	////モデルにスペキュラマップを設定する。
-	//m_titan.SetSpecMap(m_specMapSRV);
-
-	////AOマップをロード。
-	////ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
-	//DirectX::CreateDDSTextureFromFileEx(
-	//	g_graphicsEngine->GetD3DDevice(), L"Assets/sprite/Titan__Ao.dds", 0,
-	//	D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
-	//	false, nullptr, &m_aoMapSRV);
-
-	////モデルにAOマップを設定する。
-	//m_titan.SetAOMap(m_aoMapSRV);
-
-	//m_starMoney = NewGO<StarMoney>("StarMoney", 0);
-	//m_starMoney->SetPosition({ 0.0f,50.0f,100.0f });
-
 }
 
 Player::~Player()
@@ -111,6 +75,8 @@ void Player::Update()
 	BoxSearch();
 	//キーが押されたら持ち上げたり下ろしたりする
 	BoxCatch();
+	//キーが押されたら持ち上げている箱を削除する
+	BoxDelete();
 	//上げ下げ中の補完移動をする
 	BoxMove();
 
@@ -152,11 +118,6 @@ void Player::Render()
 		g_camera3D.GetViewMatrix(), 
 		g_camera3D.GetProjectionMatrix()
 	);
-	//m_titan.Draw(
-	//	g_camera3D.GetViewMatrix(),
-	//	g_camera3D.GetProjectionMatrix()
-	//);
-
 }
 
 void Player::Move() {
@@ -546,5 +507,49 @@ void Player::BoxMove() {
 			m_upBox = nullptr;
 		}
 	}
+
+}
+
+void Player::BoxDelete() {
+
+	//イベント中なら強制終了
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+		return;
+	}
+	//アクションモードでないなら強制終了
+	if (SceneManager::GetInstance()->GetGameMode() != SceneManager::ActionMode) {
+		return;
+	}
+	//何も持ち上げてないなら終了
+	if (m_upBox == nullptr) {
+		return;
+	}
+	//箱の上げ下ろし中なら強制終了
+	if (m_boxMoveFlag == true) {
+		return;
+	}
+
+	//対応するボタンが押されてないなら強制終了
+	if (HIWORD(GetAsyncKeyState(GameData::GetInstance()->GetBoxDeleteKey()))) {
+		if (m_boxDeleteButtonFlag == false) {
+			m_boxDeleteButtonFlag = true;
+		}
+		else {
+			return;
+		}
+	}
+	else {
+		m_boxDeleteButtonFlag = false;
+		return;
+	}
+
+	//箱削除
+	BoxMaker::GetInstance()->BoxDelete(m_upBox);
+	m_upBox = nullptr;
+	m_boxUpFlag = false;
+
+}
+
+void Player::PlayerMiss() {
 
 }

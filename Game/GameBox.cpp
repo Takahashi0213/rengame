@@ -373,7 +373,7 @@ void GameBox::MeshStandBy() {
 /// <summary>
 /// q‹Ÿ‘S‚Ä‚É’…F
 /// </summary>
-void GameBox::SetAllColor(CVector3 color) {
+void GameBox::SetAllColor(const CVector3 color) {
 
 	//‰‘ã” ‚Å‚È‚¢‚È‚ç’†’f
 	if (m_boxTag == BoxTag::Another) {
@@ -440,4 +440,10 @@ float GameBox::GetAnotherRangeHosei() {
 	Return_Hosei += (m_scale.z - BoxDefScale.z)*2.0f;
 
 	return Return_Hosei;
+}
+
+void GameBox::DeleteBox() {
+	for (int i = 0; i < m_boxList.size(); i++) {
+		delete m_boxList[i];
+	}
 }
