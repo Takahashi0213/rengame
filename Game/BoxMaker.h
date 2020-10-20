@@ -69,7 +69,7 @@ private:
 	void BoxUpdate();
 	void ModeChange();
 	//作成地点とプレイヤーの距離が一定以下じゃないと作れないよ
-	bool BoxCriateCheck();
+	bool BoxCreateCheck();
 
 	Game* m_game = nullptr;
 	Player* m_player = nullptr;
@@ -126,7 +126,7 @@ private:
 	const float Player_Box_MaxRange = 500.0f;						//箱作成の限界距離
 
 	//クリエイトモードに移行するために必要な最低マナ数、初代箱を生成するときに消費するマナ数でもある
-	const int CriateModeChangeBorder = 10;
+	const int CreateModeChangeBorder = 10;
 	const float DefManaHosei = 5.0f;									//箱作成の消費マナ補正 結果に除算→値が大きいほど安くなる
 
 };

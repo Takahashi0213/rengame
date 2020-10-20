@@ -27,7 +27,7 @@ public:
 		return m_position;
 	}
 	//プレイヤーの座標を設定
-	void SetPosition(const CVector3 pos) {
+	void SetPosition(const CVector3& pos) {
 		m_position = pos;
 	}
 

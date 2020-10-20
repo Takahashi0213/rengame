@@ -25,12 +25,11 @@ Game::Game()
 	m_op = new OP;
 
 	//トランジション
-	TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::NanameBox, 
-		SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime, true);
+	TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::NanameBox, 0, true);
 
 #ifdef _DEBUG
 	//ワイヤーフレームを表示しますすうすすすうう
-	g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
+	//g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 #endif
 
 }
@@ -60,7 +59,6 @@ void Game::Update() {
 		break;
 	case Game::GamaState_Game:
 		//ゲーム中専用
-
 		break;
 	}
 
@@ -88,12 +86,11 @@ void Game::GameSetUp() {
 	m_box->SetPlayer(pl);
 	//UIの作成
 	m_ui = CGameObjectManager::GetInstance()->NewGO<GameUI>("GameUI", 8);
+	m_statusUI = CGameObjectManager::GetInstance()->NewGO<GameStatus_UISystem>("GameStatus_UISystem", 8);
 	//カメラ
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
 	//ステージ
-	StageSet m_stageSet;
-	m_stageSet.InitStage(L"Sougen1");
-	//StageSet::GetInstance()->InitStage(L"Tutorial");
+	StageSet::GetInstance()->InitStage(L"Sougen1");
 	//処理変更
 	m_gameState = GamaState_Game;
 }

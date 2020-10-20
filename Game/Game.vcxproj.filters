@@ -455,6 +455,9 @@
     <ClCompile Include="Menu_Create.cpp">
       <Filter>system\GameSystem\UI\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="GameStatusUI.cpp">
+      <Filter>system\GameSystem\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -765,6 +768,9 @@
     <ClInclude Include="Menu_Create.h">
       <Filter>system\GameSystem\UI\Menu</Filter>
     </ClInclude>
+    <ClInclude Include="GameStatusUI.h">
+      <Filter>system\GameSystem\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Titan.fbx">
@@ -1008,6 +1014,21 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\Title\Title_BG.png">
       <Filter>Assets\sprite\Title</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\exp_Gage.png">
+      <Filter>Assets\sprite\window</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Gage2.png">
+      <Filter>Assets\sprite\window</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Gage2_Under.png">
+      <Filter>Assets\sprite\window</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\window\window6.png">
+      <Filter>Assets\sprite\window</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Jewel.png">
+      <Filter>Assets\sprite\system</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

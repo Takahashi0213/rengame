@@ -134,7 +134,7 @@ private:
 				{ L"Door2",Tag_Door,L"" },
 				{ L"Door3",Tag_Door,L"" },
 				{ L"Test_Enemy",Tag_Test_Enemy,L"Door2" },
-				{ L"GhostBox",Tag_GhostBox_MapMove,L"",L"Sougen1",{0.0f,0.0f,0.0f} },	//移動先マップ名＆移動先座標
+				{ L"GhostBox",Tag_GhostBox_MapMove,L"",L"Sougen1",{ 0.0f,100.0f,-100.0f } },	//移動先マップ名＆移動先座標
 		}
 		},
 		//草原1

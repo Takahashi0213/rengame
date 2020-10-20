@@ -68,8 +68,8 @@ void LevelSet::Init(const wchar_t* LEVEL_Name) {
 
 		//‘ã“üˆÊ’u‚ð1‚Â“®‚©‚·
 		i++;
-
-		return false;
+		
+		return true;
 	});
 
 	//ƒŠƒ“ƒN‚µ‚Ü‚·

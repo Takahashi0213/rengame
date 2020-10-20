@@ -35,6 +35,13 @@ public:
 	void SpriteShake(CVector2 move, int moveTime, int moveCount);
 	void SpritePattern(int moveTime, bool loopflag = false ,int overLimit = 0);
 
+	//状態取得用
+	//スプライトの移動リスト要素数を取得
+	//移動中のスプライトかどうかを判別する など
+	int GetSpriteMoveListLen() {
+		return static_cast<int>(m_spriteMoveList.size());
+	}
+
 private:
 	//準備と片付け
 	void SpriteDataUpdate();

@@ -3,6 +3,7 @@
 #include "Title.h"
 #include "Game.h"
 #include "system/CGameObjectManager.h"
+#include "StageSet.h"
 
 /// <summary>
 /// シーン切り替えをがんばるクラス
@@ -86,6 +87,7 @@ private:
 	SystemData m_systemData;
 	GameGraphic m_gameGraphic;
 	CSoundEngine m_soundEngine;				//サウンドエンジン。
+	StageSet m_stageSet;
 
 	//シーン
 	Title* m_title = nullptr;

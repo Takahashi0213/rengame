@@ -65,7 +65,7 @@ StaticBox::~StaticBox()
 
 void StaticBox::Update() {
 	//î†ÇçXêV
-	m_physicsStaticObject.SetPositionAndRotation(m_position, m_rotation);
+	//m_physicsStaticObject.SetPositionAndRotation(m_position, m_rotation);
 }
 
 void StaticBox::Render() {

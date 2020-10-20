@@ -2,7 +2,7 @@
 #include "SystemData.h"
 #include "GameGraphic.h"
 #include "GameUI.h"
-#include "PhysicsGhostObject.h"
+#include "GameStatusUI.h"
 #include "system/CGameObjectManager.h"
 #include "OP.h"
 
@@ -48,6 +48,7 @@ private:
 	GameData m_gameData;		//保存するデータ色々
 	GameEffect m_gameEffect;	//ここでアップデートする
 	GameUI* m_ui = nullptr;
+	GameStatus_UISystem* m_statusUI;
 	OP* m_op = nullptr;			//OPが終わったら削除される
 
 };

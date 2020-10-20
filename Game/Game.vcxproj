@@ -127,6 +127,7 @@
     <ClCompile Include="GameEffect.cpp" />
     <ClCompile Include="GameFont.cpp" />
     <ClCompile Include="GameMenu.cpp" />
+    <ClCompile Include="GameStatusUI.cpp" />
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="GameFont.h" />
     <ClInclude Include="GameGraphic.h" />
     <ClInclude Include="GameMenu.h" />
+    <ClInclude Include="GameStatusUI.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="GaussianBlur.h" />
@@ -563,6 +565,17 @@
     <ImageContentTask Include="Assets\sprite\Title\Title_BG.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ImageContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\system_sprite\exp_Gage.png" />
+    <ImageContentTask Include="Assets\sprite\system_sprite\Gage2.png" />
+    <ImageContentTask Include="Assets\sprite\system_sprite\Gage2_Under.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\window\window6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Jewel.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -337,8 +337,8 @@ void BoxMaker::ModeChange() {
 	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
 	int Mana = GameData::GetInstance()->GetMagicPower();
 
-	//中クリックされた瞬間かつアクションモードかつマナが(CriateModeChangeBorder)以上ある
-	if (key == MouseSupporter::New_Push && NowGameMode == SceneManager::ActionMode && Mana >= CriateModeChangeBorder) {
+	//中クリックされた瞬間かつアクションモードかつマナが(CreateModeChangeBorder)以上ある
+	if (key == MouseSupporter::New_Push && NowGameMode == SceneManager::ActionMode && Mana >= CreateModeChangeBorder) {
 
 		m_boxPos = MouseSupporter::GetInstance()->GetMousePos_3D();
 
@@ -359,7 +359,7 @@ void BoxMaker::ModeChange() {
 			//m_boxPos.z += m_bp.z;
 		}
 		
-		const bool flag = BoxCriateCheck();
+		const bool flag = BoxCreateCheck();
 
 		if (flag == true) {
 
@@ -379,7 +379,7 @@ void BoxMaker::ModeChange() {
 			m_box_Nom = 1;				//箱の数をリセット
 
 			//マナ設定
-			m_downMana = CriateModeChangeBorder;
+			m_downMana = CreateModeChangeBorder;
 			m_startMana = GameData::GetInstance()->GetMagicPower();
 
 			//ゲームカメラに渡す
@@ -390,8 +390,8 @@ void BoxMaker::ModeChange() {
 		}
 
 	}
-	//クリエイトモードに移行したいけどマナが(CriateModeChangeBorder)に足りない場合
-	else if (key == MouseSupporter::New_Push && NowGameMode == SceneManager::ActionMode && Mana < CriateModeChangeBorder) {
+	//クリエイトモードに移行したいけどマナが(CreateModeChangeBorder)に足りない場合
+	else if (key == MouseSupporter::New_Push && NowGameMode == SceneManager::ActionMode && Mana < CreateModeChangeBorder) {
 		//マナが足りません！のシェイクだけする
 		GameUI::GetInstance()->ManaShake();
 	}
@@ -414,7 +414,7 @@ void BoxMaker::ModeChange() {
 
 }
 
-bool BoxMaker::BoxCriateCheck() {
+bool BoxMaker::BoxCreateCheck() {
 
 	bool ReturnFlag = false;
 

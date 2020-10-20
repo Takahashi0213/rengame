@@ -210,10 +210,15 @@ void SpriteFont::Impl::ForEachGlyph(_In_z_ wchar_t const* text, TAction action) 
 				//‚±‚±‰ü•Ïƒ|ƒCƒ“ƒg
 				size = 4;
 
+				if ((character <= 0x0039 && character >= 0x0030) ||
+					(character <= 0x007A && character >= 0x0061)) {
+					size += 20;
+				}
+				
 				if (OffsetFlag == true && (character <= 0x4e00 || character >= 0x9fff)) {
 					size += 7;
 				}
-				if (OffsetFlag == true && (character >= 0x4e00 && character <= 0x9fff)) {
+				else if (OffsetFlag == true && (character >= 0x4e00 && character <= 0x9fff)) {
 					size += 5;
 				}
 

@@ -44,7 +44,7 @@ public:
 		return m_instance;
 	}
 
-	void CriateStage(const wchar_t* stage_filePath, const wchar_t* level_filePath);
+	void CreateStage(const wchar_t* stage_filePath, const wchar_t* level_filePath);
 
 private:
 

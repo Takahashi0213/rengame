@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "StarMoney.h"
-
+#include "GameStatusUI.h"
 
 StarMoney::StarMoney()
 {
@@ -16,6 +16,9 @@ StarMoney::StarMoney()
 		false, nullptr, &m_kiramekiSRV);
 	m_model_Kirameki.SetKirameki(m_kiramekiSRV);
 
+	//プレイヤーの検索
+	m_pl = CGameObjectManager::GetInstance()->FindGO<Player>(Hash::MakeHash("Player"));
+
 	//タグ設定
 	m_object = ObjectClass::ObjectClass_Tag::ItemObj;
 
@@ -30,6 +33,15 @@ void StarMoney::Update() {
 
 	StarMoneyMove();
 
+	//取得チェック
+	float length = (m_position - m_pl->GetPosition()).Length();
+	if (length < GetRange) {
+		//取得する
+		GameStatus_UISystem::GetInstance()->AddStarMoney(GetStarMoney);
+		DeleteGO(this);
+	}
+
+	//更新
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	m_model_Kirameki.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 

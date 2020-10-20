@@ -50,12 +50,12 @@ void StageSet::InitStage(const wchar_t* stage_name) {
 	LightMaker::GetInstance()->SetAmbientColor(m_stageData.GetStageAmbientColor(m_stageNo));
 
 	//生成タイム
-	CriateStage(m_stageData.GetStageModel(m_stageNo),
+	CreateStage(m_stageData.GetStageModel(m_stageNo),
 		m_stageData.GetStageLevel(m_stageNo));
 
 }
 
-void StageSet::CriateStage(const wchar_t* stage_filePath, const wchar_t* level_filePath) {
+void StageSet::CreateStage(const wchar_t* stage_filePath, const wchar_t* level_filePath) {
 
 	//ステージの生成
 	m_bg = CGameObjectManager::GetInstance()->NewGO<BackGround>("BackGround", 0);
