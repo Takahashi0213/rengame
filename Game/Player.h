@@ -28,7 +28,10 @@ public:
 	}
 	//プレイヤーの座標を設定
 	void SetPosition(const CVector3& pos) {
+		m_moveSpeed = CVector3::Zero();
+		m_nextPos = CVector3::Zero();
 		m_position = pos;
+		m_charaCon.SetPosition(pos);
 	}
 
 	/// <summary>
@@ -82,8 +85,8 @@ private:
 
 	//ジャンプ
 	bool m_jumpNow = false;
-	const float m_jumpPower = 16.0f;		//ジャンプﾊﾟｩﾜｧ
-	const float m_gravity = 0.8f;			//重力ﾊﾟｩﾜｧ
+	const float m_jumpPower = 26.0f;		//ジャンプﾊﾟｩﾜｧ
+	const float m_gravity = 2.0f;			//重力ﾊﾟｩﾜｧ
 
 	//箱持ち上げ
 	GameBox* m_upBox = nullptr;				//持ち上げている箱

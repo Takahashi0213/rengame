@@ -39,7 +39,7 @@ void FontRender::Update() {
 			//後始末
 			m_textOkuri_Timer = 0;
 			if (m_textOkuri_NowLen >= m_textOkuri_Len) {
-				m_okuriFlag = false;		//しゅ～りょ～
+				m_okuriFlag = false;		//終了
 			}
 
 		}
@@ -69,7 +69,6 @@ void FontRender::PostRender()
 			character[0] = *text;
 			character[1] = L'\0';
 
-			//取得した文字がうんぬんかんぬん～
 			switch (character[0])
 			{
 			case '\D':
@@ -83,21 +82,21 @@ void FontRender::PostRender()
 				//赤色
 				m_messageList.push_back(SetPackage);
 
-				wcscpy(SetPackage.Message, L"");	//驚きの白さ！
+				wcscpy(SetPackage.Message, L"");
 				SetPackage.State = Red;		//ここから赤色
 				continue;
 			case '\G':
 				//緑色
 				m_messageList.push_back(SetPackage);
 
-				wcscpy(SetPackage.Message, L"");	//脱臭炭
+				wcscpy(SetPackage.Message, L"");
 				SetPackage.State = Green;	//ここから緑色
 				continue;
 			case '\B':
 				//青色
 				m_messageList.push_back(SetPackage);
 
-				wcscpy(SetPackage.Message, L"");	//カビキラー
+				wcscpy(SetPackage.Message, L"");
 				SetPackage.State = Blue;	//ここから青色
 				continue;
 			default:
@@ -114,7 +113,7 @@ void FontRender::PostRender()
 	}
 
 	//描画開始
-	MessageSt GetPackage;		//取得したや～つを入れる場所
+	MessageSt GetPackage;		//取得したやつを入れる場所
 
 	for (int i = 0; i < m_messageList.size(); i++) {
 

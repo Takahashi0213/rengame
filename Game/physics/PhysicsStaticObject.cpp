@@ -18,7 +18,7 @@ void PhysicsStaticObject::CreateCommon(CVector3 pos, CQuaternion rot)
 {
 	RigidBodyInfo rbInfo;
 	rbInfo.collider = m_collider.get();
-	rbInfo.mass = m_mass;
+	rbInfo.mass = 0.0f;
 	rbInfo.pos = pos;
 	rbInfo.rot = rot;
 	m_rigidBody.Create(rbInfo);

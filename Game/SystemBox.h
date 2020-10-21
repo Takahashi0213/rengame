@@ -7,7 +7,7 @@
 /// ゴーストボックス
 /// マップ移動を作ったり、範囲に入ったら起動するイベントに使える
 /// </summary>
-class GhostBox : public IGameObject, public ObjectClass
+class GhostBox : public ObjectClass
 {
 public:
 	GhostBox();
@@ -19,7 +19,7 @@ public:
 	void SetStageName(const wchar_t* stageName) {
 		m_LoadStageName = stageName;
 	}
-	void SetPlayerMoveTarget(const CVector3 pos) {
+	void SetPlayerMoveTarget(const CVector3& pos) {
 		m_playerMoveTarget = pos;
 	}
 
@@ -46,7 +46,7 @@ private:
 /// 静的な箱
 /// 透明な壁を作れる
 /// </summary>
-class StaticBox : public IGameObject, public ObjectClass
+class StaticBox : public ObjectClass
 {
 public:
 	StaticBox();

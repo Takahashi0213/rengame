@@ -52,7 +52,7 @@ void SkinModelSupporter::SkinModelDataReturn() {
 /// <param name="move">移動先の座標</param>
 /// <param name="moveTime">移動時間</param>
 /// <param name="moveDelay">移動ディレイ</param>
-/// <param name="relative">相対移動フラグ trueにするとmoveに設定した値を相対座標として扱うぞ</param>
+/// <param name="relative">相対移動フラグ trueにするとmoveに設定した値を相対座標として扱う</param>
 void SkinModelSupporter::SkinModelMove(CVector3 move, int moveTime, int moveDelay, bool relative) {
 	//リストに追加や
 	SkinModelMoveSet set = { move,CVector3().Zero(),moveTime,moveDelay,0,relative,false };
@@ -168,7 +168,7 @@ void SkinModelSupporter::SkinModelRotationUpdate() {
 		m_skinModelRotationTimer++;
 
 		if (m_skinModelRotationTimer >= m_skinModelRotationLimit + m_skinModelRotationDelay && m_skinModelLoopRotationFlag == false) {
-			//おしまひ
+			//おしまい
 			m_skinModelRotationTimer = -1;
 		}
 	}

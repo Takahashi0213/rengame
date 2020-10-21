@@ -15,8 +15,8 @@ public:
 	/*!
 	* @brief	テキストを設定。
 	*@details
-	* 毎フレーム呼ぶと重いぞ！！！\n
-	* 重いのが問題になったら相談してね\n
+	* 毎フレーム呼ぶと重い！\n
+	* 重いのが問題になったら相談してください\n
 	*@param[in]	text		テキスト
 	*/
 	void SetText(const wchar_t* text)
@@ -123,7 +123,6 @@ public:
 	/// <summary>
 	/// ゲームフォントを取得
 	/// </summary>
-	/// <returns>ふぉんとに？</returns>
 	GameFont* GetGameFont() {
 		return &m_font;
 	}

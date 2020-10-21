@@ -316,6 +316,18 @@ void BoxMaker::BoxUpdate() {
 		}
 	}
 	
+	std::list<GameBox*>::iterator it;
+	it = m_boxList.begin();
+	while (it != m_boxList.end()) {
+		bool flag = (*it)->DeathBox();
+		if (flag == true) {
+			it = BoxDelete_it(it);
+		}
+		else {
+			it++; //それ以外は次へ。
+		}
+	}
+
 }
 
 /// <summary>
@@ -456,6 +468,32 @@ void BoxMaker::BoxDelete(GameBox* deleteBox) {
 	//リストからも削除
 	m_boxList.remove(deleteBox);
 
+}
+
+std::list<GameBox*>::iterator BoxMaker::BoxDelete_it(std::list<GameBox*>::iterator deleteBox_it) {
+
+	//この箱がオリジンじゃなかったらエラー
+	if ((*deleteBox_it)->GetBoxTag() == GameBox::BoxTag::Another) {
+		std::abort();
+	}
+	//マナを回復する
+	GameData::GetInstance()->SetMagicPower(
+		GameData::GetInstance()->GetMagicPower() + (*deleteBox_it)->GetManaPower()
+	);
+	//子供たちをリストから削除
+	std::vector<GameBox*> AnotherBoxs = (*deleteBox_it)->GetBoxList();
+	for (int i = 0; i < AnotherBoxs.size(); i++) {
+		m_boxList.remove(AnotherBoxs[i]);
+	}
+	//この箱の子供を全削除
+	(*deleteBox_it)->DeleteBox();
+	//この箱自体を削除
+	delete (*deleteBox_it);
+	//リストからも削除
+	std::list<GameBox*>::iterator it;
+	it = m_boxList.erase(deleteBox_it);
+
+	return it;
 }
 
 void BoxMaker::BoxAllDelete() {

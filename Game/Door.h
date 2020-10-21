@@ -6,7 +6,7 @@
 /// <summary>
 /// 信号を受け取って上下移動する扉
 /// </summary>
-class Door : public IGameObject, public ObjectClass
+class Door : public ObjectClass
 {
 public:
 	Door();
@@ -59,6 +59,7 @@ private:
 	ObjectClass* m_LinkPt[10] = { nullptr };		//ドア上下トリガー
 	int m_setNom = 0;								//イマドコ
 	bool m_upDownFlag = false;						//上下フラグ（1回だけ実行するためのbool）
+	bool m_monochromeFlag = false;					//モノクロフラグ
 
 	//反応の仕様を決めるくん
 	//ギミック系→オフになったら閉じる

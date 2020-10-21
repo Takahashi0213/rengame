@@ -1,10 +1,10 @@
 #pragma once
 #include "system/CGameObjectManager.h"
 
-//IGameObjectを継承しているので開始時にNewGOしてくださいね～
+//IGameObjectを継承しているので開始時にNewGOしてください。
 
 /// <summary>
-/// 実行するとカメラを楽に動かせるよ～ってやつ
+/// 実行するとカメラを楽に動かせる。
 /// ・シングルトン
 /// </summary>
 class CameraSupporter : public IGameObject

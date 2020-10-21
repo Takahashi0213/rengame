@@ -80,6 +80,6 @@ private:
 	ID3D11DepthStencilState*	m_depthStencilStateBackup = nullptr;	//!<現在のデプスステンシルステート。
 	ID3D11RasterizerState*		m_rasterrizerStateBackup = nullptr;		//!<現在のラスタライザステート。
 	ID3D11BlendState*			m_blendStateBackup = nullptr;			//!<現在のブレンドステート。
-	Shader m_psShader;													//!<フォント用のぴくせるしぇ
-	Shader m_psShader2;													//!<フォント用のぴくせるしぇ
+	Shader m_psShader;													//!<フォント用のピクセルシェーダー
+	Shader m_psShader2;													//!<フォント用のピクセルシェーダー
 };

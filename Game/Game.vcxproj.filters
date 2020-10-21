@@ -458,6 +458,9 @@
     <ClCompile Include="GameStatusUI.cpp">
       <Filter>system\GameSystem\UI</Filter>
     </ClCompile>
+    <ClCompile Include="BigDoor.cpp">
+      <Filter>object\Gimmick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -770,6 +773,9 @@
     </ClInclude>
     <ClInclude Include="GameStatusUI.h">
       <Filter>system\GameSystem\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="BigDoor.h">
+      <Filter>object\Gimmick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

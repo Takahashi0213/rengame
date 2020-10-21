@@ -5,7 +5,7 @@
 /// <summary>
 /// G‚ê‚é‚Æè‚É“ü‚é‚¨‹à
 /// </summary>
-class StarMoney : public IGameObject, public ObjectClass
+class StarMoney : public ObjectClass
 {
 public:
 	StarMoney();

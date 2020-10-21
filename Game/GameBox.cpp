@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameBox.h"
 #include "Game.h"
+#include "BoxMaker.h"
 
 void GameBox::GetTrianglePositionAndNormal(
 	int polyNo,
@@ -446,4 +447,22 @@ void GameBox::DeleteBox() {
 	for (int i = 0; i < m_boxList.size(); i++) {
 		delete m_boxList[i];
 	}
+}
+
+bool GameBox::DeathBox() {
+
+	//アナザーなら中断
+	if (m_boxTag == BoxTag::Another) {
+		return false;
+	}
+
+	//高度チェック
+	if (m_position.y <= DeathHeight) {
+		//低すぎ！消えよう！
+		return true;
+	}
+	else {
+		return false;
+	}
+
 }

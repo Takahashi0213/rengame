@@ -12,7 +12,6 @@ Door::Door()
 		m_scale
 	);
 	m_physicsStaticObject.CreateBox(m_position, m_rotation, StaticSize);
-	//m_physicsStaticObject.CreateMeshObject(m_model->GetModel_(), m_position, m_rotation);
 
 	//タグ設定
 	m_object = ObjectClass::ObjectClass_Tag::GimmickObj;
@@ -21,11 +20,27 @@ Door::Door()
 
 Door::~Door()
 {
+	//削除
+	DeleteGO(m_model);
 }
 
 void Door::Update() {
+
 	//更新
 
+	//モノクロになーる
+	if (Game::GetInstance() != nullptr) {
+		if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode && m_monochromeFlag == false) {
+			m_model->GetModel()->SetRenderMode(RenderMode::Monochrome);
+			m_monochromeFlag = true;
+		}
+		else if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode && m_monochromeFlag == true) {
+			m_model->GetModel()->SetRenderMode(RenderMode::Default);
+			m_monochromeFlag = false;
+		}
+	}
+
+	//座標補正
 	CQuaternion RotationY;
 	RotationY.SetRotationDeg(CVector3().AxisY(), 90.0f);	//なんか90度回転してたから強引に戻す
 	CQuaternion rot = m_rotation * RotationY;
@@ -42,8 +57,6 @@ void Door::Update() {
 }
 
 void Door::Render() {
-	//m_model.Render();
-
 }
 
 void Door::DoorUpDowmUpdate() {

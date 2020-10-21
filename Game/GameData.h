@@ -183,6 +183,37 @@ public:
 		return m_hp_MAX;
 	}
 
+	//レベルシリーズ
+
+	/// <summary>
+	/// レベルの取得と加算
+	/// </summary>
+	const int GetLevel() {
+		return m_level;
+	}
+	void AddLevel(const int& add) {
+		m_level += add;
+	}
+
+	/// <summary>
+	/// 現在経験値の取得と加算
+	/// </summary>
+	const int GetNowEXP() {
+		return m_nowExp;
+	}
+	void AddEXP(const int& exp) {
+		m_nowExp += exp;
+		m_totalExp += exp;		//累計経験値も同時に加算！
+		LevelUpCheck();			//レベルアップチェック
+	}
+
+	/// <summary>
+	/// 次レベルへの経験値を取得
+	/// </summary>
+	const int GetNextEXP() {
+		return m_nextExp;
+	}
+
 	//コンフィグシリーズ
 
 	/// <summary>
@@ -220,6 +251,19 @@ public:
 	}
 
 private:
+	/// <summary>
+	/// 経験値を取得する度に呼ばれる
+	/// 2つの関数
+	/// </summary>
+	void LevelUpCheck();		//レベルアップしたか確認
+	void LevelUpStatus();		//レベルアップした際にステータスを上昇させる
+
+	//内部用関数
+	//レベルアップした時に最大マナを上げる
+	void LevelUp_Mana(int x) {
+		SetMaxMagic(GetMaxMagic() + x);
+		MagicPowerPlus(x);
+	}
 
 	//基本
 	int m_progress = 0;						//進行度
@@ -234,7 +278,7 @@ private:
 		bool m_equipmentFlag;	//装備変更
 		bool m_teleportFlag;	//メニューからのテレポート
 	};
-	GameFlag m_gameFlag;	//要素解放フラグ
+	GameFlag m_gameFlag;		//要素解放フラグ
 
 	//スターマネー
 	int m_starMoney = 0;
@@ -246,11 +290,12 @@ private:
 	int m_nextExp = 10;			//次のレベルに必要な経験値
 	int m_nowExp = 0;			//現在の経験値
 	int m_totalExp = 0;			//累計経験値
+	const float NextEXP_Hosei = 1.4f;	//レベルアップした時、NextEXPに乗算する（次回必要になるEXPが上昇する）
 	//
-	int m_magicPower = 100;	//現在マナ
-	int m_magicPower_MAX = 100;	//マナ最大値
-	int m_hp = 300;		//現在体力
-	int m_hp_MAX = 300;	//最大体力
+	int m_magicPower = 20;		//現在マナ
+	int m_magicPower_MAX = 20;	//マナ最大値
+	int m_hp = 300;				//現在体力
+	int m_hp_MAX = 300;			//最大体力
 
 	//コンフィグ
 	int m_messageSpeed = 2;		//会話のメッセージ送りスピード

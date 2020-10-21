@@ -3,7 +3,7 @@
 #include "graphics/skinModel/SkinModelRender.h"
 #include "physics/PhysicsStaticObject.h"
 
-class Board : public IGameObject, public ObjectClass
+class Board : public ObjectClass
 {
 public:
 	Board();
@@ -22,10 +22,9 @@ public:
 	}
 
 private:
-	SkinModel m_model;			//‚à‚Å``‚é
-
-	const wchar_t* Message = L"";				//ŠÅ”Â‚Ì“à—e
-
+	SkinModel m_model;					//ƒ‚ƒfƒ‹
+	const wchar_t* Message = L"";		//ŠÅ”Â‚Ì“à—e
+	//’è”
 	const float BoardRange = 300.0f;	//’²‚×‚ç‚ê‚é”ÍˆÍ
 
 };

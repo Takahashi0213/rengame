@@ -4,7 +4,6 @@
 TestEnemy::TestEnemy()
 {
 	//デバッグ用調整
-	//m_position.Set(0.0f, 100.0f, 200.0f);
 	m_scale.Set(10.0f, 10.0f, 10.0f);
 
 	//モデル準備
@@ -51,7 +50,6 @@ void TestEnemy::Update() {
 	{
 	case TestEnemy::Move:
 		//移動
-		//m_moveSpeed.z = 1.0f;	//とりあえずの移動
 		break;
 	case TestEnemy::Follow:
 		//追尾
@@ -59,6 +57,7 @@ void TestEnemy::Update() {
 	case TestEnemy::Death:
 		//死亡
 		m_actionFlag = true;
+		GameStatus_UISystem::GetInstance()->AddEXP(EXP);		//経験値を獲得
 		CGameObjectManager::GetInstance()->DeleteGO(this);
 		break;
 	}

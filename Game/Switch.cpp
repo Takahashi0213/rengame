@@ -63,7 +63,7 @@ SwitchObj::~SwitchObj()
 {
 }
 
-void SwitchObj::SwitchObj_Init(CVector3 Pos) {
+void SwitchObj::SwitchObj_Init(const CVector3& Pos) {
 
 	//‚¨‚¶‚ã‚ñ‚Ñ
 	m_model.Init(L"Assets/modelData/Switch.cmo");

@@ -19,7 +19,12 @@ public:
 	static LevelSet* LevelSet::GetInstance() {
 		return m_instance;
 	}
-
+private:
+	/// <summary>
+	/// オブジェクト生成の共通処理。
+	/// </summary>
+	template<class T>
+	T* NewObjCommon(LevelObjectData& data);
 private:
 	
 	LevelData Level_Data;				//レベルデータ本体
@@ -27,16 +32,18 @@ private:
 	int m_levelNo = -1;					//レベルの配列番号（-1で初期化しましょ！）
 
 	//オブジェクトの生成
-	void NewObj(LevelObjectData& data, LevelData::Obj_Tag tag);
+	void NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag);
 	//オブジェクトのリンク作業オブ作業
-	void LinkObj(int levelNo, int i);
+	void LinkObj(const int levelNo, const int i);
 
 	//現在設置されているオブジェクトのデータ
 	struct Obj_Data
 	{
 		LevelData::Obj_Tag ObjTag = LevelData::Obj_Tag::Tag_NULL;		//タグ
 		const wchar_t* ObjName = L"";									//オブジェクトの名前
+		int nameKey = 0;												//名前キー。
 		const wchar_t* LinkObjName = L"";								//リンクされているオブジェクトの名前
+		int linkObjectNameKey;											//リンクされているオブジェクトの名前キー。
 	};
 	//オブジェクトデータの配列
 	Obj_Data m_Obj_Data[MAX_LEVEL_OBJ];

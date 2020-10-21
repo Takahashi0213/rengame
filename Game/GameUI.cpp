@@ -246,7 +246,7 @@ void GameUI::ManaUpdate() {
 	int NowMana = GameData::GetInstance()->GetMagicPower();
 
 	//‚Ü‚¸‚Í‰F’ˆF‚Ì•”•ª
-	float Mana = (float)NowMana / (float)MaxMana;
+	float Mana = static_cast<float>(NowMana) / static_cast<float>(MaxMana);
 	Gage->SetCutLine(Mana);
 
 	//Ô‚¢•”•ª‚ÍŒ»İƒ‚[ƒh‚Å•ªŠò

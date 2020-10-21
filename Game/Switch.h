@@ -13,7 +13,7 @@ class SwitchObj
 public:
 	SwitchObj();
 	~SwitchObj();
-	void SwitchObj_Init(CVector3 Pos);
+	void SwitchObj_Init(const CVector3& Pos);
 
 	void SwitchUpdate();
 	void SwitchDraw();
@@ -25,7 +25,7 @@ public:
 		return m_switchState;
 	}
 
-	void SetScale(CVector3 scale) {
+	void SetScale(const CVector3& scale) {
 		m_scale = scale;
 	}
 
@@ -64,7 +64,7 @@ private:
 /// スイッチのベーース
 /// 基準になるのはこっちです
 /// </summary>
-class Switch : public IGameObject, public ObjectClass
+class Switch : public ObjectClass
 {
 public:
 	Switch();

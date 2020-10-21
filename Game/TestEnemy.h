@@ -3,7 +3,7 @@
 #include "EnemySystem.h"
 
 //テスト用の敵
-class TestEnemy : public IGameObject, public EnemySystem,public ObjectClass
+class TestEnemy : public EnemySystem
 {
 public:
 	enum State {
@@ -24,5 +24,9 @@ private:
 	CVector3 m_moveSpeed = CVector3().Zero();
 
 	State m_state = Move;	//ステート
+
+	//定数
+	const int EXP = 10;
+
 };
 

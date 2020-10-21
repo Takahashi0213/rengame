@@ -23,11 +23,11 @@ void GhostBox::Update() {
 			//m_ghostObjectとぶつかった
 			if (m_LoadStageName != nullptr) {
 				//マップ移動
-				StageSet::GetInstance()->InitStage(m_LoadStageName);	//ステージ読み込み
 				m_player->SetPosition(m_playerMoveTarget);				//プレイヤー移動
+				StageSet::GetInstance()->InitStage(m_LoadStageName);	//ステージ読み込み
 			}
 			else {
-				//ゲームオーバー
+				//落下ダメージ
 
 			}
 		}

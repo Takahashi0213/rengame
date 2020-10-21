@@ -4,10 +4,10 @@
 #include "DirectionLight.h"
 #include "PointLight.h"
 
-//IGameObjectを継承しているので開始時にNewGOしてくださいね～
+//IGameObjectを継承しているので開始時にNewGOしてください
 
 /// <summary>
-/// ライト作るくん
+/// ライトを作成する
 /// ・シングルトン
 /// </summary>
 class LightMaker final : public IGameObject

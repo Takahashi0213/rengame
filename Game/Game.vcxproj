@@ -102,6 +102,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="BigDoor.cpp" />
     <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
@@ -203,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="BigDoor.h" />
     <ClInclude Include="Bloom.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="BoxCollider.h" />

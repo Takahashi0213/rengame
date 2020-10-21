@@ -62,6 +62,7 @@ public:
 	/// </summary>
 	/// <param name="deleteBox"></param>
 	void BoxDelete(GameBox* deleteBox);
+	std::list<GameBox*>::iterator BoxDelete_it(std::list<GameBox*>::iterator deleteBox_it);
 	//” ‚Ì‘SÁ‹
 	void BoxAllDelete();
 

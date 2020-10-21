@@ -17,6 +17,7 @@ public:
 	~GameBox();
 	void GameBox_Update();
 	void GameBox_Render();
+	bool DeathBox();					//高度が一定以下になったら自死
 
 	/// <summary>
 	/// 初期状態をセット
@@ -204,6 +205,7 @@ private:
 	}
 
 	void MeshStandBy();
+	const float DeathHeight = -200.0f;	//消滅する最低高度
 
 	SkinModel m_model;	//スキンモデル。
 

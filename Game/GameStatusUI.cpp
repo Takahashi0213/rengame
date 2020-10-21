@@ -15,11 +15,12 @@ GameStatusUI::GameStatusUI()
 	m_statusBase_StarMoney->SetPosition(GameStatusUI_StarMoney_DefPos);
 
 	m_text_StarMoney = NewGO<FontRender>("StatusUI_Font_StarMoney", SpritePriority);
-	m_text_StarMoney->SetText(L"100pt",
+	m_text_StarMoney->SetText(L"",
 		{ GameStatusUI_StarMoney_DefPos.x + StarMoneyTextHosei.x,
 		GameStatusUI_StarMoney_DefPos.y + StarMoneyTextHosei.y });
 	m_text_StarMoney->SetScale(FontSize);
-
+	Status_StarMoneyTextUpdate();	//所持スターマネーを表示
+	
 	m_starMoneySprite = NewGO<SpriteRender>("StatusUI_StarMoneySprite", SpritePriority);
 	m_starMoneySprite->Init(L"Assets/sprite/Jewel.dds", StarMoneySpriteSize.x, StarMoneySpriteSize.y, SpritePriority);
 	m_starMoneySprite->SetPosition(CVector3::Zero());
@@ -32,10 +33,11 @@ GameStatusUI::GameStatusUI()
 
 	m_statusBar_EXP = NewGO<SpriteRender>("StatusUI_Bar_EXP", SpritePriority);
 	m_statusBar_EXP->SetRenderMode(Sprite_RenderMode::X_Cut);
-	m_statusBar_EXP->SetCutLine(0.5f);
+	m_statusBar_EXP->SetCutLine(1.0);
 	m_statusBar_EXP->SetPosition(GameStatusUI_EXP_DefPos);
 	m_statusBar_EXP->Init(L"Assets/sprite/Gage2.dds", 
 		EXP_Bar_Size.x*EXP_SizeHosei.x, EXP_Bar_Size.y*EXP_SizeHosei.y, SpritePriority);
+	Status_EXPBarUpdate();	//経験値バーの更新
 
 	m_statusCover_EXP = NewGO<SpriteRender>("StatusUI_Cover_EXP", SpritePriority);
 	m_statusCover_EXP->Init(L"Assets/sprite/exp_Gage.dds", 
@@ -43,8 +45,9 @@ GameStatusUI::GameStatusUI()
 	m_statusCover_EXP->SetPosition(GameStatusUI_EXP_DefPos);
 
 	//全削除！
-	Status_SpriteAlphaSet(StarMoney, 0.0f, 0);
-	Status_SpriteAlphaSet(EXP, 0.0f, 0);
+	Status_SpriteAlphaSet(StarMoney, 0.0f, 1, 0);
+	Status_SpriteAlphaSet(EXP, 0.0f, 1, 0);
+	m_effectFlag = false;
 
 }
 
@@ -61,8 +64,8 @@ void GameStatusUI::GameStatusUI_Update() {
 		//そもそもリストに何も入ってないならこの先へ行く必要はなーい！
 		if (static_cast<int>(m_statusList.size() == 0)) {
 			if (m_effectFlag == true) {
-				Status_SpriteAlphaSet(StarMoney, 0.0f, StatusAlphaTime);
-				Status_SpriteAlphaSet(EXP, 0.0f, StatusAlphaTime);
+				Status_SpriteAlphaSet(StarMoney, 0.0f, StatusAlphaTime, StatusDeleteDelay);
+				Status_SpriteAlphaSet(EXP, 0.0f, StatusAlphaTime, StatusDeleteDelay);
 				m_effectFlag = false;
 			}
 			return;
@@ -111,34 +114,43 @@ void GameStatusUI::StatusEffect_Start() {
 			std::abort();	//異常な値です。
 			break;
 		case GameStatusUI::StarMoney:
-			Status_SpriteAlphaSet(StarMoney, 1.0f, StatusAlphaTime);
-			Status_SpriteAlphaSet(EXP, 0.0f, StatusAlphaTime);
+			Status_SpriteAlphaSet(StarMoney, 1.0f, StatusAlphaTime, 0);
+			Status_SpriteAlphaSet(EXP, 0.0f, StatusAlphaTime, 0);
 			break;
 		case GameStatusUI::EXP:
-			Status_SpriteAlphaSet(StarMoney, 0.0f, StatusAlphaTime);
-			Status_SpriteAlphaSet(EXP, 1.0f, StatusAlphaTime);
+			Status_SpriteAlphaSet(StarMoney, 0.0f, StatusAlphaTime, 0);
+			Status_SpriteAlphaSet(EXP, 1.0f, StatusAlphaTime, 0);
 			break;
 		}
 		m_nowStatusAnime = NewStatusAnime;
 	}
 }
 
-void GameStatusUI::Status_SpriteAlphaSet(const Status_Anime anime, const float alpha, const int time) {
+void GameStatusUI::Status_SpriteAlphaSet(const Status_Anime anime, const float alpha, const int time, const int deley) {
 
 	m_effectFlag = true;
+
 	switch (anime)
 	{
 	case StarMoney:
 		//スターマネー
-		m_statusBase_StarMoney->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,alpha }, time, 0);
-		m_text_StarMoney->m_fontSupporter.FontColorSet({ 1.0f,1.0f,1.0f,alpha }, time, 0);
-		m_starMoneySprite->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,alpha }, time, 0);
+		//m_statusBase_StarMoney->m_spriteSupporter.SpriteDelayReset();
+		//m_text_StarMoney->m_fontSupporter.FontDelayReset();
+		//m_starMoneySprite->m_spriteSupporter.SpriteDelayReset();
+		//
+		m_statusBase_StarMoney->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,alpha }, time, deley);
+		m_text_StarMoney->m_fontSupporter.FontColorSet({ 1.0f,1.0f,1.0f,alpha }, time, deley);
+		m_starMoneySprite->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,alpha }, time, deley);
 		break;
 	case EXP:
 		//経験値
-		m_statusBase_EXP->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,alpha }, time, 0);
-		m_statusBar_EXP->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,alpha }, time, 0);
-		m_statusCover_EXP->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,alpha }, time, 0);
+		//m_statusBase_EXP->m_spriteSupporter.SpriteDelayReset();
+		//m_statusBar_EXP->m_spriteSupporter.SpriteDelayReset();
+		//m_statusCover_EXP->m_spriteSupporter.SpriteDelayReset();
+		//
+		m_statusBase_EXP->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,alpha }, time, deley);
+		m_statusBar_EXP->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,alpha }, time, deley);
+		m_statusCover_EXP->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,alpha }, time, deley);
 		break;
 	}
 }
@@ -156,6 +168,11 @@ void GameStatusUI::Status_EffectUpdate() {
 		//スターマネーの座標を更新
 
 		if (m_kyokusen == 0.0f) {
+			//画像準備
+			m_starMoneySprite->SetPosition(CVector3::Zero());
+			m_starMoneySprite->SetAlpha(1.0f);
+			m_starMoneySprite->m_spriteSupporter.SpriteDelayReset();
+			m_text_StarMoney->SetColor(CVector4::White());
 			//座標計算
 			m_point_2 = m_starMoneySprite->GetPosition();	//始点
 			m_point_3 = GameStatusUI_StarMoney_DefPos;	//終点
@@ -181,18 +198,71 @@ void GameStatusUI::Status_EffectUpdate() {
 		if (m_kyokusen >= 1.0f) {
 			//終了
 			m_kyokusen = 0.0f;
-			m_statusList.erase(m_statusList_it);
-			m_starMoneySprite->SetAlpha(0.0f);
-			m_starMoneySprite->SetPosition(CVector3::Zero());
+			m_starMoneySprite->m_spriteSupporter.SpriteColor({ 1.0f,1.0f,1.0f,0.0f }, 1, 0);	//念のため1フレーム挟む
+			//スターマネー加算＆演出
+			GameData::GetInstance()->StarMoneyPlus(m_statusList_it->Add);
+			Status_StarMoneyTextUpdate();
+			//テキストジャンプ
+			m_text_StarMoney->SetColor(StarMoneyTextGetColor);
+			m_text_StarMoney->m_fontSupporter.FontMoveSet({ StarMoneyTextJump.x,StarMoneyTextJump.y },
+				StarMoneyTextJumpTime, 0, true);
+			m_text_StarMoney->m_fontSupporter.FontMoveSet({ StarMoneyTextJump.x,-StarMoneyTextJump.y }, 
+				StarMoneyTextJumpTime, StarMoneyTextJumpTime, true);
+			//エフェクト終了ということにする
 			m_nowStatusAnime = StatusAnime_NULL;
+			m_statusList.erase(m_statusList_it);
 			m_statusEffectFlag = false;
 		}
 
 		break;
 	case GameStatusUI::EXP:
 		//経験値ゲージが増えます
+		if (EXP_Stock == -1) {
+			//初期設定
+			EXP_Stock = m_statusList_it->Add;
+
+
+		}
+
+		//加算処理
+		EXP_Stock--;
+		GameData::GetInstance()->AddEXP(1);
+
+		//経験値バーの更新
+		Status_EXPBarUpdate();
+
+		//終了チェック
+		if (EXP_Stock == 0) {
+			//エフェクト終了ということにする
+			EXP_Stock = -1;
+			m_nowStatusAnime = StatusAnime_NULL;
+			m_statusList.erase(m_statusList_it);
+			m_statusEffectFlag = false;
+		}
+
 		break;
 	}
+
+}
+
+void GameStatusUI::Status_StarMoneyTextUpdate() {
+
+	wchar_t text[MAX_PATH];
+	//おわ
+	swprintf(text, MAX_PATH-1, L"%d　pt", GameData::GetInstance()->GetStarMoney());
+	//はい。
+	m_text_StarMoney->SetText(text);
+}
+
+void GameStatusUI::Status_EXPBarUpdate() {
+
+	//取得
+	int NowEXP = GameData::GetInstance()->GetNowEXP();
+	int NextEXP = GameData::GetInstance()->GetNextEXP();
+	//計算
+	float gage = static_cast<float>(NowEXP) / static_cast<float>(NextEXP);
+	m_statusBar_EXP->SetCutLine(gage);
+
 
 }
 

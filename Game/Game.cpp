@@ -28,7 +28,7 @@ Game::Game()
 	TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::NanameBox, 0, true);
 
 #ifdef _DEBUG
-	//ワイヤーフレームを表示しますすうすすすうう
+	//ワイヤーフレームを表示します
 	//g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 #endif
 
@@ -90,7 +90,7 @@ void Game::GameSetUp() {
 	//カメラ
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
 	//ステージ
-	StageSet::GetInstance()->InitStage(L"Sougen1");
+	StageSet::GetInstance()->InitStage(L"Tutorial");
 	//処理変更
 	m_gameState = GamaState_Game;
 }

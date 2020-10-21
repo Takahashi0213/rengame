@@ -3,7 +3,7 @@
 #include "system/CGameObjectManager.h"
 #include "Game.h"
 
-class BackGround : public IGameObject, public ObjectClass
+class BackGround : public ObjectClass
 {
 public:
 	BackGround();

@@ -1,6 +1,6 @@
 #pragma once
 
-class ObjectClass
+class ObjectClass : public IGameObject
 {
 public:
 	//オブジェクトの種類

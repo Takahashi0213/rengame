@@ -19,3 +19,34 @@ GameData::~GameData()
 	//インスタンスが破棄されたので、nullptrを代入
 	m_instance = nullptr;
 }
+
+void GameData::LevelUpCheck() {
+
+	//一度に複数回レベルアップする可能性もあるためループさせる
+	while (true)
+	{
+		//現在経験値がネクスト経験値をオーバーしているか？
+		if (m_nowExp < m_nextExp) {
+			break;		//オーバーしていないなら終了
+		}
+
+		//ここからレベルアップ処理
+		m_nowExp = m_nowExp - m_nextExp;							//現在の経験値を減らす
+		m_level++;													//レベルアップ
+		m_nextExp = static_cast<int>(m_nextExp * NextEXP_Hosei);	//次回経験値上昇
+		LevelUpStatus();											//レベルアップ時のステータス上昇
+	}
+
+}
+
+void GameData::LevelUpStatus() {
+
+	//レベルアップした時のステータス上昇量を個別に決める
+	switch (m_level)
+	{
+	case 2:
+		LevelUp_Mana(10);
+		break;
+	}
+
+}

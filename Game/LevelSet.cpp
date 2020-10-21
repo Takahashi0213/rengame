@@ -51,7 +51,7 @@ void LevelSet::Init(const wchar_t* LEVEL_Name) {
 	//レベルNoを渡す
 	GameData::GetInstance()->SetNowMapLevel(m_levelNo);
 
-	//レベル読み込みますますますの
+	//レベル読み込みます
 	m_level.Init(LEVEL_Name, [&](LevelObjectData& objData) {
 		
 		//まずはオブジェクトNoを検索
@@ -60,11 +60,19 @@ void LevelSet::Init(const wchar_t* LEVEL_Name) {
 
 		//生成
 		NewObj(objData, ObjectTag);
+		//以降のオブジェクト検索を高速にするために名前キーを作成しておく。
+		const wchar_t* objName = Level_Data.GetObjectName(m_levelNo, ObjNo);
+		int nameKey = Hash::MakeHash(objName);
+		const wchar_t* linkObjeName = Level_Data.GetObject_LinkObj(m_levelNo, ObjNo);
+		int linkObjNameKey = 0;// Hash::MakeHash(linkObjeName);
 		//配列に登録
 		m_Obj_Data[i] = Obj_Data{ 
 			ObjectTag,
-			Level_Data.GetObjectName(m_levelNo, ObjNo),
-			Level_Data.GetObject_LinkObj(m_levelNo, ObjNo) };
+			objName,
+			nameKey,
+			linkObjeName,
+			linkObjNameKey
+		};
 
 		//代入位置を1つ動かす
 		i++;
@@ -76,70 +84,58 @@ void LevelSet::Init(const wchar_t* LEVEL_Name) {
 	LinkObj(m_levelNo,i);
 
 }
+template<class T> 
+T* LevelSet::NewObjCommon(LevelObjectData& data)
+{
+	T* pt = CGameObjectManager::GetInstance()->NewGO<T>(data.name, 0);
+	pt->SetPosition(data.position*10.0f);
+	pt->SetRotation(data.rotation);
+	pt->SetScale(data.scale*10.0f);
+	return pt;
+}
+void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 
-void LevelSet::NewObj(LevelObjectData& data, LevelData::Obj_Tag tag) {
 
 	//ポインタの名前はptで統一
 	if (tag == LevelData::Obj_Tag::Tag_Switch) {	//スイッチ
-		Switch* pt = CGameObjectManager::GetInstance()->NewGO<Switch>(data.name, 0);
-		pt->SetPosition(data.position*10.0f);
-		pt->SetRotation(data.rotation);
-		pt->SetScale(data.scale*10.0f);
+		NewObjCommon<Switch>(data);
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Door) {	//ドア
-		Door* pt = CGameObjectManager::GetInstance()->NewGO<Door>(data.name, 0);
-		pt->SetPosition(data.position*10.0f);
-		pt->SetRotation(data.rotation);
-		pt->SetScale(data.scale*10.0f);
+		Door* pt = NewObjCommon<Door>(data);
 		pt->GetSkinModelRender()->SetUp(pt->GetPosition(), pt->GetRotation(), pt->GetScale());
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Test_Enemy) {	//テストエネミー
-		TestEnemy* pt = CGameObjectManager::GetInstance()->NewGO<TestEnemy>(data.name, 0);
-		pt->SetPosition(data.position*10.0f);
-		pt->SetRotation(data.rotation);
-		pt->SetScale(data.scale*10.0f);
+		NewObjCommon<TestEnemy>(data);
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Jewel) {	//ジュエル
-		StarMoney* pt = CGameObjectManager::GetInstance()->NewGO<StarMoney>(data.name, 0);
-		pt->SetPosition(data.position*10.0f);
-		pt->SetRotation(data.rotation);
-		pt->SetScale(data.scale*10.0f);
+		NewObjCommon<StarMoney>(data);
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Board) {	//看板
-		Board* pt = CGameObjectManager::GetInstance()->NewGO<Board>(data.name, 0);
-		pt->SetPosition(data.position*10.0f);
-		pt->SetRotation(data.rotation);
-		pt->SetScale(data.scale*10.0f);
+		Board* pt = NewObjCommon<Board>(data);
 		int ObjNo = Level_Data.ObjName_Search(m_levelNo, data.name);
 		pt->SetBoardMessage(Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo));
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_GhostBox_MapMove) {	//ゴーストボックス…移動
 		//const wchar_t* hoge = Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo);	//テストメッセージ
-		GhostBox* pt = CGameObjectManager::GetInstance()->NewGO<GhostBox>(data.name, 0);
-		pt->SetPosition(data.position*10.0f);
-		pt->SetRotation(data.rotation);
-		pt->SetScale(data.scale*10.0f);
+		GhostBox* pt = NewObjCommon<GhostBox>(data);
 		pt->CreateGhost();
 		int ObjNo = Level_Data.ObjName_Search(m_levelNo, data.name);
 		pt->SetStageName(Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo));
 		pt->SetPlayerMoveTarget(Level_Data.GetObject_Vector3Memo(m_levelNo, ObjNo));
 	}
 	if (tag == LevelData::Obj_Tag::Tag_StaticBox) {	//スタティックボックス
-		StaticBox* pt = CGameObjectManager::GetInstance()->NewGO<StaticBox>(data.name, 0);
-		pt->SetPosition(data.position*10.0f);
-		pt->SetRotation(data.rotation);
-		pt->SetScale(data.scale*10.0f);
+		StaticBox* pt = NewObjCommon<StaticBox>(data);
 		pt->CreateStaticBox();
 	}
 
 }
 
-void LevelSet::LinkObj(int levelNo, int i) {
+void LevelSet::LinkObj(const int levelNo, const int i) {
 
 	//オブジェクト配列の要素数分ループする
 	for (int ii = 0; ii < i; ii++) {
@@ -160,7 +156,7 @@ void LevelSet::LinkObj(int levelNo, int i) {
 			if (LinkObjTag == LevelData::Obj_Tag::Tag_Door) {	//ドア
 
 				//今見てるオブジェクト
-				int now_hash = Hash::MakeHash(nowObjName);
+				int now_hash = m_Obj_Data[ii].nameKey;
 				ObjectClass* now_objClass;
 
 				//ここに追加するオブジェクトは他のオブジェクトに「干渉する側」です
@@ -197,37 +193,8 @@ void LevelSet::LevelDelete() {
 		else {
 			//検索して消す
 			LevelData::Obj_Tag tag = m_Obj_Data[i].ObjTag;
-			//削除作業
-			if (tag == LevelData::Obj_Tag::Tag_Switch) {
-				Switch* pt = CGameObjectManager::GetInstance()->FindGO<Switch>(Hash::MakeHash(m_Obj_Data[i].ObjName));
-				CGameObjectManager::GetInstance()->DeleteGO(pt);
-			}
-			if (tag == LevelData::Obj_Tag::Tag_Door) {
-				Door* pt = CGameObjectManager::GetInstance()->FindGO<Door>(Hash::MakeHash(m_Obj_Data[i].ObjName));
-				CGameObjectManager::GetInstance()->DeleteGO(pt);
-			}
-			if (tag == LevelData::Obj_Tag::Tag_Test_Enemy) {
-				TestEnemy* pt = CGameObjectManager::GetInstance()->FindGO<TestEnemy>(Hash::MakeHash(m_Obj_Data[i].ObjName));
-				CGameObjectManager::GetInstance()->DeleteGO(pt);
-			}
-			if (tag == LevelData::Obj_Tag::Tag_Jewel) {
-				StarMoney* pt = CGameObjectManager::GetInstance()->FindGO<StarMoney>(Hash::MakeHash(m_Obj_Data[i].ObjName));
-				CGameObjectManager::GetInstance()->DeleteGO(pt);
-			}
-			if (tag == LevelData::Obj_Tag::Tag_Board) {
-				Board* pt = CGameObjectManager::GetInstance()->FindGO<Board>(Hash::MakeHash(m_Obj_Data[i].ObjName));
-				CGameObjectManager::GetInstance()->DeleteGO(pt);
-			}
-			if (tag == LevelData::Obj_Tag::Tag_GhostBox_MapMove) {
-				GhostBox* pt = CGameObjectManager::GetInstance()->FindGO<GhostBox>(Hash::MakeHash(m_Obj_Data[i].ObjName));
-				CGameObjectManager::GetInstance()->DeleteGO(pt);
-			}
-			if (tag == LevelData::Obj_Tag::Tag_StaticBox) {
-				StaticBox* pt = CGameObjectManager::GetInstance()->FindGO<StaticBox>(Hash::MakeHash(m_Obj_Data[i].ObjName));
-				CGameObjectManager::GetInstance()->DeleteGO(pt);
-			}
-
-
+			IGameObject* go = CGameObjectManager::GetInstance()->FindGO<IGameObject>(m_Obj_Data[i].nameKey);
+			CGameObjectManager::GetInstance()->DeleteGO(go);
 		}
 	}
 

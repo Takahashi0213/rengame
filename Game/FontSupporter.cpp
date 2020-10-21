@@ -55,7 +55,7 @@ void FontSupporter::FontMoveSet(CVector2 move, int movespeed, int delay, bool re
 	//ねんのため
 	//FontDataUpdate();
 
-	//リストに追加や
+	//リストに追加
 	FontMoveData set = { move,{ 0.0f,0.0f },movespeed,delay,0,relative,false };
 	m_fontMoveList.push_back(set);
 
@@ -164,7 +164,7 @@ void FontSupporter::FontColorUpdate() {
 		m_fontColorTimer++;
 
 		if (m_fontColorTimer >= m_fontColorLimit + m_fontColorDelay) {
-			//おしまひ
+			//おしまい
 			m_fontColorTimer = -1;
 		}
 	}

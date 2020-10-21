@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "StageSet.h"
+#include "BoxMaker.h"
 
 StageSet* StageSet::m_instance = nullptr;
 
@@ -45,9 +46,10 @@ void StageSet::InitStage(const wchar_t* stage_name) {
 	GameData::GetInstance()->SetNowStageNo(m_stageNo);
 	//ステージ場所をセット
 	GameData::GetInstance()->SetPlace(m_stageData.GetStagePlace(m_stageNo));
-
 	//環境光を設定
 	LightMaker::GetInstance()->SetAmbientColor(m_stageData.GetStageAmbientColor(m_stageNo));
+	//箱の全削除
+	BoxMaker::GetInstance()->BoxAllDelete();
 
 	//生成タイム
 	CreateStage(m_stageData.GetStageModel(m_stageNo),

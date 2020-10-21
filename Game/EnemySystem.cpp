@@ -3,11 +3,11 @@
 
 #include "BoxMaker.h"
 
-bool EnemySystem::BoxAttackSearch(CVector3 position, float range) {
+bool EnemySystem::BoxAttackSearch(const CVector3& position, const float& range) {
 
 	//ボックスメイカー
 	BoxMaker* BoxMaker_p = BoxMaker::GetInstance();
-	std::list<GameBox*> boxList = BoxMaker_p->GetBoxList();	//箱リスト取得
+	const std::list<GameBox*>& boxList = BoxMaker_p->GetBoxList();	//箱リスト取得
 	
 	bool Return_Flag = false;
 	CVector3 MoveSpeed;
@@ -23,9 +23,9 @@ bool EnemySystem::BoxAttackSearch(CVector3 position, float range) {
 		}else if (go->GetBoxTag() == GameBox::BoxTag::Another) {
 			MoveSpeed = go->GetOriginBox()->GetMoveSpeed();
 		}
-		//移動量チェーーーック
+		//移動量チェック
 		if (MoveSpeed.x == 0.0f && MoveSpeed.z == 0.0f) {
-			//動いてないのでおしまひ
+			//動いてないのでおしまい
 			continue;
 		}
 
