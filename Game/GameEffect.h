@@ -212,6 +212,8 @@ public:
 	//アニメ呼び出し用
 	enum Anime_Name {
 		Anime_LevelUp,		//レベルアップ
+		Anime_Loading,		//ローディング
+		Anime_NameNom,		//アニメの数
 	};
 
 	/// <summary>
@@ -220,7 +222,10 @@ public:
 	/// <param name="m_animeName">呼び出すアニメの種類</param>
 	/// <param name="pos">座標</param>
 	/// <param name="m_scale">大きさ</param>
-	void NewAnimationSprite(Anime_Name m_animeName, CVector3 pos, CVector3 m_scale = CVector3().One(), int priority = 0);
+	void NewAnimationSprite(const Anime_Name m_animeName,
+		const CVector3& pos, const CVector3& m_scale, const int& priority = 0);
+	SpriteRender* NewAnimationSprite_pt(const Anime_Name m_animeName,
+		const CVector3& pos, const CVector3& m_scale, const int& priority = 0);
 
 	void SpriteAnimationUpdate();
 
@@ -245,9 +250,9 @@ private:
 	};
 
 	//アニメデータ
-	const SpriteAnime_Data Game_SpriteAnime_Data[2]{
+	const SpriteAnime_Data Game_SpriteAnime_Data[Anime_NameNom]{
 		{ L"Assets/sprite/levelUp_8F.dds", 450.0f, 2000.0f, 8,false },
-		{ L"Assets/sprite/levelUp_8F.dds", 450.0f, 2000.0f, 8,false },
+		{ L"Assets/sprite/Loading_6F.dds", 65.0f, 240.0f, 6,true },
 
 	};
 

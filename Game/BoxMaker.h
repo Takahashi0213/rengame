@@ -37,7 +37,7 @@ public:
 	void Render()override;
 
 	/// <summary>
-	/// プレイヤーのポインタをほぞんぬ
+	/// プレイヤーのポインタを保存
 	/// </summary>
 	/// <param name="game">アドレス</param>
 	void SetPlayer(Player* pl) {
@@ -69,7 +69,7 @@ public:
 private:
 	void BoxUpdate();
 	void ModeChange();
-	//作成地点とプレイヤーの距離が一定以下じゃないと作れないよ
+	//作成地点とプレイヤーの距離が一定以下じゃないと作れない
 	bool BoxCreateCheck();
 
 	Game* m_game = nullptr;
@@ -77,27 +77,27 @@ private:
 
 	CVector3 m_boxPos = CVector3().Zero();			//箱座標
 
-	BoxMakerMode m_boxMakerMode = NomalMode;		//ボックスメイカーモ～～ド
+	BoxMakerMode m_boxMakerMode = NomalMode;		//ボックスメイカーモード
 
 	CVector3 m_boxN = CVector3::Zero();				//法線だ
 
 	//箱リスト
-	std::list<GameBox*> m_boxList;					//箱ども
-	std::list<int>m_manaList;						//この箱がどのくらいマナ圧迫してるかな？のリストでい
-	GameBox* m_nowBox = nullptr;					//現在見ているボックスさん
+	std::list<GameBox*> m_boxList;					//箱リスト
+	std::list<int>m_manaList;						//この箱がどのくらいマナ圧迫してるかな？のリスト
+	GameBox* m_nowBox = nullptr;					//現在見ているボックス
 	GameBox* m_nowBox_Stock = nullptr;				//以前見ていたボックスを一時保存！
-	std::list<GameBox*> m_nowBoxList;				//今変更中のボックスりすりす
+	std::list<GameBox*> m_nowBoxList;				//今変更中のボックスリスト
 	GameBox* m_originBox = nullptr;					//最初の箱
 
 	//面チェック用
-	bool m_surfaceFlag = false;						//m_boxPointの設定フラグ！！！
+	bool m_surfaceFlag = false;						//m_boxPointの設定フラグ
 
 	//箱拡大用
 	CVector3 m_box_N = CVector3::Zero();			//見ているボックスの方向
 	CVector3 m_box_N_Now = CVector3::Zero();		//現在見ているボックスの方向
 	CVector2 m_mouseMove = { 0.0f,0.0f };			//マウスの移動量を保存（マイナスになったらヤバい）
 	CVector3 m_boxScale = CVector3().One();			//拡大率！
-	CVector3 m_boxScaleDef = { 0.1f,0.1f,0.1f };	//デフォルト下限のや～～つ
+	CVector3 m_boxScaleDef = { 0.1f,0.1f,0.1f };	//デフォルト下限のやつ
 	CVector3 m_surfaceScaleNew = CVector3::Zero();	//今拡大しようとしている面の大きさ
 	CVector3 m_boxScaleHosei = CVector3().One();	//箱のデフォルトサイズと選択した面の大きさを比較して補正を計算する！！！
 	CVector3 m_planeScale = CVector3::Zero();		//面の大きさを代入する場所（一時保存）
@@ -128,7 +128,7 @@ private:
 
 	//クリエイトモードに移行するために必要な最低マナ数、初代箱を生成するときに消費するマナ数でもある
 	const int CreateModeChangeBorder = 10;
-	const float DefManaHosei = 5.0f;									//箱作成の消費マナ補正 結果に除算→値が大きいほど安くなる
+	const float DefManaHosei = 5.0f;								//箱作成の消費マナ補正 結果に除算→値が大きいほど安くなる
 
 };
 

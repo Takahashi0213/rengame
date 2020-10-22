@@ -12,7 +12,7 @@ public:
 	void Render()override;
 
 	/// <summary>
-	/// ゲームのポインタをほぞんぬ
+	/// ゲームのポインタを保存
 	/// </summary>
 	/// <param name="game">アドレス</param>
 	void SetGame(Game* game) {
@@ -25,7 +25,7 @@ private:
 	bool m_initFlag = false;
 
 	SkinModel m_model;	//スキンモデル。
-	Game* m_game;
+	Game* m_game;		//ゲーム
 	bool m_monochromeFlag = false;
 	LightMaker* m_lightMaker;
 
@@ -33,7 +33,7 @@ private:
 
 	CVector3 m_position = { 0.0f,0.0f,0.0f };
 	CQuaternion m_rotation = CQuaternion().Identity();
-	CVector3 m_scale = { 10.0f,10.0f,10.0f }; //拡大率
+	CVector3 m_scale = { 10.0f,10.0f,10.0f };				//拡大率
 
 
 };

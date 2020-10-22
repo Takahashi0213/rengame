@@ -95,7 +95,8 @@ void SpriteSupporter::SpriteDelayReset() {
 /// <param name="moveTime">移動時間</param>
 /// <param name="moveDelay">移動ディレイ</param>
 /// <param name="relative">相対移動フラグ trueにするとmoveに設定した値を相対座標として扱うぞ</param>
-void SpriteSupporter::SpriteMove(CVector2 move, int moveTime, int moveDelay, bool relative) {
+void SpriteSupporter::SpriteMove(const CVector2& move, const int& moveTime,
+	const int& moveDelay, const bool& relative) {
 
 	//リストに追加や
 	SpriteMoveSet set = { move,{0.0f,0.0f},moveTime,moveDelay,0,relative,false };
@@ -116,7 +117,8 @@ void SpriteSupporter::SpriteMove(CVector2 move, int moveTime, int moveDelay, boo
 /// <param name="moveTime">回転時間（loopflagがtrueなら無効）</param>
 /// <param name="moveDelay">回転ディレイ</param>
 /// <param name="loopflag">trueにすると停止命令までずっと回転</param>
-void SpriteSupporter::SpriteRotation(float rot, int moveTime, int moveDelay, bool loopflag) {
+void SpriteSupporter::SpriteRotation(const float& rot, const int& moveTime,
+	const int& moveDelay, const bool& loopflag) {
 
 	CQuaternion RotationZ;
 	RotationZ.SetRotationDeg(CVector3().AxisZ(), rot);
@@ -134,14 +136,14 @@ void SpriteSupporter::SpriteRotation(float rot, int moveTime, int moveDelay, boo
 /// <param name="scale">目標の大きさ</param>
 /// <param name="moveTime">動作時間</param>
 /// <param name="moveDelay">動作ディレイ</param>
-void SpriteSupporter::SpriteScale(CVector3 scale, int moveTime, int moveDelay) {
+void SpriteSupporter::SpriteScale(const CVector3& scale, const int& moveTime, const int& moveDelay) {
 
 	//リストに追加や
 	SpriteScaleSet set = { scale ,CVector3::Zero(),moveTime,moveDelay , 0 ,false };
 	m_spriteScaleList.push_back(set);
 
 }
-void SpriteSupporter::SpriteScale(const float scale, const int moveTime, const int moveDelay) {
+void SpriteSupporter::SpriteScale(const float& scale, const int& moveTime, const int& moveDelay) {
 	CVector3 Scale = { scale ,scale ,1.0f };
 
 	//リストに追加や
@@ -156,7 +158,7 @@ void SpriteSupporter::SpriteScale(const float scale, const int moveTime, const i
 /// <param name="color">目標のカラー</param>
 /// <param name="moveTime">動作時間</param>
 /// <param name="moveDelay">動作ディレイ</param>
-void SpriteSupporter::SpriteColor(CVector4 color, int moveTime, int moveDelay) {
+void SpriteSupporter::SpriteColor(const CVector4& color, const int& moveTime, const int& moveDelay) {
 	m_spriteColor = color;
 	m_spriteColorLimit = moveTime;
 	m_spriteColorDelay = moveDelay;
@@ -169,7 +171,7 @@ void SpriteSupporter::SpriteColor(CVector4 color, int moveTime, int moveDelay) {
 /// <param name="move">1回のシェイクにおける移動距離</param>
 /// <param name="moveTime">動作時間</param>
 /// <param name="moveCount">動作回数（0を指定するとループ）</param>
-void SpriteSupporter::SpriteShake(CVector2 move, int moveTime, int moveCount) {
+void SpriteSupporter::SpriteShake(const CVector2& move, const int& moveTime, const int& moveCount) {
 	m_spriteShakeMove.x = move.x;
 	m_spriteShakeMove.y = move.y;
 	m_spriteShakeLimit = moveTime;
@@ -187,7 +189,7 @@ void SpriteSupporter::SpriteShake(CVector2 move, int moveTime, int moveCount) {
 /// </summary>
 /// <param name="moveTime">1枚の経過時間</param>
 /// <param name="loopflag">ループするかどうか（falseの場合終了時自動でアルファが0になるぞ）</param>
-void SpriteSupporter::SpritePattern(int moveTime, bool loopflag, int overLimit) {
+void SpriteSupporter::SpritePattern(const int& moveTime, const bool& loopflag, const int& overLimit) {
 	m_patternLimit = moveTime;
 	m_patternTimer = 0;
 	m_patternOverLimit = overLimit;

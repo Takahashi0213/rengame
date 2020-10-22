@@ -104,13 +104,19 @@ private:
 	const float Ball_AutoRotAngle = 1.0f;						//自動回転速度
 	const CVector3 Ball_AutoRotAxis = CVector3::AxisX();		//自動回転軸
 
-	SkinModelRender* m_player;				//プレイヤー
+	SkinModel m_player;											//プレイヤー
 	const CVector3 Player_DefPos = { -70.0f,146.0f,-100.0f };	//初期座標（ボールを基準にする）
 	const float Player_Scale = 0.5f;							//拡大率
 	const float Plyer_RotAngleX = 20.0f;						//X回転量
+	Animation m_playerAnimation;								//アニメーション。
+	AnimationClip m_playerAnimationClips[1];					//アニメーションクリップ。
+	CVector3 m_p_pos;
+	CQuaternion m_p_rot;
+	CVector3 m_p_scl;
 
-	SkinModelRender* m_dummyBox;			//ダミーボックス
-
+	SkinModelRender* m_dummyBox;								//ダミーボックス
+	const CVector3 DummyBoxHosei = { -25.0f ,55.0f ,-40.0f };	//箱の座標補正
+	const float DummyBoxScale = 40.0f;							//箱の大きさ
 
 	//スプライト
 	SpriteRender* m_black;					//土台

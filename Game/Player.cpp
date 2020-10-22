@@ -10,10 +10,30 @@ int Game_UI = Hash::MakeHash("GameUI");
 Player::Player()
 {
 	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/unityChan.cmo");
-	m_model_Sl.Init(L"Assets/modelData/unityChan.cmo");
+	m_model.Init(L"Assets/modelData/unityChan.cmo", enFbxUpAxisY);
+	m_model_Sl.Init(L"Assets/modelData/unityChan.cmo", enFbxUpAxisY);
 	//m_model.SetEmissionColor({ 100.0f,1.0f,1.0f });
 	m_model_Sl.SetRenderMode(RenderMode::Silhouette);
+
+	//アニメーション
+	m_playerAnimationClips[0].Load(L"Assets/animData/walk.tka");
+	m_playerAnimationClips[0].SetLoopFlag(true);
+
+	m_playerAnimationClips[1].Load(L"Assets/animData/run.tka");
+	m_playerAnimationClips[1].SetLoopFlag(true);
+	//アニメーションの初期化。
+	m_playerAnimation.Init(
+		m_model,					//アニメーションを流すスキンモデル。
+									//これでアニメーションとスキンモデルが関連付けされる。
+		m_playerAnimationClips,		//アニメーションクリップの配列。
+		2							//アニメーションクリップの数。
+	);
+	m_playerAnimationSL.Init(
+		m_model_Sl,					//アニメーションを流すスキンモデル。
+									//これでアニメーションとスキンモデルが関連付けされる。
+		m_playerAnimationClips,		//アニメーションクリップの配列。
+		2							//アニメーションクリップの数。
+	);
 
 	//ワールド行列の更新。
 	m_model_Sl.UpdateWorldMatrix(m_position, m_rotation, m_scale);
@@ -97,12 +117,18 @@ void Player::Update()
 	ShadowMap::GetInstance()->RegistShadowCaster(&m_model);
 	ShadowMap::GetInstance()->Update(m_lightMaker->GetLightCameraPosition(), m_lightMaker->GetLightCameraTarget());
 
+	//アニメーション
+	m_playerAnimation.Play(1);
+	m_playerAnimation.Update(1.0f / 20.0f);
+	m_playerAnimationSL.Play(1);
+	m_playerAnimationSL.Update(1.0f / 20.0f);
+
 	//ライトカメラを更新
 	CVector3 LC_Pos = LightMaker::GetInstance()->GetLightCameraPosition();
 	LC_Pos = m_position;
 	LC_Pos.y += 1000.0f;
 	LightMaker::GetInstance()->SetLightCameraPosition(LC_Pos);
-	//ターゲットも！
+	//ターゲットも
 	LC_Pos = LightMaker::GetInstance()->GetLightCameraTarget();
 	LC_Pos = m_position;
 	LightMaker::GetInstance()->SetLightCameraTarget(LC_Pos);
@@ -156,6 +182,7 @@ void Player::Move() {
 		}
 	}
 
+	//移動
 	m_nextPos.y = m_position.y;
 
 	m_moveSpeed.x = m_nextPos.x - m_position.x;
@@ -163,6 +190,7 @@ void Player::Move() {
 	m_moveSpeed.x /= 20.0f;
 	m_moveSpeed.z /= 20.0f;
 
+	//上限
 	if (m_moveSpeed.x > m_moveMax) {
 		m_moveSpeed.x = m_moveMax;
 	}
@@ -175,7 +203,7 @@ void Player::Move() {
 	if (m_moveSpeed.z < -m_moveMax) {
 		m_moveSpeed.z = -m_moveMax;
 	}
-
+	//移動方向に回転させる
 	float angle = atan2(m_moveSpeed.x, m_moveSpeed.z);
 	m_rotation.SetRotation(CVector3().AxisY(), angle);
 
@@ -246,13 +274,13 @@ void Player::BoxCatch() {
 	//箱を持ち上げているかどうかで分岐
 	if (m_boxUpFlag == false) {
 
-		//箱を持ちアゲアゲ↑
+		//箱を持ちあげる
 
 		if (m_upKouho_Box != nullptr) { //持ち上げられる箱がある？
 			m_upBox = m_upKouho_Box;
 			m_boxUpFlag = true;
 			m_boxMoveFlag = true;
-			m_upOrDown = false;	//箱を上げてるよフラグ
+			m_upOrDown = false;	//箱を上げてるフラグ
 			m_moveSpeed.x = 0.0f;
 			m_moveSpeed.z = 0.0f;
 			
@@ -332,7 +360,7 @@ void Player::BoxCatch() {
 			//リセット
 			m_boxUpFlag = false;
 			m_boxMoveFlag = true;
-			m_upOrDown = true;	//箱を下ろしてるよフラグ
+			m_upOrDown = true;	//箱を下ろしてるフラグ
 			m_moveSpeed.x = 0.0f;
 			m_moveSpeed.z = 0.0f;
 
@@ -357,14 +385,14 @@ void Player::BoxSearch() {
 		return;
 	}
 
-	//ﾎﾞｯｸｽﾒｲｶｱ…
+	//ボックスメーカー
 	BoxMaker* BoxMaker_p = BoxMaker::GetInstance();
 
-	//近くに箱があるか検索ｩ
-	std::list<GameBox*> boxList = BoxMaker_p->GetBoxList();
+	//近くに箱があるか検索
+	const std::list<GameBox*>& boxList = BoxMaker_p->GetBoxList();
 	float FinalRange = 0.0f;		//距離保存用
-	GameBox* UpBox = nullptr;		//（持ち上げる）箱の名は。
-	CVector3 P_B_Range;				//高さ計算用です
+	GameBox* UpBox = nullptr;		//持ち上げる箱のポインタ
+	CVector3 P_B_Range;				//高さ計算用
 	float P_B_Range_Final;			//距離
 	GameBox* UpBox_Origin= nullptr;	//持ち上げる箱の親（nullならオリジン）
 	CVector3 Hosei;					//Another用座標補正
@@ -383,7 +411,7 @@ void Player::BoxSearch() {
 
 		}
 		else if (go->GetBoxTag() == GameBox::Another) {
-			//お前！！アナザー箱！！！
+			//アナザー箱
 			UpBox_Origin = go->GetOriginBox();
 			Hosei = go->GetAnotherHosei();
 			Range_Hosei = go->GetAnotherRangeHosei();
@@ -393,7 +421,7 @@ void Player::BoxSearch() {
 		P_B_Range = m_position - (go->GetPosition() + Hosei);
 		P_B_Range_Final = P_B_Range.Length();
 
-		//貴様が相応しいか判別してやる
+		//判別タイム
 		bool Flag = false;
 
 		//近くにあるか？
@@ -447,7 +475,7 @@ void Player::BoxSearch() {
 
 	}
 
-	//貴様だ！
+	//決定！
 	m_upKouho_Box = UpBox;
 
 	//色変更

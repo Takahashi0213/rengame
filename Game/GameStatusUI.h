@@ -65,6 +65,10 @@ private:
 	/// 現在の経験値ゲージを表示
 	/// </summary>
 	void Status_EXPBarUpdate();
+	/// <summary>
+	/// レベルアップエフェクト
+	/// </summary>
+	void Status_LevelUpEffect();
 
 	//ステータス演出予約リスト
 	std::list<StatusData>m_statusList;						//ステータス演出リスト
@@ -76,7 +80,8 @@ private:
 
 	//スターマネースプライト
 	const CVector3 GameStatusUI_StarMoney_DefPos = { -500.0f,100.f,0.0f };	//スターマネー基本座標
-	const CVector3 GameStatusUI_EXP_DefPos = { 0.0f,80.f,0.0f };			//EXP基本座標
+	const CVector3 GameStatusUI_EXP_DefPos = { 0.0f,120.f,0.0f };			//EXP基本座標
+	const CVector3 GameStatusUI_LevelUp_DefPos = { 0.0f,300.0f,0.0f };		//レベルアップ基本座標
 
 	SpriteRender* m_starMoneySprite = nullptr;				//スターマネーアイコン
 	const CVector2 StarMoneySpriteSize = { 60.0f,60.0f };	//スターマネーアイコンの大きさ
@@ -103,6 +108,18 @@ private:
 	const CVector2 EXP_SizeHosei = { 3.0f, 2.0f };			//EXPステータスの補正
 
 	const int SpritePriority = 9;							//優先度
+
+	//レベルアップスプライト スターマネー座標を基準にする
+	FontRender* m_text_Level = nullptr;						//テキスト！
+	FontRender* m_text_HP = nullptr;						//テキスト！
+	FontRender* m_text_MP = nullptr;						//テキスト！
+	const float LevelUp_TextRange = 30.0f;					//テキスト同士の感覚
+	const float LevelUp_TextSizeLevel = 0.5f;				//テキストの大きさ（レベル）
+	const float LevelUp_TextSizeStatus = 0.3f;				//テキストの大きさ（ステータス）
+	const CVector2 LevelUp_TextHosei = { -80.0f,20.0f };	//テキストの補正
+	const float LevelUp_TextMove = 300.0f;					//テキストの移動量
+	const int LevelUp_TextMoveTime = 12;					//テキストの移動時間
+	const int LevelUp_TextMoveDelay = 30;					//テキストの移動ディレイ
 
 	//EXP計算用変数
 	//レベルアップ処理開始時のステータスを記録しておいて、処理終了時との差で上昇量を求める

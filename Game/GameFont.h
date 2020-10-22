@@ -41,14 +41,15 @@ public:
 	*@param[in]	shadowOffset		影を描くときのピクセルのオフセット量。
 	*@param[in]	shadowColor			影の色。
 	*/
-	void SetShadowParam(bool isDrawShadow, float shadowOffset, const CVector4& shadowColor = { 0.2f,0.2f,0.2f,1.0f })
+	void SetShadowParam(const bool& isDrawShadow, 
+		const float& shadowOffset, const CVector4& shadowColor = { 0.2f,0.2f,0.2f,1.0f })
 	{
 		m_isDrawShadow = isDrawShadow;
 		m_shadowOffset = shadowOffset;
 		m_shadowColor = shadowColor;
 	}
 
-	void SetCut(float cutUp, float cutDown) {
+	void SetCut(const float& cutUp, const float& cutDown) {
 		m_cutY_Up = cutUp;
 		m_cutY_Down = cutDown;
 	}

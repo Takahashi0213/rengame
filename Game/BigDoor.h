@@ -26,13 +26,13 @@ public:
 	void ModelChange(const BoxModel model);
 
 private:
-	SkinModelRender * m_model = nullptr;			//土台もで～～る
+	SkinModelRender * m_model = nullptr;			//土台モデル
 
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
 
 	//定数
 	const CVector3 StaticSize = { 250.0f,300.0f,20.0f };	//扉の当たり判定サイズ
-	const float StaticY_Hosei = 100.0f;						//当たり判定が埋まるので上に補正するs
+	const float StaticY_Hosei = 100.0f;						//当たり判定が埋まるので上に補正する
 
 };
 

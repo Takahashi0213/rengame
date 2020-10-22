@@ -845,6 +845,9 @@
     <MeshContentTask Include="Assets\modelData\Gimmick\StaticBox.fbx">
       <Filter>Assets\modelData\Gimmick</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Yazirushi.fbx">
+      <Filter>Assets\modelData\System</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\mikyan.jpg">
@@ -1035,6 +1038,21 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\system_sprite\Jewel.png">
       <Filter>Assets\sprite\system</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\transition\circle_b.png">
+      <Filter>Assets\sprite\Transition</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\transition\mesh.png">
+      <Filter>Assets\sprite\Transition</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Loading_6F.png">
+      <Filter>Assets\sprite\system</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\window\window7.png">
+      <Filter>Assets\sprite\window</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\window\window8.png">
+      <Filter>Assets\sprite\window</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

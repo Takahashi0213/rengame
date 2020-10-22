@@ -4,7 +4,7 @@
 
 /// <summary>
 /// レベルを設定するクラス
-/// Initでスターーート！！！です
+/// Initでスタートです
 /// </summary>
 class LevelSet
 {
@@ -29,7 +29,7 @@ private:
 	
 	LevelData Level_Data;				//レベルデータ本体
 	Level m_level;						//レベルデータ。
-	int m_levelNo = -1;					//レベルの配列番号（-1で初期化しましょ！）
+	int m_levelNo = -1;					//レベルの配列番号（-1で初期化しましょう！）
 
 	//オブジェクトの生成
 	void NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag);

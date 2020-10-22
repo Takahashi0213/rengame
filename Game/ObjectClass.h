@@ -21,7 +21,7 @@ public:
 	}
 
 	//座標
-	void SetPosition(const CVector3 pos) {
+	void SetPosition(const CVector3& pos) {
 		m_position = pos;
 	}
 	CVector3 GetPosition() {
@@ -29,7 +29,7 @@ public:
 	}
 
 	//回転
-	void SetRotation(const CQuaternion rot) {
+	void SetRotation(const CQuaternion& rot) {
 		m_rotation = rot;
 	}
 	CQuaternion GetRotation() {
@@ -37,7 +37,7 @@ public:
 	}
 
 	//拡大率
-	void SetScale(const CVector3 scl) {
+	void SetScale(const CVector3& scl) {
 		m_scale = scl;
 	}
 	CVector3 GetScale() {
@@ -46,7 +46,7 @@ public:
 
 	//一応パブリックのままで…
 
-	ObjectClass_Tag m_object = NullObj;	//こいつが何者かを示すやつです
+	ObjectClass_Tag m_object = NullObj;			//こいつが何者かを示す
 
 	SkinModelRender * m_modelRender = nullptr;	//スキンモデル。
 

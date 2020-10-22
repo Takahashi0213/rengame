@@ -13,7 +13,7 @@ void PhysicsGhostObject::Release()
 		m_isRegistPhysicsWorld = false;
 	}
 }
-void PhysicsGhostObject::CreateCommon(CVector3 pos, CQuaternion rot)
+void PhysicsGhostObject::CreateCommon(const CVector3& pos, const CQuaternion& rot, const float& mass)
 {
 	m_ghostObject.setCollisionShape(m_collider->GetBody());
 	btTransform btTrans;

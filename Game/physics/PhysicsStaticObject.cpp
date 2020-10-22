@@ -14,11 +14,11 @@ void PhysicsStaticObject::Release()
 {
 	g_physics->RemoveRigidBody(m_rigidBody);
 }
-void PhysicsStaticObject::CreateCommon(CVector3 pos, CQuaternion rot)
+void PhysicsStaticObject::CreateCommon(const CVector3& pos, const CQuaternion& rot, const float& mass)
 {
 	RigidBodyInfo rbInfo;
 	rbInfo.collider = m_collider.get();
-	rbInfo.mass = 0.0f;
+	rbInfo.mass = mass;
 	rbInfo.pos = pos;
 	rbInfo.rot = rot;
 	m_rigidBody.Create(rbInfo);

@@ -243,8 +243,8 @@
 
 		CGOM_Graphics * m_cgom_Graphics = nullptr;
 
-		std::list<IGameObject*> m_goList; //オブジェクトのリスト
-		std::list<IGameObject*> m_deleteList; //削除するオブジェクトのリスト
+		std::list<IGameObject*> m_goList;		//オブジェクトのリスト
+		std::list<IGameObject*> m_deleteList;	//削除するオブジェクトのリスト
 
 		/// <summary>
 		/// 削除リストに積んだオブジェクトをまとめて削除する

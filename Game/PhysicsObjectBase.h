@@ -15,7 +15,7 @@ private:
 	/// <summary>
 	/// 共通処理
 	/// </summary>
-	virtual void CreateCommon(CVector3 pos, CQuaternion rot) = 0;
+	virtual void CreateCommon(const CVector3& pos, const CQuaternion& rot, const float& mass) = 0;
 
 public:
 	/// <summary>
@@ -24,7 +24,8 @@ public:
 	/// <param name="pos">座標</param>
 	/// <param name="rot">回転</param>
 	/// <param name="size">スケール</param>
-	void CreateBox(CVector3 pos, CQuaternion rot, CVector3 size);
+	void CreateBox(const CVector3& pos, const CQuaternion& rot, 
+		const CVector3& size, const float& mass = 0.0f);
 	/// <summary>
 	/// カプセル形状のゴーストオブジェクトを作成
 	/// </summary>
@@ -32,14 +33,16 @@ public:
 	/// <param name="rot">回転</param>
 	/// <param name="radius">半径</param>
 	/// <param name="height">高さ</param>
-	void CreateCapsule(CVector3 pos, CQuaternion rot, float radius, float height);
+	void CreateCapsule(const CVector3& pos, const CQuaternion& rot,
+		const float& radius, const float& height, const float mass = 0.0f);
 	/// <summary>
 	/// 球体形状のゴーストオブジェクトを作成
 	/// </summary>
 	/// <param name="pos">座標</param>
 	/// <param name="rot">回転</param>
 	/// <param name="radius">半径</param>
-	void CreateSphere(CVector3 pos, CQuaternion rot, float radius);
+	void CreateSphere(const CVector3& pos, const CQuaternion& rot,
+		const float& radius, const float& mass = 0.0f);
 protected:
 	std::unique_ptr<ICollider> m_collider;	//コライダーちゃん
 };

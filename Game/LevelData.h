@@ -6,7 +6,7 @@ class LevelData
 {
 public:
 
-	//この名前ならこのオブジェクトを作りますよ的なデータ
+	//この名前ならこのオブジェクトを作ります的なデータ
 	//std::map < std::string, std::string > Level_Map =
 	//{ 
 	//	{"Switch" , "Switch" }
@@ -19,7 +19,7 @@ public:
 		Tag_Door,					//ドア スイッチから信号を受け取った場合移動する
 		Tag_BigDoor1,				//巨大ドア（向かって左側）
 		Tag_BigDoor2,				//巨大ドア（向かって右側）
-		Tag_Test_Enemy,				//テストエネミー 水でできた鳩さん
+		Tag_Test_Enemy,				//テストエネミー 水でできた鳩
 		Tag_Jewel,					//スタージュエル
 		Tag_Board,					//看板→Obj_Memoに内容を書く
 		Tag_GhostBox_MapMove,		//マップ移動用ゴースト→obj_Memoに接触時呼ばれるマップの名前を書く
@@ -31,20 +31,22 @@ public:
 	//レベルごとにこいつがオブジェクトの数だけ必要
 	struct Obj_Data
 	{
-		wchar_t Obj_Name[255];		//レベル内のオブジェクト名
-		Obj_Tag Tag;				//種類を選択
-		wchar_t LinkObj_Name[255];	//関連するオブジェクトの名前
-		wchar_t Obj_Memo[255];		//看板とかのテキスト
-		CVector3 Position_Memo;		//移動先などの設定用
+		wchar_t Obj_Name[MAX_PATH];			//レベル内のオブジェクト名
+		Obj_Tag Tag;						//種類を選択
+		wchar_t LinkObj_Name[MAX_PATH];		//関連するオブジェクトの名前
+		wchar_t Obj_Memo[MAX_PATH];			//看板とかのテキスト
+		CVector3 Position_Memo;				//移動先などの設定用
+		float FloatMemo = 0.0f;				//float型のメモ
+		float FloatMemo2 = 0.0f;			//float型のメモ
 	};
 	//レベルデータ構造体
 	struct Level_Data
 	{
-		wchar_t Level_Name[255];			//レベルのファイル名
+		wchar_t Level_Name[MAX_PATH];		//レベルのファイル名
 		Obj_Data Obj_Array[MAX_LEVEL_OBJ];	//このレベルのオブジェクトたち
 	};
 
-	//ここからデータ取得用関数～～～～～～～～～～～～～～～～
+	//ここからデータ取得用関数
 
 	/// <summary>
 	/// レベルのファイル名取得
@@ -104,6 +106,20 @@ public:
 	}
 
 	/// <summary>
+	/// floatメモを取得
+	/// 汎用的に使う
+	/// </summary>
+	/// <param name="num">レベル番号</param>
+	/// <param name="obj_num">オブジェクト番号</param>
+	/// <returns>floatメモ</returns>
+	const float GetObject_FloatMemo(const int num, const int obj_num) {
+		return m_levelData[num].Obj_Array[obj_num].FloatMemo;
+	}
+	const float GetObject_FloatMemo2(const int num, const int obj_num) {
+		return m_levelData[num].Obj_Array[obj_num].FloatMemo2;
+	}
+
+	/// <summary>
 	/// LevelDataのサイズを取得
 	/// </summary>
 	int GetLevelDataSize() {
@@ -134,7 +150,7 @@ private:
 				{ L"Door2",Tag_Door,L"" },
 				{ L"Door3",Tag_Door,L"" },
 				{ L"Test_Enemy",Tag_Test_Enemy,L"Door2" },
-				{ L"GhostBox",Tag_GhostBox_MapMove,L"",L"Sougen1",{ 0.0f,100.0f,-500.0f } },	//移動先マップ名＆移動先座標
+				{ L"GhostBox",Tag_GhostBox_MapMove,L"",L"Sougen1",{ 700.0f,110.0f,-950.0f },180.0f,-50.0f },	//移動先マップ名＆移動先座標
 		}
 		},
 		//草原1
@@ -154,9 +170,9 @@ private:
 				{ L"StaticBox4",Tag_StaticBox,L"" },
 				{ L"StaticBox5",Tag_StaticBox,L"" },
 				{ L"StaticBox6",Tag_StaticBox,L"" },
-				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen2",{ 0.0f,0.0f,0.0f } },	//移動先マップ名＆移動先座標
-				{ L"GhostBox2",Tag_GhostBox_MapMove,L"",L"Sougen3",{ 0.0f,0.0f,0.0f } },	//移動先マップ名＆移動先座標
-				{ L"GhostBox3",Tag_GhostBox_MapMove,L"",L"Tutorial",{ 0.0f,0.0f,0.0f } },	//移動先マップ名＆移動先座標
+				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen2",{ 500.0f,100.0f,1150.0f },180.0f,-750.0f },	//移動先マップ名＆移動先座標
+				{ L"GhostBox2",Tag_GhostBox_MapMove,L"",L"Sougen3",{ 1022.0f,100.0f,-88.0f },180.0f,-750.0f },	//移動先マップ名＆移動先座標
+				{ L"GhostBox3",Tag_GhostBox_MapMove,L"",L"Tutorial",{ -393.0f,50.0f,2145.0f },180.0f,-50.0f },	//移動先マップ名＆移動先座標
 			}
 		},
 		//草原2

@@ -73,7 +73,7 @@ extern void InitIndexBuffer(ID3D11Buffer*& indexBuffer) {
 	ZeroMemory(&InitData, sizeof(InitData));
 	InitData.pSysMem = index; //リソースデータのポインタを指定する
 
-	//作りま～～～
+	//作ります
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bd, &InitData, &indexBuffer);
 
 }

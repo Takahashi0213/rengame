@@ -7,29 +7,32 @@
 
 using namespace std;
 
-void PhysicsObjectBase::CreateBox(CVector3 pos, CQuaternion rot, CVector3 size)
+void PhysicsObjectBase::CreateBox(const CVector3& pos, const CQuaternion& rot,
+	const CVector3& size, const float& mass)
 {
 	Release();
 	auto boxCollider = make_unique<BoxCollider>();
 	boxCollider->Create(size);
 	m_collider = move(boxCollider);
-	CreateCommon(pos, rot);
+	CreateCommon(pos, rot,mass);
 }
-void PhysicsObjectBase::CreateCapsule(CVector3 pos, CQuaternion rot, float radius, float height)
+void PhysicsObjectBase::CreateCapsule(const CVector3& pos, const CQuaternion& rot,
+	const float& radius, const float& height, const float mass)
 {
 	Release();
 	auto capusuleCollider = make_unique<CapsuleCollider>();
 	capusuleCollider->Create(radius, height);
 	m_collider = move(capusuleCollider);
-	CreateCommon(pos, rot);
+	CreateCommon(pos, rot, mass);
 }
 
-void PhysicsObjectBase::CreateSphere(CVector3 pos, CQuaternion rot, float radius)
+void PhysicsObjectBase::CreateSphere(const CVector3& pos, const CQuaternion& rot, 
+	const float& radius, const float& mass)
 {
 	Release();
 	auto sphereCollider = make_unique<SphereCollider>();
 	sphereCollider->Create(radius);
 	m_collider = move(sphereCollider);
-	CreateCommon(pos, rot);
+	CreateCommon(pos, rot, mass);
 }
 

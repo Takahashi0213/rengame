@@ -1,12 +1,13 @@
 #pragma once
 #include "graphics/Shader.h"
 
+//スプライトのレンダーモード（SpriteRenderから設定可）
 enum Sprite_RenderMode {
 	Normal,				//普通に描画
 	X_Cut,				//Xをカットする
 	Y_Cut,				//Yをカットする
 	Slice9,				//9slice
-	Mask,				//マシュク
+	Mask,				//マスク
 	Pattern,			//パターン
 	Sprite_Monochrome,	//モノクロ
 	Overlay,			//オーバーレイ
@@ -48,7 +49,7 @@ public:
 	}
 
 	struct ConstantBuffer {
-		CMatrix WVP;	//ワールドビュープロジェクション行列
+		CMatrix WVP;		//ワールドビュープロジェクション行列
 		CVector4 mulColor;	//乗算カラー
 		float cut_line;
 		int slice_pattern;	//-1なら無効、スライス画像位置
@@ -89,10 +90,10 @@ public:
 	SpriteData m_mainSprite;
 
 	ID3D11Buffer* m_cb = nullptr;		//定数バッファ
-	bool m_isInited = false;	//!<初期化フラグ。
+	bool m_isInited = false;			//!<初期化フラグ。
 
 	Sprite_RenderMode m_renderMode = Normal;	//レンダーモード
-	float m_cut_UV = 0.5f;	//ここからカット！
+	float m_cut_UV = 0.5f;				//ここからカット！
 	int m_slicePattern = -1;
 	int m_nowPattern = 0;
 
@@ -106,7 +107,7 @@ private:
 	/// </summary>
 	/// <param name="n">切り上げたい整数</param>
 	/// <returns>16の倍数に切り上げた値</returns>
-	int Raundup16(int n)
+	int Raundup16(const int& n)
 	{
 		return (((n - 1) / 16) + 1) * 16;
 	}

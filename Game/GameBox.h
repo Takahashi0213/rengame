@@ -3,6 +3,9 @@
 #include "Physics/MeshCollider.h"
 #include "physics/PhysicsStaticObject.h"
 
+/// <summary>
+/// プレイヤーが生成する箱
+/// </summary>
 class GameBox
 {
 public:
@@ -24,13 +27,14 @@ public:
 	/// </summary>
 	/// <param name="pos">座標</param>
 	/// <param name="rot">回転</param>
-	void GameBox_Set(const CVector3 pos, const CQuaternion rot = CQuaternion::Identity()) {
+	void GameBox_Set(const CVector3& pos, const CQuaternion& rot = CQuaternion::Identity()) {
 		m_position = pos;
 		m_rotation = rot;
 	}
 
 	//レイが当たってるかをチェック
-	bool CheckHitRayToPlane(CVector3 startPos, CVector3 endPos,CVector3* boxPos,CVector3& box_N, CVector3& plane_scale);
+	bool CheckHitRayToPlane(const CVector3& startPos, const CVector3& endPos,
+		CVector3* boxPos,CVector3& box_N, CVector3& plane_scale);
 	
 	//座標を返す
 	const CVector3& GetPosition() const {
@@ -91,7 +95,7 @@ public:
 	/// <summary>
 	/// 箱の拡大率 設定＆取得
 	/// </summary>
-	void SetScale(const CVector3 scl) {
+	void SetScale(const CVector3& scl) {
 		m_scale = scl;
 	}
 	CVector3 GetScale() {
@@ -101,7 +105,7 @@ public:
 	/// <summary>
 	/// 回転を設定＆取得
 	/// </summary>
-	void SetRotation(const CQuaternion rot) {
+	void SetRotation(const CQuaternion& rot) {
 		m_rotation = rot;
 	}
 	CQuaternion GetRotation() {
@@ -111,7 +115,7 @@ public:
 	/// <summary>
 	/// マナパワーの設定と取得（箱の削除に使います）
 	/// </summary>
-	void SetManaPower(const int mana) {
+	void SetManaPower(const int& mana) {
 		m_manaPower = mana;
 	}
 	int GetManaPower() {

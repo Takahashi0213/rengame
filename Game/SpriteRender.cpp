@@ -29,7 +29,7 @@ SpriteRender::~SpriteRender()
 /// <param name="h">高さ</param>
 /// <param name="priority">優先度（大きい方が上に表示される）
 /// 指定しなかった場合は0</param>
-void SpriteRender::Init(const wchar_t* texFilePath, float w, float h, int priority)
+void SpriteRender::Init(const wchar_t* texFilePath, const float& w, const float& h, const int& priority)
 {
 	m_mainSprite.Wide = w;
 	m_mainSprite.High = h;
@@ -47,7 +47,7 @@ void SpriteRender::Init(const wchar_t* texFilePath, float w, float h, int priori
 		m_maskSprite->GetMainSprite()->SetMulColor(m_mainSprite.MulColor);
 	}
 }
-void SpriteRender::InitSub(const wchar_t* texFilePath, float w, float h, int priority)
+void SpriteRender::InitSub(const wchar_t* texFilePath, const float& w, const float& h, const int& priority)
 {
 	SpriteData data;
 	m_subSprite.push_back(data);
@@ -73,7 +73,8 @@ void SpriteRender::InitSub(const wchar_t* texFilePath, float w, float h, int pri
 /// <param name="pos">初期座標</param>
 /// <param name="priority">優先度（大きい方が上に表示される）
 /// 指定しなかった場合は0</param>
-void SpriteRender::Init(const wchar_t* texFilePath, float w, float h, CVector3 pos, CVector4 color, int priority) {
+void SpriteRender::Init(const wchar_t* texFilePath, const float& w, const float& h,
+	const CVector3& pos, const CVector4& color, const int& priority) {
 
 	m_mainSprite.Wide = w;
 	m_mainSprite.High = h;
@@ -93,7 +94,8 @@ void SpriteRender::Init(const wchar_t* texFilePath, float w, float h, CVector3 p
 		m_maskSprite->GetMainSprite()->SetMulColor(m_mainSprite.MulColor);
 	}
 }
-void SpriteRender::InitSub(const wchar_t* texFilePath, float w, float h, CVector3 pos, CVector4 color, int priority) {
+void SpriteRender::InitSub(const wchar_t* texFilePath, const float& w, const float& h, const CVector3& pos,
+	const CVector4& color, const int& priority) {
 
 	SpriteData data;
 	data.Wide = w;

@@ -38,7 +38,7 @@ SliceSprite::~SliceSprite()
 {
 }
 
-void SliceSprite::Change3Slice(float size) {
+void SliceSprite::Change3Slice(const float& size) {
 	m_3sliceFlag = true;
 	m_sprite1.m_slicePattern = 100;
 	m_sprite2.m_slicePattern = 101;
@@ -48,7 +48,7 @@ void SliceSprite::Change3Slice(float size) {
 
 void SliceSprite::SpriteDataSlice() {
 
-	//‘å‚«‚³ŒvŽZ‚µ‚Ä‚¢‚«‚Ü‚·‚í‚æ``
+	//‘å‚«‚³ŒvŽZ‚µ‚Ä‚¢‚«‚Ü‚·
 	float halfX = m_meinSpriteData.Wide / 2.0f;
 	float halfY = m_meinSpriteData.High / 2.0f;
 	float X_Cut = m_texWide / 3.0f;
@@ -56,7 +56,7 @@ void SliceSprite::SpriteDataSlice() {
 	X_Cut *= (m_meinSpriteData.Wide / m_texWide);
 	Y_Cut *= (m_meinSpriteData.High / m_texHigh);
 	float MaxCut = max(X_Cut, Y_Cut);
-	//‚Å‚©‚·‚¬‚é‚í
+	//‚Å‚©‚·‚¬‚é
 	if (MaxCut > m_meinSpriteData.Wide) {
 		MaxCut = m_meinSpriteData.Wide;
 	}
@@ -125,7 +125,7 @@ void SliceSprite::SpriteDataSlice() {
 
 void SliceSprite::SliceSpriteDraw() {
 
-	//‚¨‚¦‚©‚«‚©‚«
+	//‚¨‚¦‚©‚«
 	m_sprite1.Sprite_Draw();
 	m_sprite2.Sprite_Draw();
 	m_sprite3.Sprite_Draw();

@@ -27,13 +27,16 @@ public:
 	void SpriteDelayReset();
 
 	//実行するコマンド
-	void SpriteMove(CVector2 move, int moveTime, int moveDelay, bool relative = false);
-	void SpriteRotation(float rot, int moveTime, int moveDelay, bool loopflag = false);
-	void SpriteScale(CVector3 scale, int moveTime, int moveDelay);
-	void SpriteScale(const float scale, const int moveTime, const int moveDelay);
-	void SpriteColor(CVector4 color, int moveTime, int moveDelay);
-	void SpriteShake(CVector2 move, int moveTime, int moveCount);
-	void SpritePattern(int moveTime, bool loopflag = false ,int overLimit = 0);
+	void SpriteMove(const CVector2& move, const int& moveTime,
+		const int& moveDelay, const bool& relative = false);
+	void SpriteRotation(const float& rot, const int& moveTime,
+		const int& moveDelay, const bool& loopflag = false);
+	void SpriteScale(const CVector3& scale, const int& moveTime, const int& moveDelay);
+	void SpriteScale(const float& scale, const int& moveTime, const int& moveDelay);
+	void SpriteColor(const CVector4& color, const int& moveTime, const int& moveDelay);
+	void SpriteShake(const CVector2& move, const int& moveTime, const int& moveCount);
+	void SpritePattern(const int& moveTime, const bool& loopflag = false,
+		const int& overLimit = 0);
 
 	//状態取得用
 	//スプライトの移動リスト要素数を取得

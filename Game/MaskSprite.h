@@ -13,8 +13,7 @@ public:
 	/// <summary>
 	/// 座標を設定
 	/// </summary>
-	/// <param name="pos">座標</param>
-	void SetPosition(const CVector3 pos, int list = -1)
+	void SetPosition(const CVector3& pos, const int& list = -1)
 	{
 		if (list == -1) {
 			m_mainSpriteData.Position = pos;
@@ -26,8 +25,7 @@ public:
 	/// <summary>
 	/// 座標を取得
 	/// </summary>
-	/// <returns>座標</returns>
-	const CVector3 GetPosition(int list = -1) const
+	const CVector3 GetPosition(const int& list = -1) const
 	{
 		if (list == -1) {
 			return m_mainSpriteData.Position;
@@ -39,8 +37,7 @@ public:
 	/// <summary>
 	/// 回転を設定
 	/// </summary>
-	/// <param name="rot">回転</param>
-	void SetRotation(const CQuaternion rot,int list = -1)
+	void SetRotation(const CQuaternion& rot, const int& list = -1)
 	{
 		if (list == -1) {
 			m_mainSpriteData.Rotation = rot;
@@ -52,8 +49,7 @@ public:
 	/// <summary>
 	/// 回転を取得
 	/// </summary>
-	/// <returns>回転</returns>
-	const CQuaternion GetRotation(int list = -1) const
+	const CQuaternion GetRotation(const int& list = -1) const
 	{
 		if (list == -1) {
 			return m_mainSpriteData.Rotation;
@@ -65,8 +61,7 @@ public:
 	/// <summary>
 	/// 拡大率を設定
 	/// </summary>
-	/// <param name="scr">拡大率</param>
-	void SetScale(const CVector3 scl,int list = -1)
+	void SetScale(const CVector3& scl, const int& list = -1)
 	{
 		if (list == -1) {
 			m_mainSpriteData.Scale = scl;
@@ -75,7 +70,7 @@ public:
 			m_subSpriteList[list].subData.Scale = scl;		//サブ
 		}
 	}
-	void SetScale(const float scl, int list = -1) { //便利Ver
+	void SetScale(const float& scl, const int& list = -1) { //便利Ver
 		if (list == -1) {
 			m_mainSpriteData.Scale.x = scl;
 			m_mainSpriteData.Scale.y = scl;
@@ -88,8 +83,7 @@ public:
 	/// <summary>
 	/// 拡大率を取得
 	/// </summary>
-	/// <returns>拡大率</returns>
-	const CVector3 GetScale(int list = -1) const
+	const CVector3 GetScale(const int& list = -1) const
 	{
 		if (list == -1) {
 			return m_mainSpriteData.Scale;
@@ -101,8 +95,7 @@ public:
 	/// <summary>
 	/// ピボットを設定
 	/// </summary>
-	/// <param name="pivot">ピボット</param>
-	void SetPivot(const CVector2 pivot, int list = -1)
+	void SetPivot(const CVector2& pivot, const int& list = -1)
 	{
 		if (list == -1) {
 			m_mainSpriteData.Pivot = pivot;
@@ -114,8 +107,7 @@ public:
 	/// <summary>
 	/// ピボットを取得
 	/// </summary>
-	/// <returns>ピボット</returns>
-	CVector2 GetPivot(int list = -1)
+	CVector2 GetPivot(const int& list = -1)
 	{
 		if (list == -1) {
 			return m_mainSpriteData.Pivot;
@@ -128,8 +120,7 @@ public:
 	/// <summary>
 	/// サイズを設定
 	/// </summary>
-	/// <param name="size">サイズ</param>
-	void SetSize(CVector2 size, int list = -1) {
+	void SetSize(const CVector2& size, const int& list = -1) {
 		
 		if (list == -1) {
 			m_mainSpriteData.Wide = size.x;
@@ -144,8 +135,7 @@ public:
 	/// <summary>
 	/// 乗算カラーを設定
 	/// </summary>
-	/// <param name="mulColor">乗算カラー</param>
-	void SetMulColor(const CVector4& mulColor, int list = -1)
+	void SetMulColor(const CVector4& mulColor, const int& list = -1)
 	{
 		if (list == -1) {
 			m_mainSpriteData.MulColor = mulColor;
@@ -159,8 +149,7 @@ public:
 	/// <summary>
 	/// 乗算カラーを取得
 	/// </summary>
-	/// <returns>乗算カラー</returns>
-	CVector4 GetMulColor(int list = -1)
+	CVector4 GetMulColor(const int& list = -1)
 	{
 		if (list == -1) {
 			return m_mainSpriteData.MulColor;
@@ -173,12 +162,12 @@ public:
 	/// <summary>
 	/// レンダーモードの変更
 	/// </summary>
-	void ChangeRenderMode(Sprite_RenderMode srm, int list) {
+	void ChangeRenderMode(const Sprite_RenderMode srm, const int& list) {
 		if (list >= 0) {
 			m_subSpriteList[list].sprite->m_renderMode = srm;
 		}
 		else {
-			std::abort(); //異常な値です！！！！！！コラ！
+			std::abort(); //異常な値です！！！
 		}
 	}
 

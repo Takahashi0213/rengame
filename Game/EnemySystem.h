@@ -7,6 +7,8 @@ public:
 	/// </summary>
 	bool BoxAttackSearch(const CVector3& position, const float& range = 120.0f);
 
+	Player* m_player;				//ƒvƒŒƒCƒ„[
+
 private:
 
 	//’è”

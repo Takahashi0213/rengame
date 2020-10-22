@@ -34,7 +34,7 @@ private:
 	//ただし反応の仕様がエネミーの場合、一度開いたらもう実行しない
 	void UpdateActionFlag() {
 
-		//動作仕様がエネミー＆扉が上がっているならオワオワリ
+		//動作仕様がエネミー＆扉が上がっているなら終わり
 		if (m_LinkObjectTag == ObjectClass::ObjectClass_Tag::EnemyObj &&
 			m_actionFlag == true) {
 			return;
@@ -50,18 +50,18 @@ private:
 		m_actionFlag = CheckFlag;	//trueのままならｵｹ
 	}
 
-	SkinModelRender* m_model;						//土台もで～～る
+	SkinModelRender* m_model;						//土台モデル
 
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
 
-	void DoorUpDowmUpdate();						//ドアの上下移動あっぷでーーーーーーと
+	void DoorUpDowmUpdate();						//ドアの上下移動アップデート
 
 	ObjectClass* m_LinkPt[10] = { nullptr };		//ドア上下トリガー
-	int m_setNom = 0;								//イマドコ
+	int m_setNom = 0;								//いまどこにいる？
 	bool m_upDownFlag = false;						//上下フラグ（1回だけ実行するためのbool）
 	bool m_monochromeFlag = false;					//モノクロフラグ
 
-	//反応の仕様を決めるくん
+	//反応の仕様を決める
 	//ギミック系→オフになったら閉じる
 	//エネミー系→一度開いたら二度と閉じない（敵のインスタンスが消去されるため）
 	ObjectClass_Tag m_LinkObjectTag = ObjectClass::ObjectClass_Tag::NullObj;

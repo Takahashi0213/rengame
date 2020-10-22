@@ -22,6 +22,12 @@ public:
 	void SetPlayerMoveTarget(const CVector3& pos) {
 		m_playerMoveTarget = pos;
 	}
+	void SetYazirushiRot(const float& rotAngle) {
+		m_yazirushiRotAngle = rotAngle;
+	}
+	void SetYazirushiYHosei(const float& hosei) {
+		m_yazirushiYHosei = hosei;
+	}
 
 	/// <summary>
 	/// 呼び出すとゴーストを生成する
@@ -30,6 +36,7 @@ public:
 
 private:
 	PhysicsGhostObject m_ghostObject;				//ゴーストオブジェクト
+	SkinModelRender* m_Yazirushi = nullptr;			//マップ移動ゴーストの場合使用する
 
 	Player* m_player = nullptr;						//プレイヤーはここ！
 
@@ -37,6 +44,12 @@ private:
 	//マップ移動編
 	const wchar_t* m_LoadStageName = nullptr;		//ステージの名前
 	CVector3 m_playerMoveTarget;					//プレイヤーの移動先
+	float m_yazirushiRotAngle = 0.0f;				//矢印の回転
+	float m_yazirushiYHosei = 0.0f;					//矢印のY補正
+	bool m_mapMoveFlag = false;						//マップ移動フラグ
+	int m_mapMoveTimer = 0;							//マップ移動タイマー
+	const float YazirushiMoveHosei = 30.0f;			//矢印の移動量補正
+	const int YazirushiMoveTime = 10;				//矢印の移動時間
 	//ゲームオーバー編
 
 

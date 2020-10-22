@@ -57,7 +57,7 @@ private:
 	/*!
 	* @brief	静的物理オブジェクト作成処理の共通処理。
 	*/
-	void CreateCommon(CVector3 pos, CQuaternion rot) override final;
+	void CreateCommon(const CVector3& pos, const CQuaternion& rot, const float& mass = 0.0f) override final;
 
 	MeshCollider m_meshCollider;		//!<メッシュコライダー。
 	float m_mass = 1.0f;				//!<質量。

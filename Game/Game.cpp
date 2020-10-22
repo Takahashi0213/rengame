@@ -29,7 +29,7 @@ Game::Game()
 
 #ifdef _DEBUG
 	//ワイヤーフレームを表示します
-	//g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
+	g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 #endif
 
 }
@@ -82,7 +82,7 @@ void Game::GameSetUp() {
 	BoxMaker* m_box = CGameObjectManager::GetInstance()->NewGO<BoxMaker>("BoxMaker", 1);
 	//プレイヤーの作成
 	Player* pl = CGameObjectManager::GetInstance()->NewGO<Player>("Player", 1);
-	//ボックスメイカーに渡すよ
+	//ボックスメイカーに渡す
 	m_box->SetPlayer(pl);
 	//UIの作成
 	m_ui = CGameObjectManager::GetInstance()->NewGO<GameUI>("GameUI", 8);

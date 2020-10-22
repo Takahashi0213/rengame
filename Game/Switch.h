@@ -39,7 +39,7 @@ private:
 		Off,
 	};
 
-	SkinModel m_model;								//スイッチのもで～～る
+	SkinModel m_model;								//スイッチのモデル
 	Player* m_pl = nullptr;							//プレイヤー
 
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
@@ -51,7 +51,7 @@ private:
 
 	SwitchState m_switchState = Off;				//オンオフ状態
 
-													//定数
+	//定数
 	const CVector3 Local = { 0.0f,5.0f,0.0f };		//ベースを基準にした赤い部分のローカル座標
 	const CVector3 GhostScale = { 160.0f,0.5f,160.0f };	//判定用ゴーストの範囲
 	const float GhostY_Up = 15.0f;					//判定用ゴーストを上に持ち上げておく移動量
@@ -61,7 +61,7 @@ private:
 };
 
 /// <summary>
-/// スイッチのベーース
+/// スイッチのベース
 /// 基準になるのはこっちです
 /// </summary>
 class Switch : public ObjectClass
@@ -73,7 +73,7 @@ public:
 	void Render()override;
 
 	//設定
-	void SetPosition(CVector3 pos) {
+	void SetPosition(const CVector3& pos) {
 		m_position = pos;
 		m_switchObj.SwitchObj_Init(m_position);
 	}
@@ -87,6 +87,7 @@ public:
 
 	/// <summary>
 	/// スイッチのオンオフ状態を返す
+	/// 外部から見ると仕様が逆なので戻しておく
 	/// </summary>
 	bool GetSwitchState() {
 		if (m_switchObj.GetSwitchState() == false) {
@@ -100,7 +101,7 @@ public:
 
 private:
 
-	SkinModel m_model;		//スイッチの土台もで～～る
+	SkinModel m_model;		//スイッチの土台モデル
 	SwitchObj m_switchObj;	//赤い方を所持
 
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト

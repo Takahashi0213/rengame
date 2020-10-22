@@ -75,7 +75,7 @@ GameMenu::GameMenu()
 	MenuLogo->ChangeRenderMode_Mask(Sprite_RenderMode::Overlay, 1);
 	MenuLogo->ChangeRenderMode_Mask(Sprite_RenderMode::Add, 2);
 
-	//めにゅう
+	//メニュー
 	float Y_Hosei = 0.0f;
 	MenuCommand_Sprite1 = NewGO<SpriteRender>("MenuCommand_Sprite1", SpriteNo);
 	MenuCommand_Sprite1->ChangeSliceSprite(MenuCommandWindowDefSize);
@@ -144,7 +144,7 @@ GameMenu::GameMenu()
 	MenuCommand_Font4->SetPosition({ DefMenuCommand_TextPosition.x + MenuMove + SaveX_Hosei,
 		DefMenuCommand_TextPosition.y + Y_Hosei });
 
-	//コマンドあくせさりぃ
+	//コマンドアクセサリー
 
 
 	//説明文
@@ -161,7 +161,7 @@ GameMenu::GameMenu()
 	MenuCommand_Cursor->SetPosition({ DefCursorPosition.x + MenuMove,DefCursorPosition.y,DefCursorPosition.z });
 	MenuCommand_Cursor->SetAlpha(0.0f);
 
-	//登録しとく
+	//登録しておく
 	m_spriteRenderList.push_back(MenuWindow);
 	m_spriteRenderList.push_back(MenuWindow2);
 	m_spriteRenderList.push_back(MenuButton);
@@ -187,6 +187,9 @@ GameMenu::~GameMenu()
 {
 	//インスタンスが破棄されたので、nullptrを代入
 	m_instance = nullptr;
+	//コマンドも削除
+	DeleteMenuCommand();
+
 }
 
 void GameMenu::GameMenuUpdate() {
@@ -198,10 +201,12 @@ void GameMenu::GameMenuUpdate() {
 	int Right_Key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Right_Key);
 
 	//他の更新
-	Update_Effect(GameMode);
-	Update_Command();
-	Update_MenuEnter(Left_Key);
-	Update_CommandNow();
+	GameMenu::Update_Effect(GameMode);
+	GameMenu::Update_Command();
+	if (GameMode == SceneManager::MenuMode) {
+		GameMenu::Update_MenuEnter(Left_Key);
+		GameMenu::Update_CommandNow();
+	}
 
 	//フラグリセット
 	m_selectFlag = false;
@@ -235,8 +240,11 @@ void GameMenu::GameMenuUpdate() {
 
 				SceneManager::GetInstance()->SetGameMode(SceneManager::GameMode::MenuMode);
 				MenuLogoTimer = -1;
+				//NoActiveの画像演出をリセット
+				MenuWindow2->SetAlpha(1.0f);
+				MenuSetumeiFont->SetAlpha(1.0f);
 				MenuCommand_Cursor->SetAlpha(1.0f);
-				m_nowMenuCommand = MenuCommand::Create;	//カーソル位置リセリセ
+				m_nowMenuCommand = MenuCommand::Create;	//カーソル位置リセット
 				m_menuMoveTimer = 0;
 				EffekseerSupporter::GetInstance()->NoPostStop();
 				m_commandNow = false;
@@ -299,6 +307,11 @@ void GameMenu::GameMenuUpdate() {
 				SceneManager::GetInstance()->SetGameMode(SceneManager::GameMode::ActionMode);
 				MenuCommand_Cursor->SetAlpha(0.0f);
 				EffekseerSupporter::GetInstance()->NoPostMove();
+				m_commandEndFlag = true;
+				//コマンドのフェードアウト
+				if (m_menu_BoxAllDelete != nullptr) {
+					m_menu_BoxAllDelete->CommandEnd();
+				}
 
 				//移動
 				MenuButton->Init(L"Assets/sprite/MenuButton.dds", MenuButtonSize, MenuButtonSize, SpriteNo);
@@ -345,11 +358,28 @@ void GameMenu::GameMenuUpdate() {
 		m_menuMoveTimer++;
 	}
 
+	//コマンド終了チェック
+	if (m_commandEndFlag == true) {
+		m_commandEndTimer++;
+		if (m_commandEndTimer == CommandEndLimit) {
+			m_commandEndTimer = 0;
+			m_commandEndFlag = false;
+			m_commandNow = false;
+			if (GameMode == SceneManager::MenuMode) {
+				Update_CommandDraw(false);
+				//NoActiveの画像演出をリセット
+				MenuWindow2->SetAlpha(1.0f);
+				MenuSetumeiFont->SetAlpha(1.0f);
+				MenuCommand_Cursor->SetAlpha(1.0f);
+			}
+		}
+	}
+
 }
 
 void GameMenu::Update_Effect(int mode) {
 
-	//メニューモードなら！画面にブラーをかけるゥ！
+	//メニューモードなら画面にブラーをかける
 	if (mode == SceneManager::GameMode::MenuMode) {
 
 		float blur = SceneManager::GetInstance()->GetGameGraphicInstance()->m_blurIntensity;
@@ -360,7 +390,7 @@ void GameMenu::Update_Effect(int mode) {
 		SceneManager::GetInstance()->GetGameGraphicInstance()->m_blurIntensity = blur;
 
 	}
-	//違うなら戻すｯ！！！！
+	//違うなら戻す
 	if (mode != SceneManager::GameMode::MenuMode) {
 
 		float blur = SceneManager::GetInstance()->GetGameGraphicInstance()->m_blurIntensity;
@@ -464,9 +494,14 @@ void GameMenu::Update_Command() {
 		MenuCommand_Cursor->m_spriteSupporter.SpriteMove({ -Cursor_YMove ,0.0f }, CursorMoveLimit / 2, CursorMoveLimit / 2, true);
 	}
 	else if (m_cursorMoveTimer == CursorMoveLimit) {
-		m_cursorMoveTimer = -1;	//ﾘｾｯﾄｩ
+		m_cursorMoveTimer = -1;	//ﾘｾｯﾄ
 	}
 	m_cursorMoveTimer++;
+
+	//カーソル移動は常にするが、コマンド更新受付はコマンド中行わない
+	if (m_commandNow == true) {
+		return;
+	}
 
 	//マウスの入力で選択中のコマンドをカエール
 	int now_delta = MouseSupporter::GetInstance()->GetWheelMove();		//移動量
@@ -597,9 +632,18 @@ void GameMenu::Update_CommandDelta(const int delta, bool& flag) {
 /// </summary>
 void GameMenu::Update_CommandDraw(bool drawStile) {
 
+	//何か実行しているなら中断
+	if (m_commandNow == true) {
+		return;
+	}
+	//終了中なら中断
+	if (m_commandEndFlag == true) {
+		return;
+	}
+
 	//コマンド位置の移動
 	m_cursorMoveTimer = 0;
-	//リセットしないとヤバ
+	//リセットしないとバグります
 	MenuCommand_Cursor->m_spriteSupporter.SpriteDelayReset();
 	{
 		MenuCommand_Sprite1->m_spriteSupporter.SpriteDelayReset();
@@ -648,62 +692,78 @@ void GameMenu::Update_CommandDraw(bool drawStile) {
 	case GameMenu::Create:
 		MenuCommand_Sprite1->SetAlpha(1.0f);
 		MenuCommand_Font1->SetAlpha(1.0f);
-		MenuCommand_Sprite2->SetAlpha(0.5f);
-		MenuCommand_Font2->SetAlpha(0.5f);
-		MenuCommand_Sprite3->SetAlpha(0.5f);
-		MenuCommand_Font3->SetAlpha(0.5f);
-		MenuCommand_Sprite4->SetAlpha(0.5f);
-		MenuCommand_Font4->SetAlpha(0.5f);
+		MenuCommand_Sprite2->SetAlpha(NoActiveAlpha);
+		MenuCommand_Font2->SetAlpha(NoActiveAlpha);
+		MenuCommand_Sprite3->SetAlpha(NoActiveAlpha);
+		MenuCommand_Font3->SetAlpha(NoActiveAlpha);
+		MenuCommand_Sprite4->SetAlpha(NoActiveAlpha);
+		MenuCommand_Font4->SetAlpha(NoActiveAlpha);
 		//
-		MenuCommand_Sprite1->m_spriteSupporter.SpriteMove({ 0.0f,10.0f }, 2, 0, true);
-		MenuCommand_Sprite1->m_spriteSupporter.SpriteMove({ 0.0f,-10.0f }, 2, 2, true);
-		MenuCommand_Font1->m_fontSupporter.FontMoveSet({ 0.0f,10.0f }, 2, 0, true);
-		MenuCommand_Font1->m_fontSupporter.FontMoveSet({ 0.0f,-10.0f }, 2, 2, true);
+		MenuCommand_Sprite1->m_spriteSupporter.SpriteMove({ 0.0f,MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, 0, true);
+		MenuCommand_Sprite1->m_spriteSupporter.SpriteMove({ 0.0f,-MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, MenuCommandSelectJumpTime, true);
+		MenuCommand_Font1->m_fontSupporter.FontMoveSet({ 0.0f,MenuCommandSelectJumpY },
+			MenuCommandSelectJumpTime, 0, true);
+		MenuCommand_Font1->m_fontSupporter.FontMoveSet({ 0.0f,-MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, MenuCommandSelectJumpTime, true);
 		break;
 	case GameMenu::Box_Release:
-		MenuCommand_Sprite1->SetAlpha(0.5f);
-		MenuCommand_Font1->SetAlpha(0.5f);
+		MenuCommand_Sprite1->SetAlpha(NoActiveAlpha);
+		MenuCommand_Font1->SetAlpha(NoActiveAlpha);
 		MenuCommand_Sprite2->SetAlpha(1.0f);
 		MenuCommand_Font2->SetAlpha(1.0f);
-		MenuCommand_Sprite3->SetAlpha(0.5f);
-		MenuCommand_Font3->SetAlpha(0.5f);
-		MenuCommand_Sprite4->SetAlpha(0.5f);
-		MenuCommand_Font4->SetAlpha(0.5f);
+		MenuCommand_Sprite3->SetAlpha(NoActiveAlpha);
+		MenuCommand_Font3->SetAlpha(NoActiveAlpha);
+		MenuCommand_Sprite4->SetAlpha(NoActiveAlpha);
+		MenuCommand_Font4->SetAlpha(NoActiveAlpha);
 		//
-		MenuCommand_Sprite2->m_spriteSupporter.SpriteMove({ 0.0f,10.0f }, 2, 0, true);
-		MenuCommand_Sprite2->m_spriteSupporter.SpriteMove({ 0.0f,-10.0f }, 2, 2, true);
-		MenuCommand_Font2->m_fontSupporter.FontMoveSet({ 0.0f,10.0f }, 2, 0, true);
-		MenuCommand_Font2->m_fontSupporter.FontMoveSet({ 0.0f,-10.0f }, 2, 2, true);
+		MenuCommand_Sprite2->m_spriteSupporter.SpriteMove({ 0.0f,MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, 0, true);
+		MenuCommand_Sprite2->m_spriteSupporter.SpriteMove({ 0.0f,-MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, MenuCommandSelectJumpTime, true);
+		MenuCommand_Font2->m_fontSupporter.FontMoveSet({ 0.0f,MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, 0, true);
+		MenuCommand_Font2->m_fontSupporter.FontMoveSet({ 0.0f,-MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, MenuCommandSelectJumpTime, true);
 		break;
 	case GameMenu::Library:
-		MenuCommand_Sprite1->SetAlpha(0.5f);
-		MenuCommand_Font1->SetAlpha(0.5f);
-		MenuCommand_Sprite2->SetAlpha(0.5f);
-		MenuCommand_Font2->SetAlpha(0.5f);
+		MenuCommand_Sprite1->SetAlpha(NoActiveAlpha);
+		MenuCommand_Font1->SetAlpha(NoActiveAlpha);
+		MenuCommand_Sprite2->SetAlpha(NoActiveAlpha);
+		MenuCommand_Font2->SetAlpha(NoActiveAlpha);
 		MenuCommand_Sprite3->SetAlpha(1.0f);
 		MenuCommand_Font3->SetAlpha(1.0f);
-		MenuCommand_Sprite4->SetAlpha(0.5f);
-		MenuCommand_Font4->SetAlpha(0.5f);
+		MenuCommand_Sprite4->SetAlpha(NoActiveAlpha);
+		MenuCommand_Font4->SetAlpha(NoActiveAlpha);
 		//
-		MenuCommand_Sprite3->m_spriteSupporter.SpriteMove({ 0.0f,10.0f }, 2, 0, true);
-		MenuCommand_Sprite3->m_spriteSupporter.SpriteMove({ 0.0f,-10.0f }, 2, 2, true);
-		MenuCommand_Font3->m_fontSupporter.FontMoveSet({ 0.0f,10.0f }, 2, 0, true);
-		MenuCommand_Font3->m_fontSupporter.FontMoveSet({ 0.0f,-10.0f }, 2, 2, true);
+		MenuCommand_Sprite3->m_spriteSupporter.SpriteMove({ 0.0f,MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, 0, true);
+		MenuCommand_Sprite3->m_spriteSupporter.SpriteMove({ 0.0f,-MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, MenuCommandSelectJumpTime, true);
+		MenuCommand_Font3->m_fontSupporter.FontMoveSet({ 0.0f,MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, 0, true);
+		MenuCommand_Font3->m_fontSupporter.FontMoveSet({ 0.0f,-MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, MenuCommandSelectJumpTime, true);
 		break;
 	case GameMenu::Save:
-		MenuCommand_Sprite1->SetAlpha(0.5f);
-		MenuCommand_Font1->SetAlpha(0.5f);
-		MenuCommand_Sprite2->SetAlpha(0.5f);
-		MenuCommand_Font2->SetAlpha(0.5f);
-		MenuCommand_Sprite3->SetAlpha(0.5f);
-		MenuCommand_Font3->SetAlpha(0.5f);
+		MenuCommand_Sprite1->SetAlpha(NoActiveAlpha);
+		MenuCommand_Font1->SetAlpha(NoActiveAlpha);
+		MenuCommand_Sprite2->SetAlpha(NoActiveAlpha);
+		MenuCommand_Font2->SetAlpha(NoActiveAlpha);
+		MenuCommand_Sprite3->SetAlpha(NoActiveAlpha);
+		MenuCommand_Font3->SetAlpha(NoActiveAlpha);
 		MenuCommand_Sprite4->SetAlpha(1.0f);
 		MenuCommand_Font4->SetAlpha(1.0f);
 		//
-		MenuCommand_Sprite4->m_spriteSupporter.SpriteMove({ 0.0f,10.0f }, 2, 0, true);
-		MenuCommand_Sprite4->m_spriteSupporter.SpriteMove({ 0.0f,-10.0f }, 2, 2, true);
-		MenuCommand_Font4->m_fontSupporter.FontMoveSet({ 0.0f,10.0f }, 2, 0, true);
-		MenuCommand_Font4->m_fontSupporter.FontMoveSet({ 0.0f,-10.0f }, 2, 2, true);
+		MenuCommand_Sprite4->m_spriteSupporter.SpriteMove({ 0.0f,MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, 0, true);
+		MenuCommand_Sprite4->m_spriteSupporter.SpriteMove({ 0.0f,-MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, MenuCommandSelectJumpTime, true);
+		MenuCommand_Font4->m_fontSupporter.FontMoveSet({ 0.0f,MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, 0, true);
+		MenuCommand_Font4->m_fontSupporter.FontMoveSet({ 0.0f,-MenuCommandSelectJumpY }, 
+			MenuCommandSelectJumpTime, MenuCommandSelectJumpTime, true);
 		break;
 	}
 
@@ -717,22 +777,30 @@ void GameMenu::Update_CommandDraw(bool drawStile) {
 /// </summary>
 void GameMenu::Update_MenuEnter(int leftKey) {
 
-	//何か実行いるなら中断
+	//何か実行しているなら中断
 	if (m_commandNow == true) {
 		return;
 	}
+	//終了中なら中断
+	if (m_commandEndFlag == true) {
+		return;
+	}
+	//戻るボタンにマウスオーバーなら中断
+	if (MenuButton->MouseOverMouse() == true) {
+		return;
+	}
 
-	//もし決定されたらコマンドを決定（日本語がおかしいさん）
+	//もし決定されたらコマンドを決定（日本語がおかしい）
 	if (leftKey == MouseSupporter::Release_Push) {
 
 		//生成
 		switch (m_nowMenuCommand)
 		{
 		case GameMenu::Create:
-
+			m_menu_Create = new Menu_Create;
 			break;
 		case GameMenu::Box_Release:
-			m_boxAllDelete = new Menu_BoxAllDelete;
+			m_menu_BoxAllDelete = new Menu_BoxAllDelete;
 			break;
 		case GameMenu::Library:
 
@@ -742,6 +810,8 @@ void GameMenu::Update_MenuEnter(int leftKey) {
 			break;
 		}
 
+		//コマンドを半透明に
+		GameMenu_NoActiveEffect();
 		//フラグTrue
 		m_commandNow = true;
 	}
@@ -761,15 +831,24 @@ void GameMenu::Update_CommandNow() {
 	if (m_commandNow == false) {
 		return;
 	}
+	//終了中なら中断
+	if (m_commandEndFlag == true) {
+		return;
+	}
 
-	//コマンドに応じて実行すっぞ
+	//コマンドに応じて実行
 	switch (m_nowMenuCommand)
 	{
 	case GameMenu::Create:
 
 		break;
 	case GameMenu::Box_Release:
-		m_boxAllDelete->DeleteCheckUpdate();
+		m_menu_BoxAllDelete->DeleteCheckUpdate();
+		if (m_menu_BoxAllDelete->GetDeleteFlag() == true) {
+			//コマンド終了
+			DeleteMenuCommand();
+			m_commandEndFlag = true;
+		}
 		break;
 	case GameMenu::Library:
 
@@ -779,5 +858,32 @@ void GameMenu::Update_CommandNow() {
 		break;
 	}
 
+}
+
+void GameMenu::GameMenu_NoActiveEffect() {
+
+	MenuWindow2->SetAlpha(NoActiveAlpha);
+	MenuCommand_Sprite1->SetAlpha(NoActiveAlpha);
+	MenuCommand_Sprite2->SetAlpha(NoActiveAlpha);
+	MenuCommand_Sprite3->SetAlpha(NoActiveAlpha);
+	MenuCommand_Sprite4->SetAlpha(NoActiveAlpha);
+	MenuCommand_Cursor->SetAlpha(NoActiveAlpha);
+	MenuCommand_Font1->SetAlpha(NoActiveAlpha);
+	MenuCommand_Font2->SetAlpha(NoActiveAlpha);
+	MenuCommand_Font3->SetAlpha(NoActiveAlpha);
+	MenuCommand_Font4->SetAlpha(NoActiveAlpha);
+	MenuSetumeiFont->SetAlpha(NoActiveAlpha);
+}
+
+void GameMenu::DeleteMenuCommand() {
+
+	if (m_menu_Create != nullptr) {
+		delete m_menu_Create;
+		m_menu_Create = nullptr;
+	}
+	if (m_menu_BoxAllDelete != nullptr) {
+		delete m_menu_BoxAllDelete;
+		m_menu_BoxAllDelete = nullptr;
+	}
 
 }

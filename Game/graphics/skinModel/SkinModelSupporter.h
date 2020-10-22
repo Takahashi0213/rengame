@@ -28,6 +28,13 @@ public:
 
 	void SkinModelSupporterUpdate();
 
+	//状態取得用
+	//モデルの移動リスト要素数を取得
+	//移動中のモデルかどうかを判別する など
+	int GetSkinModelMoveListLen() {
+		return static_cast<int>(m_skinModelMoveList.size());
+	}
+
 private:
 	//準備と片付け
 	void SkinModelDataUpdate();

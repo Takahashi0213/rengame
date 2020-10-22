@@ -19,7 +19,8 @@ public:
 
 	//設定
 	void Model_Init(const wchar_t* filePath);
-	void Model_Init(const wchar_t* filePath, CVector3 pos, CQuaternion rot, CVector3 scl);
+	void Model_Init(const wchar_t* filePath, const CVector3& pos, const CQuaternion& rot, const CVector3& scl,
+		EnFbxUpAxis enFbxUpAxis = enFbxUpAxisZ);
 	//アニメーションも同時Ver
 	void Model_Init_Anim(const wchar_t* filePath,
 		AnimationClip* animationClips = nullptr,

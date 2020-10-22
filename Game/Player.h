@@ -61,6 +61,11 @@ private:
 	LightMaker* m_lightMaker;
 	//MouseOver ms;
 
+	//アニメーション
+	Animation m_playerAnimation;				//アニメーション。
+	Animation m_playerAnimationSL;				//アニメーション。
+	AnimationClip m_playerAnimationClips[2];	//アニメーションクリップ。
+
 	//モノクロフラグ
 	bool m_monochromeFlag = false;
 
@@ -74,7 +79,7 @@ private:
 	void BoxDelete();
 
 	//プレイヤー
-	CVector3 m_position = { 0.0f,100.0f,-500.0f };
+	CVector3 m_position = { 0.0f,50.0f,-800.0f };
 	CQuaternion m_rotation = CQuaternion().Identity();
 	CVector3 m_scale = CVector3().One(); //拡大率
 	CVector3 m_moveSpeed = CVector3().Zero();

@@ -82,7 +82,7 @@ Sprite* MaskSprite::AddSubSprite(const wchar_t* texFilePath, float w, float h) {
 	//スプライトの生成
 	SubSpriteData Data;
 	Data.sprite = new Sprite;
-	//どっせい
+	//設定する
 	Data.sprite->Sprite_Init(texFilePath, w, h);
 	Data.sprite->SetMulColor(m_mainSpriteData.MulColor);
 	//データ設定

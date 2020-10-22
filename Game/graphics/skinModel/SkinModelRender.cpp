@@ -117,8 +117,9 @@ void SkinModelRender::Model_Init(const wchar_t* filePath) {
 /// <param name="pos">‰ŠúÀ•W</param>
 /// <param name="rot">‰Šú‰ñ“]</param>
 /// <param name="scl">‰ŠúŠg‘å—¦</param>
-void SkinModelRender::Model_Init(const wchar_t* filePath, CVector3 pos, CQuaternion rot, CVector3 scl) {
-	m_skinModel.Init(filePath);
+void SkinModelRender::Model_Init(const wchar_t* filePath, const CVector3& pos, const CQuaternion& rot, const CVector3& scl,
+	EnFbxUpAxis enFbxUpAxis) {
+	m_skinModel.Init(filePath, enFbxUpAxis);
 	m_position = pos;
 	m_rotation = rot;
 	m_scale = scl;

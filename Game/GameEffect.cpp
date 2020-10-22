@@ -24,7 +24,7 @@ GameEffect::~GameEffect()
 	m_instance = nullptr;
 }
 
-//ここから～～～GameEffect_Stand
+//ここからGameEffect_Stand
 
 void GameEffect_Stand::StandInit() {
 
@@ -107,7 +107,7 @@ void GameEffect_Stand::StandControl(Stand_Name stand, const Stand_Command comman
 
 }
 
-//ここから～～～GameEffect_Message
+//ここからGameEffect_Message
 
 void GameEffect_Message::MessageInit() {
 
@@ -394,25 +394,52 @@ void GameEffect_Message::LogUpdate() {
 
 }
 
-//ここから～～～GameEffect_AnimationSprite
+//ここからGameEffect_AnimationSprite
 
-void GameEffect_AnimationSprite::NewAnimationSprite(Anime_Name m_animeName, CVector3 pos, CVector3 m_scale, int priority){
+void GameEffect_AnimationSprite::NewAnimationSprite(const Anime_Name m_animeName, 
+	const CVector3& pos, const CVector3& m_scale, const int& priority){
 
-	char RenderName[256];
+	char RenderName[MAX_PATH];
 	//インスタンスの名前を作成。
 	AnimationNom++;
 	sprintf(RenderName, "SpriteAnime%d", AnimationNom);
 	SpriteRender* sr = NewGO<SpriteRender>(RenderName, priority);
-	//アニメーション処理を自動で行ってくれるぞ！すごいぞーかっこいいぞー
+	sr->SetPosition(pos);
+	sr->SetScale(m_scale);
+	//アニメーション処理を自動で行ってくれる
 	sr->Init(Game_SpriteAnime_Data[m_animeName].SpriteName,
 		Game_SpriteAnime_Data[m_animeName].High, Game_SpriteAnime_Data[m_animeName].Wide, priority);
 	sr->SetHighPattern(Game_SpriteAnime_Data[m_animeName].Pattern, 0);
 	sr->m_spriteSupporter.SpritePattern(1, Game_SpriteAnime_Data[m_animeName].Loop, 6);
-	
+
 	SpriteRenderList srl;
 	srl.SpriteRender_pt = sr;
 
 	m_spriteRenderList.push_back(srl);
+}
+
+SpriteRender* GameEffect_AnimationSprite::NewAnimationSprite_pt(const Anime_Name m_animeName,
+	const CVector3& pos, const CVector3& m_scale, const int& priority) {
+
+	char RenderName[MAX_PATH];
+	//インスタンスの名前を作成。
+	AnimationNom++;
+	sprintf(RenderName, "SpriteAnime%d", AnimationNom);
+	SpriteRender* sr = NewGO<SpriteRender>(RenderName, priority);
+	sr->SetPosition(pos);
+	sr->SetScale(m_scale);
+	//アニメーション処理を自動で行ってくれる
+	sr->Init(Game_SpriteAnime_Data[m_animeName].SpriteName,
+		Game_SpriteAnime_Data[m_animeName].High, Game_SpriteAnime_Data[m_animeName].Wide, priority);
+	sr->SetHighPattern(Game_SpriteAnime_Data[m_animeName].Pattern, 0);
+	sr->m_spriteSupporter.SpritePattern(1, Game_SpriteAnime_Data[m_animeName].Loop, 6);
+
+	SpriteRenderList srl;
+	srl.SpriteRender_pt = sr;
+
+	m_spriteRenderList.push_back(srl);
+
+	return sr;
 }
 
 void GameEffect_AnimationSprite::SpriteAnimationUpdate() {
@@ -430,7 +457,7 @@ void GameEffect_AnimationSprite::SpriteAnimationUpdate() {
 
 	}
 
-	//実際に黄泉送りにしてく
+	//実際に削除
 	std::list<SpriteRenderList>::iterator it;
 	it = m_spriteRenderList.begin();
 	while (it != m_spriteRenderList.end()) {

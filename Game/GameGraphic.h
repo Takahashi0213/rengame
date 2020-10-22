@@ -12,4 +12,6 @@ public:
 	bool m_dofFlag = true;				//Dofを実行する？
 	const int TransitionTime = 60;		//場面転換トランジションフレーム数
 
+	const CVector3 LoadingAnimePos = { 480.0f,-220.0f,0.0f };	//ローディングアニメーションの座標
+
 };

@@ -327,6 +327,7 @@
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Base.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Coli.fbx" />
+    <MeshContentTask Include="Assets\modelData\Gimmick\Yazirushi.fbx" />
     <MeshContentTask Include="Assets\modelData\map.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
@@ -578,6 +579,17 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\system_sprite\Jewel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\transition\circle_b.png" />
+    <ImageContentTask Include="Assets\sprite\transition\mesh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\system_sprite\Loading_6F.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\window\window7.png" />
+    <ImageContentTask Include="Assets\sprite\window\window8.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

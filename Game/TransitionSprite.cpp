@@ -61,7 +61,7 @@ void TransitionSprite::InitCommon(
 /// <param name="texFilePath">ファイルパス</param>
 /// <param name="w">幅</param>
 /// <param name="h">高さ</param>
-void TransitionSprite::Sprite_Init(const wchar_t* texFilePath, const float w, const float h) {
+void TransitionSprite::Sprite_Init(const wchar_t* texFilePath, const float& w, const float& h) {
 
 	InitCommon(w, h);
 

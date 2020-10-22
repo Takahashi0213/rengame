@@ -123,10 +123,12 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 	if (tag == LevelData::Obj_Tag::Tag_GhostBox_MapMove) {	//ゴーストボックス…移動
 		//const wchar_t* hoge = Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo);	//テストメッセージ
 		GhostBox* pt = NewObjCommon<GhostBox>(data);
-		pt->CreateGhost();
 		int ObjNo = Level_Data.ObjName_Search(m_levelNo, data.name);
 		pt->SetStageName(Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo));
 		pt->SetPlayerMoveTarget(Level_Data.GetObject_Vector3Memo(m_levelNo, ObjNo));
+		pt->SetYazirushiRot(Level_Data.GetObject_FloatMemo(m_levelNo, ObjNo));
+		pt->SetYazirushiYHosei(Level_Data.GetObject_FloatMemo2(m_levelNo, ObjNo));
+		pt->CreateGhost();
 	}
 	if (tag == LevelData::Obj_Tag::Tag_StaticBox) {	//スタティックボックス
 		StaticBox* pt = NewObjCommon<StaticBox>(data);

@@ -19,7 +19,7 @@ public:
 	/// <summary>
 	/// 基本サイズを設定
 	/// </summary>
-	void SetDefSize(CVector2 size) {
+	void SetDefSize(const CVector2& size) {
 		m_texWide = size.x;
 		m_texHigh = size.y;
 	}
@@ -27,7 +27,8 @@ public:
 	/// <summary>
 	/// Init用
 	/// </summary>
-	void SetTex(const wchar_t* tex,float w,float h) { //めんどくせえなコレ
+	void SetTex(const wchar_t* tex, const float& w, const float& h) {
+		//面倒な処理
 		m_sprite1.Sprite_Init(tex, w, h);
 		m_sprite2.Sprite_Init(tex, w, h);
 		m_sprite3.Sprite_Init(tex, w, h);
@@ -38,7 +39,7 @@ public:
 		m_sprite8.Sprite_Init(tex, w, h);
 		m_sprite9.Sprite_Init(tex, w, h);
 	}
-	void SetColor(CVector4 col) {
+	void SetColor(const CVector4& col) {
 		m_sprite1.SetMulColor(col);
 		m_sprite2.SetMulColor(col);
 		m_sprite3.SetMulColor(col);
@@ -54,13 +55,13 @@ public:
 	/// 設定します
 	/// </summary>
 	void SetSliceData(
-		CVector3 pos,
-		CQuaternion rot,
-		CVector3 scale,
-		CVector2 Pivot,
-		float wide,
-		float high,
-		CVector4 color
+		const CVector3& pos,
+		const CQuaternion& rot,
+		const CVector3& scale,
+		const CVector2& Pivot,
+		const float& wide,
+		const float& high,
+		const CVector4& color
 	) {
 		m_meinSpriteData.Position = pos;
 		m_meinSpriteData.Rotation = rot;
@@ -86,7 +87,7 @@ public:
 	/// <summary>
 	/// 3スライスに変更
 	/// </summary>
-	void Change3Slice(float size);
+	void Change3Slice(const float& size);
 
 private:
 	/// <summary>

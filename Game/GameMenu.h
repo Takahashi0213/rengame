@@ -6,7 +6,7 @@
 #include "Menu_BoxAllDelete.h"
 
 /// <summary>
-/// メニューのアレコレを総括する…なんやろなあ
+/// メニューのアレコレを総括する
 /// ・シングルトン
 /// </summary>
 class GameMenu final
@@ -43,14 +43,17 @@ public:
 
 private:
 
-	//ｴﾌｪｸﾄｩ
+	//ｴﾌｪｸﾄ
 	void Update_Effect(int mode);
-	//こまんど
+	void GameMenu_NoActiveEffect();								//コマンド選択中はメニューをモノクロにする
+	//コマンド
 	void Update_Command();										//マウスカーソルの位置でコマンドの移動方法を変える
 	void Update_CommandDelta(const int delta, bool& flag);		//マウスホイールの動作からコマンド位置を上下させる
 	void Update_CommandDraw(bool drawStile);					//選択中のコマンドとそれ以外のコマンドで描画を変える処理
 	void Update_MenuEnter(int leftKey);							//メニューのコマンド決定処理
 	void Update_CommandNow();									//コマンド実行中、自動でアップデートする処理
+	//メニューコマンドを削除
+	void DeleteMenuCommand();
 
 	//メンバ変数
 	const int SpriteNo = 7;										//スプライトの基準となる優先度
@@ -58,16 +61,17 @@ private:
 	const float MenuMove_Over = 30.0f;							//メニューを開閉する時の移動量（オーバーラン用）
 	const int MenuMoveTime = 4;									//メニューを開閉する時間
 	int m_menuMoveTimer = 0;									//移動用タイマー
-	MenuCommand m_nowMenuCommand = MenuCommand::Create;			//現在のコマンドォ！
+	MenuCommand m_nowMenuCommand = MenuCommand::Create;			//現在のコマンド
 	bool m_selectFlag = false;									//選択中
 	bool m_commandNow = false;									//コマンド内容実行中
 
-	//メニュー関連の画像が多すぎめんどい
+	//メニュー関連の画像が多すぎ
 	std::vector<SpriteRender*> m_spriteRenderList;
 	std::vector<FontRender*> m_fontRenderList;
 
 	//各コマンドのポインタ保存用 実行中だけ保存される
-	Menu_BoxAllDelete* m_boxAllDelete = nullptr;				//箱消去用
+	Menu_Create* m_menu_Create = nullptr;
+	Menu_BoxAllDelete* m_menu_BoxAllDelete = nullptr;
 
 	//メニュー枠関連
 	const CVector2 DefMenuWindowSize = { 600.0f,742.0f };
@@ -110,6 +114,9 @@ private:
 	const float TextFontSize = 0.6f;							//テキストの大きさ
 	const CVector2 DefMenuCommand_TextPosition = { 375.0f,182.0f };
 	const float SaveX_Hosei = 30.0f;
+	const float MenuCommandSelectJumpY = 10.0f;					//選択時のジャンプ幅
+	const int MenuCommandSelectJumpTime = 2;					//選択時のジャンプ時間
+
 	//項目内容
 	const wchar_t* Koumoku[4]{
 		L"クリエイト",
@@ -126,10 +133,10 @@ private:
 	const CVector2 DefSetumei_TextPosition = { -140.0f,60.0f };	//説明文ウィンドウを基準にした座標
 	//内容
 	const wchar_t* SetumeiBun[4]{
-		L"クリエイトの\n説明文だよ",
-		L"全箱解放の\n説明文です",
-		L"ライブラリの\n説明文だゾ",
-		L"セーブの\n説明文だｯ！！",
+		L"マナやアイテムを\n消費して便利な\n装備を作ります。",
+		L"生成されている箱を\n全て削除して、\nマナを全回復させます。",
+		L"今までの冒険の\n記録を閲覧できます。",
+		L"現在のプレイ状況を\n保存します。こまめに\n保存しましょう。",
 	};
 
 	//選択カーソル
@@ -141,6 +148,12 @@ private:
 	//メニュー中のブラー関連
 	const float BlurSpeed = 1.0f;								//1フレームごとの重み増減数
 	const float MaxBlur = 5.0f;									//ブラーの最大重み
+
+	//コマンド選択中関連
+	const float NoActiveAlpha = 0.5f;							//非アクティブの間起こるアルファ
+	bool m_commandEndFlag = false;								//コマンド終了フラグ
+	int m_commandEndTimer = 0;									//コマンド終了タイマー
+	const int CommandEndLimit = 6;								//コマンド終了リミット
 
 	//メニュー操作関連
 
@@ -154,9 +167,6 @@ private:
 	bool m_selectOverFlag = false;	//↑がtrueの時にホイールを操作されたよフラグ
 	bool m_selectOverFlag_ = false;	//予備
 
-	//コマンド関連
-	Menu_Create* m_menuCriate = nullptr;
-	Menu_BoxAllDelete* m_menu_BoxAllDelete = nullptr;
 
 	//↓ここから↓スプライト↓
 

@@ -21,7 +21,7 @@ Title::Title()
 	LightMaker::GetInstance()->SetAmbientColor({ 1.0f, 1.0f, 1.0f });
 
 	//初期設定
-	SetUp();
+	Title::SetUp();
 }
 
 
@@ -35,7 +35,6 @@ Title::~Title()
 	DeleteGO(m_bg1);
 	DeleteGO(m_bg2);
 	DeleteGO(m_ball);
-	DeleteGO(m_player);
 	DeleteGO(m_dummyBox);
 	for (auto iter = Rogo.TitleRogo_Circle.begin(); iter != Rogo.TitleRogo_Circle.end(); iter++) {
 		DeleteGO(iter->second);
@@ -71,6 +70,10 @@ void Title::Update() {
 
 	//背景更新
 	BG_Update();
+	//アニメーション
+	m_player.UpdateWorldMatrix(m_p_pos, m_p_rot, m_p_scl);
+	m_playerAnimation.Play(0);
+	m_playerAnimation.Update(1.0f / 20.0f);
 
 	//カメラ
 	g_camera3D.Update();
@@ -81,7 +84,10 @@ void Title::Update() {
 }
 
 void Title::Render() {
-
+	m_player.Draw(
+		g_camera3D.GetViewMatrix(),
+		g_camera3D.GetProjectionMatrix()
+	);
 }
 
 /// <summary>
@@ -112,29 +118,39 @@ void Title::SetUp() {
 	m_ball->SetShadowReciever(true);
 
 	//プレイヤー	
-	m_player = NewGO<SkinModelRender>("TitleModel_Player", 0);
-	m_player->Model_Init(L"Assets/modelData/unityChan.cmo");
-	m_player->SetPosition({ Ball_DefPos.x + Player_DefPos.x,
+	m_player.Init(L"Assets/modelData/unityChan.cmo", enFbxUpAxisY);
+	m_p_pos.Set(Ball_DefPos.x + Player_DefPos.x,
 		Ball_DefPos.y + Player_DefPos.y,
-		Ball_DefPos.z + Player_DefPos.z });
-	m_player->SetScale(Player_Scale);
+		Ball_DefPos.z + Player_DefPos.z);
+	m_p_scl.Set(Player_Scale, Player_Scale, Player_Scale);
 	//プレイヤーの回転
 	CQuaternion p_rot, p_rot2;
 	p_rot.SetRotationDeg(CVector3::AxisX(), Plyer_RotAngleX);
 	p_rot2.SetRotationDeg(CVector3::AxisY(), 180.0f + Ball_RotAngle);	//モデルが後ろを向いているので正面+ボールの回転
 	p_rot *= p_rot2;
-	m_player->SetRotation(p_rot);
-	m_player->SetShadowReciever(true);
+	m_p_rot = p_rot;
+	m_player.SetShadowReciever(true);
+	m_player.UpdateWorldMatrix(m_p_pos, m_p_rot, m_p_scl);
+	//プレイヤーのアニメーション
+	m_playerAnimationClips[0].Load(L"Assets/animData/run.tka");
+	m_playerAnimationClips[0].SetLoopFlag(true);
+	//アニメーションの初期化。
+	m_playerAnimation.Init(
+		m_player,					//アニメーションを流すスキンモデル。
+									//これでアニメーションとスキンモデルが関連付けされる。
+		m_playerAnimationClips,		//アニメーションクリップの配列。
+		1							//アニメーションクリップの数。
+	);
 
 	//ボックス
 	m_dummyBox = NewGO<SkinModelRender>("TitleModel_Box", 0);
 	m_dummyBox->Model_Init(L"Assets/modelData/box.cmo");
-	CVector3 Pl_Pos = m_player->GetPosition();
-	m_dummyBox->SetPosition({ Pl_Pos.x - 20.0f,
-		Pl_Pos.y + 55.0f,
-		Pl_Pos.z - 40.0f });
+	CVector3 Pl_Pos = m_p_pos;
+	m_dummyBox->SetPosition({ Pl_Pos.x + DummyBoxHosei.x,
+		Pl_Pos.y + DummyBoxHosei.y,
+		Pl_Pos.z + DummyBoxHosei.z });
 	m_dummyBox->SetRotation(p_rot);
-	m_dummyBox->SetScale(40.0f);
+	m_dummyBox->SetScale(DummyBoxScale);
 
 	//コマンド
 	m_command_Start = NewGO<SpriteRender>("TitleSprite_Command1", 0);

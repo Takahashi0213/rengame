@@ -8,7 +8,7 @@ public:
 	~TransitionSprite();
 
 	//メインスプライト
-	void Sprite_Init(const wchar_t* texFilePath, const float w, const float h);
+	void Sprite_Init(const wchar_t* texFilePath, const float& w, const float& h);
 	void Sprite_Update();
 	void Sprite_Draw();
 

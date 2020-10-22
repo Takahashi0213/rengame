@@ -48,7 +48,7 @@ private:
 	/// <summary>
 	/// ゴースト作成時の共通処理
 	/// </summary>
-	void CreateCommon(CVector3 pos, CQuaternion rot) override;
+	void CreateCommon(const CVector3& pos, const CQuaternion& rot, const float& mass = 0.0f) override;
 private:
 	bool						m_isRegistPhysicsWorld = false;	//!<物理ワールドに登録しているかどうかのフラグ。
 	btGhostObject				m_ghostObject;	//!<ゴースト

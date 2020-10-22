@@ -18,13 +18,13 @@ public:
 	void Update()override;
 	void Render()override;
 
-	void Init(const wchar_t* texFilePath, float w, float h, int priority = 0);
-	void Init(const wchar_t* texFilePath, float w, float h, CVector3 pos = CVector3().Zero(),
-		CVector4 color = CVector4().White(), int priority = 0);
+	void Init(const wchar_t* texFilePath, const float& w, const float& h, const int& priority = 0);
+	void Init(const wchar_t* texFilePath, const float& w, const float& h, const CVector3& pos = CVector3().Zero(),
+		const CVector4& color = CVector4().White(), const int& priority = 0);
 
-	void InitSub(const wchar_t* texFilePath, float w, float h, int priority = 0);
-	void InitSub(const wchar_t* texFilePath, float w, float h, CVector3 pos = CVector3().Zero(),
-		CVector4 color = CVector4().White(), int priority = 0);
+	void InitSub(const wchar_t* texFilePath, const float& w, const float& h, const int& priority = 0);
+	void InitSub(const wchar_t* texFilePath, const float& w, const float& h, const CVector3& pos = CVector3().Zero(),
+		const CVector4& color = CVector4().White(), const int& priority = 0);
 
 	/// <summary>
 	/// このスプライトをマスクスプライトに指定する場合、Initの前に必ず実行しようね
@@ -42,7 +42,7 @@ public:
 		m_subSpriteFlag = true;
 	}
 	//こっちはスライススプライト
-	void ChangeSliceSprite(CVector2 size) {
+	void ChangeSliceSprite(const CVector2& size) {
 
 		if (m_subSpriteFlag == true) {
 			abort();	//浮気じゃん！
@@ -62,8 +62,7 @@ public:
 	/// <summary>
 	/// 座標を設定
 	/// </summary>
-	/// <param name="pos">座標</param>
-	void SetPosition(const CVector3 pos, int list = -1)
+	void SetPosition(const CVector3& pos, const int& list = -1)
 	{
 		if (list == -1) {
 			m_mainSprite.Position = pos;
@@ -75,8 +74,7 @@ public:
 	/// <summary>
 	/// 座標を取得
 	/// </summary>
-	/// <returns>座標</returns>
-	const CVector3 GetPosition(int list = -1) const
+	const CVector3 GetPosition(const int& list = -1) const
 	{
 		if (list == -1) {
 			return m_mainSprite.Position;
@@ -88,8 +86,7 @@ public:
 	/// <summary>
 	/// 回転を設定
 	/// </summary>
-	/// <param name="rot">回転</param>
-	void SetRotation(const CQuaternion rot, int list = -1)
+	void SetRotation(const CQuaternion& rot, const int& list = -1)
 	{
 		if (list == -1) {
 			m_mainSprite.Rotation = rot;
@@ -101,8 +98,7 @@ public:
 	/// <summary>
 	/// 回転を取得
 	/// </summary>
-	/// <returns>回転</returns>
-	const CQuaternion GetRotation(int list = -1) const
+	const CQuaternion GetRotation(const int& list = -1) const
 	{
 		if (list == -1) {
 			return m_mainSprite.Rotation;
@@ -114,8 +110,7 @@ public:
 	/// <summary>
 	/// 拡大率を設定
 	/// </summary>
-	/// <param name="scr">拡大率</param>
-	void SetScale(const CVector3 scl, int list = -1)
+	void SetScale(const CVector3& scl, const int& list = -1)
 	{
 		if (list == -1) {
 			m_mainSprite.Scale = scl;
@@ -124,7 +119,7 @@ public:
 			m_subSprite[list].Scale = scl;
 		}
 	}
-	void SetScale(const float scl, int list = -1) { //便利Ver
+	void SetScale(const float& scl, const int& list = -1) { //便利Ver
 		if (list == -1) {
 			m_mainSprite.Scale.x = scl;
 			m_mainSprite.Scale.y = scl;
@@ -137,8 +132,7 @@ public:
 	/// <summary>
 	/// 拡大率を取得
 	/// </summary>
-	/// <returns>拡大率</returns>
-	const CVector3 GetScale(int list = -1) const
+	const CVector3 GetScale(const int& list = -1) const
 	{
 		if (list == -1) {
 			return m_mainSprite.Scale;
@@ -150,8 +144,7 @@ public:
 	/// <summary>
 	/// ピボットを設定
 	/// </summary>
-	/// <param name="pivot">ピボット</param>
-	void SetPivot(const CVector2 pivot , int list = -1)
+	void SetPivot(const CVector2& pivot , const int& list = -1)
 	{
 		if (list == -1) {
 			m_mainSprite.Pivot.x = pivot.x;
@@ -165,8 +158,7 @@ public:
 	/// <summary>
 	/// ピボットを取得
 	/// </summary>
-	/// <returns>ピボット</returns>
-	CVector2 GetPivot(int list = -1)
+	CVector2 GetPivot(const int& list = -1)
 	{
 		if (list == -1) {
 			return m_mainSprite.Pivot;
@@ -179,8 +171,7 @@ public:
 	/// <summary>
 	/// 幅を取得
 	/// </summary>
-	/// <returns>幅</returns>
-	float GetWide(int list = -1)
+	float GetWide(const int& list = -1)
 	{
 		if (list == -1) {
 			return m_mainSprite.Wide;
@@ -192,8 +183,7 @@ public:
 	/// <summary>
 	/// 高さを取得
 	/// </summary>
-	/// <returns>高さ</returns>
-	float GetHigh(int list = -1)
+	float GetHigh(const int& list = -1)
 	{
 		if (list == -1) {
 			return m_mainSprite.High;
@@ -206,8 +196,7 @@ public:
 	/// <summary>
 	/// 乗算カラーを設定
 	/// </summary>
-	/// <param name="mulColor">乗算カラー</param>
-	void SetMulColor(const CVector4& mulColor, int list = -1)
+	void SetMulColor(const CVector4& mulColor, const int& list = -1)
 	{
 		if (list == -1) {
 			m_mainSprite.MulColor = mulColor;
@@ -221,8 +210,7 @@ public:
 	/// <summary>
 	/// 乗算カラーを取得
 	/// </summary>
-	/// <returns>乗算カラー</returns>
-	CVector4 GetMulColor(int list = -1)
+	CVector4 GetMulColor(const int& list = -1)
 	{
 		if (list == -1) {
 			return m_mainSprite.MulColor;
@@ -234,8 +222,7 @@ public:
 	/// <summary>
 	/// アルファの設定
 	/// </summary>
-	/// <param name="Alpha">アルファ</param>
-	void SetAlpha(const float Alpha, int list = -1) {
+	void SetAlpha(const float& Alpha, const int& list = -1) {
 
 		if (list == -1) {
 			m_mainSprite.MulColor.w = Alpha;
@@ -249,8 +236,7 @@ public:
 	/// <summary>
 	/// アルファの取得
 	/// </summary>
-	/// <returns>現在の不透明度だ</returns>
-	float GetAlpha(int list = -1) {
+	float GetAlpha(const int& list = -1) {
 		if (list == -1) {
 			return m_mainSprite.MulColor.w;
 		}
@@ -261,10 +247,10 @@ public:
 
 	//パターン取得関連
 	int GetMaxPattern() {
-		return m_pattern;
+		return m_pattern;		//最大パターン
 	}
 	int GetNowPattern() {
-		return m_nowPattern;
+		return m_nowPattern;	//現在パターン
 	}
 
 	/// <summary>
@@ -286,7 +272,7 @@ public:
 	/// サブスプライトの数を返す
 	/// </summary>
 	int GetSubSpriteNum() {
-		return (int)m_subSprite.size();
+		return static_cast<int>(m_subSprite.size());
 	}
 
 	//グラフィカルなアレンジを！！
@@ -304,7 +290,7 @@ public:
 	/// どこから切るか設定
 	/// </summary>
 	/// <param name="cut">UV座標の境界</param>
-	void SetCutLine(float cut) {
+	void SetCutLine(const float& cut) {
 		m_pos_Cut = cut;
 		m_sprite.m_cut_UV = m_pos_Cut;
 	}
@@ -315,7 +301,7 @@ public:
 	/// <summary>
 	/// SliceSpriteなら3Sliceに変更する
 	/// </summary>
-	void Set3Slice(float size) {
+	void Set3Slice(const float& size) {
 		if (m_sliceSprite != nullptr) {
 			m_sliceSprite->Change3Slice(size);
 		}
@@ -325,7 +311,7 @@ public:
 	/// 縦パターンの設定
 	/// </summary>
 	/// <param name="pt">パターン数</param>
-	void SetHighPattern(int pattern,int nowPt = 0) {
+	void SetHighPattern(const int& pattern,const int& nowPt = 0) {
 		m_sprite.m_renderMode = Sprite_RenderMode::Pattern;
 		m_sprite.m_slicePattern = pattern;
 		m_pattern = pattern;
@@ -339,7 +325,7 @@ public:
 	/// <summary>
 	/// マスクのサブスプライトのレンダーモードを変えます
 	/// </summary>
-	void ChangeRenderMode_Mask(Sprite_RenderMode srm, int list) {
+	void ChangeRenderMode_Mask(const Sprite_RenderMode srm, const int& list) {
 		if (m_subSpriteFlag == true) {
 			m_maskSprite->ChangeRenderMode(srm, list);
 	}
@@ -348,7 +334,7 @@ public:
 	/// <summary>
 	/// マウスが自分に重なってたらTrueを返す
 	/// </summary>
-	/// <returns>重なってる？？？？？</returns>
+	/// <returns>重なってる？</returns>
 	bool MouseOverMouse();
 
 	/// <summary>
@@ -362,7 +348,7 @@ public:
 	/// </remarks>
 	SpriteSupporter m_spriteSupporter;		//スプライトサポーター
 	//サブサポーターの取得
-	SpriteSupporter* GetSubSpriteSupporter(int No) {
+	SpriteSupporter* GetSubSpriteSupporter(const int& No) {
 		return m_subSpriteSupporter[No];
 	}
 
@@ -373,7 +359,7 @@ private:
 	void SpriteSp_Update() {
 		//メイン
 		m_spriteSupporter.SpriteSupporter_Update();
-		//サブゥ
+		//サブ
 		for (int i = 0; i < m_subSpriteSupporter.size(); i++) {
 			m_subSpriteSupporter[i]->SpriteSupporter_Update();
 		}
@@ -394,9 +380,9 @@ private:
 	MaskSprite* m_maskSprite = nullptr;
 	SliceSprite* m_sliceSprite = nullptr;
 
-	SpriteData m_mainSprite;	//メインスプライト
-	std::vector<SpriteData> m_subSprite;		//サブスプライト
-	std::vector<SpriteSupporter*> m_subSpriteSupporter;		//さぶすぷ・さぽおたあ
+	SpriteData m_mainSprite;								//メインスプライト
+	std::vector<SpriteData> m_subSprite;					//サブスプライト
+	std::vector<SpriteSupporter*> m_subSpriteSupporter;		//サブスプライト・サポーター
 
 	bool m_subSpriteFlag = false;	//サブスプライト使用中？？？
 	bool m_sliceSpriteFlag = false;	//slice9スプライト使用中？？？

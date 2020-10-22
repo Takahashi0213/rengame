@@ -131,8 +131,8 @@ void GameBox::GameBoxUpdate_Colli() {
 				Pos = m_originBox->GetPosition();
 				Pos += m_localPosition;
 			}
-			Pos.y += m_scale.y * 0.5f;	//ほせいさん
-			m_physicsStaticObject.CreateBox(Pos, m_rotation, m_scale);
+			Pos.y += m_scale.y * 0.5f;	//補正
+			m_physicsStaticObject.CreateBox(Pos, m_rotation, m_scale, 1.0f);	//重量を設定する
 		}
 		else {
 			CQuaternion Rot;
@@ -155,7 +155,8 @@ void GameBox::GameBoxUpdate_Colli() {
 /// </summary>
 /// <param name="startPos">始点</param>
 /// <param name="endPos">終点</param>
-bool GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* boxPos, CVector3& box_N, CVector3& plane_scale) {
+bool GameBox::CheckHitRayToPlane(const CVector3& startPos, const CVector3& endPos, 
+	CVector3* boxPos, CVector3& box_N, CVector3& plane_scale) {
 
 	m_N = CVector3::Zero();
 
@@ -284,7 +285,7 @@ bool GameBox::CheckHitRayToPlane(CVector3 startPos, CVector3 endPos, CVector3* b
 
 							boxPos[3] = m_vPos_3;
 
-							//面の大きさを計算す～る
+							//面の大きさを計算する
 							CVector3 vMax, vMin;
 							vMax = boxPos[0];
 							vMax.Max(boxPos[1]);
