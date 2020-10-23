@@ -99,7 +99,7 @@ private:
 	CVector3 m_boxScale = CVector3().One();			//拡大率！
 	CVector3 m_boxScaleDef = { 0.1f,0.1f,0.1f };	//デフォルト下限のやつ
 	CVector3 m_surfaceScaleNew = CVector3::Zero();	//今拡大しようとしている面の大きさ
-	CVector3 m_boxScaleHosei = CVector3().One();	//箱のデフォルトサイズと選択した面の大きさを比較して補正を計算する！！！
+	CVector3 m_boxScaleHosei = CVector3().One();	//箱のデフォルトサイズと選択した面の大きさを比較して補正を計算する
 	CVector3 m_planeScale = CVector3::Zero();		//面の大きさを代入する場所（一時保存）
 	CVector3 m_planeScaleNow = CVector3::Zero();	//面の大きさを代入する場所（最新版）
 	BoxDirection m_boxDirection;					//現在の箱の向き

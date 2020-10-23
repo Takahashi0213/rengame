@@ -12,7 +12,7 @@ public:
 	void Render()override;
 
 	//モデルの種類
-	enum BoxModel {
+	enum DoorModel {
 		Model_BigDoor,
 		Model_BigDoor2,
 		Model_BigDoorNum,
@@ -23,12 +23,13 @@ public:
 	/// 内容は同じだけど見た目が違うドアがたくさんあるので
 	/// </summary>
 	/// <param name="model">モデルの種類</param>
-	void ModelChange(const BoxModel model);
+	void ModelChange(const DoorModel model);
 
 private:
 	SkinModelRender * m_model = nullptr;			//土台モデル
 
 	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
+	DoorModel m_thisModel;
 
 	//定数
 	const CVector3 StaticSize = { 250.0f,300.0f,20.0f };	//扉の当たり判定サイズ

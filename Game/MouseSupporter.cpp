@@ -169,7 +169,7 @@ const CVector2 MouseSupporter::GetMousePos_Sprite() {
 /// <summary>
 /// 実行する度に前回の座標と今回の座標の差（ベクトル）を返す
 /// </summary>
-/// <param name="p">取得する位置（0は常時実行、1はｶｧﾒｨﾗｧ）</param>
+/// <param name="p">取得する位置（0は常時実行、1はｶﾒﾗ）</param>
 /// <returns>差</returns>
 CVector2 MouseSupporter::GetBeforeMouse(const int p) {
 	CVector2 pos = GetMousePos();

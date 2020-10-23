@@ -28,6 +28,9 @@ public:
 	void SetYazirushiYHosei(const float& hosei) {
 		m_yazirushiYHosei = hosei;
 	}
+	void SetRotFlag(const bool& rotFlag) {
+		YazirushiRotFlag = rotFlag;
+	}
 
 	/// <summary>
 	/// 呼び出すとゴーストを生成する
@@ -50,6 +53,7 @@ private:
 	int m_mapMoveTimer = 0;							//マップ移動タイマー
 	const float YazirushiMoveHosei = 30.0f;			//矢印の移動量補正
 	const int YazirushiMoveTime = 10;				//矢印の移動時間
+	bool YazirushiRotFlag = false;					//矢印の回転フラグ（Y_UP）
 	//ゲームオーバー編
 
 

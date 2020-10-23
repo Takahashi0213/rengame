@@ -105,6 +105,14 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 		Door* pt = NewObjCommon<Door>(data);
 		pt->GetSkinModelRender()->SetUp(pt->GetPosition(), pt->GetRotation(), pt->GetScale());
 	}
+	if (tag == LevelData::Obj_Tag::Tag_BigDoor1) {	//巨大ドア1
+		BigDoor* pt = NewObjCommon<BigDoor>(data);
+		pt->ModelChange(BigDoor::DoorModel::Model_BigDoor);
+	}
+	if (tag == LevelData::Obj_Tag::Tag_BigDoor2) {	//巨大ドア2
+		BigDoor* pt = NewObjCommon<BigDoor>(data);
+		pt->ModelChange(BigDoor::DoorModel::Model_BigDoor2);
+	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Test_Enemy) {	//テストエネミー
 		NewObjCommon<TestEnemy>(data);
@@ -128,6 +136,7 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 		pt->SetPlayerMoveTarget(Level_Data.GetObject_Vector3Memo(m_levelNo, ObjNo));
 		pt->SetYazirushiRot(Level_Data.GetObject_FloatMemo(m_levelNo, ObjNo));
 		pt->SetYazirushiYHosei(Level_Data.GetObject_FloatMemo2(m_levelNo, ObjNo));
+		pt->SetRotFlag(Level_Data.GetObject_BoolMemo(m_levelNo, ObjNo));
 		pt->CreateGhost();
 	}
 	if (tag == LevelData::Obj_Tag::Tag_StaticBox) {	//スタティックボックス

@@ -10,6 +10,7 @@
 //ƒMƒ~ƒbƒN
 #include "Switch.h"
 #include "Door.h"
+#include "BigDoor.h"
 #include "Board.h"
 
 //“G

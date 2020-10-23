@@ -22,6 +22,9 @@ Title::Title()
 
 	//初期設定
 	Title::SetUp();
+
+	//タイトルBGMの再生
+	SceneManager::GetInstance()->GetSoundManagerInstance()->InitBGM(L"Assets/sound/BGM/Title.wav");
 }
 
 
@@ -46,6 +49,9 @@ Title::~Title()
 	DeleteGO(m_command_Start);
 	DeleteGO(m_command_Continue);
 	DeleteGO(m_command_End);
+
+	//BGMのフェードアウト
+	SceneManager::GetInstance()->GetSoundManagerInstance()->BGM_VolumeFade(0.0f, 60);
 
 }
 

@@ -36,6 +36,7 @@ public:
 		wchar_t LinkObj_Name[MAX_PATH];		//関連するオブジェクトの名前
 		wchar_t Obj_Memo[MAX_PATH];			//看板とかのテキスト
 		CVector3 Position_Memo;				//移動先などの設定用
+		bool BoolMemo = false;				//bool型のメモ
 		float FloatMemo = 0.0f;				//float型のメモ
 		float FloatMemo2 = 0.0f;			//float型のメモ
 	};
@@ -106,6 +107,17 @@ public:
 	}
 
 	/// <summary>
+	/// boolメモを取得
+	/// 汎用的に使う
+	/// </summary>
+	/// <param name="num">レベル番号</param>
+	/// <param name="obj_num">オブジェクト番号</param>
+	/// <returns>boolメモ</returns>
+	const bool GetObject_BoolMemo(const int num, const int obj_num) {
+		return m_levelData[num].Obj_Array[obj_num].BoolMemo;
+	}
+
+	/// <summary>
 	/// floatメモを取得
 	/// 汎用的に使う
 	/// </summary>
@@ -150,7 +162,7 @@ private:
 				{ L"Door2",Tag_Door,L"" },
 				{ L"Door3",Tag_Door,L"" },
 				{ L"Test_Enemy",Tag_Test_Enemy,L"Door2" },
-				{ L"GhostBox",Tag_GhostBox_MapMove,L"",L"Sougen1",{ 700.0f,110.0f,-950.0f },180.0f,-50.0f },	//移動先マップ名＆移動先座標
+				{ L"GhostBox",Tag_GhostBox_MapMove,L"",L"Sougen1",{ 700.0f,110.0f,-950.0f }, false ,180.0f,-50.0f },	//移動先マップ名＆移動先座標
 		}
 		},
 		//草原1
@@ -170,9 +182,9 @@ private:
 				{ L"StaticBox4",Tag_StaticBox,L"" },
 				{ L"StaticBox5",Tag_StaticBox,L"" },
 				{ L"StaticBox6",Tag_StaticBox,L"" },
-				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen2",{ 500.0f,100.0f,1150.0f },180.0f,-750.0f },	//移動先マップ名＆移動先座標
-				{ L"GhostBox2",Tag_GhostBox_MapMove,L"",L"Sougen3",{ 1022.0f,100.0f,-88.0f },180.0f,-750.0f },	//移動先マップ名＆移動先座標
-				{ L"GhostBox3",Tag_GhostBox_MapMove,L"",L"Tutorial",{ -393.0f,50.0f,2145.0f },180.0f,-50.0f },	//移動先マップ名＆移動先座標
+				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen2",{ 500.0f,100.0f,-950.0f }, false ,180.0f,-750.0f },	//移動先マップ名＆移動先座標
+				{ L"GhostBox2",Tag_GhostBox_MapMove,L"",L"Sougen3",{ 1022.0f,100.0f,-88.0f }, false ,180.0f,-750.0f },	//移動先マップ名＆移動先座標
+				{ L"GhostBox3",Tag_GhostBox_MapMove,L"",L"Tutorial",{ -393.0f,50.0f,2145.0f }, false ,180.0f,-50.0f },	//移動先マップ名＆移動先座標
 			}
 		},
 		//草原2
@@ -181,6 +193,14 @@ private:
 			{
 				{ L"jewel1",Tag_Jewel,L"" },
 				{ L"jewel2",Tag_Jewel,L"" },
+				{ L"BigDoor",Tag_BigDoor1,L"" },
+				{ L"BigDoor_",Tag_BigDoor2,L"" },
+				{ L"StaticBox1",Tag_StaticBox,L"" },
+				{ L"StaticBox2",Tag_StaticBox,L"" },
+				{ L"StaticBox3",Tag_StaticBox,L"" },
+				{ L"StaticBox4",Tag_StaticBox,L"" },
+				{ L"StaticBox5",Tag_StaticBox,L"" },
+				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ 1000.0f,100.0f,1000.0f }, true ,-90.0f,-100.0f },	//移動先マップ名＆移動先座標
 			}
 		},
 		//草原3
@@ -189,6 +209,12 @@ private:
 			{
 				{ L"jewel1",Tag_Jewel,L"" },
 				{ L"jewel2",Tag_Jewel,L"" },
+				{ L"StaticBox1",Tag_StaticBox,L"" },
+				{ L"StaticBox2",Tag_StaticBox,L"" },
+				{ L"StaticBox3",Tag_StaticBox,L"" },
+				{ L"StaticBox4",Tag_StaticBox,L"" },
+				{ L"StaticBox5",Tag_StaticBox,L"" },
+				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ 700.0f,110.0f,-950.0f }, false ,180.0f,-250.0f },	//移動先マップ名＆移動先座標
 			}
 		}
 

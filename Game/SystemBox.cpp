@@ -35,6 +35,14 @@ void GhostBox::Update() {
 				//トランジション
 				TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::Circle,
 					SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime, false, true);
+				//現在の場所と移動先の場所が違うならBGMをフェードアウトさせる
+				GameData::Place_Data NowPlace = GameData::GetInstance()->GetPlace();
+				GameData::Place_Data NextPlace = StageSet::GetInstance()->GetStagePlace(m_LoadStageName);
+				if (NowPlace != NextPlace) {
+					//BGMのフェードアウト
+					SceneManager::GetInstance()->GetSoundManagerInstance()->BGM_VolumeFade(0.0f,
+						SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime);
+				}
 				//マップ移動フラグをtrueにする
 				m_mapMoveFlag = true;
 			}
@@ -57,19 +65,34 @@ void GhostBox::Update() {
 			CQuaternion RotationY;
 			RotationY.SetRotationDeg(CVector3().AxisY(), m_yazirushiRotAngle);
 			CQuaternion rot = m_rotation * RotationY;
+			//どっちが上？
+			EnFbxUpAxis axis;
+			if (YazirushiRotFlag == false) {
+				axis = EnFbxUpAxis::enFbxUpAxisY;
+			}
+			else {
+				axis = EnFbxUpAxis::enFbxUpAxisZ;
+			}
 
 			m_Yazirushi->Model_Init(
 				L"Assets/modelData/Yazirushi.cmo",
 				pos,
 				rot,
 				{5.0f,5.0f,5.0f},
-				EnFbxUpAxis::enFbxUpAxisY
+				axis
 			);
 		}
 		else {
 			//移動
 			if (m_Yazirushi->m_skinModelSupporter.GetSkinModelMoveListLen() == 0) {
-				CVector3 front = { 0.0f, 1.0f,0.0f };
+				CVector3 front;
+				if (YazirushiRotFlag == false) {
+					front.Set(0.0f, 1.0f, 0.0f);
+				}
+				else {
+					front.Set(0.0f, 0.0f, 1.0f);
+				}
+
 				CQuaternion y_rot = m_Yazirushi->GetRotation();
 				y_rot.Multiply(front);
 				CVector3 moveVec = front * YazirushiMoveHosei;
@@ -83,6 +106,9 @@ void GhostBox::Update() {
 	if (m_mapMoveFlag == true) {
 		m_mapMoveTimer++;
 		if (m_mapMoveTimer == SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime) {
+			GameData::Place_Data NextPlace = StageSet::GetInstance()->GetStagePlace(m_LoadStageName);
+			wchar_t* bgmName = StageSet::GetInstance()->GetStageBGM_Name(NextPlace);
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitBGM(bgmName);
 			m_player->SetPosition(m_playerMoveTarget);				//プレイヤー移動
 			StageSet::GetInstance()->InitStage(m_LoadStageName);	//ステージ読み込み
 		}
@@ -100,7 +126,7 @@ void GhostBox::CreateGhost() {
 	m_ghostObject.CreateBox(
 		m_position,		//第一引数は座標。
 		m_rotation,		//第二引数は回転クォータニオン。
-		m_scale				//第三引数はボックスのサイズ。
+		m_scale			//第三引数はボックスのサイズ。
 	);
 
 }

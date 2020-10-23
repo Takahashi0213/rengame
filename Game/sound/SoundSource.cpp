@@ -17,6 +17,8 @@ CSoundSource::~CSoundSource()
 {
 	Release();
 }
+void CSoundSource::Render() {
+}
 void CSoundSource::InitCommon()
 {
 }

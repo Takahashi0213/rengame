@@ -46,6 +46,17 @@ public:
 
 	void CreateStage(const wchar_t* stage_filePath, const wchar_t* level_filePath);
 
+	//ステージ番号
+	int GetStageNo() {
+		return m_stageNo;
+	}
+	//ステージの場所データ
+	const GameData::Place_Data GetStagePlace(const wchar_t* stage_name);
+	//ステージのBGM名
+	wchar_t* GetStageBGM_Name(const GameData::Place_Data place) {
+		return m_stageData.GetStageBGM(place);
+	}
+
 private:
 
 	//メンバ

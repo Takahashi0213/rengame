@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "system/CGameObjectManager.h"
 #include "StageSet.h"
+#include "SoundManager.h"
 
 /// <summary>
 /// シーン切り替えをがんばるクラス
@@ -62,14 +63,17 @@ public:
 	/// インスタンスを取得！
 	/// </summary>
 	/// <returns>インスタンスです</returns>
-	static SceneManager* SceneManager::GetInstance() {
+	static SceneManager* GetInstance() {
 		return m_instance;
 	}
-	SystemData* SceneManager::GetSystemInstance() {
+	SystemData* GetSystemInstance() {
 		return &m_systemData;
 	}
-	GameGraphic* SceneManager::GetGameGraphicInstance() {
+	GameGraphic* GetGameGraphicInstance() {
 		return &m_gameGraphic;
+	}
+	SoundManager* GetSoundManagerInstance() {
+		return &m_soundManager;
 	}
 
 private:
@@ -88,6 +92,7 @@ private:
 	GameGraphic m_gameGraphic;
 	CSoundEngine m_soundEngine;				//サウンドエンジン。
 	StageSet m_stageSet;
+	SoundManager m_soundManager;
 
 	//シーン
 	Title* m_title = nullptr;

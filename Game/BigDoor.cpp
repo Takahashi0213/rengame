@@ -29,7 +29,7 @@ void BigDoor::Render() {
 
 }
 
-void BigDoor::ModelChange(const BoxModel model) {
+void BigDoor::ModelChange(const DoorModel model) {
 
 	const wchar_t* modelNames[Model_BigDoorNum] = {
 		L"Assets/modelData/BigDoor.cmo",
@@ -41,4 +41,8 @@ void BigDoor::ModelChange(const BoxModel model) {
 		m_rotation,
 		m_scale
 	);
+
+	m_thisModel = model;
+	m_physicsStaticObject.CreateBox(m_position, m_rotation, StaticSize);
+
 }

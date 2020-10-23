@@ -461,6 +461,9 @@
     <ClCompile Include="BigDoor.cpp">
       <Filter>object\Gimmick</Filter>
     </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -777,6 +780,9 @@
     <ClInclude Include="BigDoor.h">
       <Filter>object\Gimmick</Filter>
     </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Titan.fbx">
@@ -1053,6 +1059,9 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\window\window8.png">
       <Filter>Assets\sprite\window</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Sky.png">
+      <Filter>Assets\sprite</Filter>
     </ImageContentTask>
   </ItemGroup>
   <ItemGroup>

@@ -176,6 +176,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="SliceSprite.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="sound\SoundEngine.cpp" />
     <ClCompile Include="sound\SoundSource.cpp" />
     <ClCompile Include="sound\WaveFile.cpp" />
@@ -285,6 +286,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="SliceSprite.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="sound\SoundEngine.h" />
     <ClInclude Include="sound\SoundSource.h" />
     <ClInclude Include="sound\WaveFile.h" />
@@ -590,6 +592,9 @@
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\window\window7.png" />
     <ImageContentTask Include="Assets\sprite\window\window8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\Sky.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -47,6 +47,7 @@ void TestEnemy::Update() {
 		//死んじゃった
 		m_state = State::Death;
 	}
+	m_moveSpeed = CVector3::Zero();
 
 	//ステートで分岐
 	switch (m_state)
@@ -81,8 +82,10 @@ void TestEnemy::Update() {
 
 	//キャラコン移動
 	m_charaCon.SetPosition(m_position);
+	//重力
+	m_moveSpeed.y -= Gravity;
+	//キャラコン実行
 	m_position = m_charaCon.Execute(1.0f, m_moveSpeed);
-
 	//ModelRender更新
 	m_modelRender->SetPosition(m_position);
 
@@ -101,7 +104,6 @@ void TestEnemy::MoveAction() {
 		//距離が近いので追尾する。
 		m_state = Follow;
 	}
-
 
 }
 

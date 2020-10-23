@@ -21,6 +21,7 @@ StageSet::~StageSet()
 
 void StageSet::InitStage(const wchar_t* stage_name) {
 	
+	//最初にステージとレベルを削除
 	DeleteStage();
 
 	int Size = m_stageData.GetStageListSize();
@@ -80,9 +81,33 @@ void StageSet::DeleteStage() {
 	//背景の削除
 	if (m_bg != nullptr) {
 		CGameObjectManager::GetInstance()->DeleteGO(m_bg);
+		m_bg = nullptr;
 	}
 
 	//レベルの削除
 	m_levelSet.LevelDelete();
 
+}
+
+const GameData::Place_Data StageSet::GetStagePlace(const wchar_t* stage_name) {
+
+	int Size = m_stageData.GetStageListSize();
+	int stageNo = -1;
+
+	//どのレベルかチェックするためのループ
+	for (int i = 0; i < Size; i++) {
+		//一致する場合そいつに決定する
+		if (wcscmp(m_stageData.GetStageName(i), stage_name) == 0) {
+			stageNo = i;	//お前しか…いない！
+			break;
+		}
+	}
+
+	//エラーチェック
+	if (stageNo == -1) {
+		//どれにも引っかかっていないためエラー
+		std::abort();
+	}
+
+	return m_stageData.GetStagePlace(stageNo);
 }

@@ -8,11 +8,15 @@ BackGround::BackGround()
 	int a = Hash::MakeHash("LightMaker");
 	m_lightMaker = CGameObjectManager::GetInstance()->FindGO<LightMaker>(a);
 
+	m_sprite = NewGO<SpriteRender>("Sky", 0);
+	m_sprite->Init(L"Assets/sprite/Sky.dds", 1280.0f, 855.0f, 0);
+	m_sprite->SetObjectTag(objectTag::t_BackSprite);
+	m_sprite->SetPosition(CVector3::Zero());
 }
-
 
 BackGround::~BackGround()
 {
+	DeleteGO(m_sprite);
 }
 
 void BackGround::Init(const wchar_t* filePath) {

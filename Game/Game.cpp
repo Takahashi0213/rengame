@@ -24,9 +24,6 @@ Game::Game()
 	//OPを生成
 	m_op = new OP;
 
-	//トランジション
-	TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::NanameBox, 0, true);
-
 #ifdef _DEBUG
 	//ワイヤーフレームを表示します
 	g_physics->SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
@@ -91,6 +88,8 @@ void Game::GameSetUp() {
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
 	//ステージ
 	StageSet::GetInstance()->InitStage(L"Tutorial");
+	//チュートリアルBGMの再生
+	SceneManager::GetInstance()->GetSoundManagerInstance()->InitBGM(L"Assets/sound/BGM/Tutorial.wav");
 	//処理変更
 	m_gameState = GamaState_Game;
 }

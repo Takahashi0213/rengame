@@ -10,14 +10,18 @@ public:
 
 	//ステージデータ構造体
 	struct Stage_Srtuct {
-		wchar_t Stage_Name[255];		//ステージ名前
-		wchar_t Stage_HyouziName[255];	//各マップの表示名 痛々しいネームが良い
-		wchar_t LoadStageModel[255];	//ステージモデルのファイルパス
-		wchar_t LoadStageLevel[255];	//ステージレベルのファイルパス
-		GameData::Place_Data ThisPlace;	//ここはどこ
-		CVector3 AmbientColor;			//このマップの環境光
+		wchar_t Stage_Name[MAX_PATH];		//ステージ名前
+		wchar_t Stage_HyouziName[MAX_PATH];	//各マップの表示名 痛々しいネームが良い
+		wchar_t LoadStageModel[MAX_PATH];	//ステージモデルのファイルパス
+		wchar_t LoadStageLevel[MAX_PATH];	//ステージレベルのファイルパス
+		GameData::Place_Data ThisPlace;		//ここはどこ
+		CVector3 AmbientColor;				//このマップの環境光
 	};
-
+	//BGMデータ構造体
+	struct Stage_BGM {
+		wchar_t* BGM_Name;					//BGMの名前
+	};
+	
 	//取得ゾーン
 
 	/// <summary>
@@ -46,6 +50,11 @@ public:
 	//ステージの環境光
 	const CVector3 GetStageAmbientColor(const int stageNo) {
 		return StageList[stageNo].AmbientColor;
+	}
+
+	//ステージのBGM名
+	wchar_t* GetStageBGM(const GameData::Place_Data place) {
+		return StageBGM[place].BGM_Name;
 	}
 
 	//計算ゾーン
@@ -97,6 +106,12 @@ private:
 		},
 
 
+	};
+
+	const Stage_BGM StageBGM[5]{
+		L"Assets/sound/BGM/Title.wav",		//無
+		L"Assets/sound/BGM/Tutorial.wav",	//チュートリアル
+		L"Assets/sound/BGM/Stage1.wav",		//草原
 	};
 
 };

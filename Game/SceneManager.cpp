@@ -57,6 +57,10 @@ void SceneManager::Update() {
 		break;
 	}
 
+	//共通アップデート
+	m_soundManager.SoundManagerUpdate();
+	m_soundEngine.Update();
+
 }
 
 void SceneManager::Render() {

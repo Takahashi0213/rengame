@@ -33,7 +33,9 @@ private:
 
 	//’è”
 	const float FollowLength = 300.0f;
-	const float FollowSpeed = 10.0f; //’Ç”ö‚Ì‘¬“x
+	const float FollowSpeed = 5.0f; //’Ç”ö‚Ì‘¬“x
+
+	const float Gravity = 2.0f;			//d—Í
 
 	const int ATK = 10;
 	const int EXP = 10;

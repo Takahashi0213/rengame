@@ -54,9 +54,6 @@ void BoxMaker::Update() {
 				m_boxPos = MouseSupporter::GetInstance()->GetMousePos_3D();
 				
 				//ü•ªƒ`ƒFƒbƒN
-				//CVector3 ray = g_camera3D.GetTarget() - g_camera3D.GetPosition();
-				//ray.Normalize();
-				//ray *= 10000.0f;
 			
 				result |= go->CheckHitRayToPlane(g_camera3D.GetPosition(), m_boxPos, boxPoint_Stock, m_boxN, m_planeScale);
 				
@@ -184,14 +181,14 @@ void BoxMaker::Update() {
 		}
 	}
 
-	//ƒtƒH[ƒJƒXƒ‚[ƒh—p‚Ìˆ—```````
+	//ƒtƒH[ƒJƒXƒ‚[ƒh—p‚Ìˆ—
 	if (NowGameMode == SceneManager::CreateMode && m_boxMakerMode == FocusMode) {
 		
 		key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
 		
 		if (key == MouseSupporter::Now_Pushing) {	//‰Ÿ‚³‚ê‚Ä‚é‚â‚ñ
 
-			//” ‚ÌŠg‘åk¬`````
+			//” ‚ÌŠg‘åk¬
 			CVector2 mouseMove = MouseSupporter::GetInstance()->GetMouseMove();
 			m_boxScale = m_nowBox->GetScale();
 

@@ -17,12 +17,15 @@ void OP::OP_Update() {
 
 	if (m_opEffectFlag == false) {
 
-		if (m_opShinkou == 0) {
+		if (m_opShinkou == 1) {
+			//トランジション
+			TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::NanameBox, 0, true);
+
 			GameEffect::GetInstance()->EasyEffect(L"オープニングの\nテストメッセージ",
 				GameEffect_Stand::Stand_Normal,
 				GameEffect_Stand::New_Stand);
 		}
-		if (m_opShinkou == 1) {
+		if (m_opShinkou == 2) {
 			GameEffect::GetInstance()->EasyEffect(L"ゲーム始まるよ！",
 				GameEffect_Stand::Stand_Happy,
 				GameEffect_Stand::Jump_Stand);
@@ -31,11 +34,23 @@ void OP::OP_Update() {
 	}
 	else {
 		//クリック待ち
-		int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
-		if (key == MouseSupporter::Release_Push) {
-			//次へ
-			m_opEffectFlag = false;
-			m_opShinkou++;
+		if (m_opShinkou == 0) {
+			m_opTimer++;
+			if (m_opTimer > OP_TimerLimit) {
+				//次へ
+				m_opEffectFlag = false;
+				m_opShinkou++;
+				m_opTimer = 0;
+			}
+		}
+		else {
+			//左が押されたら…
+			int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
+			if (key == MouseSupporter::Release_Push) {
+				//次へ
+				m_opEffectFlag = false;
+				m_opShinkou++;
+			}
 		}
 	}
 
@@ -46,6 +61,5 @@ void OP::OP_Update() {
 			GameEffect_Stand::Delete_Stand);
 		m_opEndFlag = true;
 	}
-
 
 }

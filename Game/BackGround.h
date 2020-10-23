@@ -26,6 +26,7 @@ private:
 
 	SkinModel m_model;	//スキンモデル。
 	Game* m_game;		//ゲーム
+	SpriteRender* m_sprite = nullptr;
 	bool m_monochromeFlag = false;
 	LightMaker* m_lightMaker;
 

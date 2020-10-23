@@ -74,7 +74,7 @@ Effekseer::Handle EffekseerSupporter::NewEffect_Vector(const EffectData EffectFi
 	//回転させる
 	CGameObjectManager::GetInstance()->GetEffekseerManager()->SetRotation(m_playEffectHandle, rotX, rotY, rotZ);
 
-	//リストに追加や
+	//リストに追加
 	Effect set = { m_playEffectHandle,PostFlag };
 	m_effectList.push_back(set);
 
