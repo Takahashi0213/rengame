@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GameBox.h"
-#include "Game.h"
+#include "GameScene/Game.h"
 #include "BoxMaker.h"
 
 void GameBox::GetTrianglePositionAndNormal(

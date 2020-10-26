@@ -51,34 +51,34 @@ const int MAX_LEVEL_OBJ = 100;						//レベルに設定できる最大オブジェクト数
 
 #include "graphics/animation/Animation.h"
 #include "graphics/animation/AnimationClip.h"
-#include "graphics/Camera.h"
-#include "CCamera2D.h"
+#include "graphics/camera/Camera.h"
+#include "graphics/camera/CCamera2D.h"
 
 #include "Hash.h"
-#include "DebugLog.h"
+#include "Debug/DebugLog.h"
 #include "GameTime.h"
-#include "LightMaker.h"
-#include "CameraSupporter.h"
-#include "MouseSupporter.h"
+#include "graphics/light/LightMaker.h"
+#include "graphics/camera/CameraSupporter.h"
+#include "GameSystem/Mouse/MouseSupporter.h"
 
-#include "SpriteStandby.h"
-#include "SpriteRender.h"
+#include "graphics/sprite/SpriteStandby.h"
+#include "graphics/sprite/SpriteRender.h"
 
 #include "graphics/skinModel/SkinModelRender.h"
 #include "ShadowMap.h"
 
-#include "FontRender.h"
+#include "graphics/font/FontRender.h"
 
 #include "GameData.h"
-#include "GameEffect.h"
+#include "GameSystem/GameUI/GameEffect.h"
 
 #include "TransitionGenerator.h"
 
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 
-#include "ObjectClass.h"
+#include "GameObject/ObjectClass.h"
 
-#include "SceneManager.h"
+#include "GameScene/SceneManager.h"
 
 extern SpriteRender spRen;

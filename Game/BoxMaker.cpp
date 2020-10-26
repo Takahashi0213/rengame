@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "BoxMaker.h"
-#include "GameUI.h"
+#include "GameSystem/GameUI/GameUI.h"
 
 BoxMaker* BoxMaker::m_instance = nullptr;
 

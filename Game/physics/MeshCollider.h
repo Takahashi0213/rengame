@@ -1,5 +1,5 @@
 #pragma once
-#include "Physics/ICollider.h"
+#include "Physics/Collider/ICollider.h"
 
 
 class SkinModel;

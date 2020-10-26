@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LevelSet.h"
-#include "BackGround.h"
+#include "level/LevelSet.h"
+#include "GameObject/BackGround.h"
 #include "StageData.h"
 
 /// <summary>

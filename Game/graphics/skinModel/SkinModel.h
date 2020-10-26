@@ -2,8 +2,8 @@
 
 #include "graphics/Skeleton.h"
 
-#include "DirectionLight.h"
-#include "PointLight.h"
+#include "graphics/light/DirectionLight.h"
+#include "graphics/light/PointLight.h"
 
 /*!
 *@brief	FBX‚Ìã•ûŒüB

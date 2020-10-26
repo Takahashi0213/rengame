@@ -1,7 +1,7 @@
 #pragma once
 
 #include "character/CharacterController.h"
-#include "PhysicsDebugDraw.h"
+#include "Debug/PhysicsDebugDraw.h"
 
 class RigidBody;
 

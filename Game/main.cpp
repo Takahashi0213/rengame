@@ -1,11 +1,10 @@
 #include "stdafx.h"
 #include "system/system.h"
-#include "Player.h"
 #include "level/Level.h"
 
 #include "GameCamera.h"
 
-#include "SceneManager.h"
+#include "GameScene/SceneManager.h"
 
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。

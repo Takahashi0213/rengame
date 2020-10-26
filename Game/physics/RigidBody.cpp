@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Physics/RigidBody.h"
-#include "Physics/ICollider.h"
+#include "physics/Collider/ICollider.h"
 
 
 RigidBody::~RigidBody()

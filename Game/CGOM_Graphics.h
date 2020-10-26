@@ -1,7 +1,7 @@
 #pragma once
 #include "RenderTarget.h"
-#include "Sprite.h"
-#include "PostEffect.h"
+#include "graphics/sprite/Sprite.h"
+#include "graphics/postEffect/PostEffect.h"
 
 /// <summary>
 /// ゲームオブジェクトマネージャーのグラフィック関連

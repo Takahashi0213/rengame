@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Physics/CapsuleCollider.h"
+#include "Physics/Collider/CapsuleCollider.h"
 #include "Physics/RigidBody.h"
 
 

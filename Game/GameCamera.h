@@ -1,7 +1,6 @@
 #pragma once
 #include "system/CGameObjectManager.h"
-#include "Player.h"
-#include "Game.h"
+#include "GameObject/Player.h"
 #include "GameBox.h"
 
 /// <summary>

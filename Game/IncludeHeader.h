@@ -5,16 +5,16 @@
 /// </summary>
 
 //アイテム
-#include "StarMoney.h"
+#include "GameObject/StarMoney.h"
 
 //ギミック
-#include "Switch.h"
-#include "Door.h"
-#include "BigDoor.h"
-#include "Board.h"
+#include "GameObject/Switch.h"
+#include "GameObject/Door.h"
+#include "GameObject/BigDoor.h"
+#include "GameObject/Board.h"
 
 //敵
-#include "TestEnemy.h"
+#include "GameObject/TestEnemy.h"
 
 //システムオブジェクト
-#include "SystemBox.h"
+#include "GameObject/SystemBox.h"
