@@ -76,6 +76,7 @@ private:
 	void BoxSearch();
 	void BoxMove();
 	void BoxDelete();
+	CVector3 BoxThrowSearch();
 
 	//プレイヤー
 	CVector3 m_position = { 0.0f,50.0f,-800.0f };
@@ -86,6 +87,10 @@ private:
 
 	//移動
 	const float m_moveMax = 30.0f;
+
+	//キャラコン
+	const float Radius = 25.0f;		//半径
+	const float Height = 30.0f;		//高さ
 
 	//ジャンプ
 	bool m_jumpNow = false;
@@ -114,5 +119,9 @@ private:
 	const float m_boxMove_Y_Hosei_Put = 50.0f;	//箱を下ろす際の最高到達点Y補正
 	const float m_boxPos_Y_Hosei = 150.0f;		//箱を持ち上げているときのプレイヤーY補正
 	const float m_boxPut_Hosei = 150.0f;		//箱を置くときの移動量
+	//箱投げ
+	const float BoxThrowMaxLength = 500.0f;		//箱投げのターゲットになる範囲
+
+
 };
 

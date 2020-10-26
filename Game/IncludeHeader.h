@@ -15,6 +15,8 @@
 
 //敵
 #include "GameObject/TestEnemy.h"
+#include "GameObject/Mannequin.h"
+#include "GameObject/Benite.h"
 
 //システムオブジェクト
 #include "GameObject/SystemBox.h"

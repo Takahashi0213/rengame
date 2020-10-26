@@ -29,6 +29,7 @@ public:
 		ActionMode,
 		CreateMode,
 		MenuMode,
+		GameOver,
 	};
 
 	/// <summary>

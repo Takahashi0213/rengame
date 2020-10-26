@@ -10,6 +10,16 @@
 class GhostBox : public ObjectClass
 {
 public:
+	enum GhostBox_System {
+		MapMove,	//マップ移動
+		MapEvent,	//マップイベント
+		DamageZone,	//落下ダメージ
+	};
+	//動作の種類を設定
+	void SetGhostBox_System(const GhostBox_System boxSystem) {
+		m_boxSystem = boxSystem;
+	}
+
 	GhostBox();
 	~GhostBox();
 	void Update()override;
@@ -17,7 +27,7 @@ public:
 
 	//設定用（レベル生成時に同時に呼ぶのが基本）
 	void SetStageName(const wchar_t* stageName) {
-		m_LoadStageName = stageName;
+		m_LoadName = stageName;
 	}
 	void SetPlayerMoveTarget(const CVector3& pos) {
 		m_playerMoveTarget = pos;
@@ -38,14 +48,16 @@ public:
 	void CreateGhost();
 
 private:
+	void GhostAction();		//プレイヤー接触時の反応
+
 	PhysicsGhostObject m_ghostObject;				//ゴーストオブジェクト
 	SkinModelRender* m_Yazirushi = nullptr;			//マップ移動ゴーストの場合使用する
 
 	Player* m_player = nullptr;						//プレイヤーはここ！
+	GhostBox_System m_boxSystem;					//この箱の種類
 
 	//レベルセット時に設定するもの
-	//マップ移動編
-	const wchar_t* m_LoadStageName = nullptr;		//ステージの名前
+	const wchar_t* m_LoadName = nullptr;		//ステージ/イベントの名前
 	CVector3 m_playerMoveTarget;					//プレイヤーの移動先
 	float m_yazirushiRotAngle = 0.0f;				//矢印の回転
 	float m_yazirushiYHosei = 0.0f;					//矢印のY補正
@@ -54,8 +66,6 @@ private:
 	const float YazirushiMoveHosei = 30.0f;			//矢印の移動量補正
 	const int YazirushiMoveTime = 10;				//矢印の移動時間
 	bool YazirushiRotFlag = false;					//矢印の回転フラグ（Y_UP）
-	//ゲームオーバー編
-
 
 };
 

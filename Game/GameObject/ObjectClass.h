@@ -55,6 +55,8 @@ public:
 	CQuaternion m_rotation = CQuaternion().Identity();
 	CVector3 m_scale = CVector3().One(); //拡大率
 
+	bool m_monochromeFlag = false;		//クリエイトモード時にモノクロにするフラグ
+
 	//反応フラグ
 	//なんかアクションさせたいとき用
 	bool m_actionFlag = false;

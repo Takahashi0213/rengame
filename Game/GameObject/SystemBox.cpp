@@ -12,11 +12,12 @@ GhostBox::GhostBox()
 
 GhostBox::~GhostBox()
 {
+	//矢印の削除
 	if (m_Yazirushi != nullptr) {
 		DeleteGO(m_Yazirushi);
 	}
 
-	if (m_LoadStageName != nullptr && m_mapMoveFlag == true) {
+	if (m_boxSystem == MapMove && m_mapMoveFlag == true) {
 		//トランジション閉じる
 		TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::Circle,
 			SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime, true , true);
@@ -30,31 +31,13 @@ void GhostBox::Update() {
 	g_physics->ContactTest(*charaCon, [&](const btCollisionObject& contactObject) {
 		if (m_ghostObject.IsSelf(contactObject) == true) {
 			//m_ghostObjectとぶつかった
-			if (m_LoadStageName != nullptr && m_mapMoveFlag == false) {
-				//マップ移動
-				//トランジション
-				TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::Circle,
-					SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime, false, true);
-				//現在の場所と移動先の場所が違うならBGMをフェードアウトさせる
-				GameData::Place_Data NowPlace = GameData::GetInstance()->GetPlace();
-				GameData::Place_Data NextPlace = StageSet::GetInstance()->GetStagePlace(m_LoadStageName);
-				if (NowPlace != NextPlace) {
-					//BGMのフェードアウト
-					SceneManager::GetInstance()->GetSoundManagerInstance()->BGM_VolumeFade(0.0f,
-						SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime);
-				}
-				//マップ移動フラグをtrueにする
-				m_mapMoveFlag = true;
-			}
-			else {
-				//落下ダメージ
-
-			}
+			GhostAction();
 		}
 		});
 
 	//矢印
-	if (m_LoadStageName != nullptr) {
+	if (m_boxSystem == MapMove) {
+
 		if (m_Yazirushi == nullptr) {
 			//生成
 			m_Yazirushi = CGameObjectManager::GetInstance()->NewGO<SkinModelRender>(L"Yazirushi", 0);
@@ -83,6 +66,18 @@ void GhostBox::Update() {
 			);
 		}
 		else {
+			//モノクロ化
+			if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode && m_monochromeFlag == false) {
+				m_Yazirushi->GetModel()->SetRenderMode(RenderMode::Monochrome);
+				m_Yazirushi->SetIsUpdateSkinModelSupporter(false);	//矢印の移動を一時停止
+				m_monochromeFlag = true;
+			}
+			else if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode && m_monochromeFlag == true) {
+				m_Yazirushi->GetModel()->SetRenderMode(RenderMode::Default);
+				m_Yazirushi->SetIsUpdateSkinModelSupporter(true);	//矢印の移動を再開
+				m_monochromeFlag = false;
+			}
+
 			//移動
 			if (m_Yazirushi->m_skinModelSupporter.GetSkinModelMoveListLen() == 0) {
 				CVector3 front;
@@ -106,11 +101,11 @@ void GhostBox::Update() {
 	if (m_mapMoveFlag == true) {
 		m_mapMoveTimer++;
 		if (m_mapMoveTimer == SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime) {
-			GameData::Place_Data NextPlace = StageSet::GetInstance()->GetStagePlace(m_LoadStageName);
+			GameData::Place_Data NextPlace = StageSet::GetInstance()->GetStagePlace(m_LoadName);
 			wchar_t* bgmName = StageSet::GetInstance()->GetStageBGM_Name(NextPlace);
 			SceneManager::GetInstance()->GetSoundManagerInstance()->InitBGM(bgmName);
 			m_player->SetPosition(m_playerMoveTarget);				//プレイヤー移動
-			StageSet::GetInstance()->InitStage(m_LoadStageName);	//ステージ読み込み
+			StageSet::GetInstance()->InitStage(m_LoadName);	//ステージ読み込み
 		}
 	}
 
@@ -128,6 +123,40 @@ void GhostBox::CreateGhost() {
 		m_rotation,		//第二引数は回転クォータニオン。
 		m_scale			//第三引数はボックスのサイズ。
 	);
+
+}
+
+void GhostBox::GhostAction() {
+
+	//マップ移動
+	if (m_boxSystem == MapMove && m_mapMoveFlag == false) {
+		//トランジション
+		TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::Circle,
+			SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime, false, true);
+		//現在の場所と移動先の場所が違うならBGMをフェードアウトさせる
+		GameData::Place_Data NowPlace = GameData::GetInstance()->GetPlace();
+		GameData::Place_Data NextPlace = StageSet::GetInstance()->GetStagePlace(m_LoadName);
+		if (NowPlace != NextPlace) {
+			//BGMのフェードアウト
+			SceneManager::GetInstance()->GetSoundManagerInstance()->BGM_VolumeFade(0.0f,
+				SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime);
+		}
+		//マップ移動フラグをtrueにする
+		m_mapMoveFlag = true;
+	}
+	//イベント
+	if (m_boxSystem == MapEvent) {
+	
+		//イベントの実行
+		Game::GetInstance()->GetGameEvent()->EvemtStart(m_LoadName);
+
+		//この箱は削除される
+		DeleteGO(this);
+	}
+	//落下ダメージ
+	if (m_boxSystem == DamageZone) {
+
+	}
 
 }
 

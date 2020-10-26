@@ -262,9 +262,9 @@ void BoxMaker::Update() {
 
 	}
 
-	//アンドゥ処理！！！！
+	//アンドゥ処理！
 	if (NowGameMode == SceneManager::CreateMode && m_box_Nom > 1) {
-		//CTRL+Z
+		//CTRL+Z（臨時）
 		if (GetAsyncKeyState(VK_CONTROL) & 0x8000 && GetAsyncKeyState('Z') & 0x8000) {
 
 			if (m_undoFlag == false) {

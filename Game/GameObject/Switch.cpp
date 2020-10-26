@@ -25,6 +25,20 @@ Switch::~Switch()
 
 void Switch::Update() {
 
+	//モノクロ化
+	if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode && m_monochromeFlag == false) {
+		m_modelRender->GetModel()->SetRenderMode(RenderMode::Monochrome);
+		m_monochromeFlag = true;
+	}
+	else if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode && m_monochromeFlag == true) {
+		m_modelRender->GetModel()->SetRenderMode(RenderMode::Default);
+		m_monochromeFlag = false;
+	}
+	//クリエイトモード中は一切の更新をしない
+	if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode) {
+		return;
+	}
+
 	//更新
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	//m_physicsStaticObject.SetPositionAndRotation(m_position, m_rotation);

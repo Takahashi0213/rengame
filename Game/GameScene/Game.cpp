@@ -56,7 +56,21 @@ void Game::Update() {
 		break;
 	case Game::GamaState_Game:
 		//ゲーム中専用
+		m_gameEvent.GameEventUpdate();	//ゲームイベントアップデート
+		m_damageSystem.DamageUpdate();	//ダメージシステムアップデート
 		break;
+	case Game::GamaState_GameOver:
+		//ゲームオーバーアップデート
+
+		break;
+
+	}
+
+	//ゲームオーバーチェック
+	if (m_gameState != Game::GamaState_GameOver &&
+		SceneManager::GetInstance()->GetGameMode() == SceneManager::GameOver) {
+		m_gameState = Game::GamaState_GameOver;
+		m_gameOver = new GameOver;
 	}
 
 	//どのステートでもエフェクト更新はする
@@ -87,7 +101,7 @@ void Game::GameSetUp() {
 	//カメラ
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
 	//ステージ
-	StageSet::GetInstance()->InitStage(L"Tutorial");
+	StageSet::GetInstance()->InitStage(L"Sougen1");
 	//チュートリアルBGMの再生
 	SceneManager::GetInstance()->GetSoundManagerInstance()->InitBGM(L"Assets/sound/BGM/Tutorial.wav");
 	//処理変更

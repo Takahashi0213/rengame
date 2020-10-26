@@ -24,7 +24,8 @@ public:
 	//アニメーションも同時Ver
 	void Model_Init_Anim(const wchar_t* filePath,
 		AnimationClip* animationClips = nullptr,
-		int numAnimationClips = 0);
+		int numAnimationClips = 0,
+		EnFbxUpAxis enFbxUpAxis = enFbxUpAxisZ);
 
 	/// <summary>
 	/// モデルを返す
@@ -130,6 +131,32 @@ public:
 	}
 
 	/// <summary>
+	/// アニメーションの再生
+	/// </summary>
+	/// <param name="animNo">アニメーションクリップの番号。コンストラクタに渡したanimClipListの並びとなる。</param>
+	/// <param name="interpolateTime">補完時間(単位：秒)</param>
+	void PlayAnimation(int animNo, float interpolateTime = 0.0f)
+	{
+		m_animation.Play(animNo, interpolateTime);
+	}
+	/// <summary>
+	/// アニメーションの再生中？
+	/// </summary>
+	/// <returns>trueなら再生中</returns>
+	bool IsPlayingAnimation() const
+	{
+		return m_animation.IsPlaying();
+	}
+
+	/// <summary>
+	/// スキンモデルサポーターを更新する？
+	/// falseで停止、trueで再開
+	/// </summary>
+	void SetIsUpdateSkinModelSupporter(const bool& flag) {
+		m_isUpdateSkinModelSupporter = flag;
+	}
+
+	/// <summary>
 	/// モデルを楽に動かすクラスを呼び出せるぞ
 	/// </summary>
 	/// <remarks>
@@ -157,6 +184,8 @@ private:
 	CQuaternion m_rotation = CQuaternion().Identity();				//!<回転。
 	CVector3 m_scale = CVector3().One();							//!<拡大率。
 	RenderMode m_renderMode = Default;								//!<描画モード
+
+	bool m_isUpdateSkinModelSupporter = true;						//!<スキンモデルサポーターを更新する？
 
 	AnimationClip*				m_animationClips = nullptr;			//!<アニメーションクリップ。
 	int							m_numAnimationClips = 0;			//!<アニメーションクリップの数。

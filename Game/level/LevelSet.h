@@ -10,10 +10,27 @@ class LevelSet
 {
 	static LevelSet* m_instance;
 public:
+	//現在設置されているオブジェクトのデータ
+	struct Obj_Data
+	{
+		LevelData::Obj_Tag ObjTag = LevelData::Obj_Tag::Tag_NULL;		//タグ
+		const wchar_t* ObjName = L"";									//オブジェクトの名前
+		int nameKey = 0;												//名前キー。
+		const wchar_t* LinkObjName = L"";								//リンクされているオブジェクトの名前
+		int linkObjectNameKey;											//リンクされているオブジェクトの名前キー。
+	};
+
 	LevelSet();
 	~LevelSet();
 	void Init(const wchar_t* LEVEL_Name);
 	void LevelDelete();
+
+	/// <summary>
+	/// オブジェクトデータの配列の先頭を返す
+	/// </summary>
+	Obj_Data* GetObjData() {
+		return &m_Obj_Data[0];
+	}
 
 	//インスタンスの取得
 	static LevelSet* LevelSet::GetInstance() {
@@ -36,15 +53,6 @@ private:
 	//オブジェクトのリンク作業オブ作業
 	void LinkObj(const int levelNo, const int i);
 
-	//現在設置されているオブジェクトのデータ
-	struct Obj_Data
-	{
-		LevelData::Obj_Tag ObjTag = LevelData::Obj_Tag::Tag_NULL;		//タグ
-		const wchar_t* ObjName = L"";									//オブジェクトの名前
-		int nameKey = 0;												//名前キー。
-		const wchar_t* LinkObjName = L"";								//リンクされているオブジェクトの名前
-		int linkObjectNameKey;											//リンクされているオブジェクトの名前キー。
-	};
 	//オブジェクトデータの配列
 	Obj_Data m_Obj_Data[MAX_LEVEL_OBJ];
 };

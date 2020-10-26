@@ -28,7 +28,7 @@ void Door::Update() {
 
 	//更新
 
-	//モノクロになーる
+	//モノクロになる
 	if (Game::GetInstance() != nullptr) {
 		if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode && m_monochromeFlag == false) {
 			m_model->GetModel()->SetRenderMode(RenderMode::Monochrome);

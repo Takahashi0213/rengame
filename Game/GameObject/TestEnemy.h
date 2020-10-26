@@ -1,6 +1,6 @@
 #pragma once
 #include "character/CharacterController.h"
-#include "EnemySystem.h"
+#include "GameObject/EnemySystem.h"
 
 //テスト用の敵
 class TestEnemy : public EnemySystem

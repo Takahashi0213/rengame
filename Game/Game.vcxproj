@@ -104,17 +104,22 @@
     <ClCompile Include="BoxMaker.cpp" />
     <ClCompile Include="CGOM_Graphics.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
+    <ClCompile Include="DamageSystem.cpp" />
     <ClCompile Include="Debug\DebugLog.cpp" />
     <ClCompile Include="Debug\PhysicsDebugDraw.cpp" />
     <ClCompile Include="EffekseerSupporter.cpp" />
+    <ClCompile Include="EventData.cpp" />
     <ClCompile Include="GameBox.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameData.cpp" />
+    <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="GameObject\BackGround.cpp" />
+    <ClCompile Include="GameObject\Benite.cpp" />
     <ClCompile Include="GameObject\BigDoor.cpp" />
     <ClCompile Include="GameObject\Board.cpp" />
     <ClCompile Include="GameObject\Door.cpp" />
     <ClCompile Include="GameObject\EnemySystem.cpp" />
+    <ClCompile Include="GameObject\Mannequin.cpp" />
     <ClCompile Include="GameObject\ObjectClass.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
     <ClCompile Include="GameObject\StarMoney.cpp" />
@@ -122,6 +127,7 @@
     <ClCompile Include="GameObject\SystemBox.cpp" />
     <ClCompile Include="GameObject\TestEnemy.cpp" />
     <ClCompile Include="GameScene\Game.cpp" />
+    <ClCompile Include="GameScene\GameOver.cpp" />
     <ClCompile Include="GameScene\OP.cpp" />
     <ClCompile Include="GameScene\SceneManager.cpp" />
     <ClCompile Include="GameScene\Title.cpp" />
@@ -207,18 +213,24 @@
     <ClInclude Include="BoxMaker.h" />
     <ClInclude Include="CGOM_Graphics.h" />
     <ClInclude Include="character\CharacterController.h" />
+    <ClInclude Include="DamageSystem.h" />
     <ClInclude Include="Debug\DebugLog.h" />
     <ClInclude Include="Debug\PhysicsDebugDraw.h" />
     <ClInclude Include="EffekseerSupporter.h" />
+    <ClInclude Include="EventData.h" />
+    <ClInclude Include="EventSave.h" />
     <ClInclude Include="GameBox.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameData.h" />
+    <ClInclude Include="GameEvent.h" />
     <ClInclude Include="GameGraphic.h" />
     <ClInclude Include="GameObject\BackGround.h" />
+    <ClInclude Include="GameObject\Benite.h" />
     <ClInclude Include="GameObject\BigDoor.h" />
     <ClInclude Include="GameObject\Board.h" />
     <ClInclude Include="GameObject\Door.h" />
     <ClInclude Include="GameObject\EnemySystem.h" />
+    <ClInclude Include="GameObject\Mannequin.h" />
     <ClInclude Include="GameObject\ObjectClass.h" />
     <ClInclude Include="GameObject\Player.h" />
     <ClInclude Include="GameObject\StarMoney.h" />
@@ -226,6 +238,7 @@
     <ClInclude Include="GameObject\SystemBox.h" />
     <ClInclude Include="GameObject\TestEnemy.h" />
     <ClInclude Include="GameScene\Game.h" />
+    <ClInclude Include="GameScene\GameOver.h" />
     <ClInclude Include="GameScene\OP.h" />
     <ClInclude Include="GameScene\SceneManager.h" />
     <ClInclude Include="GameScene\Title.h" />
@@ -317,6 +330,8 @@
     <MeshContentTask Include="Assets\modelData\box.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Enemy\Benite\Benite.fbx" />
+    <MeshContentTask Include="Assets\modelData\Enemy\Mannequin.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Board\Board.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor_.fbx" />

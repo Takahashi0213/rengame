@@ -50,6 +50,10 @@ public:
 	int GetStageNo() {
 		return m_stageNo;
 	}
+	//オブジェクトデータの先頭を取得
+	LevelSet::Obj_Data* GetObjData() {
+		return m_levelSet.GetObjData();
+	}
 	//ステージの場所データ
 	const GameData::Place_Data GetStagePlace(const wchar_t* stage_name);
 	//ステージのBGM名

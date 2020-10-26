@@ -43,10 +43,12 @@ void BackGround::Update() {
 	if (Game::GetInstance() != nullptr) {
 		if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode && m_monochromeFlag == false) {
 			m_model.SetRenderMode(RenderMode::Monochrome);
+			m_sprite->SetRenderMode(Sprite_RenderMode::Sprite_Monochrome);
 			m_monochromeFlag = true;
 		}
 		else if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode && m_monochromeFlag == true) {
 			m_model.SetRenderMode(RenderMode::Default);
+			m_sprite->SetRenderMode(Sprite_RenderMode::Normal);
 			m_monochromeFlag = false;
 		}
 	}

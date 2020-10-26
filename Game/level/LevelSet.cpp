@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "LevelSet.h"
-
 //まとめて
 #include "IncludeHeader.h"
 
@@ -117,8 +116,14 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 	if (tag == LevelData::Obj_Tag::Tag_Test_Enemy) {	//テストエネミー
 		NewObjCommon<TestEnemy>(data);
 	}
+	if (tag == LevelData::Obj_Tag::Tag_Mannequin) {		//マネキン
+		NewObjCommon<Mannequin>(data);
+	}
+	if (tag == LevelData::Obj_Tag::Tag_Benite) {		//ベニテー
+		NewObjCommon<Benite>(data);
+	}
 
-	if (tag == LevelData::Obj_Tag::Tag_Jewel) {	//ジュエル
+	if (tag == LevelData::Obj_Tag::Tag_Jewel) {			//ジュエル
 		NewObjCommon<StarMoney>(data);
 	}
 
@@ -129,7 +134,6 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_GhostBox_MapMove) {	//ゴーストボックス…移動
-		//const wchar_t* hoge = Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo);	//テストメッセージ
 		GhostBox* pt = NewObjCommon<GhostBox>(data);
 		int ObjNo = Level_Data.ObjName_Search(m_levelNo, data.name);
 		pt->SetStageName(Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo));
@@ -137,8 +141,17 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 		pt->SetYazirushiRot(Level_Data.GetObject_FloatMemo(m_levelNo, ObjNo));
 		pt->SetYazirushiYHosei(Level_Data.GetObject_FloatMemo2(m_levelNo, ObjNo));
 		pt->SetRotFlag(Level_Data.GetObject_BoolMemo(m_levelNo, ObjNo));
+		pt->SetGhostBox_System(GhostBox::MapMove);
 		pt->CreateGhost();
 	}
+	if (tag == LevelData::Obj_Tag::Tag_GhostBox_Event) {	//ゴーストボックス…イベント
+		GhostBox* pt = NewObjCommon<GhostBox>(data);
+		int ObjNo = Level_Data.ObjName_Search(m_levelNo, data.name);
+		pt->SetStageName(Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo));
+		pt->SetGhostBox_System(GhostBox::MapEvent);
+		pt->CreateGhost();
+	}
+
 	if (tag == LevelData::Obj_Tag::Tag_StaticBox) {	//スタティックボックス
 		StaticBox* pt = NewObjCommon<StaticBox>(data);
 		pt->CreateStaticBox();
@@ -179,6 +192,10 @@ void LevelSet::LinkObj(const int levelNo, const int i) {
 					TestEnemy* NowObj = CGameObjectManager::GetInstance()->FindGO<TestEnemy>(now_hash);
 					now_objClass = NowObj->GetInstance();
 				}
+				if (NowObjTag == LevelData::Obj_Tag::Tag_Mannequin) {
+					Mannequin* NowObj = CGameObjectManager::GetInstance()->FindGO<Mannequin>(now_hash);
+					now_objClass = NowObj->GetInstance();
+				}
 
 				//リンクオブジェクト
 				int link_hash = Hash::MakeHash(linkObjName);
@@ -203,7 +220,6 @@ void LevelSet::LevelDelete() {
 		}
 		else {
 			//検索して消す
-			LevelData::Obj_Tag tag = m_Obj_Data[i].ObjTag;
 			IGameObject* go = CGameObjectManager::GetInstance()->FindGO<IGameObject>(m_Obj_Data[i].nameKey);
 			CGameObjectManager::GetInstance()->DeleteGO(go);
 		}

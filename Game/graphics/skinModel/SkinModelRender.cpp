@@ -134,7 +134,8 @@ void SkinModelRender::Model_Init(const wchar_t* filePath, const CVector3& pos, c
 /// <param name="numAnimationClips">アニメーションクリップの数</param>
 void SkinModelRender::Model_Init_Anim(const wchar_t* filePath,
 	AnimationClip* animationClips,
-	int numAnimationClips)
+	int numAnimationClips,
+	EnFbxUpAxis enFbxUpAxis)
 {
 	m_skinModel.Init(filePath);
 	InitAnimation(animationClips, numAnimationClips);
@@ -154,7 +155,15 @@ void SkinModelRender::InitAnimation(AnimationClip* animationClips, int numAnimat
 /// アップデート
 /// </summary>
 void SkinModelRender::Update() {
-	m_skinModelSupporter.SkinModelSupporterUpdate();
+
+	if (m_isUpdateSkinModelSupporter == true) {
+		m_skinModelSupporter.SkinModelSupporterUpdate();
+	}
+
+	if (m_animationClips != nullptr) {
+		m_animation.Update(1.0f / 20.0f);
+	}
+
 	m_skinModel.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	//キャスターフラグがオンなら登録
 	if (m_shadowCasterFlag == true) {

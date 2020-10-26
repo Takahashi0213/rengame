@@ -17,9 +17,7 @@ public:
 	GameData();
 	~GameData();
 
-	////°˖✧◝(⁰▿⁰)◜✧˖°////
-	////データ用関数/////////
-	////°˖✧◝(⁰▿⁰)◜✧˖°////
+	//データ用関数
 
 	/// <summary>
 	/// 進行度加算
@@ -30,7 +28,6 @@ public:
 	/// <summary>
 	/// 進行度取得
 	/// </summary>
-	/// <returns>進行度</returns>
 	int GetProgress() const {
 		return m_progress;
 	}
@@ -38,14 +35,12 @@ public:
 	/// <summary>
 	/// 現在位置変更
 	/// </summary>
-	/// <param name="pd">新しい現在位置</param>
 	void SetPlace(const Place_Data& pd) {
 		m_nowPlace = pd;
 	}
 	/// <summary>
 	/// 現在位置取得
 	/// </summary>
-	/// <returns>イマココ！</returns>
 	const Place_Data GetPlace()const {
 		return m_nowPlace;
 	}
@@ -96,7 +91,6 @@ public:
 	/// <summary>
 	/// スターマネーを取得
 	/// </summary>
-	/// <returns>おかね</returns>
 	const int GetStarMoney()const {
 		return m_starMoney;
 	}
@@ -104,7 +98,6 @@ public:
 	/// <summary>
 	/// 現在魔力の設定
 	/// </summary>
-	/// <param name="power">これ</param>
 	void SetMagicPower(const int& power) {
 		m_magicPower = power;
 		if (m_magicPower > m_magicPower_MAX) {	//上限
@@ -130,7 +123,6 @@ public:
 	/// <summary>
 	/// 魔力の取得
 	/// </summary>
-	/// <returns>現在値</returns>
 	const int GetMagicPower()const {
 		return m_magicPower;
 	}
@@ -148,7 +140,6 @@ public:
 	/// <summary>
 	/// 現在体力の設定
 	/// </summary>
-	/// <param name="hp">これ</param>
 	void SetHP(const int& hp) {
 		m_hp = hp;
 	}
@@ -168,7 +159,6 @@ public:
 	/// <summary>
 	/// 体力の取得
 	/// </summary>
-	/// <returns>現在値</returns>
 	const int GetHP() const {
 		return m_hp;
 	}
@@ -226,7 +216,7 @@ public:
 		return m_messageSpeed;
 	}
 
-	//キーコンフィグ～～～～！！！
+	//キーコンフィグ～
 	//箱キャッチ
 	void SetBoxCatchKey(const char& key) {
 		m_boxCatchKey = key;
@@ -286,7 +276,7 @@ private:
 
 	//プレイヤーステータス
 	int m_level = 1;			//レベル
-	const int MAX_LEVEL = 99;	//最大れべーる
+	const int MAX_LEVEL = 99;	//最大レベル
 	int m_nextExp = 10;			//次のレベルに必要な経験値
 	int m_nowExp = 0;			//現在の経験値
 	int m_totalExp = 0;			//累計経験値
@@ -301,6 +291,8 @@ private:
 	int m_messageSpeed = 2;		//会話のメッセージ送りスピード
 	char m_boxCatchKey = 'C';	//箱を持ち上げるキー
 	char m_boxDeleteKey = 'D';	//箱を削除するキー
+	float m_bgmVolume = 100.0f;	//BGMのボリューム補正（/100してBGMのボリュームに乗算される）
+	float m_seVolume = 100.0f;	//SEのボリューム補正（/100してBGMのボリュームに乗算される）
 
 };
 

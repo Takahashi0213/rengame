@@ -172,6 +172,9 @@
     <Filter Include="object\SystemObject">
       <UniqueIdentifier>{042f1fff-fd25-437b-8058-5f587f7f2fa3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="system\GameEvent">
+      <UniqueIdentifier>{67d6bdb4-6957-474b-9197-5a50bee39f8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -463,6 +466,24 @@
     </ClCompile>
     <ClCompile Include="level\LevelData.cpp">
       <Filter>level</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEvent.cpp">
+      <Filter>system\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="EventData.cpp">
+      <Filter>system\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Benite.cpp">
+      <Filter>object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Mannequin.cpp">
+      <Filter>object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageSystem.cpp">
+      <Filter>system\GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\GameOver.cpp">
+      <Filter>Scene\GameScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -783,6 +804,27 @@
     <ClInclude Include="level\LevelSet.h">
       <Filter>level</Filter>
     </ClInclude>
+    <ClInclude Include="GameEvent.h">
+      <Filter>system\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="EventData.h">
+      <Filter>system\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="EventSave.h">
+      <Filter>system\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Benite.h">
+      <Filter>object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Mannequin.h">
+      <Filter>object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageSystem.h">
+      <Filter>system\GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\GameOver.h">
+      <Filter>Scene\GameScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Titan.fbx">
@@ -853,6 +895,12 @@
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Gimmick\Yazirushi.fbx">
       <Filter>Assets\modelData\System</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Enemy\Benite\Benite.fbx">
+      <Filter>Assets\modelData\Enemy</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Enemy\Mannequin.fbx">
+      <Filter>Assets\modelData\Enemy</Filter>
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>

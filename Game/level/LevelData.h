@@ -14,6 +14,8 @@ public:
 		Tag_BigDoor1,				//巨大ドア（向かって左側）
 		Tag_BigDoor2,				//巨大ドア（向かって右側）
 		Tag_Test_Enemy,				//テストエネミー 水でできた鳩
+		Tag_Mannequin,				//マネキン チュートリアル用の動かない的
+		Tag_Benite,					//ベニテー（敵）
 		Tag_Jewel,					//スタージュエル
 		Tag_Board,					//看板→Obj_Memoに内容を書く
 		Tag_GhostBox_MapMove,		//マップ移動用ゴースト→obj_Memoに接触時呼ばれるマップの名前を書く
@@ -158,7 +160,7 @@ private:
 				{ L"Door1",Tag_Door,L"" },
 				{ L"Door2",Tag_Door,L"" },
 				{ L"Door3",Tag_Door,L"" },
-				{ L"Test_Enemy",Tag_Test_Enemy,L"Door2" },
+				{ L"Mannequin1",Tag_Mannequin,L"Door2" },
 				{ L"GhostBox",Tag_GhostBox_MapMove,L"",L"Sougen1",{ 700.0f,110.0f,-950.0f }, false ,180.0f,-50.0f },	//移動先マップ名＆移動先座標
 		}
 		},
@@ -166,7 +168,8 @@ private:
 		{
 			L"Assets/level/stage_1_1.tkl",	//レベルファイル名
 			{
-				{ L"Test_Enemy",Tag_Test_Enemy,L"" },
+				{ L"Benite1",Tag_Benite,L"" },
+				{ L"Benite2",Tag_Benite,L"" },
 				{ L"jewel1",Tag_Jewel,L"" },
 				{ L"jewel2",Tag_Jewel,L"" },
 				{ L"jewel3",Tag_Jewel,L"" },

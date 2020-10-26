@@ -86,7 +86,7 @@ public:
 	/// 自己発光色を設定
 	/// </summary>
 	/// <param name="color">自己発光色</param>
-	void SetEmissionColor(CVector3 color)
+	void SetEmissionColor(const CVector3& color)
 	{
 		m_emissionColor = color;
 	}
@@ -109,7 +109,7 @@ public:
 	/// レンダーモードを変更
 	/// </summary>
 	/// <param name="mode">モード</param>
-	void SetRenderMode(int mode) {
+	void SetRenderMode(const int& mode) {
 		m_renderMode = mode;
 	}
 

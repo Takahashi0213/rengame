@@ -41,7 +41,7 @@ Player::Player()
 	m_nextPos = m_position;		//移動先を初期化
 
 	//キャラクターコントローラーを初期化。
-	m_charaCon.Init(25, 30, m_position);
+	m_charaCon.Init(Radius, Height, m_position);
 
 	//ライトメーカーの取得
 	m_lightMaker = LightMaker::GetInstance();
@@ -71,7 +71,7 @@ Player::~Player()
 
 void Player::Update()
 {
-	//モノクロになーる
+	//モノクロになる
 	if (m_gameObj != nullptr) {
 		if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode && m_monochromeFlag == false) {
 			m_model.SetRenderMode(RenderMode::Monochrome);
@@ -82,6 +82,17 @@ void Player::Update()
 			m_monochromeFlag = false;
 		}
 	}
+	//アニメーション
+	if (m_gameObj != nullptr) {
+		if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode) {
+			//アニメーション再生
+			m_playerAnimation.Play(1);
+			m_playerAnimation.Update(1.0f / 20.0f);
+			m_playerAnimationSL.Play(1);
+			m_playerAnimationSL.Update(1.0f / 20.0f);
+		}
+	}
+
 
 	//処理
 
@@ -116,12 +127,6 @@ void Player::Update()
 	//シャドウキャスターを登録。
 	ShadowMap::GetInstance()->RegistShadowCaster(&m_model);
 	ShadowMap::GetInstance()->Update(m_lightMaker->GetLightCameraPosition(), m_lightMaker->GetLightCameraTarget());
-
-	//アニメーション
-	m_playerAnimation.Play(1);
-	m_playerAnimation.Update(1.0f / 20.0f);
-	m_playerAnimationSL.Play(1);
-	m_playerAnimationSL.Update(1.0f / 20.0f);
 
 	//ライトカメラを更新
 	CVector3 LC_Pos = LightMaker::GetInstance()->GetLightCameraPosition();
@@ -321,13 +326,10 @@ void Player::BoxCatch() {
 		CVector3 Move = m_moveSpeed / m_boxPutHosei;
 		Move.y = 0.0f;
 		float MovePower = Move.Length();
-		if (MovePower > 0.999f) {
+		if (MovePower > 0.99f) {
 
 			//投げる
-			CVector3 MoveSpeed = m_moveSpeed;
-			MoveSpeed.Normalize();
-			MoveSpeed *= 100.0f;	//移動パワー
-			MoveSpeed.y = 1.0f;		//高さ
+			CVector3 MoveSpeed = BoxThrowSearch();
 			m_upBox->SetMoveSpeed(MoveSpeed);
 
 			//リセット
@@ -575,6 +577,73 @@ void Player::BoxDelete() {
 	BoxMaker::GetInstance()->BoxDelete(m_upBox);
 	m_upBox = nullptr;
 	m_boxUpFlag = false;
+
+}
+
+CVector3 Player::BoxThrowSearch() {
+
+	CVector3 MousePos = MouseSupporter::GetInstance()->GetMousePos_3D();
+
+	btDiscreteDynamicsWorld* dw = g_physics->GetDynamicWorld();
+	btCollisionWorld::ClosestRayResultCallback CRR_Callback(g_camera3D.GetPosition(), MousePos);
+	dw->rayTest((btVector3)g_camera3D.GetPosition(), MousePos, CRR_Callback);
+	if (CRR_Callback.hasHit()) {
+
+		//検索
+		CVector3 ThrowTarget = CVector3::Zero();
+		float TargetLength = BoxThrowMaxLength;
+		bool TargetSetFlag = false;
+		LevelSet::Obj_Data* obj_data = StageSet::GetInstance()->GetObjData();
+
+		for (int i = 0; i < MAX_LEVEL_OBJ; i++) {
+			if (wcscmp(obj_data->ObjName, L"") == 0) {
+				//名前がない！強制終了
+				break;
+			}
+			else {
+				//検索して敵なら計算する
+				ObjectClass* go = CGameObjectManager::GetInstance()->FindGO<ObjectClass>(obj_data->nameKey);
+				if (go != nullptr) {
+					if (go->m_object == ObjectClass::ObjectClass_Tag::EnemyObj) {
+						//敵なので座標を取得して距離が近いなら上書き
+						CVector3 diff = go->GetPosition() - m_position;
+						float Len = diff.Length();
+						if (Len <= TargetLength) {
+							//上書き
+							ThrowTarget = go->GetPosition();
+							TargetLength = Len;
+							TargetSetFlag = true;	//1度でも引っかかったらtrueになる
+						}
+					}
+				}
+			}
+			obj_data++;
+		}
+
+		//最終結果
+		if (TargetSetFlag == true) {
+			//移動速度を計算して返す
+			CVector3 diff = ThrowTarget - m_position;
+			diff.y = 1.0f;		//高さ
+			return diff;
+		}
+		else {
+			//どこにも引っかからなかった
+			CVector3 MoveSpeed = m_moveSpeed;
+			MoveSpeed.Normalize();
+			MoveSpeed *= 100.0f;	//移動パワー
+			MoveSpeed.y = 1.0f;		//高さ
+			return MoveSpeed;
+		}
+
+	}
+	else {
+		CVector3 MoveSpeed = m_moveSpeed;
+		MoveSpeed.Normalize();
+		MoveSpeed *= 100.0f;	//移動パワー
+		MoveSpeed.y = 1.0f;		//高さ
+		return MoveSpeed;
+	}
 
 }
 
