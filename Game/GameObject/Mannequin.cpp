@@ -5,16 +5,16 @@ Mannequin::Mannequin()
 {
 	//モデル準備
 	//アニメーションクリップをロードとループフラグ。
-	//m_animClips[enAnimationClip_wait].Load(L"animData/MannequinStay.tka");
-	//m_animClips[enAnimationClip_wait].SetLoopFlag(true);
+	m_animClips[enAnimationClip_wait].Load(L"Assets/animData/MannequinStay.tka");
+	m_animClips[enAnimationClip_wait].SetLoopFlag(true);
 
 	m_modelRender = CGameObjectManager::GetInstance()->NewGO<SkinModelRender>("Mannequin", 1);
-	m_modelRender->Model_Init(L"Assets/modelData/Mannequin.cmo"/*,
-		m_animClips, enAnimationClip_Num*/);
+	m_modelRender->Model_Init_Anim(L"Assets/modelData/Mannequin.cmo",
+		m_animClips, enAnimationClip_Num);
 	m_modelRender->SetPosition(m_position);
 	m_modelRender->SetRotation(m_rotation);
 	m_modelRender->SetScale(Scale);
-	//m_modelRender->PlayAnimation(enAnimationClip_wait);
+	m_modelRender->PlayAnimation(enAnimationClip_wait);
 
 	//シャドウレシーバーにする。
 	m_modelRender->SetShadowReciever(true);
@@ -40,7 +40,9 @@ Mannequin::Mannequin()
 Mannequin::~Mannequin()
 {
 	//片付ける
-	CGameObjectManager::GetInstance()->DeleteGO(m_modelRender);
+	if (m_modelRender != nullptr) {
+		CGameObjectManager::GetInstance()->DeleteGO(m_modelRender);
+	}
 	m_charaCon.RemoveRigidBoby();
 }
 
@@ -66,13 +68,17 @@ void Mannequin::Update() {
 		//死んじゃった
 		m_actionFlag = true;
 		GameStatus_UISystem::GetInstance()->AddEXP(EXP);		//経験値を獲得
+		CGameObjectManager::GetInstance()->DeleteGO(m_modelRender);
+		m_modelRender = nullptr;
 		CGameObjectManager::GetInstance()->DeleteGO(this);
 	}
 
 	//キャラコン実行
 	m_position = m_charaCon.Execute(1.0f, CVector3::Zero());
 	//ModelRender更新
-	m_modelRender->SetPosition(m_position);
+	if (m_modelRender != nullptr) {
+		m_modelRender->SetPosition(m_position);
+	}
 }
 void Mannequin::Render() {
 

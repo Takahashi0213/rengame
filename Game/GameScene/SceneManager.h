@@ -3,7 +3,7 @@
 #include "Title.h"
 #include "Game.h"
 #include "system/CGameObjectManager.h"
-#include "StageSet.h"
+#include "GameSystem/StageSet/StageSet.h"
 #include "sound/SoundManager.h"
 
 /// <summary>

@@ -321,14 +321,16 @@ void GameStatusUI::Status_LevelUpEffect() {
 			m_text_MP->SetColor(CVector4::White());
 		}
 
-		//移動処理 右へ
-		m_text_Level->m_fontSupporter.FontMoveSet({ LevelUp_TextMove ,0.0f }, LevelUp_TextMoveTime, 0, true);
-		m_text_HP->m_fontSupporter.FontMoveSet({ LevelUp_TextMove ,0.0f }, LevelUp_TextMoveTime, 0, true);
-		m_text_MP->m_fontSupporter.FontMoveSet({ LevelUp_TextMove ,0.0f }, LevelUp_TextMoveTime, 0, true);
-		//移動処理 左へ（予約）
-		m_text_Level->m_fontSupporter.FontMoveSet({ -LevelUp_TextMove ,0.0f }, LevelUp_TextMoveTime, LevelUp_TextMoveDelay, true);
-		m_text_HP->m_fontSupporter.FontMoveSet({ -LevelUp_TextMove ,0.0f }, LevelUp_TextMoveTime, LevelUp_TextMoveDelay, true);
-		m_text_MP->m_fontSupporter.FontMoveSet({ -LevelUp_TextMove ,0.0f }, LevelUp_TextMoveTime, LevelUp_TextMoveDelay, true);
+		if (m_text_Level->m_fontSupporter.GetFontMoveListLen() == 0) {
+			//移動処理 右へ
+			m_text_Level->m_fontSupporter.FontMoveSet({ LevelUp_TextMove ,0.0f }, LevelUp_TextMoveTime, 0, true);
+			m_text_HP->m_fontSupporter.FontMoveSet({ LevelUp_TextMove ,0.0f }, LevelUp_TextMoveTime, 0, true);
+			m_text_MP->m_fontSupporter.FontMoveSet({ LevelUp_TextMove ,0.0f }, LevelUp_TextMoveTime, 0, true);
+			//移動処理 左へ（予約）
+			m_text_Level->m_fontSupporter.FontMoveSet({ -LevelUp_TextMove ,0.0f }, LevelUp_TextMoveTime, LevelUp_TextMoveDelay, true);
+			m_text_HP->m_fontSupporter.FontMoveSet({ -LevelUp_TextMove ,0.0f }, LevelUp_TextMoveTime, LevelUp_TextMoveDelay, true);
+			m_text_MP->m_fontSupporter.FontMoveSet({ -LevelUp_TextMove ,0.0f }, LevelUp_TextMoveTime, LevelUp_TextMoveDelay, true);
+		}
 
 	}
 

@@ -140,6 +140,7 @@
     <ClCompile Include="GameSystem\GameUI\Menu_Create.cpp" />
     <ClCompile Include="GameSystem\Mouse\MouseOver.cpp" />
     <ClCompile Include="GameSystem\Mouse\MouseSupporter.cpp" />
+    <ClCompile Include="GameSystem\StageSet\StageSet.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp" />
     <ClCompile Include="graphics\animation\AnimationClip.cpp" />
     <ClCompile Include="graphics\animation\AnimationPlayController.cpp" />
@@ -198,7 +199,6 @@
     <ClCompile Include="sound\SoundSource.cpp" />
     <ClCompile Include="sound\WaveFile.cpp" />
     <ClCompile Include="sound\WaveFileBank.cpp" />
-    <ClCompile Include="StageSet.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -251,6 +251,8 @@
     <ClInclude Include="GameSystem\GameUI\Menu_Create.h" />
     <ClInclude Include="GameSystem\Mouse\MouseOver.h" />
     <ClInclude Include="GameSystem\Mouse\MouseSupporter.h" />
+    <ClInclude Include="GameSystem\StageSet\StageData.h" />
+    <ClInclude Include="GameSystem\StageSet\StageSet.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="graphics\animation\Animation.h" />
     <ClInclude Include="graphics\animation\AnimationClip.h" />
@@ -315,8 +317,6 @@
     <ClInclude Include="sound\SoundSource.h" />
     <ClInclude Include="sound\WaveFile.h" />
     <ClInclude Include="sound\WaveFileBank.h" />
-    <ClInclude Include="StageData.h" />
-    <ClInclude Include="StageSet.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SystemData.h" />
     <ClInclude Include="system\CGameObjectManager.h" />
@@ -327,11 +327,10 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\0_0.fbx" />
+    <MeshContentTask Include="Assets\modelData\Benite.fbx" />
     <MeshContentTask Include="Assets\modelData\box.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Enemy\Benite\Benite.fbx" />
-    <MeshContentTask Include="Assets\modelData\Enemy\Mannequin.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Board\Board.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor_.fbx" />
@@ -345,6 +344,7 @@
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Base.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Coli.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Yazirushi.fbx" />
+    <MeshContentTask Include="Assets\modelData\Mannequin.fbx" />
     <MeshContentTask Include="Assets\modelData\map.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>

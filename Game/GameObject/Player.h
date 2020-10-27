@@ -13,17 +13,25 @@ public:
 	void Update()override;
 	void Render()override;
 
+	enum EnAnimationClip {
+		enAnimationClip_Idle,		//待機
+		enAnimationClip_Run,		//走る
+		enAnimationClip_Num,		//アニメーションクリップ
+	};
+
 	/// <summary>
-	/// プレイヤーが落下したら呼びましょう！
+	/// プレイヤーが敵からダメージを受けたら呼びましょう！
 	/// </summary>
-	void PlayerMiss();
+	void PlayerMiss(const CVector3& pos);
 
 	/// <summary>
 	/// プレイヤーのポジションを返す
 	/// </summary>
-	/// <returns>プレイヤーの場所</returns>
 	CVector3 GetPosition() {
 		return m_position;
+	}
+	const CVector3& GetPositionBackup() {
+		return m_posBackup;
 	}
 	//プレイヤーの座標を設定
 	void SetPosition(const CVector3& pos) {
@@ -36,7 +44,6 @@ public:
 	/// <summary>
 	/// プレイヤーの回転を返す
 	/// </summary>
-	/// <returns>回転</returns>
 	CQuaternion GetRotation() {
 		return m_rotation;
 	}
@@ -61,9 +68,9 @@ private:
 	//MouseOver ms;
 
 	//アニメーション
-	Animation m_playerAnimation;				//アニメーション。
-	Animation m_playerAnimationSL;				//アニメーション。
-	AnimationClip m_playerAnimationClips[2];	//アニメーションクリップ。
+	Animation m_playerAnimation;								//アニメーション。
+	Animation m_playerAnimationSL;								//アニメーション。
+	AnimationClip m_playerAnimationClips[enAnimationClip_Num];	//アニメーションクリップ。
 
 	//モノクロフラグ
 	bool m_monochromeFlag = false;
@@ -80,10 +87,11 @@ private:
 
 	//プレイヤー
 	CVector3 m_position = { 0.0f,50.0f,-800.0f };
-	CQuaternion m_rotation = CQuaternion().Identity();
-	CVector3 m_scale = CVector3().One(); //拡大率
-	CVector3 m_moveSpeed = CVector3().Zero();
-	CVector3 m_nextPos = CVector3().Zero();
+	CQuaternion m_rotation = CQuaternion::Identity();
+	CVector3 m_scale = CVector3::One();					//拡大率
+	CVector3 m_moveSpeed = CVector3::Zero();
+	CVector3 m_nextPos = CVector3::Zero();
+	CVector3 m_posBackup = CVector3::Zero();
 
 	//移動
 	const float m_moveMax = 30.0f;
@@ -121,7 +129,11 @@ private:
 	const float m_boxPut_Hosei = 150.0f;		//箱を置くときの移動量
 	//箱投げ
 	const float BoxThrowMaxLength = 500.0f;		//箱投げのターゲットになる範囲
-
+	//ダメージ
+	const float m_damage_YHosei = 20.0f;		//ダメージを受けた時に飛びあがる量
+	const float m_damage_knockback = -200.0f;	//ダメージを受けた時のノックバック距離
+	bool m_damage_Flag = false;					//ダメージで飛び上がっている間は方向を固定する
+	bool m_damage_JumpFlag = false;				//ダメージで飛び上がっている間は方向を固定する（空中用）
 
 };
 

@@ -17,6 +17,10 @@ public:
 	/// <param name="eventName">イベントの名前</param>
 	void EvemtStart(const wchar_t* eventName) {
 		int EvNo = m_eventData.SearchEventNo(eventName);
+		//起動済みのイベントなら強制終了
+		if (m_eventData.GetEventSaveFlag(EvNo) == true) {
+			return;
+		}
 		m_nowEventNo = EvNo;
 		m_eventProgress = -1;
 	}

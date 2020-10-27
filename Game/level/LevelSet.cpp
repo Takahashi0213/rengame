@@ -220,8 +220,10 @@ void LevelSet::LevelDelete() {
 		}
 		else {
 			//ŒŸõ‚µ‚ÄÁ‚·
-			IGameObject* go = CGameObjectManager::GetInstance()->FindGO<IGameObject>(m_Obj_Data[i].nameKey);
-			CGameObjectManager::GetInstance()->DeleteGO(go);
+			ObjectClass* go = CGameObjectManager::GetInstance()->FindGO<ObjectClass>(m_Obj_Data[i].nameKey);
+			if (go != nullptr) {
+				go->DeleteObject();
+			}
 		}
 	}
 

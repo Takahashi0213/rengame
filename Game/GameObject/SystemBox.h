@@ -57,7 +57,7 @@ private:
 	GhostBox_System m_boxSystem;					//この箱の種類
 
 	//レベルセット時に設定するもの
-	const wchar_t* m_LoadName = nullptr;		//ステージ/イベントの名前
+	const wchar_t* m_LoadName = nullptr;			//ステージ/イベントの名前
 	CVector3 m_playerMoveTarget;					//プレイヤーの移動先
 	float m_yazirushiRotAngle = 0.0f;				//矢印の回転
 	float m_yazirushiYHosei = 0.0f;					//矢印のY補正
@@ -66,6 +66,7 @@ private:
 	const float YazirushiMoveHosei = 30.0f;			//矢印の移動量補正
 	const int YazirushiMoveTime = 10;				//矢印の移動時間
 	bool YazirushiRotFlag = false;					//矢印の回転フラグ（Y_UP）
+	const int FallDamage = 50;						//落下ダメージ
 
 };
 

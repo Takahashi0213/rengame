@@ -296,9 +296,6 @@
     <ClCompile Include="graphics\skinModel\SkinModel.cpp">
       <Filter>graphics\SkinModel</Filter>
     </ClCompile>
-    <ClCompile Include="StageSet.cpp">
-      <Filter>system\StageSet</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject\ObjectClass.cpp">
       <Filter>object</Filter>
     </ClCompile>
@@ -485,6 +482,9 @@
     <ClCompile Include="GameScene\GameOver.cpp">
       <Filter>Scene\GameScene</Filter>
     </ClCompile>
+    <ClCompile Include="GameSystem\StageSet\StageSet.cpp">
+      <Filter>system\StageSet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -629,12 +629,6 @@
     </ClInclude>
     <ClInclude Include="graphics\skinModel\SkinModelSupporter.h">
       <Filter>graphics\SkinModel</Filter>
-    </ClInclude>
-    <ClInclude Include="StageSet.h">
-      <Filter>system\StageSet</Filter>
-    </ClInclude>
-    <ClInclude Include="StageData.h">
-      <Filter>system\StageSet</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\ObjectClass.h">
       <Filter>object</Filter>
@@ -825,6 +819,12 @@
     <ClInclude Include="GameScene\GameOver.h">
       <Filter>Scene\GameScene</Filter>
     </ClInclude>
+    <ClInclude Include="GameSystem\StageSet\StageSet.h">
+      <Filter>system\StageSet</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\StageSet\StageData.h">
+      <Filter>system\StageSet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Titan.fbx">
@@ -896,10 +896,10 @@
     <MeshContentTask Include="Assets\modelData\Gimmick\Yazirushi.fbx">
       <Filter>Assets\modelData\System</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Enemy\Benite\Benite.fbx">
+    <MeshContentTask Include="Assets\modelData\Benite.fbx">
       <Filter>Assets\modelData\Enemy</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Enemy\Mannequin.fbx">
+    <MeshContentTask Include="Assets\modelData\Mannequin.fbx">
       <Filter>Assets\modelData\Enemy</Filter>
     </MeshContentTask>
   </ItemGroup>

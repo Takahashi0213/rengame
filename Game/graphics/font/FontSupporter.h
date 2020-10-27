@@ -28,6 +28,13 @@ public:
 	void FontMoveSet(CVector2 move, int movespeed, int delay, bool relative = false);
 	void FontColorSet(CVector4 color, int moveTime, int moveDelay);
 
+	//状態取得用
+	//フォントの移動リスト要素数を取得
+	//移動中のフォントかどうかを判別する など
+	int GetFontMoveListLen() {
+		return static_cast<int>(m_fontMoveList.size());
+	}
+
 private:
 	class FontRender* m_fontRender;
 	//準備と片付け

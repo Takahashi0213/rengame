@@ -16,23 +16,23 @@ Player::Player()
 	m_model_Sl.SetRenderMode(RenderMode::Silhouette);
 
 	//アニメーション
-	m_playerAnimationClips[0].Load(L"Assets/animData/walk.tka");
-	m_playerAnimationClips[0].SetLoopFlag(true);
+	m_playerAnimationClips[enAnimationClip_Idle].Load(L"Assets/animData/idle.tka");
+	m_playerAnimationClips[enAnimationClip_Idle].SetLoopFlag(true);
 
-	m_playerAnimationClips[1].Load(L"Assets/animData/run.tka");
-	m_playerAnimationClips[1].SetLoopFlag(true);
+	m_playerAnimationClips[enAnimationClip_Run].Load(L"Assets/animData/run.tka");
+	m_playerAnimationClips[enAnimationClip_Run].SetLoopFlag(true);
 	//アニメーションの初期化。
 	m_playerAnimation.Init(
 		m_model,					//アニメーションを流すスキンモデル。
 									//これでアニメーションとスキンモデルが関連付けされる。
 		m_playerAnimationClips,		//アニメーションクリップの配列。
-		2							//アニメーションクリップの数。
+		enAnimationClip_Num			//アニメーションクリップの数。
 	);
 	m_playerAnimationSL.Init(
 		m_model_Sl,					//アニメーションを流すスキンモデル。
 									//これでアニメーションとスキンモデルが関連付けされる。
 		m_playerAnimationClips,		//アニメーションクリップの配列。
-		2							//アニメーションクリップの数。
+		enAnimationClip_Num			//アニメーションクリップの数。
 	);
 
 	//ワールド行列の更新。
@@ -86,13 +86,19 @@ void Player::Update()
 	if (m_gameObj != nullptr) {
 		if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode) {
 			//アニメーション再生
-			m_playerAnimation.Play(1);
+			float MovePower = m_moveSpeed.Length();
+			if (MovePower > 10.0f) {
+				m_playerAnimation.Play(enAnimationClip_Run);
+				m_playerAnimationSL.Play(enAnimationClip_Run);
+			}
+			else {
+				m_playerAnimation.Play(enAnimationClip_Idle);
+				m_playerAnimationSL.Play(enAnimationClip_Idle);
+			}
 			m_playerAnimation.Update(1.0f / 20.0f);
-			m_playerAnimationSL.Play(1);
 			m_playerAnimationSL.Update(1.0f / 20.0f);
 		}
 	}
-
 
 	//処理
 
@@ -167,8 +173,12 @@ void Player::Move() {
 	bool OnG_Flag = m_charaCon.IsOnGround();
 	GameUI* ui = CGameObjectManager::GetInstance()->FindGO<GameUI>(Game_UI);
 
-	if (key == MouseSupporter::Release_Push && SceneManager::GetInstance()->GetGameMode() == SceneManager::ActionMode
-		&& ui->GetGemeMenu()->GetSelectFlag() == false) {
+	//左キーが離された＆現在アクションモード＆メニューボタンに被っていない＆ノックバック中でない
+	if (key == MouseSupporter::Release_Push &&
+		SceneManager::GetInstance()->GetGameMode() == SceneManager::ActionMode &&
+		ui->GetGemeMenu()->GetSelectFlag() == false &&
+		m_damage_Flag == false)
+	{
 		if (MouseSupporter::GetInstance()->GetMouseTimer(MouseSupporter::Left_Key) < 12) {
 
 			m_nextPos = MouseSupporter::GetInstance()->GetMousePos_3D();
@@ -208,9 +218,17 @@ void Player::Move() {
 	if (m_moveSpeed.z < -m_moveMax) {
 		m_moveSpeed.z = -m_moveMax;
 	}
-	//移動方向に回転させる
-	float angle = atan2(m_moveSpeed.x, m_moveSpeed.z);
-	m_rotation.SetRotation(CVector3().AxisY(), angle);
+
+	//移動方向に回転させる（ノックバック中は回転しない）
+	if (m_damage_Flag == false) {
+		float angle = atan2(m_moveSpeed.x, m_moveSpeed.z);
+		m_rotation.SetRotation(CVector3().AxisY(), angle);
+	}
+
+	//現在位置のバックアップ
+	if (m_jumpNow == false) {
+		m_posBackup = m_position;
+	}
 
 }
 
@@ -238,9 +256,25 @@ void Player::Jump() {
 			//	180.0f, 180.0f, 180.0f);
 		}
 		m_jumpNow = true;
+
 	}
 	else {
 		m_jumpNow = false;
+	}
+
+	//空中フラグリセット
+	if (OnG_Flag == false) {
+		if (m_damage_JumpFlag == false && m_damage_Flag == true) {
+			m_damage_JumpFlag = true;
+		}
+	}
+	else {
+		if (m_damage_JumpFlag == true && m_damage_Flag == true) {
+			//ノックバック終了
+			m_damage_Flag = false;
+			m_damage_JumpFlag = false;
+			m_nextPos = m_position;
+		}
 	}
 
 }
@@ -326,7 +360,7 @@ void Player::BoxCatch() {
 		CVector3 Move = m_moveSpeed / m_boxPutHosei;
 		Move.y = 0.0f;
 		float MovePower = Move.Length();
-		if (MovePower > 0.99f) {
+		if (MovePower >= 0.0f) {
 
 			//投げる
 			CVector3 MoveSpeed = BoxThrowSearch();
@@ -606,7 +640,7 @@ CVector3 Player::BoxThrowSearch() {
 				if (go != nullptr) {
 					if (go->m_object == ObjectClass::ObjectClass_Tag::EnemyObj) {
 						//敵なので座標を取得して距離が近いなら上書き
-						CVector3 diff = go->GetPosition() - m_position;
+						CVector3 diff = go->GetPosition() - CRR_Callback.m_hitPointWorld;
 						float Len = diff.Length();
 						if (Len <= TargetLength) {
 							//上書き
@@ -624,12 +658,14 @@ CVector3 Player::BoxThrowSearch() {
 		if (TargetSetFlag == true) {
 			//移動速度を計算して返す
 			CVector3 diff = ThrowTarget - m_position;
-			diff.y = 1.0f;		//高さ
+			diff.Normalize();
+			diff *= 100.0f;		//移動パワー
+			diff.y = -3.0f;		//高さ
 			return diff;
 		}
 		else {
-			//どこにも引っかからなかった
-			CVector3 MoveSpeed = m_moveSpeed;
+			//どこにも引っかからなかった			
+			CVector3 MoveSpeed = CRR_Callback.m_hitPointWorld - m_upBox->GetPosition();
 			MoveSpeed.Normalize();
 			MoveSpeed *= 100.0f;	//移動パワー
 			MoveSpeed.y = 1.0f;		//高さ
@@ -647,6 +683,17 @@ CVector3 Player::BoxThrowSearch() {
 
 }
 
-void Player::PlayerMiss() {
+void Player::PlayerMiss(const CVector3& pos) {
 
+	//ノックバックの計算
+	CVector3 Pos = m_position;
+	CVector3 Move = m_moveSpeed;
+	Move.Normalize();
+	Pos += (Move * m_damage_knockback);
+	m_nextPos = Pos;
+
+	m_moveSpeed = CVector3::Zero();
+	m_moveSpeed.y = m_damage_YHosei;
+	m_damage_Flag = true;
+	m_damage_JumpFlag = false;
 }

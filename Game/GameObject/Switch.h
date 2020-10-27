@@ -19,6 +19,13 @@ public:
 	void SwitchDraw();
 
 	/// <summary>
+	/// レンダーモード変更
+	/// </summary>
+	void SwitchRenderModeChange(const RenderMode renderMode) {
+		m_model.SetRenderMode(renderMode);
+	}
+
+	/// <summary>
 	/// スイッチのオンオフ状態を返す
 	/// </summary>
 	bool GetSwitchState() {

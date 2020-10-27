@@ -10,3 +10,7 @@ GameOver::GameOver()
 GameOver::~GameOver()
 {
 }
+
+void GameOver::GameOverUpdate() {
+
+}

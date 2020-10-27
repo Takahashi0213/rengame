@@ -160,7 +160,8 @@ void SkinModelRender::Update() {
 		m_skinModelSupporter.SkinModelSupporterUpdate();
 	}
 
-	if (m_animationClips != nullptr) {
+	if (m_animationClips != nullptr &&
+		m_isUpdateAnimation == true) {
 		m_animation.Update(1.0f / 20.0f);
 	}
 

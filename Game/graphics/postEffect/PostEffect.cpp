@@ -52,6 +52,7 @@ void PostEffect::Update()
 
 void PostEffect::Draw()
 {
+
 	//Game::GameMode NowGameMode = Game::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
 	SceneManager::GameMode NowGameMode = SceneManager::GameMode::ActionMode;
 

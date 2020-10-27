@@ -302,7 +302,7 @@ void BoxMaker::Update() {
 /// ボックスを全部アップデートする
 /// </summary>
 void BoxMaker::BoxUpdate() {
-	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
+	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();
 
 	for (auto go : m_boxList) {
 	
@@ -343,11 +343,13 @@ void BoxMaker::ModeChange() {
 
 	//中クリックの状態を判定
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Center_Key);
-	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
+	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();
 	int Mana = GameData::GetInstance()->GetMagicPower();
 
 	//中クリックされた瞬間かつアクションモードかつマナが(CreateModeChangeBorder)以上ある
-	if (key == MouseSupporter::New_Push && NowGameMode == SceneManager::ActionMode && Mana >= CreateModeChangeBorder) {
+	if (key == MouseSupporter::New_Push && 
+		NowGameMode == SceneManager::ActionMode &&
+		Mana >= CreateModeChangeBorder) {
 
 		m_boxPos = MouseSupporter::GetInstance()->GetMousePos_3D();
 
@@ -361,11 +363,6 @@ void BoxMaker::ModeChange() {
 			//プレイヤーのちょい上
 			m_boxPos = m_player->GetPosition();
 			m_boxPos.y += PosHoseiY;
-			//CVector3 m_bp = MouseSupporter::GetInstance()->GetMousePos_3D();
-			//m_bp.Normalize();
-			//m_boxPos.x += m_bp.x;
-			//m_boxPos.y += m_bp.y;
-			//m_boxPos.z += m_bp.z;
 		}
 		
 		const bool flag = BoxCreateCheck();
@@ -400,12 +397,15 @@ void BoxMaker::ModeChange() {
 
 	}
 	//クリエイトモードに移行したいけどマナが(CreateModeChangeBorder)に足りない場合
-	else if (key == MouseSupporter::New_Push && NowGameMode == SceneManager::ActionMode && Mana < CreateModeChangeBorder) {
+	else if (key == MouseSupporter::New_Push && 
+		NowGameMode == SceneManager::ActionMode && 
+		Mana < CreateModeChangeBorder) {
 		//マナが足りません！のシェイクだけする
 		GameUI::GetInstance()->ManaShake();
 	}
-	//クリエイトモードからアクションモードへ戻りマス
-	else if (key == MouseSupporter::New_Push && NowGameMode == SceneManager::CreateMode) {	//中クリックされた瞬間かつアクションモード
+	//クリエイトモードからアクションモードへ戻ります
+	else if (key == MouseSupporter::New_Push &&
+		NowGameMode == SceneManager::CreateMode) {	//中クリックされた瞬間かつクリエイトモード
 
 		//魔力減少
 		m_originBox->SetManaPower(m_downMana);

@@ -5,9 +5,17 @@ Benite::Benite()
 {
 
 	//モデル準備
+	//アニメーションクリップをロードとループフラグ。
+	m_animClips[enAnimationClip_walk].Load(L"Assets/animData/BeniteWalk.tka");
+	m_animClips[enAnimationClip_walk].SetLoopFlag(true);
+
 	m_modelRender = CGameObjectManager::GetInstance()->NewGO<SkinModelRender>("Benite", 1);
-	m_modelRender->Model_Init(L"Assets/modelData/Mannequin.cmo",
-		m_position, m_rotation, m_scale);
+	m_modelRender->Model_Init_Anim(L"Assets/modelData/Benite.cmo",
+		m_animClips, enAnimationClip_Num);
+	m_modelRender->SetPosition(m_position);
+	m_modelRender->SetRotation(m_rotation);
+	m_modelRender->SetScale(Scale);
+	m_modelRender->PlayAnimation(enAnimationClip_walk);
 
 	m_modelRender->SetScale(Scale);
 
@@ -34,7 +42,9 @@ Benite::Benite()
 Benite::~Benite()
 {
 	//片付ける
-	CGameObjectManager::GetInstance()->DeleteGO(m_modelRender);
+	if (m_modelRender != nullptr) {
+		CGameObjectManager::GetInstance()->DeleteGO(m_modelRender);
+	}
 	m_charaCon.RemoveRigidBoby();
 }
 
@@ -43,15 +53,18 @@ void Benite::Update() {
 	//モノクロ化
 	if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode && m_monochromeFlag == false) {
 		m_modelRender->GetModel()->SetRenderMode(RenderMode::Monochrome);
+		m_modelRender->SetIsUpdateAnimation(false);
 		m_monochromeFlag = true;
 	}
 	else if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode && m_monochromeFlag == true) {
 		m_modelRender->GetModel()->SetRenderMode(RenderMode::Default);
+		m_modelRender->SetIsUpdateAnimation(true);
 		m_monochromeFlag = false;
 	}
 
-	//クリエイトモード中は一切の更新をしない
-	if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode) {
+	//クリエイトモード中やゲームオーバー中は一切の更新をしない
+	if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode || 
+		SceneManager::GetInstance()->GetGameMode() == SceneManager::GameOver) {
 		return;
 	}
 
@@ -66,7 +79,10 @@ void Benite::Update() {
 	CVector3 toPlayerDir = m_player->GetPosition() - m_position;
 	float toPlayerLen = toPlayerDir.Length();
 	if (toPlayerLen < DamageLength) {
-		Game::GetInstance()->GetDamageSystem()->Damage(-ATK);
+		bool damageFlag = Game::GetInstance()->GetDamageSystem()->Damage(-ATK);
+		if (damageFlag == true) {
+			m_player->PlayerMiss(m_position);		//プレイヤーのノックバック
+		}
 	}
 
 	//ステートで分岐
@@ -88,6 +104,8 @@ void Benite::Update() {
 		//死亡
 		m_actionFlag = true;
 		GameStatus_UISystem::GetInstance()->AddEXP(EXP);		//経験値を獲得
+		CGameObjectManager::GetInstance()->DeleteGO(m_modelRender);
+		m_modelRender = nullptr;
 		CGameObjectManager::GetInstance()->DeleteGO(this);
 		break;
 	}
@@ -97,8 +115,10 @@ void Benite::Update() {
 	//キャラコン実行
 	m_position = m_charaCon.Execute(1.0f, m_moveSpeed);
 	//ModelRender更新
-	m_modelRender->SetPosition(m_position);
-	m_modelRender->SetRotation(m_rotation);
+	if (m_modelRender != nullptr) {
+		m_modelRender->SetPosition(m_position);
+		m_modelRender->SetRotation(m_rotation);
+	}
 
 }
 void Benite::Render() {

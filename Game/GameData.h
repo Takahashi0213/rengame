@@ -250,9 +250,14 @@ private:
 
 	//内部用関数
 	//レベルアップした時に最大マナを上げる
-	void LevelUp_Mana(int x) {
+	void LevelUp_Mana(const int& x) {
 		SetMaxMagic(GetMaxMagic() + x);
 		MagicPowerPlus(x);
+	}
+	//レベルアップした時に最大HPを100上げる（ハート1つ分、固定）
+	void LevelUp_HP() {
+		SetMaxHP(GetMaxHP() + 100);
+		HP_Plus(100);
 	}
 
 	//基本
@@ -284,8 +289,8 @@ private:
 	//
 	int m_magicPower = 20;		//現在マナ
 	int m_magicPower_MAX = 20;	//マナ最大値
-	int m_hp = 300;				//現在体力
-	int m_hp_MAX = 300;			//最大体力
+	int m_hp = 200;				//現在体力
+	int m_hp_MAX = 200;			//最大体力
 
 	//コンフィグ
 	int m_messageSpeed = 2;		//会話のメッセージ送りスピード

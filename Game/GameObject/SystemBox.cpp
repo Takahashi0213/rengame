@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SystemBox.h"
 
-#include "StageSet.h"
+#include "GameSystem/StageSet/StageSet.h"
 
 GhostBox::GhostBox()
 {
@@ -155,9 +155,9 @@ void GhostBox::GhostAction() {
 	}
 	//落下ダメージ
 	if (m_boxSystem == DamageZone) {
-
+		Game::GetInstance()->GetDamageSystem()->Damage(-FallDamage);	//ダメージを受ける
+		m_player->SetPosition(m_player->GetPositionBackup());			//座標を戻す
 	}
-
 }
 
 /// <summary>

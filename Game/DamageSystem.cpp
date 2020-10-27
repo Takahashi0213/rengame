@@ -11,14 +11,15 @@ DamageSystem::~DamageSystem()
 {
 }
 
-void DamageSystem::Damage(const int& damage) {
+bool DamageSystem::Damage(const int& damage) {
 	
 	//–³“GŽžŠÔ’†‚Å‚È‚¢‚È‚çƒ_ƒ[ƒW‚ð—^‚¦‚é
 	if (m_damageFlag == false) {
 		GameData::GetInstance()->HP_Plus(damage);
 		m_damageFlag = true;
+		return true;
 	}
-
+	return false;
 }
 
 void DamageSystem::DamageUpdate() {

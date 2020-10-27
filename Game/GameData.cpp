@@ -47,6 +47,31 @@ void GameData::LevelUpStatus() {
 	case 2:
 		LevelUp_Mana(10);
 		break;
+	case 3:
+		LevelUp_HP();
+		break;
+	case 4:
+		LevelUp_Mana(10);
+		break;
+	case 5:
+		LevelUp_Mana(5);
+		break;
+	case 6:
+		LevelUp_Mana(5);
+		break;
+	case 7:
+		LevelUp_HP();
+		break;
+	case 8:
+		LevelUp_Mana(5);
+		break;
+	case 9:
+		LevelUp_Mana(5);
+		break;
+	case 10:
+		LevelUp_Mana(10);
+		break;
+
 	}
 
 }

@@ -44,6 +44,12 @@ public:
 		return m_scale;
 	}
 
+	//削除用
+	void DeleteObject() {
+		CGameObjectManager::GetInstance()->DeleteGO(m_modelRender);
+		DeleteGO(this);
+	}
+
 	//一応パブリックのままで…
 
 	ObjectClass_Tag m_object = NullObj;			//こいつが何者かを示す

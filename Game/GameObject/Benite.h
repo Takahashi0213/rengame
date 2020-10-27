@@ -10,6 +10,11 @@ public:
 	void Update()override;
 	void Render()override;
 
+	enum EnAnimationClip {
+		enAnimationClip_walk, //待機
+		enAnimationClip_Num,  //アニメーションクリップ
+	};
+
 	enum State {
 		Move,
 		AttackWait,
@@ -25,6 +30,7 @@ private:
 	void AttackAction();
 
 	CharacterController m_charaCon; //キャラコン
+	AnimationClip m_animClips[enAnimationClip_Num];
 
 	CVector3 m_moveSpeed = CVector3().Zero();
 
@@ -48,9 +54,9 @@ private:
 	const float AttackLimit = 0.5f;			//攻撃の時間
 	const float AttackEndLimit = 2.0f;		//攻撃終了の時間
 
-	const float Scale = 4.0f;				//大きさ
+	const float Scale = 1.0f;				//大きさ
 
-	const float DamageLength = 100.0f;		//ダメージの範囲
+	const float DamageLength = 150.0f;		//ダメージの範囲
 
 	const int ATK = 50;
 	const int EXP = 20;

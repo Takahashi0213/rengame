@@ -149,6 +149,14 @@ public:
 	}
 
 	/// <summary>
+	/// アニメーションを更新する？
+	/// falseで停止、trueで再開
+	/// </summary>
+	void SetIsUpdateAnimation(const bool& flag) {
+		m_isUpdateAnimation = flag;
+	}
+
+	/// <summary>
 	/// スキンモデルサポーターを更新する？
 	/// falseで停止、trueで再開
 	/// </summary>
