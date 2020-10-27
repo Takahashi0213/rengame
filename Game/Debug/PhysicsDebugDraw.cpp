@@ -32,6 +32,20 @@ void CPhysicsDebugDraw::Init()
 	bufferDesc.CPUAccessFlags = 0;
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_cb);
 
+	//①頂点バッファを設定しましょう
+	D3D11_BUFFER_DESC bd;
+	ZeroMemory(&bd, sizeof(bd));
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.ByteWidth = static_cast<int>(m_vertexBuffer.size()) * sizeof(CVector4);
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd.CPUAccessFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA InitData;
+	ZeroMemory(&InitData, sizeof(InitData));
+	InitData.pSysMem = &m_vertexBuffer[0];
+	HRESULT hr = g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bd, &InitData, &m_vertexBuffer_);
+
+
 }
 void CPhysicsDebugDraw::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 {
@@ -56,19 +70,6 @@ void CPhysicsDebugDraw::EndDraw()
 	//入力レイアウトを設定。
 	g_graphicsEngine->GetD3DDeviceContext()->IASetInputLayout(m_vs.GetInputLayout());
 	//m_primitive.Draw(*g_graphicsEngine->GetD3DDeviceContext(), m_numLine * 2);
-
-	//①頂点バッファを設定しましょう
-	D3D11_BUFFER_DESC bd;
-	ZeroMemory(&bd, sizeof(bd));
-	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = static_cast<int>(m_vertexBuffer.size()) * sizeof(CVector4);
-	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bd.CPUAccessFlags = 0;
-	D3D11_SUBRESOURCE_DATA InitData;
-	ZeroMemory(&InitData, sizeof(InitData));
-	InitData.pSysMem = &m_vertexBuffer[0];
-
-	HRESULT hr = g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bd, &InitData, &m_vertexBuffer_);
 
 	//②メインメモリの頂点バッファの内容をGraphicメモリにコピー
 	g_graphicsEngine->GetD3DDeviceContext()->UpdateSubresource(m_vertexBuffer_, 0, NULL, &m_vertexBuffer[0], 0, 0);

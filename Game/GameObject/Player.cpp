@@ -87,7 +87,7 @@ void Player::Update()
 		if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode) {
 			//アニメーション再生
 			float MovePower = m_moveSpeed.Length();
-			if (MovePower > 10.0f) {
+			if (MovePower > 2.0f) {
 				m_playerAnimation.Play(enAnimationClip_Run);
 				m_playerAnimationSL.Play(enAnimationClip_Run);
 			}

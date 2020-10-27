@@ -73,7 +73,9 @@
 			ForwordRender();
 
 			//デバッグ
+#ifdef _DEBUG
 			m_cgom_Graphics->DebugDraw();
+#endif
 
 			//エフェクサー
 			m_cgom_Graphics->EffectRender(false);
