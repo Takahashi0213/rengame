@@ -387,6 +387,8 @@ void BoxMaker::ModeChange() {
 			//マナ設定
 			m_downMana = CreateModeChangeBorder;
 			m_startMana = GameData::GetInstance()->GetMagicPower();
+			//SE
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/ModeChange.wav");
 
 			//ゲームカメラに渡す
 			int a = Hash::MakeHash("GameCamera");
@@ -402,6 +404,8 @@ void BoxMaker::ModeChange() {
 		Mana < CreateModeChangeBorder) {
 		//マナが足りません！のシェイクだけする
 		GameUI::GetInstance()->ManaShake();
+		//SE
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/CanNotBoxCreate.wav");
 	}
 	//クリエイトモードからアクションモードへ戻ります
 	else if (key == MouseSupporter::New_Push &&
@@ -410,6 +414,8 @@ void BoxMaker::ModeChange() {
 		//魔力減少
 		m_originBox->SetManaPower(m_downMana);
 		GameData::GetInstance()->SetMagicPower(m_startMana - m_downMana);
+		//SE
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/ModeChange.wav");
 
 		//アクションモードへ変更
 		SceneManager::GetInstance()->SetGameMode(SceneManager::ActionMode);

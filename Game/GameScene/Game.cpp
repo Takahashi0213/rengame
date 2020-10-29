@@ -20,7 +20,9 @@ Game::Game()
 	m_instance = this;
 
 	//生成
-	
+	m_gameData = new GameData;
+	m_gameEffect = new GameEffect;
+
 	//OPを生成
 	m_op = new OP;
 
@@ -56,8 +58,8 @@ void Game::Update() {
 		break;
 	case Game::GamaState_Game:
 		//ゲーム中専用
-		m_gameEvent.GameEventUpdate();		//ゲームイベントアップデート
-		m_damageSystem.DamageUpdate();		//ダメージシステムアップデート
+		m_gameEvent->GameEventUpdate();		//ゲームイベントアップデート
+		m_damageSystem->DamageUpdate();		//ダメージシステムアップデート
 		break;
 	case Game::GamaState_GameOver:
 		m_gameOver->GameOverUpdate();		//ゲームオーバーアップデート
@@ -72,7 +74,7 @@ void Game::Update() {
 	}
 
 	//どのステートでもエフェクト更新はする
-	m_gameEffect.GameEffectUpdate();
+	m_gameEffect->GameEffectUpdate();
 
 }
 
@@ -98,6 +100,10 @@ void Game::GameSetUp() {
 	m_statusUI = CGameObjectManager::GetInstance()->NewGO<GameStatus_UISystem>("GameStatus_UISystem", 8);
 	//カメラ
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
+	//ゲームイベント
+	m_gameEvent = new GameEvent;
+	//ダメージシステム
+	m_damageSystem = new DamageSystem;
 	//ステージ
 	StageSet::GetInstance()->InitStage(L"Tutorial");
 	//チュートリアルBGMの再生

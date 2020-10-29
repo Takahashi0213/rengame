@@ -97,7 +97,7 @@ public:
 	int m_slicePattern = -1;
 	int m_nowPattern = 0;
 
-	void SetSize(CVector2 size) {
+	void SetSize(const CVector2& size) {
 		InitCommon(size.x, size.y,true);
 	}
 

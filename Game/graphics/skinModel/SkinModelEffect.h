@@ -87,7 +87,6 @@ private:
 	/// シルエット描画用のデプスステンシルステートを初期化する。
 	/// </summary>
 	void InitSilhouettoDepthStepsilState();
-
 	/// <summary>
 	/// 半透明合成用のブレンドステートを初期化する
 	/// </summary>

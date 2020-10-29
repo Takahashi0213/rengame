@@ -52,6 +52,8 @@ void StarMoney::Update() {
 	if (length < GetRange) {
 		//Žæ“¾‚·‚é
 		GameStatus_UISystem::GetInstance()->AddStarMoney(GetStarMoney);
+		//SE
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/StarMoney.wav");
 		DeleteGO(this);
 	}
 

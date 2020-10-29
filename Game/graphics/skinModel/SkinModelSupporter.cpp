@@ -53,7 +53,8 @@ void SkinModelSupporter::SkinModelDataReturn() {
 /// <param name="moveTime">移動時間</param>
 /// <param name="moveDelay">移動ディレイ</param>
 /// <param name="relative">相対移動フラグ trueにするとmoveに設定した値を相対座標として扱う</param>
-void SkinModelSupporter::SkinModelMove(CVector3 move, int moveTime, int moveDelay, bool relative) {
+void SkinModelSupporter::SkinModelMove(const CVector3& move, const int& moveTime, 
+	const int& moveDelay, const bool& relative) {
 	//リストに追加や
 	SkinModelMoveSet set = { move,CVector3().Zero(),moveTime,moveDelay,0,relative,false };
 	m_skinModelMoveList.push_back(set);
@@ -73,8 +74,8 @@ void SkinModelSupporter::SkinModelMove(CVector3 move, int moveTime, int moveDela
 /// <param name="moveTime">回転時間（loopflagがtrueなら無効）</param>
 /// <param name="moveDelay">回転ディレイ</param>
 /// <param name="loopflag">trueにすると停止命令までずっと回転</param>
-void SkinModelSupporter::SkinModelRotation(const float rot, CVector3 axis, 
-	const int moveTime, const int moveDelay, const bool loopflag) {
+void SkinModelSupporter::SkinModelRotation(const float& rot, CVector3 axis, 
+	const int& moveTime, const int& moveDelay, const bool& loopflag) {
 
 	//現在の回転に合わせる
 	CQuaternion rotation = m_skinModelRender->GetRotation();

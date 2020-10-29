@@ -13,8 +13,10 @@ class EffekseerSupporter
 public:
 	//エフェクトの種類
 	enum EffectData {
-		TestData,
-		Null,
+		TestData,			//テストデータ
+		EnemyDeath,			//敵が倒れる
+		PlayerMove,			//プレイヤーの移動先
+		EffectNum,
 	};
 
 	//
@@ -32,6 +34,7 @@ public:
 	
 	/// <summary>
 	/// エフェクトの生成
+	/// PostFlagをtrueにすると2D空間に描画される
 	/// </summary>
 	Effekseer::Handle NewEffect(const wchar_t* EffectFileName, 
 		const bool& PostFlag = false,
@@ -50,8 +53,13 @@ public:
 	/// <summary>
 	/// 先に描画されるエフェクトのストップ＆再開
 	/// </summary>
-	void NoPostStop();
-	void NoPostMove();
+	void NoPostStop(const bool& flag);
+
+	/// <summary>
+	/// エフェクトの強制削除
+	/// </summary>
+	/// <param name="effect">削除するエフェクトのハンドル</param>
+	void EffectDelete(const Effekseer::Handle& effect);
 
 	/// <summary>
 	/// エフェクトデータの削除（毎フレーム呼んでね）
@@ -69,9 +77,10 @@ public:
 private:
 
 	//エフェクトファイル名
-	const wchar_t EffectDetaBase[2][30]{
+	const wchar_t EffectDetaBase[EffectNum][MAX_PATH]{
 	{ L"Assets/effect/test.efk" },
-	{ L"Assets/effect/test.efk" },
+	{ L"Assets/effect/EnemyDeath.efk" },
+	{ L"Assets/effect/PlayerMove.efk" },
 	};
 
 	std::list<Effect> m_effectList;		//エフェクトリスト

@@ -63,14 +63,14 @@ public:
 	{
 		m_color = color;
 	}
-	void SetAlpha(float alpha) {
+	void SetAlpha(const float& alpha) {
 		m_color.w = alpha;
 	}
 	/*!
 	*@brief	回転を設定。
 	*@param[in]	rotation	回転角度。単位はラジアン。
 	*/
-	void SetRotation(float rotation)
+	void SetRotation(const float& rotation)
 	{
 		m_rotation = rotation;
 	}
@@ -78,7 +78,7 @@ public:
 	*@brief	拡大率を設定。
 	*@param[in]	scale	拡大率。
 	*/
-	void SetScale(float scale)
+	void SetScale(const float& scale)
 	{
 		m_scale = scale;
 	}
@@ -98,11 +98,11 @@ public:
 		m_pivot.y = pivot.y;
 	}
 	/// <summary>
-	/// カットするゾイ
+	/// カットする
 	/// </summary>
 	/// <param name="cutUp">ここより上は描画しないよ</param>
 	/// <param name="cutDown">ここより下も描画しないぞ</param>
-	void SetCut(float cutUp,float cutDown) {
+	void SetCut(const float& cutUp, const float& cutDown) {
 		m_font.SetCut(cutUp, cutDown);
 	}
 	/*!
@@ -140,7 +140,7 @@ public:
 	/// </summary>
 	/// <param name="text">表示するテキスト</param>
 	/// <param name="Interval">1文字ごとのインターバル</param>
-	void SetTextOkuri(const wchar_t* text, int Interval);
+	void SetTextOkuri(const wchar_t* text, const int& Interval, const bool& TextOkuriSE_Flag = true);
 
 	/// <summary>
 	/// テキスト送りを一瞬で最後まで行います
@@ -182,6 +182,7 @@ private:
 	bool m_okuriFlag = false;					//!<メッセージ送り処理のフラグ
 	int m_textOkuri_Len = 0;					//!<予備テキストの文字数
 	int m_textOkuri_NowLen = 0;					//!<現在の文字数
+	bool m_textOkuriSE = false;					//!<テキスト送り中にSEを鳴らす？
 
 	//特殊文字用
 	struct MessageSt{

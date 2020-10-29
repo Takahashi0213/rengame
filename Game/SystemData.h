@@ -10,4 +10,5 @@ public:
 	bool m_eventNowFlag = false;		//イベント中（会話など）
 	bool m_menuStopFlag = false;		//メニューの操作フラグ	
 
+
 };

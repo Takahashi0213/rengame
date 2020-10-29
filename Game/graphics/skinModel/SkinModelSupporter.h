@@ -19,8 +19,10 @@ public:
 	}
 
 	//実行するコマンド
-	void SkinModelMove(CVector3 move, int moveTime, int moveDelay, bool relative = false);
-	void SkinModelRotation(const float rot, CVector3 axis , const int moveTime, const int moveDelay, const bool loopflag = false);
+	void SkinModelMove(const CVector3& move, const int& moveTime,
+		const int& moveDelay, const bool& relative = false);
+	void SkinModelRotation(const float& rot, CVector3 axis , const int& moveTime, 
+		const int& moveDelay, const bool& loopflag = false);
 	//初期化
 	void SkinModelMoveClear() {
 		m_skinModelMoveList.clear();

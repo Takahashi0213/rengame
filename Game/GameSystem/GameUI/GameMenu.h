@@ -18,6 +18,7 @@ public:
 		Box_Release,	//全箱解放（箱を全て消去してマナを回復）
 		Library,		//図鑑やあらすじ
 		Save,			//セーブ
+		CommandNum,		//コマンド数
 	};
 
 	GameMenu();
@@ -44,13 +45,13 @@ public:
 private:
 
 	//ｴﾌｪｸﾄ
-	void Update_Effect(int mode);
-	void GameMenu_NoActiveEffect();								//コマンド選択中はメニューをモノクロにする
+	void Update_Effect(const int& mode);
+	void GameMenu_NoActiveEffect();								//コマンド選択中はメニューを半透明にする
 	//コマンド
 	void Update_Command();										//マウスカーソルの位置でコマンドの移動方法を変える
 	void Update_CommandDelta(const int delta, bool& flag);		//マウスホイールの動作からコマンド位置を上下させる
 	void Update_CommandDraw(bool drawStile);					//選択中のコマンドとそれ以外のコマンドで描画を変える処理
-	void Update_MenuEnter(int leftKey);							//メニューのコマンド決定処理
+	void Update_MenuEnter(const int& leftKey);					//メニューのコマンド決定処理
 	void Update_CommandNow();									//コマンド実行中、自動でアップデートする処理
 	//メニューコマンドを削除
 	void DeleteMenuCommand();									//コマンドを削除する
@@ -64,6 +65,7 @@ private:
 	MenuCommand m_nowMenuCommand = MenuCommand::Create;			//現在のコマンド
 	bool m_selectFlag = false;									//選択中
 	bool m_commandNow = false;									//コマンド内容実行中
+	bool m_selectSE_Flag = false;								//メニューボタンの効果音フラグ
 
 	//メニュー関連の画像が多すぎ
 	std::vector<SpriteRender*> m_spriteRenderList;
@@ -118,7 +120,7 @@ private:
 	const int MenuCommandSelectJumpTime = 2;					//選択時のジャンプ時間
 
 	//項目内容
-	const wchar_t* Koumoku[4]{
+	const wchar_t* Koumoku[CommandNum]{
 		L"クリエイト",
 		L"全箱解放",
 		L"ライブラリ",
@@ -132,7 +134,7 @@ private:
 	const float TextFontSize_Setumei = 0.5f;					//テキストの大きさ
 	const CVector2 DefSetumei_TextPosition = { -140.0f,60.0f };	//説明文ウィンドウを基準にした座標
 	//内容
-	const wchar_t* SetumeiBun[4]{
+	const wchar_t* SetumeiBun[CommandNum]{
 		L"マナやアイテムを\n消費して便利な\n装備を作ります。",
 		L"生成されている箱を\n全て削除して、\nマナを全回復させます。",
 		L"今までの冒険の\n記録を閲覧できます。",
@@ -154,6 +156,10 @@ private:
 	bool m_commandEndFlag = false;								//コマンド終了フラグ
 	int m_commandEndTimer = 0;									//コマンド終了タイマー
 	const int CommandEndLimit = 10;								//コマンド終了リミット
+
+	//サウンド関連
+	const float MenuBGM_Volume = 0.5f;							//メニュー中はBGMの音量を下げる
+	const int MenuBGM_FadeTime = 6;								//BGMの音量変化フェード速度
 
 	//メニュー操作関連
 

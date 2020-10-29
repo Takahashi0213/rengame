@@ -8,6 +8,8 @@ Benite::Benite()
 	//アニメーションクリップをロードとループフラグ。
 	m_animClips[enAnimationClip_walk].Load(L"Assets/animData/BeniteWalk.tka");
 	m_animClips[enAnimationClip_walk].SetLoopFlag(true);
+	m_animClips[enAnimationClip_attack].Load(L"Assets/animData/BeniAttackFull.tka");
+	m_animClips[enAnimationClip_attack].SetLoopFlag(false);
 
 	m_modelRender = CGameObjectManager::GetInstance()->NewGO<SkinModelRender>("Benite", 1);
 	m_modelRender->Model_Init_Anim(L"Assets/modelData/Benite.cmo",
@@ -15,7 +17,7 @@ Benite::Benite()
 	m_modelRender->SetPosition(m_position);
 	m_modelRender->SetRotation(m_rotation);
 	m_modelRender->SetScale(Scale);
-	m_modelRender->PlayAnimation(enAnimationClip_walk);
+	m_modelRender->PlayAnimation(enAnimationClip_walk);	//基本歩く
 
 	m_modelRender->SetScale(Scale);
 
@@ -28,7 +30,7 @@ Benite::Benite()
 	//キャラコン！！
 	m_charaCon.Init(
 		60.0f,  //キャラクターの半径。
-		60.0f,  //キャラクターの高さ。
+		80.0f,  //キャラクターの高さ。
 		m_position //キャラクターの初期座標。
 	);
 
@@ -104,6 +106,9 @@ void Benite::Update() {
 		//死亡
 		m_actionFlag = true;
 		GameStatus_UISystem::GetInstance()->AddEXP(EXP);		//経験値を獲得
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Enemy_Death.wav");	//SE
+		EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::EnemyDeath,
+			false, m_position.x, m_position.y, m_position.z);
 		CGameObjectManager::GetInstance()->DeleteGO(m_modelRender);
 		m_modelRender = nullptr;
 		CGameObjectManager::GetInstance()->DeleteGO(this);
@@ -181,6 +186,15 @@ void Benite::Attack_Wait() {
 		m_moveSpeed = diff;
 		m_moveSpeed.Normalize();
 		m_moveSpeed *= BackSpeed;
+
+		CVector3 front = { 0.0f, 0.0f,1.0f };
+		//プレイヤーの向きに回転
+		m_moveSpeed.y = 0.0f;
+		diff = m_moveSpeed;
+		diff.Normalize();
+		CQuaternion qRot;
+		qRot.SetRotation(front, diff);
+		m_rotation = qRot;
 	}
 
 	//タイマー加算
@@ -193,14 +207,6 @@ void Benite::Attack_Wait() {
 		m_state = Attack;
 	}
 
-	CVector3 front = { 0.0f, 0.0f,1.0f };
-	//プレイヤーの向きに回転
-	m_moveSpeed.y = 0.0f;
-	CVector3 diff = m_moveSpeed;
-	diff.Normalize();
-	CQuaternion qRot;
-	qRot.SetRotation(front, diff);
-	m_rotation = qRot;
 }
 
 void Benite::AttackAction() {
@@ -225,19 +231,29 @@ void Benite::AttackAction() {
 	//タイマー加算
 	m_moveTimer += CGameTime::GetFrameDeltaTime();
 
+	//攻撃アニメーション
+	if (m_moveTimer >= AttackAnimeLimit && m_attackAnimeFlag == false) {
+		m_modelRender->PlayAnimation(enAnimationClip_attack);	//攻撃
+		m_attackAnimeFlag = true;
+	}
 	//移動後のスタン
 	if (m_moveTimer >= AttackLimit && m_moveFlag == false) {
 		m_moveSpeed = CVector3::Zero();
 		m_moveFlag = true;
 	}
-
 	if (m_moveTimer >= AttackEndLimit) {
 		//移動へ移行
 		m_moveSpeed = CVector3::Zero();
 		m_moveTimer = 0.0f;
 		m_moveFlag = false;
 		m_state = Move;
+		m_attackAnimeFlag = false;
+		m_modelRender->PlayAnimation(enAnimationClip_walk);	//基本歩く
 	}
 
+	//攻撃アニメーション終了
+	if (m_attackAnimeFlag == true && m_modelRender->IsPlayingAnimation() == false) {
+		m_modelRender->PlayAnimation(enAnimationClip_walk);	//基本歩く
+	}
 
 }

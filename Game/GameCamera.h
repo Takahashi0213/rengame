@@ -19,13 +19,12 @@ public:
 	/// <summary>
 	/// 今見ている箱のアドレスです
 	/// </summary>
-	/// <param name="gamebox">アドレスです</param>
 	void SetGameBox(GameBox* gamebox) {
 		m_gamebox = gamebox;
 	}
 
 	/// <summary>
-	/// クリエイトモードからアクションモードに切り替わった時、カメラの移動を制御するフラグをtrueにしましょ～
+	/// クリエイトモードからアクションモードに切り替わった時、カメラの移動を制御するフラグをtrueにしましょ
 	/// </summary>
 	void PlayerCameraMove() {
 		m_camera_BoxToPlayer_MoveFlag = true;
@@ -37,6 +36,11 @@ public:
 	/// <returns>インスタンスです</returns>
 	static GameCamera* GameCamera::GetInstance() {
 		return m_instance;
+	}
+
+	//外部からの強制カメラ移動実行
+	void ActionModeCameraMove() {
+		ActionMode();
 	}
 
 private:

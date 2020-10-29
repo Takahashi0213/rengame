@@ -30,6 +30,11 @@ void Sprite::InitCommon(float w, float h ,bool cutFlag)
 {
 	m_mainSprite.Size.x = w;
 	m_mainSprite.Size.y = h;
+
+	if (cutFlag == true) {
+		m_vertexBuffer->Release();
+	}
+
 	//頂点バッファの初期化
 	InitVertexBuffer(m_vertexBuffer, w, h);
 

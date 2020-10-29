@@ -9,6 +9,8 @@ public:
 
 	Player* m_player;				//プレイヤー
 
+	bool m_deathEffectFlag = false;	//死亡エフェクト複数再生防止
+
 private:
 
 	//定数

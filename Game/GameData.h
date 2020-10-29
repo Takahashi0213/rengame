@@ -231,6 +231,22 @@ public:
 	const char GetBoxDeleteKey()const {
 		return m_boxDeleteKey;
 	}
+	
+	//サウンドコンフィグ
+	//BGMボリューム補正
+	void Set_BGMVolume(const float& volume) {
+		m_bgmVolume = volume;
+	}
+	const float& Get_BGMVolume()const {
+		return m_bgmVolume;
+	}
+	//SEボリューム補正
+	void Set_SEVolume(const float& volume) {
+		m_seVolume = volume;
+	}
+	const float& Get_SEVolume()const {
+		return m_seVolume;
+	}
 
 	/// <summary>
 	/// インスタンスを取得！

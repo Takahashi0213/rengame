@@ -50,7 +50,7 @@ void FontSupporter::FontDelayReset() {
 
 //‚±‚±‚©‚çÝ’è
 
-void FontSupporter::FontMoveSet(CVector2 move, int movespeed, int delay, bool relative) {
+void FontSupporter::FontMoveSet(const CVector2& move, const int& movespeed, const int& delay, const bool& relative) {
 
 	//‚Ë‚ñ‚Ì‚½‚ß
 	//FontDataUpdate();
@@ -61,7 +61,7 @@ void FontSupporter::FontMoveSet(CVector2 move, int movespeed, int delay, bool re
 
 }
 
-void FontSupporter::FontColorSet(CVector4 color, int moveTime, int moveDelay) {
+void FontSupporter::FontColorSet(const CVector4& color, const int& moveTime, const int& moveDelay) {
 	m_fontColor = color;
 	m_fontColorLimit = moveTime;
 	m_fontColorDelay = moveDelay;
@@ -103,7 +103,7 @@ void FontSupporter::FontMoveUpdate() {
 			go->m_fontMoveTimer++;
 
 			if (go->m_fontMoveTimer >= go->m_fontMoveLimit + go->m_fontMoveDelay) {
-				//‚¨‚µ‚Ü‚Ð
+				//‚¨‚µ‚Ü‚¢
 				go->m_fontMoveDeleteFlag = true;
 				go->m_fontMoveTimer = -1;
 			}

@@ -14,11 +14,11 @@ public:
 	~GameStatusUI();
 
 	//予約処理追加
-	void AddStarMoney(const int x) {
+	void AddStarMoney(const int& x) {
 		StatusData addData = { Status_Anime::StarMoney ,x };
 		m_statusList.push_back(addData);
 	}
-	void AddEXP(const int x) {
+	void AddEXP(const int& x) {
 		StatusData addData = { Status_Anime::EXP ,x };
 		m_statusList.push_back(addData);
 	}
@@ -120,6 +120,7 @@ private:
 	const float LevelUp_TextMove = 300.0f;					//テキストの移動量
 	const int LevelUp_TextMoveTime = 12;					//テキストの移動時間
 	const int LevelUp_TextMoveDelay = 30;					//テキストの移動ディレイ
+	SpriteRender* m_levelUpSprite = nullptr;				//レベルアップスプライト
 
 	//EXP計算用変数
 	//レベルアップ処理開始時のステータスを記録しておいて、処理終了時との差で上昇量を求める
@@ -164,10 +165,10 @@ public:
 	void Render()override;
 
 	//ここから加算処理用
-	void AddStarMoney(const int x) {
+	void AddStarMoney(const int& x) {
 		m_gameStatusUI.AddStarMoney(x);
 	}
-	void AddEXP(const int x) {
+	void AddEXP(const int& x) {
 		m_gameStatusUI.AddEXP(x);
 	}
 

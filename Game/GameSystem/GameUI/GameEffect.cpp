@@ -13,7 +13,7 @@ GameEffect::GameEffect()
 	//このインスタンスを唯一のインスタンスとして記録する
 	m_instance = this;
 
-	//ここから準備(/・ω・)/
+	//ここから準備
 	m_stand.StandInit();
 	m_message.MessageInit();
 }
@@ -180,7 +180,7 @@ void GameEffect_Message::MessageInit() {
 void GameEffect_Message::MessageEffect(wchar_t* Message) {
 
 	//メッセージ送り
-	m_messageFont->SetTextOkuri(Message, 2);
+	m_messageFont->SetTextOkuri(Message, GameData::GetInstance()->GetMessageSpeed());
 
 	//色々と準備が必要です
 	m_windowOkuriSprite->SetAlpha(0.0f);
@@ -300,6 +300,10 @@ void GameEffect_Message::MessageUpdate() {
 			else {	//メッセージ表示スキップ
 				m_messageFont->TextOkuriEnd();
 			}
+			//スキップ中でないなら決定SEを鳴らす
+			if (m_skipFlag == false) {
+				SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/OK.wav");
+			}
 		}
 
 		//メッセージ送りアイコンの表示
@@ -354,7 +358,7 @@ void GameEffect_Message::MessageUpdate() {
 	}
 }
 
-void GameEffect_Message::LogChange(bool Flag) {
+void GameEffect_Message::LogChange(const bool& Flag) {
 
 	if (Flag == true) {
 		//表示する時の処理
@@ -468,6 +472,21 @@ void GameEffect_AnimationSprite::SpriteAnimationUpdate() {
 		else {
 			it++; //それ以外は次へ。
 		}
+	}
+
+}
+
+void GameEffect_AnimationSprite::DeleteAnimationSprite(SpriteRender* sr) {
+
+	for (auto go = m_spriteRenderList.begin();
+		go != m_spriteRenderList.end();
+		go++) {
+
+		//アルファが0なら削除フラグをオン
+		if (go->SpriteRender_pt == sr) {
+			go->DeleteFlag = true;
+		}
+
 	}
 
 }

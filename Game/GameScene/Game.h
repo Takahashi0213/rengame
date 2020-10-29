@@ -40,10 +40,10 @@ public:
 		return m_ui;
 	}
 	GameEvent* GetGameEvent() {
-		return &m_gameEvent;
+		return m_gameEvent;
 	}
 	DamageSystem* GetDamageSystem() {
-		return &m_damageSystem;
+		return m_damageSystem;
 	}
 
 private:
@@ -55,13 +55,13 @@ private:
 
 	//ここからゲーム用
 
-	GameData m_gameData;				//保存するデータ色々
-	GameEffect m_gameEffect;			//ここでアップデートする
-	GameUI* m_ui = nullptr;				//UI
-	GameStatus_UISystem* m_statusUI;	//UI
-	GameEvent m_gameEvent;				//ゲームイベント
-	DamageSystem m_damageSystem;		//ダメージの付与やゲームオーバーの管理
-	OP* m_op = nullptr;					//OPが終わったら削除される
-	GameOver* m_gameOver = nullptr;		//ゲームオーバーになったら生成される
+	GameData* m_gameData = nullptr;				//保存するデータ色々
+	GameEffect* m_gameEffect = nullptr;			//ここでアップデートする
+	GameUI* m_ui = nullptr;						//UI
+	GameStatus_UISystem* m_statusUI = nullptr;	//UI
+	GameEvent* m_gameEvent = nullptr;			//ゲームイベント
+	DamageSystem* m_damageSystem = nullptr;		//ダメージの付与やゲームオーバーの管理
+	OP* m_op = nullptr;							//OPが終わったら削除される
+	GameOver* m_gameOver = nullptr;				//ゲームオーバーになったら生成される
 };
 

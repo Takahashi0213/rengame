@@ -25,7 +25,7 @@ Mannequin::Mannequin()
 	//キャラコン！！
 	m_charaCon.Init(
 		60.0f,  //キャラクターの半径。
-		100.0f,  //キャラクターの高さ。
+		150.0f,  //キャラクターの高さ。
 		m_position //キャラクターの初期座標。
 	);
 
@@ -64,13 +64,17 @@ void Mannequin::Update() {
 
 	//箱との衝突判定
 	bool DeathFlag = BoxAttackSearch(m_position);
-	if (DeathFlag == true) {
+	if (DeathFlag == true && m_deathEffectFlag == false) {
 		//死んじゃった
 		m_actionFlag = true;
 		GameStatus_UISystem::GetInstance()->AddEXP(EXP);		//経験値を獲得
+		EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::EnemyDeath,
+			false, m_position.x, m_position.y, m_position.z);
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Enemy_Death.wav");	//SE
 		CGameObjectManager::GetInstance()->DeleteGO(m_modelRender);
 		m_modelRender = nullptr;
 		CGameObjectManager::GetInstance()->DeleteGO(this);
+		m_deathEffectFlag = true;
 	}
 
 	//キャラコン実行

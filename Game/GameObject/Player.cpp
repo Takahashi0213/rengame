@@ -4,8 +4,7 @@
 
 #include "GameSystem/GameUI/GameUI.h"
 #include "BoxMaker.h"
-
-int Game_UI = Hash::MakeHash("GameUI");
+#include "GameCamera.h"
 
 Player::Player()
 {
@@ -18,9 +17,10 @@ Player::Player()
 	//アニメーション
 	m_playerAnimationClips[enAnimationClip_Idle].Load(L"Assets/animData/idle.tka");
 	m_playerAnimationClips[enAnimationClip_Idle].SetLoopFlag(true);
-
 	m_playerAnimationClips[enAnimationClip_Run].Load(L"Assets/animData/run.tka");
 	m_playerAnimationClips[enAnimationClip_Run].SetLoopFlag(true);
+	m_playerAnimationClips[enAnimationClip_Jump].Load(L"Assets/animData/jump.tka");
+	m_playerAnimationClips[enAnimationClip_Jump].SetLoopFlag(false);
 	//アニメーションの初期化。
 	m_playerAnimation.Init(
 		m_model,					//アニメーションを流すスキンモデル。
@@ -82,23 +82,6 @@ void Player::Update()
 			m_monochromeFlag = false;
 		}
 	}
-	//アニメーション
-	if (m_gameObj != nullptr) {
-		if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode) {
-			//アニメーション再生
-			float MovePower = m_moveSpeed.Length();
-			if (MovePower > 2.0f) {
-				m_playerAnimation.Play(enAnimationClip_Run);
-				m_playerAnimationSL.Play(enAnimationClip_Run);
-			}
-			else {
-				m_playerAnimation.Play(enAnimationClip_Idle);
-				m_playerAnimationSL.Play(enAnimationClip_Idle);
-			}
-			m_playerAnimation.Update(1.0f / 20.0f);
-			m_playerAnimationSL.Update(1.0f / 20.0f);
-		}
-	}
 
 	//処理
 
@@ -116,6 +99,9 @@ void Player::Update()
 	BoxDelete();
 	//上げ下げ中の補完移動をする
 	BoxMove();
+
+	//アニメーション
+	PlayerAnimation();
 
 	//ワールド行列の更新。
 	m_model_Sl.UpdateWorldMatrix(m_position, m_rotation, m_scale);
@@ -157,6 +143,43 @@ void Player::Render()
 	);
 }
 
+void Player::PlayerAnimation() {
+	//アニメーション
+	if (m_gameObj != nullptr) {
+		if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode) {
+			//アニメーション再生
+			bool RunFlag = false;
+			bool OnG_Flag = m_charaCon.IsOnGround();
+			float MovePower = m_moveSpeed.Length();
+			if (OnG_Flag == false) {
+				m_playerAnimation.Play(enAnimationClip_Jump);
+				m_playerAnimationSL.Play(enAnimationClip_Jump);
+			}
+			else {
+				if (MovePower > 1.0f) {
+					m_playerAnimation.Play(enAnimationClip_Run);
+					m_playerAnimationSL.Play(enAnimationClip_Run);
+					RunFlag = true;
+				}
+				else {
+					m_playerAnimation.Play(enAnimationClip_Idle);
+					m_playerAnimationSL.Play(enAnimationClip_Idle);
+				}
+			}
+			//アニメーションアップデート
+			if (RunFlag == false) {
+				m_playerAnimation.Update(1.0f / 20.0f);
+				m_playerAnimationSL.Update(1.0f / 20.0f);
+			}
+			else {
+				MovePower = min(MovePower, 35.0f);
+				m_playerAnimation.Update(1.0f / (40.0f - MovePower));
+				m_playerAnimationSL.Update(1.0f / (40.0f - MovePower));
+			}
+		}
+	}
+}
+
 void Player::Move() {
 
 	//イベント中なら強制終了
@@ -171,12 +194,14 @@ void Player::Move() {
 	//左クリックの状態を判定
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
 	bool OnG_Flag = m_charaCon.IsOnGround();
-	GameUI* ui = CGameObjectManager::GetInstance()->FindGO<GameUI>(Game_UI);
+	if (m_ui == nullptr) {
+		m_ui = CGameObjectManager::GetInstance()->FindGO<GameUI>(Hash::MakeHash("GameUI"));
+	}
 
 	//左キーが離された＆現在アクションモード＆メニューボタンに被っていない＆ノックバック中でない
 	if (key == MouseSupporter::Release_Push &&
 		SceneManager::GetInstance()->GetGameMode() == SceneManager::ActionMode &&
-		ui->GetGemeMenu()->GetSelectFlag() == false &&
+		m_ui->GetGemeMenu()->GetSelectFlag() == false &&
 		m_damage_Flag == false)
 	{
 		if (MouseSupporter::GetInstance()->GetMouseTimer(MouseSupporter::Left_Key) < 12) {
@@ -193,7 +218,9 @@ void Player::Move() {
 			else {
 				m_nextPos = m_position + (m_moveSpeed / 1000.0f);
 			}
-
+			//エフェクト
+			EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::PlayerMove,
+				false, m_nextPos.x, m_nextPos.y, m_nextPos.z);
 		}
 	}
 
@@ -230,6 +257,9 @@ void Player::Move() {
 		m_posBackup = m_position;
 	}
 
+	//移動している時はSEを再生する
+	MoveSE();
+
 }
 
 void Player::Jump() {
@@ -249,14 +279,13 @@ void Player::Jump() {
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
 		if (m_jumpNow == false && OnG_Flag == true) {
 			m_moveSpeed.y = m_jumpPower;
-
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Jump.wav", 1.5f);
 			//EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::TestData, false, 100.0f, 100.0f, 0.0f);
 			//EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::TestData, true,
 			//	300.0f, 100.0f, 0.0f,
 			//	180.0f, 180.0f, 180.0f);
 		}
 		m_jumpNow = true;
-
 	}
 	else {
 		m_jumpNow = false;
@@ -319,10 +348,11 @@ void Player::BoxCatch() {
 			m_upBox = m_upKouho_Box;
 			m_boxUpFlag = true;
 			m_boxMoveFlag = true;
-			m_upOrDown = false;	//箱を上げてるフラグ
+			m_upOrDown = false;			//箱を上げてるフラグ
 			m_moveSpeed.x = 0.0f;
 			m_moveSpeed.z = 0.0f;
-			
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/BoxCatch.wav", 2.0f);
+
 			//箱の方を向く
 			{
 				CVector3 playerForward = { 0.0f, 0.0f, 1.0f };
@@ -363,6 +393,7 @@ void Player::BoxCatch() {
 		if (MovePower >= 0.0f) {
 
 			//投げる
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/BoxThrow.wav");
 			CVector3 MoveSpeed = BoxThrowSearch();
 			m_upBox->SetMoveSpeed(MoveSpeed);
 
@@ -393,6 +424,8 @@ void Player::BoxCatch() {
 				m_point_1 = Pos2;	//終点寄り
 			}
 
+			//効果音
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/BoxCatch.wav");
 			//リセット
 			m_boxUpFlag = false;
 			m_boxMoveFlag = true;
@@ -657,7 +690,7 @@ CVector3 Player::BoxThrowSearch() {
 		//最終結果
 		if (TargetSetFlag == true) {
 			//移動速度を計算して返す
-			CVector3 diff = ThrowTarget - m_position;
+			CVector3 diff = ThrowTarget - m_upBox->GetPosition();
 			diff.Normalize();
 			diff *= 100.0f;		//移動パワー
 			diff.y = -3.0f;		//高さ
@@ -683,6 +716,42 @@ CVector3 Player::BoxThrowSearch() {
 
 }
 
+void Player::MoveSE() {
+
+	//アクションモードでないなら強制終了
+	if (SceneManager::GetInstance()->GetGameMode() != SceneManager::ActionMode) {
+		return;
+	}
+
+	float MovePower = m_moveSpeed.Length();
+	bool OnG_Flag = m_charaCon.IsOnGround();
+
+	//移動力が足りないので強制終了
+	if (MovePower < 1.0f) {
+		return;
+	}
+	//空中にいるので強制終了
+	if (OnG_Flag == false) {
+		return;
+	}
+
+	//タイマー加算
+	m_stepSE_Timer += CGameTime::GetFrameDeltaTime() * MovePower;
+
+	//SE再生
+	if (m_stepSE_Timer >= StepSE_Limit) {
+		m_stepSE_Timer = 0.0f;
+		if (m_stepSE_LeftRight == false) {
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/PlayerStep_Left.wav", StepVolume);
+			m_stepSE_LeftRight = true;
+		}
+		else {
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/PlayerStep_Right.wav", StepVolume);
+			m_stepSE_LeftRight = false;
+		}
+	}
+}
+
 void Player::PlayerMiss(const CVector3& pos) {
 
 	//ノックバックの計算
@@ -691,9 +760,21 @@ void Player::PlayerMiss(const CVector3& pos) {
 	Move.Normalize();
 	Pos += (Move * m_damage_knockback);
 	m_nextPos = Pos;
-
+	//ノックバック設定
 	m_moveSpeed = CVector3::Zero();
 	m_moveSpeed.y = m_damage_YHosei;
 	m_damage_Flag = true;
 	m_damage_JumpFlag = false;
+	SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/PlayerDamage.wav");
+
+}
+
+void Player::SetPosition(const CVector3& pos) {
+
+	//座標の設定
+	m_moveSpeed = CVector3::Zero();
+	m_nextPos = CVector3::Zero();
+	m_position = pos;
+	m_charaCon.SetPosition(pos);
+	GameCamera::GetInstance()->ActionModeCameraMove();	//カメラも動かす
 }

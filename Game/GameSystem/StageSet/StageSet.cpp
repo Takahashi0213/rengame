@@ -55,7 +55,6 @@ void StageSet::InitStage(const wchar_t* stage_name) {
 	//ê∂ê¨É^ÉCÉÄ
 	CreateStage(m_stageData.GetStageModel(m_stageNo),
 		m_stageData.GetStageLevel(m_stageNo));
-
 }
 
 void StageSet::CreateStage(const wchar_t* stage_filePath, const wchar_t* level_filePath) {

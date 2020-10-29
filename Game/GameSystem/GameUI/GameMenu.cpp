@@ -87,7 +87,7 @@ GameMenu::GameMenu()
 	MenuCommand_Sprite1->SetPosition({ DefMenuCommandPosition.x + MenuMove ,
 		DefMenuCommandPosition.y + Y_Hosei,DefMenuCommandPosition.z });
 	MenuCommand_Font1 = NewGO<FontRender>("MenuCommand_Font1", SpriteNo);
-	MenuCommand_Font1->SetText(Koumoku[0]);
+	MenuCommand_Font1->SetText(Koumoku[Create]);
 	MenuCommand_Font1->SetColor(TextColor);
 	MenuCommand_Font1->SetScale(TextFontSize);
 	MenuCommand_Font1->SetPosition({ DefMenuCommand_TextPosition.x + MenuMove ,
@@ -104,7 +104,7 @@ GameMenu::GameMenu()
 	MenuCommand_Sprite2->SetPosition({ DefMenuCommandPosition.x + MenuMove ,
 		DefMenuCommandPosition.y + Y_Hosei,DefMenuCommandPosition.z });
 	MenuCommand_Font2 = NewGO<FontRender>("MenuCommand_Font2", SpriteNo);
-	MenuCommand_Font2->SetText(Koumoku[1]);
+	MenuCommand_Font2->SetText(Koumoku[Box_Release]);
 	MenuCommand_Font2->SetColor(TextColor);
 	MenuCommand_Font2->SetScale(TextFontSize);
 	MenuCommand_Font2->SetPosition({ DefMenuCommand_TextPosition.x + MenuMove , 
@@ -121,7 +121,7 @@ GameMenu::GameMenu()
 	MenuCommand_Sprite3->SetPosition({ DefMenuCommandPosition.x + MenuMove ,
 		DefMenuCommandPosition.y + Y_Hosei,DefMenuCommandPosition.z });
 	MenuCommand_Font3 = NewGO<FontRender>("MenuCommand_Font3", SpriteNo);
-	MenuCommand_Font3->SetText(Koumoku[2]);
+	MenuCommand_Font3->SetText(Koumoku[Library]);
 	MenuCommand_Font3->SetColor(TextColor);
 	MenuCommand_Font3->SetScale(TextFontSize);
 	MenuCommand_Font3->SetPosition({ DefMenuCommand_TextPosition.x + MenuMove ,
@@ -138,7 +138,7 @@ GameMenu::GameMenu()
 	MenuCommand_Sprite4->SetPosition({ DefMenuCommandPosition.x + MenuMove ,
 		DefMenuCommandPosition.y + Y_Hosei,DefMenuCommandPosition.z });
 	MenuCommand_Font4 = NewGO<FontRender>("MenuCommand_Font4", SpriteNo);
-	MenuCommand_Font4->SetText(Koumoku[3]);
+	MenuCommand_Font4->SetText(Koumoku[Save]);
 	MenuCommand_Font4->SetColor(TextColor);
 	MenuCommand_Font4->SetScale(TextFontSize);
 	MenuCommand_Font4->SetPosition({ DefMenuCommand_TextPosition.x + MenuMove + SaveX_Hosei,
@@ -189,7 +189,6 @@ GameMenu::~GameMenu()
 	m_instance = nullptr;
 	//コマンドも削除
 	DeleteMenuCommand();
-
 }
 
 void GameMenu::GameMenuUpdate() {
@@ -234,6 +233,11 @@ void GameMenu::GameMenuUpdate() {
 			MenuButton->SetMulColor({ 1.5f,1.5f,1.5f,1.0f });
 			//フラグ変更
 			m_selectFlag = true;
+			if (m_selectSE_Flag == false) {
+				//SE
+				SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Cursor.wav");
+				m_selectSE_Flag = true;
+			}
 
 			//左クリックされたらメニューを開き、モードをメニューモードに変更する
 			if (Left_Key == MouseSupporter::Release_Push) {
@@ -248,6 +252,8 @@ void GameMenu::GameMenuUpdate() {
 				m_menuMoveTimer = 0;
 				EffekseerSupporter::GetInstance()->NoPostStop();
 				m_commandNow = false;
+				SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Menu_Open.wav");
+				SceneManager::GetInstance()->GetSoundManagerInstance()->BGM_VolumeFade(MenuBGM_Volume, MenuBGM_FadeTime);
 
 				//コマンドの描画をリセット
 				Update_CommandDraw(true);
@@ -257,7 +263,7 @@ void GameMenu::GameMenuUpdate() {
 
 				for (int i = 0 ; i < m_spriteRenderList.size() ; i++) {
 
-					m_spriteRenderList[i]->m_spriteSupporter.SpriteMove({ +MenuMove_Over,0.0f },
+					m_spriteRenderList[i]->m_spriteSupporter.SpriteMove({ + MenuMove_Over,0.0f },
 						MenuMoveTime / 2, 0, true);
 					m_spriteRenderList[i]->m_spriteSupporter.SpriteMove({ -(MenuMove + (MenuMove_Over * 2)),0.0f },
 						MenuMoveTime, MenuMoveTime / 2, true);
@@ -284,7 +290,7 @@ void GameMenu::GameMenuUpdate() {
 
 			MenuButton->SetScale(1.0f);
 			MenuButton->SetMulColor({ 1.0f,1.0f,1.0f,1.0f });
-
+			m_selectSE_Flag = false;
 		}
 
 		break;
@@ -299,6 +305,11 @@ void GameMenu::GameMenuUpdate() {
 			MenuButton->SetMulColor({ 1.5f,1.5f,1.5f,1.0f });
 			//フラグ変更
 			m_selectFlag = true;
+			if (m_selectSE_Flag == false) {
+				//SE
+				SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Cursor.wav");
+				m_selectSE_Flag = true;
+			}
 
 			//左クリックされたらメニューを閉じ、モードをアクションモードに変更する
 			if (Left_Key == MouseSupporter::Release_Push ||
@@ -308,6 +319,9 @@ void GameMenu::GameMenuUpdate() {
 				MenuCommand_Cursor->SetAlpha(0.0f);
 				EffekseerSupporter::GetInstance()->NoPostMove();
 				m_commandEndFlag = true;
+				SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Menu_Close.wav");
+				SceneManager::GetInstance()->GetSoundManagerInstance()->BGM_VolumeFade(1.0f, MenuBGM_FadeTime);
+
 				//コマンドのフェードアウト
 				if (m_menu_BoxAllDelete != nullptr) {
 					m_menu_BoxAllDelete->CommandEnd();
@@ -346,7 +360,7 @@ void GameMenu::GameMenuUpdate() {
 
 			MenuButton->SetScale(1.0f);
 			MenuButton->SetMulColor({ 1.0f,1.0f,1.0f,1.0f });
-
+			m_selectSE_Flag = false;
 		}
 
 
@@ -377,7 +391,7 @@ void GameMenu::GameMenuUpdate() {
 
 }
 
-void GameMenu::Update_Effect(int mode) {
+void GameMenu::Update_Effect(const int& mode) {
 
 	//メニューモードなら画面にブラーをかける
 	if (mode == SceneManager::GameMode::MenuMode) {
@@ -443,14 +457,12 @@ void GameMenu::Update_Effect(int mode) {
 			if (Pos1.x < Pos2.x) {
 				//0番が左にいる
 				MenuLogo->SetPosition({ DefMenuLogoPosition.x + MenuLogoNami.x - MenuMove ,
-					DefMenuLogoPosition.y ,DefMenuLogoPosition.z }, 0);
-				
+					DefMenuLogoPosition.y ,DefMenuLogoPosition.z }, 0);				
 			}
 			else {
 				//1番が左にいる
 				MenuLogo->SetPosition({ DefMenuLogoPosition.x + MenuLogoNami.x - MenuMove ,
 					DefMenuLogoPosition.y ,DefMenuLogoPosition.z }, 1);
-
 			}
 
 			//移動
@@ -574,6 +586,7 @@ void GameMenu::Update_Command() {
 	//更新されたら絵も更新する
 	if (ChangeFlag == true) {
 		Update_CommandDraw(false);
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Cursor.wav");	//SE
 	}
 
 }
@@ -775,7 +788,7 @@ void GameMenu::Update_CommandDraw(bool drawStile) {
 /// <summary>
 /// コマンドの決定受付
 /// </summary>
-void GameMenu::Update_MenuEnter(int leftKey) {
+void GameMenu::Update_MenuEnter(const int& leftKey) {
 
 	//何か実行しているなら中断
 	if (m_commandNow == true) {
@@ -810,6 +823,8 @@ void GameMenu::Update_MenuEnter(int leftKey) {
 			break;
 		}
 
+		//SE
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/OK.wav");
 		//コマンドを半透明に
 		GameMenu_NoActiveEffect();
 		//フラグTrue
@@ -836,7 +851,7 @@ void GameMenu::Update_CommandNow() {
 		return;
 	}
 
-	//コマンドに応じて実行
+	//コマンドに応じて更新＆終了チェック
 	switch (m_nowMenuCommand)
 	{
 	case GameMenu::Create:
@@ -862,6 +877,7 @@ void GameMenu::Update_CommandNow() {
 
 void GameMenu::GameMenu_NoActiveEffect() {
 
+	//全部半透明！
 	MenuWindow2->SetAlpha(NoActiveAlpha);
 	MenuCommand_Sprite1->SetAlpha(NoActiveAlpha);
 	MenuCommand_Sprite2->SetAlpha(NoActiveAlpha);

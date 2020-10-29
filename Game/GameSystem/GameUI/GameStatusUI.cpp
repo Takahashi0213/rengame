@@ -252,10 +252,11 @@ void GameStatusUI::Status_EffectUpdate() {
 		//経験値バーの更新
 		Status_EXPBarUpdate();
 
+		//レベルアップエフェクトチェック
+		Status_LevelUpEffect();
+
 		//終了チェック
 		if (EXP_Stock <= 0) {
-			//レベルアップエフェクトチェック
-			Status_LevelUpEffect();
 			//エフェクト終了ということにする
 			EXP_Stock = -1;
 			m_nowStatusAnime = StatusAnime_NULL;
@@ -284,6 +285,8 @@ void GameStatusUI::Status_EXPBarUpdate() {
 	//計算
 	float gage = static_cast<float>(NowEXP) / static_cast<float>(NextEXP);
 	m_statusBar_EXP->SetCutLine(gage);
+	//SE
+	SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/EXP_Gage.wav");
 
 }
 
@@ -294,8 +297,14 @@ void GameStatusUI::Status_LevelUpEffect() {
 	
 	if (NowLevel != m_startLevel) {
 		//レベルアップ処理
-		GameEffect::GetInstance()->GetInstance_SpriteAnime()->NewAnimationSprite(GameEffect_AnimationSprite::Anime_Name::Anime_LevelUp,
+		if (m_levelUpSprite != nullptr) {	//すでに表示されていたら削除する
+			GameEffect::GetInstance()->GetInstance_SpriteAnime()->DeleteAnimationSprite(m_levelUpSprite);
+		}
+		m_levelUpSprite = GameEffect::GetInstance()->GetInstance_SpriteAnime()->
+			NewAnimationSprite_pt(GameEffect_AnimationSprite::Anime_Name::Anime_LevelUp,
 			GameStatusUI_LevelUp_DefPos, CVector3::One(), SpritePriority);
+		//SE
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/LevelUP.wav");
 
 		//表示更新
 		int NowMaxHP = GameData::GetInstance()->GetMaxHP();
@@ -332,6 +341,7 @@ void GameStatusUI::Status_LevelUpEffect() {
 			m_text_MP->m_fontSupporter.FontMoveSet({ -LevelUp_TextMove ,0.0f }, LevelUp_TextMoveTime, LevelUp_TextMoveDelay, true);
 		}
 
+		m_startLevel = NowLevel;
 	}
 
 }

@@ -21,14 +21,14 @@ TransitionGenerator::~TransitionGenerator()
 
 void TransitionGenerator::Update() {
 
-	if (m_borderLine < 0.0f) {
-		m_nowTransitionFlag = false;
-	}
-	if (m_borderLine > MoveSpeed) {
-		m_nowTransitionFlag = false;
-	}
-
 	if (m_nowTransitionFlag == true) {
+		if (m_borderLine < 0.0f) {
+			m_nowTransitionFlag = false;
+		}
+		if (m_borderLine > MoveSpeed) {
+			m_nowTransitionFlag = false;
+		}
+
 		if (m_transitionMode == false) {
 			m_borderLine += (1.0f / m_transitionLimit)*MoveSpeed;
 		}
@@ -94,11 +94,13 @@ void TransitionGenerator::TransitionInit(
 			130.0f, 480.0f, 10);
 		m_loadingSprite->SetHighPattern(6, 0);
 		m_loadingSprite->m_spriteSupporter.SpritePattern(1, true, 0);
+		SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag = true;	//イベント開始
 	}
 	if (loadingFlag == true && m_loadingSprite != nullptr && mode == true) {
 		//削除
 		delete m_loadingSprite;
 		m_loadingSprite = nullptr;
+		SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag = false;	//イベント終了
 	}
 
 }

@@ -16,6 +16,7 @@ public:
 	enum EnAnimationClip {
 		enAnimationClip_Idle,		//待機
 		enAnimationClip_Run,		//走る
+		enAnimationClip_Jump,		//ジャンプ
 		enAnimationClip_Num,		//アニメーションクリップ
 	};
 
@@ -34,12 +35,7 @@ public:
 		return m_posBackup;
 	}
 	//プレイヤーの座標を設定
-	void SetPosition(const CVector3& pos) {
-		m_moveSpeed = CVector3::Zero();
-		m_nextPos = CVector3::Zero();
-		m_position = pos;
-		m_charaCon.SetPosition(pos);
-	}
+	void SetPosition(const CVector3& pos);
 
 	/// <summary>
 	/// プレイヤーの回転を返す
@@ -65,7 +61,7 @@ private:
 	CharacterController m_charaCon;		//キャラクターコントローラー。
 	Game* m_gameObj;
 	LightMaker* m_lightMaker;
-	//MouseOver ms;
+	GameUI* m_ui = nullptr;
 
 	//アニメーション
 	Animation m_playerAnimation;								//アニメーション。
@@ -75,8 +71,11 @@ private:
 	//モノクロフラグ
 	bool m_monochromeFlag = false;
 
-	//行動
+	//アニメーション
+	void PlayerAnimation();
+	//行動 移動
 	void Move();
+	void MoveSE();		//足音再生
 	void Jump();
 	//行動 箱関連
 	void BoxCatch();
@@ -134,6 +133,10 @@ private:
 	const float m_damage_knockback = -200.0f;	//ダメージを受けた時のノックバック距離
 	bool m_damage_Flag = false;					//ダメージで飛び上がっている間は方向を固定する
 	bool m_damage_JumpFlag = false;				//ダメージで飛び上がっている間は方向を固定する（空中用）
-
+	//足音
+	const float StepVolume = 0.5f;				//足音の大きさ
+	float m_stepSE_Timer = 0.0f;				//足音用タイマー
+	const float StepSE_Limit = 1.0f;			//足音制限時間
+	bool m_stepSE_LeftRight = false;			//左足と右足
 };
 

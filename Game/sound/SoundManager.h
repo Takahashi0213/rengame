@@ -1,4 +1,8 @@
 #pragma once
+
+/// <summary>
+/// BGMや効果音の管理
+/// </summary>
 class SoundManager
 {
 public:
@@ -27,6 +31,11 @@ public:
 		m_volumeTimer = 0;
 		m_volumeLimit = changeTime;
 	}
+
+	//SE処理
+
+	//SEの再生（自動でワンショットになる）
+	CSoundSource* InitSE(wchar_t* filePath, const float& Volume = 1.0f);
 
 private:
 

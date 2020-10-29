@@ -36,6 +36,11 @@ void FontRender::Update() {
 			}
 			m_text = hoge;
 
+			//フォント内でSEを鳴らすのはあまり好ましくないと思う…
+			if (m_textOkuriSE == true) {
+				SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Speak.wav");
+			}
+
 			//後始末
 			m_textOkuri_Timer = 0;
 			if (m_textOkuri_NowLen >= m_textOkuri_Len) {
@@ -177,7 +182,7 @@ void FontRender::PostRender()
 
 }
 
-void FontRender::SetTextOkuri(const wchar_t* text, int Interval) {
+void FontRender::SetTextOkuri(const wchar_t* text, const int& Interval, const bool& TextOkuriSE_Flag) {
 
 	//初期化と設定
 	m_text = { L"" };
@@ -191,5 +196,6 @@ void FontRender::SetTextOkuri(const wchar_t* text, int Interval) {
 	m_textOkuri_Timer = 0;
 	m_okuriFlag = true;
 	m_textOkuri_NowLen = -1;
+	m_textOkuriSE = TextOkuriSE_Flag;
 
 }

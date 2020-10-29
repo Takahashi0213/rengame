@@ -48,6 +48,8 @@ public:
 	/// 
 	/// コマンドが空白の場合、自動でNew_Standが入ります
 	/// 
+	/// そのため、どちらの引数も空白の場合現在の立ち絵をそのまま継続使用します
+	/// 
 	/// </remarks>
 	void StandControl(Stand_Name stand = Stand_Null, const Stand_Command command = Stand_Command::New_Stand);
 
@@ -128,7 +130,7 @@ public:
 private:
 
 	//ログ関数
-	void LogChange(bool Flag);
+	void LogChange(const bool& Flag);
 	void LogUpdate();
 
 	//会話枠表示用
@@ -227,6 +229,19 @@ public:
 	SpriteRender* NewAnimationSprite_pt(const Anime_Name m_animeName,
 		const CVector3& pos, const CVector3& m_scale, const int& priority = 0);
 
+	/// <summary>
+	/// 強引に削除
+	/// </summary>
+	/// <param name="sr">削除したいスプライトレンダー</param>
+	/// <remarks>
+	/// NewAnimationSprite_ptを使用すると外部にポインタを返せます
+	/// 
+	/// ループするアニメーションは勝手に終了しないので、
+	/// これを用いて削除してください
+	/// </remarks>
+	void DeleteAnimationSprite(SpriteRender* sr);
+
+	//更新
 	void SpriteAnimationUpdate();
 
 private:

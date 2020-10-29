@@ -96,14 +96,6 @@ void GameCamera::ActionMode() {
 	m_cameraPos.y = P_Position.y + m_cameraHosei.y;
 	m_cameraPos.z = P_Position.z + m_cameraHosei.z;
 
-	/*
-	P_qRot.Multiply(vBase);
-	//プレイヤーの真後ろについていくよ
-	CVector3 vpos = vBase * -300.0f;
-	m_cameraPos = vpos + m_cameraTarget;
-	m_cameraPos.y = m_cameraPos.y + 200.0f;
-	*/
-
 }
 
 void GameCamera::CreateMode() {

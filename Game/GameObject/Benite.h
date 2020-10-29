@@ -11,8 +11,9 @@ public:
 	void Render()override;
 
 	enum EnAnimationClip {
-		enAnimationClip_walk, //待機
-		enAnimationClip_Num,  //アニメーションクリップ
+		enAnimationClip_walk,	//待機
+		enAnimationClip_attack, //攻撃
+		enAnimationClip_Num,	 //アニメーションクリップ
 	};
 
 	enum State {
@@ -38,6 +39,7 @@ private:
 
 	float m_moveTimer = 0.0f;
 	bool m_moveFlag = false;
+	bool m_attackAnimeFlag = false;			//アニメーション1回だけでいいので…
 
 	//定数
 	const float MoveWaitLimit = 2.0f;		//停止するライン
@@ -51,6 +53,7 @@ private:
 	const float AttackWaitLimit = 0.5f;		//攻撃準備の時間
 
 	const float AttackSpeed = 20.0f;		//攻撃移動速度
+	const float AttackAnimeLimit = 0.4f;	//攻撃アニメの時間
 	const float AttackLimit = 0.5f;			//攻撃の時間
 	const float AttackEndLimit = 2.0f;		//攻撃終了の時間
 

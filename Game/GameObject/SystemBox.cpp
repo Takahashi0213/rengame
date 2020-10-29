@@ -101,11 +101,15 @@ void GhostBox::Update() {
 	if (m_mapMoveFlag == true) {
 		m_mapMoveTimer++;
 		if (m_mapMoveTimer == SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime) {
+			//現在の場所と移動先の場所が違うならBGMを再生する
 			GameData::Place_Data NextPlace = StageSet::GetInstance()->GetStagePlace(m_LoadName);
-			wchar_t* bgmName = StageSet::GetInstance()->GetStageBGM_Name(NextPlace);
-			SceneManager::GetInstance()->GetSoundManagerInstance()->InitBGM(bgmName);
+			GameData::Place_Data NowPlace = GameData::GetInstance()->GetPlace();
+			if (NowPlace != NextPlace) {
+				wchar_t* bgmName = StageSet::GetInstance()->GetStageBGM_Name(NextPlace);
+				SceneManager::GetInstance()->GetSoundManagerInstance()->InitBGM(bgmName);
+			}
 			m_player->SetPosition(m_playerMoveTarget);				//プレイヤー移動
-			StageSet::GetInstance()->InitStage(m_LoadName);	//ステージ読み込み
+			StageSet::GetInstance()->InitStage(m_LoadName);			//ステージ読み込み
 		}
 	}
 
@@ -133,6 +137,8 @@ void GhostBox::GhostAction() {
 		//トランジション
 		TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::Circle,
 			SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime, false, true);
+		//マップ移動SE
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/MapMove.wav");
 		//現在の場所と移動先の場所が違うならBGMをフェードアウトさせる
 		GameData::Place_Data NowPlace = GameData::GetInstance()->GetPlace();
 		GameData::Place_Data NextPlace = StageSet::GetInstance()->GetStagePlace(m_LoadName);

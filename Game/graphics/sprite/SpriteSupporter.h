@@ -19,6 +19,7 @@ public:
 		m_spriteNo = No;
 	}
 
+	//更新（SpriteRenderが呼ぶ）
 	void SpriteSupporter_Update();
 
 	/// <summary>
@@ -68,37 +69,37 @@ private:
 	int m_spriteNo = -1;									//スプライト番号（サブスプライト関連）
 	//Move
 	struct SpriteMoveSet {
-		CVector2 m_spriteMovePos = { 0.0f,0.0f };	//スプライトの移動先
-		CVector2 m_spriteMoveSpeed = { 0.0f,0.0f };	//スプライトの移動量
-		int m_spriteMoveLimit = -1;					//スプライトの移動時間（-1は移動中ではない）
-		int m_spriteMoveDelay = -1;					//スプライトの移動ディレイ
-		int m_spriteMoveTimer = -1;					//スプライトの移動タイマー
-		bool m_spriteMoveRelative = false;			//スプライトの相対移動フラグ（trueなら相対移動）
-		bool m_spriteMoveDeleteFlag = false;		//削除フラグ（いじらないでね）
+		CVector2 m_spriteMovePos = { 0.0f,0.0f };			//スプライトの移動先
+		CVector2 m_spriteMoveSpeed = { 0.0f,0.0f };			//スプライトの移動量
+		int m_spriteMoveLimit = -1;							//スプライトの移動時間（-1は移動中ではない）
+		int m_spriteMoveDelay = -1;							//スプライトの移動ディレイ
+		int m_spriteMoveTimer = -1;							//スプライトの移動タイマー
+		bool m_spriteMoveRelative = false;					//スプライトの相対移動フラグ（trueなら相対移動）
+		bool m_spriteMoveDeleteFlag = false;				//削除フラグ（いじらないでね）
 	};
-	std::list<SpriteMoveSet> m_spriteMoveList;		 //移動のリスト
+	std::list<SpriteMoveSet> m_spriteMoveList;				 //移動のリスト
 	//Rotation
 	CQuaternion m_spriteRotation = CQuaternion().Identity();	//1フレームの回転量
-	int m_spriteRotationLimit = -1;					//スプライトの回転時間（-1は移動中ではない）
-	int m_spriteRotationDelay = -1;					//スプライトの回転ディレイ
-	int m_spriteRotationTimer = -1;					//スプライトの回転タイマー
-	bool m_spriteLoopRotationFlag = false;			//trueなら永遠に延々にフォーエバー回る回る回る
+	int m_spriteRotationLimit = -1;							//スプライトの回転時間（-1は移動中ではない）
+	int m_spriteRotationDelay = -1;							//スプライトの回転ディレイ
+	int m_spriteRotationTimer = -1;							//スプライトの回転タイマー
+	bool m_spriteLoopRotationFlag = false;					//trueなら永遠に延々にフォーエバー回る回る回る
 	//Scale
 	struct SpriteScaleSet {
 		CVector3 m_spriteScale = CVector3().Zero();			//目標の大きさ
 		CVector3 m_spriteScaleMove = CVector3().Zero();		//1フレームの変化量
-		int m_spriteScaleLimit = -1;				//スプライトの拡大時間（-1は移動中ではない）
-		int m_spriteScaleDelay = -1;				//スプライトの拡大ディレイ
-		int m_spriteScaleTimer = -1;				//スプライトの拡大タイマー
-		bool m_spriteScaleDeleteFlag = false;		//削除フラグ（いじらないでね）
+		int m_spriteScaleLimit = -1;						//スプライトの拡大時間（-1は移動中ではない）
+		int m_spriteScaleDelay = -1;						//スプライトの拡大ディレイ
+		int m_spriteScaleTimer = -1;						//スプライトの拡大タイマー
+		bool m_spriteScaleDeleteFlag = false;				//削除フラグ（いじらないでね）
 	};
-	std::list<SpriteScaleSet> m_spriteScaleList;	 //拡大縮小のリスト
+	std::list<SpriteScaleSet> m_spriteScaleList;			//拡大縮小のリスト
 	//MulColor
-	CVector4 m_spriteColor = CVector4().White();		//目標の色
-	CVector4 m_spriteColorMove = CVector4().White();	//1フレームの変化量
-	int m_spriteColorLimit = -1;						//スプライトの色変更時間（-1は変化中ではない）
-	int m_spriteColorDelay = -1;						//スプライトの変化ディレイ
-	int m_spriteColorTimer = -1;						//スプライトの変化タイマー
+	CVector4 m_spriteColor = CVector4().White();			//目標の色
+	CVector4 m_spriteColorMove = CVector4().White();		//1フレームの変化量
+	int m_spriteColorLimit = -1;							//スプライトの色変更時間（-1は変化中ではない）
+	int m_spriteColorDelay = -1;							//スプライトの変化ディレイ
+	int m_spriteColorTimer = -1;							//スプライトの変化タイマー
 	//Shake
 	CVector2 m_spriteShakeMove = { 0.0f,0.0f };				//シェイクでの移動距離
 	CVector2 m_spriteShakeMove_OneFlame = { 0.0f,0.0f };	//シェイクの1フレーム移動距離
@@ -107,10 +108,10 @@ private:
 	int m_spriteShakeCounter = -1;							//スプライトのシェイク回数カウンター
 	int m_spriteShakeTimer = -1;							//スプライトのシェイクタイマー
 	//Pattern
-	int m_patternLimit = -1;							//最終パターン
-	int m_patternTimer = -1;							//パターン用タイマー
-	int m_patternOverLimit = -1;						//パターン終了後の待ち時間（パターン終了時一瞬で消えたりするので）
-	bool m_patternLoopFlag = false;						//falseならパターン終了時、アルファを自動で0にする trueならループする
+	int m_patternLimit = -1;								//最終パターン
+	int m_patternTimer = -1;								//パターン用タイマー
+	int m_patternOverLimit = -1;							//パターン終了後の待ち時間（パターン終了時一瞬で消えたりするので）
+	bool m_patternLoopFlag = false;							//falseならパターン終了時、アルファを自動で0にする trueならループする
 
 };
 

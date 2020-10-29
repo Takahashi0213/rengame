@@ -82,6 +82,7 @@ public:
 		}
 		SpriteUpdate();
 	}
+
 	void SliceSpriteDraw();
 
 	/// <summary>

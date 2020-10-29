@@ -459,6 +459,7 @@ void Title::CommandSelect() {
 
 		if (m_memberCommand != Game_Start) {
 			//初回演出
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Cursor.wav");	//SE
 			m_command_Start->SetMulColor(CommandMulColor);
 			m_command_Start->m_spriteSupporter.SpriteMove({ 0.0f,CommandSelectMove }, CommandSelectMoveTime, 0, true);
 			m_command_Start->m_spriteSupporter.SpriteMove({ 0.0f,-CommandSelectMove }, CommandSelectMoveTime, CommandSelectMoveTime, true);
@@ -477,6 +478,7 @@ void Title::CommandSelect() {
 
 		if (m_memberCommand != Game_Continue) {
 			//初回演出
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Cursor.wav");	//SE
 			m_command_Continue->SetMulColor(CommandMulColor);
 			m_command_Continue->m_spriteSupporter.SpriteMove({ 0.0f,CommandSelectMove }, CommandSelectMoveTime, 0, true);
 			m_command_Continue->m_spriteSupporter.SpriteMove({ 0.0f,-CommandSelectMove }, CommandSelectMoveTime, CommandSelectMoveTime, true);
@@ -493,6 +495,7 @@ void Title::CommandSelect() {
 
 		if (m_memberCommand != Game_End) {
 			//初回演出
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Cursor.wav");	//SE
 			m_command_End->SetMulColor(CommandMulColor);
 			m_command_End->m_spriteSupporter.SpriteMove({ 0.0f,CommandSelectMove }, CommandSelectMoveTime, 0, true);
 			m_command_End->m_spriteSupporter.SpriteMove({ 0.0f,-CommandSelectMove }, CommandSelectMoveTime, CommandSelectMoveTime, true);
@@ -512,6 +515,7 @@ void Title::CommandSelect() {
 	else {
 		//左クリックされたら確定させる
 		if (MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key) == MouseSupporter::Release_Push) {
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/GameStart.wav", 2.0f);
 			m_titleEffect = Command_Effect;
 		}
 	}

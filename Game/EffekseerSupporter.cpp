@@ -99,29 +99,33 @@ void EffekseerSupporter::EffectClear() {
 
 }
 
-void EffekseerSupporter::NoPostStop() {
+void EffekseerSupporter::NoPostStop(const bool& flag) {
 
 	for (auto go = m_effectList.begin();
 		go != m_effectList.end();
 		go++) {
 
 		if (go->PostFlag == false) {
-			CGameObjectManager::GetInstance()->GetEffekseerManager()->SetPaused(go->Handle, true);
+			CGameObjectManager::GetInstance()->GetEffekseerManager()->SetPaused(go->Handle, flag);
 		}
 
 	}
 
 }
-void EffekseerSupporter::NoPostMove() {
 
-	for (auto go = m_effectList.begin();
-		go != m_effectList.end();
-		go++) {
+void EffekseerSupporter::EffectDelete(const Effekseer::Handle& effect) {
 
-		if (go->PostFlag == false) {
-			CGameObjectManager::GetInstance()->GetEffekseerManager()->SetPaused(go->Handle, false);
+	//削除処理
+	std::list<Effect>::iterator it;
+	it = m_effectList.begin();
+	while (it != m_effectList.end()) {
+
+		if (effect == it->Handle) {
+			it = m_effectList.erase(it); //erase関数は削除されたイテレータの次を返してくるので、eraseの戻り値を使う。
 		}
-
+		else {
+			it++; //それ以外は次へ。
+		}
 	}
 
 }

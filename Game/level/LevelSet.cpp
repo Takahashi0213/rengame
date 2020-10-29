@@ -96,19 +96,19 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 
 
 	//ポインタの名前はptで統一
-	if (tag == LevelData::Obj_Tag::Tag_Switch) {	//スイッチ
+	if (tag == LevelData::Obj_Tag::Tag_Switch) {		//スイッチ
 		NewObjCommon<Switch>(data);
 	}
 
-	if (tag == LevelData::Obj_Tag::Tag_Door) {	//ドア
+	if (tag == LevelData::Obj_Tag::Tag_Door) {			//ドア
 		Door* pt = NewObjCommon<Door>(data);
 		pt->GetSkinModelRender()->SetUp(pt->GetPosition(), pt->GetRotation(), pt->GetScale());
 	}
-	if (tag == LevelData::Obj_Tag::Tag_BigDoor1) {	//巨大ドア1
+	if (tag == LevelData::Obj_Tag::Tag_BigDoor1) {		//巨大ドア1
 		BigDoor* pt = NewObjCommon<BigDoor>(data);
 		pt->ModelChange(BigDoor::DoorModel::Model_BigDoor);
 	}
-	if (tag == LevelData::Obj_Tag::Tag_BigDoor2) {	//巨大ドア2
+	if (tag == LevelData::Obj_Tag::Tag_BigDoor2) {		//巨大ドア2
 		BigDoor* pt = NewObjCommon<BigDoor>(data);
 		pt->ModelChange(BigDoor::DoorModel::Model_BigDoor2);
 	}
@@ -127,7 +127,7 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 		NewObjCommon<StarMoney>(data);
 	}
 
-	if (tag == LevelData::Obj_Tag::Tag_Board) {	//看板
+	if (tag == LevelData::Obj_Tag::Tag_Board) {			//看板
 		Board* pt = NewObjCommon<Board>(data);
 		int ObjNo = Level_Data.ObjName_Search(m_levelNo, data.name);
 		pt->SetBoardMessage(Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo));
@@ -152,7 +152,7 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 		pt->CreateGhost();
 	}
 
-	if (tag == LevelData::Obj_Tag::Tag_StaticBox) {	//スタティックボックス
+	if (tag == LevelData::Obj_Tag::Tag_StaticBox) {			//スタティックボックス
 		StaticBox* pt = NewObjCommon<StaticBox>(data);
 		pt->CreateStaticBox();
 	}
