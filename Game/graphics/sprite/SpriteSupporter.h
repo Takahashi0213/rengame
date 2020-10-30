@@ -39,11 +39,23 @@ public:
 	void SpritePattern(const int& moveTime, const bool& loopflag = false,
 		const int& overLimit = 0);
 
+	/// <summary>
+	/// このフラグがtrue かつ このスプライトが全く動いていない場合
+	/// スプライトは自動でDeleteGOされる
+	/// </summary>
+	/// <param name="flag">フラグ</param>
+	void SetAutoDeathFlag(const bool& flag) {
+		m_autoDeathFlag = flag;
+	}
+
 	//状態取得用
 	//スプライトの移動リスト要素数を取得
 	//移動中のスプライトかどうかを判別する など
 	int GetSpriteMoveListLen() {
 		return static_cast<int>(m_spriteMoveList.size());
+	}
+	int GetSpriteScaleListLen() {
+		return static_cast<int>(m_spriteScaleList.size());
 	}
 
 private:
@@ -77,7 +89,7 @@ private:
 		bool m_spriteMoveRelative = false;					//スプライトの相対移動フラグ（trueなら相対移動）
 		bool m_spriteMoveDeleteFlag = false;				//削除フラグ（いじらないでね）
 	};
-	std::list<SpriteMoveSet> m_spriteMoveList;				 //移動のリスト
+	std::list<SpriteMoveSet> m_spriteMoveList;				//移動のリスト
 	//Rotation
 	CQuaternion m_spriteRotation = CQuaternion().Identity();	//1フレームの回転量
 	int m_spriteRotationLimit = -1;							//スプライトの回転時間（-1は移動中ではない）
@@ -112,6 +124,9 @@ private:
 	int m_patternTimer = -1;								//パターン用タイマー
 	int m_patternOverLimit = -1;							//パターン終了後の待ち時間（パターン終了時一瞬で消えたりするので）
 	bool m_patternLoopFlag = false;							//falseならパターン終了時、アルファを自動で0にする trueならループする
+	//AutoDeath
+	bool m_autoDeathFlag = false;							//何もしていない場合、親のスプライトレンダーを削除する
+
 
 };
 

@@ -21,6 +21,8 @@ Player::Player()
 	m_playerAnimationClips[enAnimationClip_Run].SetLoopFlag(true);
 	m_playerAnimationClips[enAnimationClip_Jump].Load(L"Assets/animData/jump.tka");
 	m_playerAnimationClips[enAnimationClip_Jump].SetLoopFlag(false);
+	m_playerAnimationClips[enAnimationClip_Damage].Load(L"Assets/animData/damage.tka");
+	m_playerAnimationClips[enAnimationClip_Damage].SetLoopFlag(false);
 	//アニメーションの初期化。
 	m_playerAnimation.Init(
 		m_model,					//アニメーションを流すスキンモデル。
@@ -95,6 +97,7 @@ void Player::Update()
 	BoxSearch();
 	//キーが押されたら持ち上げたり下ろしたりする
 	BoxCatch();
+	BoxPut();
 	//キーが押されたら持ち上げている箱を削除する
 	BoxDelete();
 	//上げ下げ中の補完移動をする
@@ -144,16 +147,24 @@ void Player::Render()
 }
 
 void Player::PlayerAnimation() {
+
 	//アニメーション
 	if (m_gameObj != nullptr) {
-		if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode) {
+		if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode &&
+			SceneManager::GetInstance()->GetGameMode() != SceneManager::MenuMode) {
 			//アニメーション再生
 			bool RunFlag = false;
 			bool OnG_Flag = m_charaCon.IsOnGround();
 			float MovePower = m_moveSpeed.Length();
 			if (OnG_Flag == false) {
-				m_playerAnimation.Play(enAnimationClip_Jump);
-				m_playerAnimationSL.Play(enAnimationClip_Jump);
+				if (m_damage_JumpFlag == false) {
+					m_playerAnimation.Play(enAnimationClip_Jump);
+					m_playerAnimationSL.Play(enAnimationClip_Jump);
+				}
+				else {
+					m_playerAnimation.Play(enAnimationClip_Damage);
+					m_playerAnimationSL.Play(enAnimationClip_Damage);
+				}
 			}
 			else {
 				if (MovePower > 1.0f) {
@@ -219,7 +230,8 @@ void Player::Move() {
 				m_nextPos = m_position + (m_moveSpeed / 1000.0f);
 			}
 			//エフェクト
-			EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::PlayerMove,
+			EffekseerSupporter::GetInstance()->EffectDelete(m_moveEffect);
+			m_moveEffect = EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::PlayerMove,
 				false, m_nextPos.x, m_nextPos.y, m_nextPos.z);
 		}
 	}
@@ -229,8 +241,8 @@ void Player::Move() {
 
 	m_moveSpeed.x = m_nextPos.x - m_position.x;
 	m_moveSpeed.z = m_nextPos.z - m_position.z;
-	m_moveSpeed.x /= 20.0f;
-	m_moveSpeed.z /= 20.0f;
+	m_moveSpeed.x /= MoveHosei;
+	m_moveSpeed.z /= MoveHosei;
 
 	//上限
 	if (m_moveSpeed.x > m_moveMax) {
@@ -386,56 +398,84 @@ void Player::BoxCatch() {
 	}
 	else {
 
-		//移動量に応じて箱を置くか投げるか変更
-		CVector3 Move = m_moveSpeed / m_boxPutHosei;
-		Move.y = 0.0f;
-		float MovePower = Move.Length();
-		if (MovePower >= 0.0f) {
+		//投げる
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/BoxThrow.wav");
+		CVector3 MoveSpeed = BoxThrowSearch();
+		m_upBox->SetMoveSpeed(MoveSpeed);
 
-			//投げる
-			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/BoxThrow.wav");
-			CVector3 MoveSpeed = BoxThrowSearch();
-			m_upBox->SetMoveSpeed(MoveSpeed);
-
-			//リセット
-			m_boxUpFlag = false;
-			m_upBox = nullptr;
-
-		}
-		else {
-			//箱をおろす
-
-			//座標は前方床
-			{
-				//座標計算
-				m_point_2 = m_upBox->GetPosition();	//始点
-				CVector3 Pos = m_position;
-				CVector3 Move_ = m_moveSpeed;
-				Move_.Normalize();
-				Pos += Move_ * m_boxPut_Hosei;
-				m_point_3 = Pos;	//終点
-				CVector3 Vec = Pos - m_upBox->GetPosition();	//始点から終点に伸びるベクトル
-				Vec /= 4.0f;
-				CVector3 Pos2 = m_upBox->GetPosition() + Vec;
-				Pos2.y += m_boxMove_Y_Hosei_Put;
-				m_point_4 = Pos2;	//始点寄り
-				Pos2 = Pos - Vec;
-				Pos2.y = m_point_4.y;
-				m_point_1 = Pos2;	//終点寄り
-			}
-
-			//効果音
-			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/BoxCatch.wav");
-			//リセット
-			m_boxUpFlag = false;
-			m_boxMoveFlag = true;
-			m_upOrDown = true;	//箱を下ろしてるフラグ
-			m_moveSpeed.x = 0.0f;
-			m_moveSpeed.z = 0.0f;
-
-		}
+		//リセット
+		m_boxUpFlag = false;
+		m_upBox = nullptr;
 
 	}
+
+}
+
+void Player::BoxPut() {
+
+	//イベント中なら強制終了
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+		return;
+	}
+
+	//アクションモードでないなら強制終了
+	if (SceneManager::GetInstance()->GetGameMode() != SceneManager::ActionMode) {
+		return;
+	}
+
+	//箱の上げ下ろし中は強制終了
+	if (m_boxMoveFlag == true) {
+		return;
+	}
+
+	//箱を持ち上げていないなら強制終了
+	if (m_boxUpFlag == false) {
+		return;
+	}
+
+	//対応するボタンが押されてないなら強制終了
+	if (HIWORD(GetAsyncKeyState(GameData::GetInstance()->GetBoxPutKey()))) {
+		if (m_boxButtonFlag == false) {
+			m_boxButtonFlag = true;
+		}
+		else {
+			return;
+		}
+	}
+	else {
+		m_boxButtonFlag = false;
+		return;
+	}
+
+	//箱をおろす
+
+	//座標は前方床
+	{
+		//座標計算
+		m_point_2 = m_upBox->GetPosition();	//始点
+		CVector3 Pos = m_position;
+		CVector3 Move_ = m_moveSpeed;
+		Move_.Normalize();
+		Pos += Move_ * m_boxPut_Hosei;
+		m_point_3 = Pos;	//終点
+		CVector3 Vec = Pos - m_upBox->GetPosition();	//始点から終点に伸びるベクトル
+		Vec /= 4.0f;
+		CVector3 Pos2 = m_upBox->GetPosition() + Vec;
+		Pos2.y += m_boxMove_Y_Hosei_Put;
+		m_point_4 = Pos2;	//始点寄り
+		Pos2 = Pos - Vec;
+		Pos2.y = m_point_4.y;
+		m_point_1 = Pos2;	//終点寄り
+	}
+
+	//効果音
+	SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/BoxCatch.wav");
+	//リセット
+	m_boxUpFlag = false;
+	m_boxMoveFlag = true;
+	m_upOrDown = true;	//箱を下ろしてるフラグ
+	m_moveSpeed.x = 0.0f;
+	m_moveSpeed.z = 0.0f;
 
 }
 
@@ -694,6 +734,9 @@ CVector3 Player::BoxThrowSearch() {
 			diff.Normalize();
 			diff *= 100.0f;		//移動パワー
 			diff.y = -3.0f;		//高さ
+			//エフェクト
+			m_moveEffect = EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::EnemyScope,
+				false, ThrowTarget.x, ThrowTarget.y + BoxThrowEffect_Y_Hosei, ThrowTarget.z);
 			return diff;
 		}
 		else {
@@ -773,8 +816,9 @@ void Player::SetPosition(const CVector3& pos) {
 
 	//座標の設定
 	m_moveSpeed = CVector3::Zero();
-	m_nextPos = CVector3::Zero();
+	m_nextPos = pos;
 	m_position = pos;
 	m_charaCon.SetPosition(pos);
 	GameCamera::GetInstance()->ActionModeCameraMove();	//カメラも動かす
+
 }

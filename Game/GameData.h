@@ -215,6 +215,13 @@ public:
 	const int GetMessageSpeed()const {
 		return m_messageSpeed;
 	}
+	//カメラの感度
+	void SetCameraSpeed(const float& speed) {
+		m_cameraSpeed = speed;
+	}
+	const float GetCameraSpeed()const {
+		return m_cameraSpeed;
+	}
 
 	//キーコンフィグ～
 	//箱キャッチ
@@ -223,6 +230,13 @@ public:
 	}
 	const char GetBoxCatchKey()const {
 		return m_boxCatchKey;
+	}
+	//箱設置
+	void SetBoxPutKey(const char& key) {
+		m_boxPutKey = key;
+	}
+	const char GetBoxPutKey()const {
+		return m_boxPutKey;
 	}
 	//箱削除
 	void SetBoxDeleteKey(const char& key) {
@@ -310,7 +324,9 @@ private:
 
 	//コンフィグ
 	int m_messageSpeed = 2;		//会話のメッセージ送りスピード
+	float m_cameraSpeed = 3.0f;	//カメラの感度
 	char m_boxCatchKey = 'C';	//箱を持ち上げるキー
+	char m_boxPutKey = 'X';		//箱を置くキー
 	char m_boxDeleteKey = 'D';	//箱を削除するキー
 	float m_bgmVolume = 100.0f;	//BGMのボリューム補正（/100してBGMのボリュームに乗算される）
 	float m_seVolume = 100.0f;	//SEのボリューム補正（/100してBGMのボリュームに乗算される）

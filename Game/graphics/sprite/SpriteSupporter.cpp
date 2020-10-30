@@ -25,6 +25,16 @@ void SpriteSupporter::SpriteSupporter_Update() {
 	SpriteShakeUpdate();
 	SpritePatternUpdate();
 
+	//オートデスチェック
+	if (m_autoDeathFlag == true) {
+		//全く動作していない？？
+		if (GetSpriteMoveListLen() == 0 &&
+			GetSpriteScaleListLen() == 0) {
+			//消滅する
+			DeleteGO(m_spriteRender);
+		}
+	}
+
 	//最後に更新したデータを返す
 	SpriteDataReturn();
 }
@@ -60,9 +70,9 @@ void SpriteSupporter::SpriteDataReturn() {
 
 void SpriteSupporter::SpriteDelayReset() {
 
-	//
+	//Move
 	m_spriteMoveList.clear();
-	//
+	//Rotation
 	m_spriteRotation = CQuaternion().Identity();	//1フレームの回転量
 	m_spriteRotationLimit = -1;	//スプライトの回転時間（-1は移動中ではない）
 	m_spriteRotationDelay = -1;	//スプライトの回転ディレイ
@@ -178,7 +188,7 @@ void SpriteSupporter::SpriteShake(const CVector2& move, const int& moveTime, con
 	m_spriteShakeCount = moveCount;
 	m_spriteShakeCounter = 0;
 	m_spriteShakeTimer = 0;
-	//移動距離もこ↑こ↓で計算
+	//移動距離もここで計算
 	m_spriteShakeMove_OneFlame.x = (m_spriteShakeMove.x / (m_spriteShakeLimit * 2));
 	m_spriteShakeMove_OneFlame.y = (m_spriteShakeMove.y / (m_spriteShakeLimit * 2));
 
@@ -447,9 +457,7 @@ void SpriteSupporter::SpritePatternUpdate() {
 				//ループする
 				m_nowPattern = 0;
 			}
-
 		}
-
 	}
 
 }

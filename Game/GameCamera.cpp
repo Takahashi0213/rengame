@@ -123,31 +123,31 @@ void GameCamera::CreateMode() {
 void GameCamera::CommonMove() {
 
 	//回転
-
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Right_Key);
 	if (key == MouseSupporter::Now_Pushing) {
+
 		//カメラ操作
 		CVector2 move_c = MouseSupporter::GetInstance()->GetBeforeMouse(1);
 		CVector3 move_cc = CVector3().Zero();
 		move_cc.x = move_c.x;
 		move_cc.y = move_c.y;
-		move_cc.y *= -1.0f;
+		move_cc.y *= -1.0f;		//逆にする
 		move_cc.Normalize();
 
 		CVector3 toCameraPosOld = m_cameraHosei;
 		float x = move_cc.x;
 		float y = move_cc.y;
-		x *= 3.0f;
-		y *= 3.0f;
+		x *= GameData::GetInstance()->GetCameraSpeed();
+		y *= GameData::GetInstance()->GetCameraSpeed();
 		//Y軸周りの回転
 		CQuaternion qRot;
-		qRot.SetRotationDeg(CVector3().AxisY(), 3.0f * x);
+		qRot.SetRotationDeg(CVector3().AxisY(), GameData::GetInstance()->GetCameraSpeed() * x);
 		qRot.Multiply(m_cameraHosei);
 		//X軸周りの回転。
 		CVector3 axisX;
 		axisX.Cross(CVector3().AxisY(), m_cameraHosei);
 		axisX.Normalize();
-		qRot.SetRotationDeg(axisX, 3.0f * y);
+		qRot.SetRotationDeg(axisX, GameData::GetInstance()->GetCameraSpeed() * y);
 		qRot.Multiply(m_cameraHosei);
 
 		//カメラの回転の上限をチェックする。

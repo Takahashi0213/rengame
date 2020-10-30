@@ -5,6 +5,10 @@
 #include "GameSystem/Mouse/MouseOver.h"
 #include "GameBox.h"
 
+/// <summary>
+/// プレイヤー
+/// 基本的に消滅しない
+/// </summary>
 class Player final: public IGameObject
 {
 public:
@@ -17,6 +21,7 @@ public:
 		enAnimationClip_Idle,		//待機
 		enAnimationClip_Run,		//走る
 		enAnimationClip_Jump,		//ジャンプ
+		enAnimationClip_Damage,		//ダメージ
 		enAnimationClip_Num,		//アニメーションクリップ
 	};
 
@@ -79,6 +84,7 @@ private:
 	void Jump();
 	//行動 箱関連
 	void BoxCatch();
+	void BoxPut();
 	void BoxSearch();
 	void BoxMove();
 	void BoxDelete();
@@ -94,6 +100,8 @@ private:
 
 	//移動
 	const float m_moveMax = 30.0f;
+	const float MoveHosei = 20.0f;			//移動力への補正（大きいほど遅くなる）
+	Effekseer::Handle m_moveEffect = -1;	//移動エフェクト
 
 	//キャラコン
 	const float Radius = 25.0f;		//半径
@@ -128,6 +136,7 @@ private:
 	const float m_boxPut_Hosei = 150.0f;		//箱を置くときの移動量
 	//箱投げ
 	const float BoxThrowMaxLength = 500.0f;		//箱投げのターゲットになる範囲
+	const float BoxThrowEffect_Y_Hosei = 50.0f;	//箱投げエフェクトのY補正
 	//ダメージ
 	const float m_damage_YHosei = 20.0f;		//ダメージを受けた時に飛びあがる量
 	const float m_damage_knockback = -200.0f;	//ダメージを受けた時のノックバック距離

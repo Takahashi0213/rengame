@@ -27,6 +27,8 @@ StarMoney::StarMoney()
 
 StarMoney::~StarMoney()
 {
+	//‰ð•ú
+	m_kiramekiSRV->Release();
 }
 
 void StarMoney::Update() {

@@ -1,4 +1,8 @@
 #pragma once
+
+/// <summary>
+/// 敵に必要な物色々
+/// </summary>
 class EnemySystem : public ObjectClass
 {
 public:

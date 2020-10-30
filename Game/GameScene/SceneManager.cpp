@@ -27,18 +27,18 @@ SceneManager::SceneManager()
 	CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
 
 	//最初はタイトル！
-	//m_title = CGameObjectManager::GetInstance()->NewGO<Title>("Game_Title");
+	m_title = CGameObjectManager::GetInstance()->NewGO<Title>("Game_Title");
 	//タイトルがいらない時用（↑のタイトル生成はコメントアウトしてください）
-	{
-		m_game = CGameObjectManager::GetInstance()->NewGO<Game>("Main_Game");
-		m_nowScene = Game_Sence;
+	//{
+	//	m_game = CGameObjectManager::GetInstance()->NewGO<Game>("Main_Game");
+	//	m_nowScene = Game_Sence;
 
-		//音楽がいらない時用
-		GameData::GetInstance()->Set_BGMVolume(0.0f);
-		//効果音がいらない時用
-		GameData::GetInstance()->Set_SEVolume(0.0f);
+	//	//音楽がいらない時用
+	//	GameData::GetInstance()->Set_BGMVolume(0.0f);
+	//	//効果音がいらない時用
+	//	GameData::GetInstance()->Set_SEVolume(0.0f);
 
-	}
+	//}
 
 }
 

@@ -53,7 +53,7 @@ void CameraSupporter::Render() {
 /// <param name="move">移動する分のベクトル</param>
 /// <param name="moveTime">移動時間</param>
 /// <param name="moveDelay">移動ディレイ</param>
-void CameraSupporter::CameraMove(CVector3 move, float moveTime, float moveDelay) {
+void CameraSupporter::CameraMove(const CVector3& move, const float& moveTime, const float& moveDelay) {
 
 	//メンバ変数リセット
 	m_cameraMoveFlag = true;
@@ -71,7 +71,7 @@ void CameraSupporter::CameraMove(CVector3 move, float moveTime, float moveDelay)
 /// </summary>
 /// <param name="moveTime">移動時間</param>
 /// <param name="moveDelay">移動ディレイ</param>
-void CameraSupporter::CameraMove_Rot(float move, float moveTime, float moveDelay) {
+void CameraSupporter::CameraMove_Rot(const float& move, const float& moveTime, const float& moveDelay) {
 
 	//メンバ変数リセット
 	m_cameraMoveFlag_Rot = true;
@@ -91,7 +91,7 @@ void CameraSupporter::CameraMove_Rot(float move, float moveTime, float moveDelay
 /// <param name="speed">ブレる速さ</param>
 /// <param name="moveTime">動作時間 ※-1.0fを設定すると停止するまで続けます</param>
 /// <param name="moveDelay">動作ディレイ</param>
-void CameraSupporter::CameraMove_Bure(CVector2 bure, float speed, float moveTime, float moveDelay) {
+void CameraSupporter::CameraMove_Bure(const CVector2& bure, const float& speed, const float& moveTime, const float& moveDelay) {
 
 	//メンバ変数リセット
 	m_cameraMoveFlag_Bure = true;
@@ -115,7 +115,7 @@ void CameraSupporter::CameraMove_Bure(CVector2 bure, float speed, float moveTime
 /// <param name="moveTime">ズーム時間</param>
 /// <param name="moveDelay">ズームウェイト</param>
 /// <param name="boundFlag">trueにすると目標を少し通り過ぎてバウンドします</param>
-void CameraSupporter::CameraMove_Zoom(const float angle, float moveTime, float moveDelay, bool boundFlag) {
+void CameraSupporter::CameraMove_Zoom(const float& angle, const float& moveTime, const float& moveDelay, const bool& boundFlag) {
 
 	//メンバ変数リセット
 	m_cameraMoveFlag_Zoom = true;
@@ -136,7 +136,7 @@ void CameraSupporter::CameraMove_Zoom(const float angle, float moveTime, float m
 /// <param name="move">移動する分のベクトル</param>
 /// <param name="moveTime">移動時間</param>
 /// <param name="moveDelay">移動ディレイ</param>
-void CameraSupporter::CameraTargetMove(CVector3 move, float moveTime, float moveDelay) {
+void CameraSupporter::CameraTargetMove(const CVector3& move, const float& moveTime, const float& moveDelay) {
 
 	//メンバ変数リセット
 	m_cameraTargetMoveFlag = true;
@@ -153,8 +153,6 @@ void CameraSupporter::CameraTargetMove(CVector3 move, float moveTime, float move
 /// カメラ移動を実行
 /// </summary>
 void CameraSupporter::CameraMoveUpdate() {
-
-	//float a = CGameTime::GetFrameDeltaTime();
 
 	if (m_cameraMoveTimer >= m_cameraMoveDelay) {
 

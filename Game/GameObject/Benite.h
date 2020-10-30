@@ -2,6 +2,10 @@
 #include "character/CharacterController.h"
 #include "GameObject/EnemySystem.h"
 
+/// <summary>
+/// ベニテー
+/// プレイヤーを発見すると少し後退してから突進する
+/// </summary>
 class Benite : public EnemySystem
 {
 public:

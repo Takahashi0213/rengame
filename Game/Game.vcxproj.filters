@@ -248,12 +248,6 @@
     <ClCompile Include="CGOM_Graphics.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="TransitionGenerator.cpp">
-      <Filter>graphics\Transition</Filter>
-    </ClCompile>
-    <ClCompile Include="TransitionSprite.cpp">
-      <Filter>graphics\Transition</Filter>
-    </ClCompile>
     <ClCompile Include="sound\SoundEngine.cpp">
       <Filter>sound</Filter>
     </ClCompile>
@@ -485,6 +479,12 @@
     <ClCompile Include="GameSystem\StageSet\StageSet.cpp">
       <Filter>system\StageSet</Filter>
     </ClCompile>
+    <ClCompile Include="graphics\Transition\TransitionSprite.cpp">
+      <Filter>graphics\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Transition\TransitionGenerator.cpp">
+      <Filter>graphics\Transition</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -575,12 +575,6 @@
     </ClInclude>
     <ClInclude Include="GameGraphic.h">
       <Filter>system\GameSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="TransitionGenerator.h">
-      <Filter>graphics\Transition</Filter>
-    </ClInclude>
-    <ClInclude Include="TransitionSprite.h">
-      <Filter>graphics\Transition</Filter>
     </ClInclude>
     <ClInclude Include="sound\SoundEngine.h">
       <Filter>sound</Filter>
@@ -824,6 +818,12 @@
     </ClInclude>
     <ClInclude Include="GameSystem\StageSet\StageData.h">
       <Filter>system\StageSet</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Transition\TransitionGenerator.h">
+      <Filter>graphics\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Transition\TransitionSprite.h">
+      <Filter>graphics\Transition</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

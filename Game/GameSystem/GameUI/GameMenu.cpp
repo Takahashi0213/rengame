@@ -250,7 +250,7 @@ void GameMenu::GameMenuUpdate() {
 				MenuCommand_Cursor->SetAlpha(1.0f);
 				m_nowMenuCommand = MenuCommand::Create;	//カーソル位置リセット
 				m_menuMoveTimer = 0;
-				EffekseerSupporter::GetInstance()->NoPostStop();
+				EffekseerSupporter::GetInstance()->NoPostStop(true);
 				m_commandNow = false;
 				SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Menu_Open.wav");
 				SceneManager::GetInstance()->GetSoundManagerInstance()->BGM_VolumeFade(MenuBGM_Volume, MenuBGM_FadeTime);
@@ -317,7 +317,7 @@ void GameMenu::GameMenuUpdate() {
 
 				SceneManager::GetInstance()->SetGameMode(SceneManager::GameMode::ActionMode);
 				MenuCommand_Cursor->SetAlpha(0.0f);
-				EffekseerSupporter::GetInstance()->NoPostMove();
+				EffekseerSupporter::GetInstance()->NoPostStop(false);
 				m_commandEndFlag = true;
 				SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Menu_Close.wav");
 				SceneManager::GetInstance()->GetSoundManagerInstance()->BGM_VolumeFade(1.0f, MenuBGM_FadeTime);

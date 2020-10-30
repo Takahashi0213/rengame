@@ -62,5 +62,6 @@ private:
 
 	//定数
 	const float CameraMoveHosei = 10.0f;		//モードチェンジ時、カメラの移動速度補正
+
 };
 

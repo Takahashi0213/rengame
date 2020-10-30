@@ -22,21 +22,25 @@ public:
 			return;
 		}
 		m_nowEventNo = EvNo;
-		m_eventProgress = -1;
+		m_eventEndProgress = m_eventData.SearchEventEndProgress(EvNo);
+		m_eventProgress = 0;
 	}
 
 	void GameEventUpdate();
 
 private:
-	/// <summary>
 	//イベント一覧
 	void Event_Tutorial1();
+	void Event_Tutorial2();
+	void Event_Tutorial3();
 
 	EventData m_eventData;			//イベントデータ
 
 	int m_nowEventNo = -1;			//実行中のイベント番号
 	int m_eventProgress = -1;		//実行中のイベント進行度
+	int m_eventEndProgress = -1;	//実行中のイベント終了進行度
 	bool m_eventWaitFlag = false;	//イベントのクリック待ちフラグ
+	bool m_eventEndFlag = false;	//イベント終了フラグ
 
 };
 

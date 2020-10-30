@@ -16,6 +16,7 @@ public:
 		TestData,			//テストデータ
 		EnemyDeath,			//敵が倒れる
 		PlayerMove,			//プレイヤーの移動先
+		EnemyScope,			//箱を飛ばす先（敵）
 		EffectNum,
 	};
 
@@ -81,6 +82,7 @@ private:
 	{ L"Assets/effect/test.efk" },
 	{ L"Assets/effect/EnemyDeath.efk" },
 	{ L"Assets/effect/PlayerMove.efk" },
+	{ L"Assets/effect/EnemyScope.efk" },
 	};
 
 	std::list<Effect> m_effectList;		//エフェクトリスト

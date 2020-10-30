@@ -192,7 +192,7 @@ void GameStatusUI::Status_EffectUpdate() {
 			m_starMoneySprite->SetAlpha(1.0f);
 			m_starMoneySprite->m_spriteSupporter.SpriteDelayReset();
 			m_text_StarMoney->SetColor(CVector4::White());
-			//座標計算
+			//座標計算（ベジェ曲線）
 			m_point_2 = m_starMoneySprite->GetPosition();	//始点
 			m_point_3 = GameStatusUI_StarMoney_DefPos;		//終点
 			CVector3 Vec = m_point_3 - m_point_2;			//始点から終点に伸びるベクトル

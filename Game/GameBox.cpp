@@ -375,7 +375,7 @@ void GameBox::MeshStandBy() {
 /// <summary>
 /// q‹Ÿ‘S‚Ä‚É’…F
 /// </summary>
-void GameBox::SetAllColor(const CVector3 color) {
+void GameBox::SetAllColor(const CVector3& color) {
 
 	//‰‘ã” ‚Å‚È‚¢‚È‚ç’†’f
 	if (m_boxTag == BoxTag::Another) {

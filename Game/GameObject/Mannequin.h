@@ -2,6 +2,11 @@
 #include "character/CharacterController.h"
 #include "GameObject/EnemySystem.h"
 
+/// <summary>
+/// マネキン（敵です）
+/// チュートリアル用
+/// 動かない 倒せるだけの敵
+/// </summary>
 class Mannequin : public EnemySystem
 {
 public:

@@ -44,20 +44,20 @@ public:
 	/// <summary>
 	/// 色取得＆削除
 	/// </summary>
-	void SetColor(CVector3 color) {
+	void SetColor(const CVector3& color) {
 		m_model.SetEmissionColor(color);
 	}
 	CVector3 GetColor() {
 		return m_model.GetEmissionColor();
 	}
 	//（子供含め）まとめて着色
-	void SetAllColor(const CVector3 color);
+	void SetAllColor(const CVector3& color);
 
 	//移動量取得＆削除
 	CVector3 GetMoveSpeed() {
 		return m_moveSpeed;
 	}
-	void SetMoveSpeed(CVector3 speed) {
+	void SetMoveSpeed(const CVector3& speed) {
 		m_moveSpeed = speed;
 	}
 
@@ -132,7 +132,7 @@ public:
 	/// <summary>
 	/// 箱のローカル座標！
 	/// </summary>
-	void SetLocalPos(const CVector3 pos) {
+	void SetLocalPos(const CVector3& pos) {
 		m_localPosition = pos;
 	}
 	CVector3 GetLocalPos() {

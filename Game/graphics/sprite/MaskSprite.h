@@ -201,8 +201,8 @@ private:
 		CQuaternion Rotation = CQuaternion().Identity();
 		CVector3 Scale = CVector3().One();
 		CVector2 Pivot = { 0.5f, 0.5f };
-		float Wide = 0.0f;	//幅！
-		float High = 0.0f;	//高さ！
+		float Wide = 0.0f;	//幅
+		float High = 0.0f;	//高さ
 		CVector4 MulColor = { 1.0f,1.0f,1.0f,1.0f };	//!<乗算カラー。
 	};
 

@@ -2,6 +2,10 @@
 #include "physics/PhysicsStaticObject.h"
 #include "system/CGameObjectManager.h"
 
+/// <summary>
+/// 背景（ステージ）
+/// 空のスプライトも保有
+/// </summary>
 class BackGround : public ObjectClass
 {
 public:

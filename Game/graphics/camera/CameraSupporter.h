@@ -17,11 +17,11 @@ public:
 	void Render()override;
 
 	//ƒJƒƒ‰‘€ìŠÖ”
-	void CameraSupporter::CameraMove(CVector3 move, float moveTime, float moveDelay);
-	void CameraSupporter::CameraMove_Rot(float move, float moveTime, float moveDelay);
-	void CameraSupporter::CameraMove_Bure(CVector2 bure, float speed, float moveTime, float moveDelay);
-	void CameraSupporter::CameraMove_Zoom(const float angle, float moveTime, float moveDelay, bool boundFlag);
-	void CameraSupporter::CameraTargetMove(CVector3 move, float moveTime, float moveDelay);
+	void CameraSupporter::CameraMove(const CVector3& move, const float& moveTime, const float& moveDelay);
+	void CameraSupporter::CameraMove_Rot(const float& move, const float& moveTime, const float& moveDelay);
+	void CameraSupporter::CameraMove_Bure(const CVector2& bure, const float& speed, const float& moveTime, const float& moveDelay);
+	void CameraSupporter::CameraMove_Zoom(const float& angle, const float& moveTime, const float& moveDelay, const bool& boundFlag);
+	void CameraSupporter::CameraTargetMove(const CVector3& move, const float& moveTime, const float& moveDelay);
 
 	/// <summary>
 	/// ƒJƒƒ‰‚ÌƒuƒŒ‚ğ’â~
