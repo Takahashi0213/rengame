@@ -45,8 +45,7 @@ void OP::OP_Update() {
 		}
 		else {
 			//¶‚ª‰Ÿ‚³‚ê‚½‚çc
-			int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
-			if (key == MouseSupporter::Release_Push) {
+			if (GameEffect::GetInstance()->GetInstance_Message()->GetMessageOkuriFlag() == true) {
 				//ŽŸ‚Ö
 				m_opEffectFlag = false;
 				m_opShinkou++;

@@ -14,6 +14,7 @@ protected:
 	Shader m_psSilhouette;		//シルエット描画用のピクセルシェーダー。
 	Shader m_psMonochrome;		//モノクロ描画用のピクセルシェーダー。
 	Shader m_vsShadowMap;		//シャドウマップ生成用の頂点シェーダー。
+	Shader m_vsShadowMapSkin;	//シャドウマップ生成用の頂点シェーダー(スキンモデル用)
 	Shader m_psShadowMap;		//シャドウマップ生成用のピクセルシェーダー。
 	Shader m_psShader_Box;		//箱用のピクセルシェーダー
 	Shader m_psShader_Kirameki;	//きらめき用のピクセルシェーダー
@@ -103,6 +104,7 @@ public:
 	{
 		m_vsShader.Load("Assets/shader/model.fx", "VSMain", Shader::EnType::VS);
 		m_pVSShader = &m_vsShader;
+		m_vsShadowMapShader = &m_vsShadowMap;
 		isSkining = false;
 	}
 };
@@ -117,7 +119,7 @@ public:
 		wchar_t hoge[256];
 		GetCurrentDirectoryW(256, hoge);
 		m_vsShader.Load("Assets/shader/model.fx", "VSMainSkin", Shader::EnType::VS);
-		
+		m_vsShadowMapShader = &m_vsShadowMapSkin;
 		m_pVSShader = &m_vsShader;
 		isSkining = true;
 	}

@@ -359,9 +359,11 @@ PSOutput PSMain(PSInput In)
 			shadowMapUV.x < 1.0f &&
 			shadowMapUV.y > 0.0f &&
 			shadowMapUV.y < 1.0f &&
-			zInLVP > zInShadowMap + 0.01f) {
+			zInLVP > zInShadowMap + 0.0001f) {
 			//影が落ちているので、光を弱くする
-			lig *= 0.5f;
+			float2 tmp = (shadowMapUV - 0.5f) * 2.0f;
+			float t = pow( min( 1.0f, length(tmp) ), 0.7f );
+			lig = lerp(lig * 0.5f, lig, t );
 		}
 	}
 
@@ -416,7 +418,40 @@ PSInput_ShadowMap VSMain_ShadowMap(VSInputNmTxVcTangent In)
 	psInput.Position = pos;
 	return psInput;
 }
+//--------------------------------------------------------------------------------------
+// シャドウマップ生成用(スキンモデル)の頂点シェーダー。
+//--------------------------------------------------------------------------------------
+PSInput_ShadowMap VSMainSkin_ShadowMap(VSInputNmTxWeights In)
+{
+	PSInput_ShadowMap psInput = (PSInput_ShadowMap)0;	///////////////////////////////////////////////////
+	//ここからスキニングを行っている箇所。
+	//スキン行列を計算。
+	///////////////////////////////////////////////////
+	float4x4 skinning = 0;
+	float4 pos = 0;
+	{
 
+		float w = 0.0f;
+
+		for (int i = 0; i < 3; i++)
+		{
+			//boneMatrixにボーン行列が設定されていて、
+			//In.indicesは頂点に埋め込まれた、関連しているボーンの番号。
+			//In.weightsは頂点に埋め込まれた、関連しているボーンのウェイト。
+			skinning += boneMatrix[In.Indices[i]] * In.Weights[i];
+			w += In.Weights[i];
+		}
+		//最後のボーンを計算する。
+		skinning += boneMatrix[In.Indices[3]] * (1.0f - w);
+		//頂点座標にスキン行列を乗算して、頂点をワールド空間に変換。
+		//mulは乗算命令。
+		pos = mul(skinning, In.Position);
+	}
+	pos = mul(mView, pos);
+	pos = mul(mProj, pos);
+	psInput.Position = pos;
+	return psInput;
+}
 //--------------------------------------------------------------------------------------
 // ピクセルシェーダーのエントリ関数。
 //--------------------------------------------------------------------------------------

@@ -19,4 +19,5 @@
 #include "GameObject/Benite.h"
 
 //システムオブジェクト
+#include "GameObject/EventObject.h"
 #include "GameObject/SystemBox.h"

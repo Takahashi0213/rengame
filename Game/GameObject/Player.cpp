@@ -8,11 +8,9 @@
 
 Player::Player()
 {
-	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/unityChan.cmo", enFbxUpAxisY);
-	m_model_Sl.Init(L"Assets/modelData/unityChan.cmo", enFbxUpAxisY);
-	//m_model.SetEmissionColor({ 100.0f,1.0f,1.0f });
-	m_model_Sl.SetRenderMode(RenderMode::Silhouette);
+	//スキンモデルレンダーの生成
+	m_playerModel = new SkinModelRender;
+	m_playerModel_Sl = new SkinModelRender;
 
 	//アニメーション
 	m_playerAnimationClips[enAnimationClip_Idle].Load(L"Assets/animData/idle.tka");
@@ -23,23 +21,19 @@ Player::Player()
 	m_playerAnimationClips[enAnimationClip_Jump].SetLoopFlag(false);
 	m_playerAnimationClips[enAnimationClip_Damage].Load(L"Assets/animData/damage.tka");
 	m_playerAnimationClips[enAnimationClip_Damage].SetLoopFlag(false);
-	//アニメーションの初期化。
-	m_playerAnimation.Init(
-		m_model,					//アニメーションを流すスキンモデル。
-									//これでアニメーションとスキンモデルが関連付けされる。
-		m_playerAnimationClips,		//アニメーションクリップの配列。
-		enAnimationClip_Num			//アニメーションクリップの数。
-	);
-	m_playerAnimationSL.Init(
-		m_model_Sl,					//アニメーションを流すスキンモデル。
-									//これでアニメーションとスキンモデルが関連付けされる。
-		m_playerAnimationClips,		//アニメーションクリップの配列。
-		enAnimationClip_Num			//アニメーションクリップの数。
-	);
+
+	//cmoファイルの読み込み。
+	m_playerModel->Model_Init_Anim(L"Assets/modelData/unityChan.cmo",
+		m_playerAnimationClips, enAnimationClip_Num, enFbxUpAxisY);
+	m_playerModel_Sl->Model_Init_Anim(L"Assets/modelData/unityChan.cmo",
+		m_playerAnimationClips, enAnimationClip_Num, enFbxUpAxisY);
+	m_playerModel_Sl->SetRenderMode(RenderMode::Silhouette);
+	m_playerModel->PlayAnimation(enAnimationClip_Idle);
+	m_playerModel_Sl->PlayAnimation(enAnimationClip_Idle);
 
 	//ワールド行列の更新。
-	m_model_Sl.UpdateWorldMatrix(m_position, m_rotation, m_scale);
-	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+	m_playerModel->SetUp(m_position, m_rotation, m_scale);
+	m_playerModel_Sl->SetUp(m_position, m_rotation, m_scale);
 	m_nextPos = m_position;		//移動先を初期化
 
 	//キャラクターコントローラーを初期化。
@@ -49,10 +43,7 @@ Player::Player()
 	m_lightMaker = LightMaker::GetInstance();
 
 	//シャドウレシーバーにする。
-	m_model.SetShadowReciever(true);
-
-	//ゲームのポインタ
-	m_gameObj = Game::GetInstance();
+	m_playerModel->SetShadowReciever(true);
 
 	//スプライトマスクのテスト
 
@@ -74,13 +65,13 @@ Player::~Player()
 void Player::Update()
 {
 	//モノクロになる
-	if (m_gameObj != nullptr) {
+	if (Game::GetInstance() != nullptr) {
 		if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode && m_monochromeFlag == false) {
-			m_model.SetRenderMode(RenderMode::Monochrome);
+			m_playerModel->SetRenderMode(RenderMode::Monochrome);
 			m_monochromeFlag = true;
 		}
 		else if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode && m_monochromeFlag == true) {
-			m_model.SetRenderMode(RenderMode::Default);
+			m_playerModel->SetRenderMode(RenderMode::Default);
 			m_monochromeFlag = false;
 		}
 	}
@@ -90,6 +81,7 @@ void Player::Update()
 	//持ち上げ中の箱の座標をプレイヤーに合わせる
 	BoxUp();
 	//移動
+	MoveClick();
 	Move();
 	//地上にいたらジャンプ
 	Jump();
@@ -106,21 +98,28 @@ void Player::Update()
 	//アニメーション
 	PlayerAnimation();
 
-	//ワールド行列の更新。
-	m_model_Sl.UpdateWorldMatrix(m_position, m_rotation, m_scale);
-	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+	//モデルの更新。
+	m_playerModel->SetUp(m_position, m_rotation, m_scale);
+	m_playerModel_Sl->SetUp(m_position, m_rotation, m_scale);
+	m_playerModel->Update();
+	m_playerModel_Sl->Update();
 
 	if (SceneManager::GetInstance()->GetGameMode() == SceneManager::ActionMode){ //アクションモードでなければ更新しない！
 
-		//重力
-		m_moveSpeed.y -= m_gravity;
-		//キャラコン移動
-		m_position = m_charaCon.Execute(1.0f, m_moveSpeed);
-
+		if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true &&
+			SceneManager::GetInstance()->GetSystemInstance()->m_event_PlayerMoveFlag == false) {
+			//何もしない
+		}
+		else {
+			//重力
+			m_moveSpeed.y -= m_gravity;
+			//キャラコン移動
+			m_position = m_charaCon.Execute(1.0f, m_moveSpeed);
+		}
 	}
 
 	//シャドウキャスターを登録。
-	ShadowMap::GetInstance()->RegistShadowCaster(&m_model);
+	ShadowMap::GetInstance()->RegistShadowCaster(m_playerModel->GetModel());
 	ShadowMap::GetInstance()->Update(m_lightMaker->GetLightCameraPosition(), m_lightMaker->GetLightCameraTarget());
 
 	//ライトカメラを更新
@@ -136,62 +135,57 @@ void Player::Update()
 
 void Player::Render()
 {
-	m_model_Sl.Draw(
-		g_camera3D.GetViewMatrix(),
-		g_camera3D.GetProjectionMatrix()
-	);
-	m_model.Draw(
-		g_camera3D.GetViewMatrix(), 
-		g_camera3D.GetProjectionMatrix()
-	);
+	m_playerModel_Sl->Render();
+	m_playerModel->Render();
 }
 
 void Player::PlayerAnimation() {
 
-	//アニメーション
-	if (m_gameObj != nullptr) {
-		if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode &&
-			SceneManager::GetInstance()->GetGameMode() != SceneManager::MenuMode) {
-			//アニメーション再生
-			bool RunFlag = false;
-			bool OnG_Flag = m_charaCon.IsOnGround();
-			float MovePower = m_moveSpeed.Length();
-			if (OnG_Flag == false) {
-				if (m_damage_JumpFlag == false) {
-					m_playerAnimation.Play(enAnimationClip_Jump);
-					m_playerAnimationSL.Play(enAnimationClip_Jump);
-				}
-				else {
-					m_playerAnimation.Play(enAnimationClip_Damage);
-					m_playerAnimationSL.Play(enAnimationClip_Damage);
-				}
-			}
-			else {
-				if (MovePower > 1.0f) {
-					m_playerAnimation.Play(enAnimationClip_Run);
-					m_playerAnimationSL.Play(enAnimationClip_Run);
-					RunFlag = true;
-				}
-				else {
-					m_playerAnimation.Play(enAnimationClip_Idle);
-					m_playerAnimationSL.Play(enAnimationClip_Idle);
-				}
-			}
-			//アニメーションアップデート
-			if (RunFlag == false) {
-				m_playerAnimation.Update(1.0f / 20.0f);
-				m_playerAnimationSL.Update(1.0f / 20.0f);
-			}
-			else {
-				MovePower = min(MovePower, 35.0f);
-				m_playerAnimation.Update(1.0f / (40.0f - MovePower));
-				m_playerAnimationSL.Update(1.0f / (40.0f - MovePower));
-			}
+	//クリエイトモードかメニューモードの時中断
+	if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode ||
+		SceneManager::GetInstance()->GetGameMode() == SceneManager::MenuMode) {
+		return;
+	}
+
+	//アニメーション再生
+	bool RunFlag = false;
+	bool OnG_Flag = m_charaCon.IsOnGround();
+	float MovePower = m_moveSpeed.Length();
+	if (OnG_Flag == false) {
+		if (m_damage_JumpFlag == false) {
+			m_playerModel->PlayAnimation(enAnimationClip_Jump);
+			m_playerModel_Sl->PlayAnimation(enAnimationClip_Jump);
+		}
+		else {
+			m_playerModel->PlayAnimation(enAnimationClip_Damage);
+			m_playerModel_Sl->PlayAnimation(enAnimationClip_Damage);
 		}
 	}
+	else {
+		if (MovePower > 1.0f) {
+			m_playerModel->PlayAnimation(enAnimationClip_Run);
+			m_playerModel_Sl->PlayAnimation(enAnimationClip_Run);
+			RunFlag = true;
+		}
+		else {
+			m_playerModel->PlayAnimation(enAnimationClip_Idle);
+			m_playerModel_Sl->PlayAnimation(enAnimationClip_Idle);
+		}
+	}
+	//アニメーションアップデート
+	if (RunFlag == false) {
+		m_playerModel->SetAnimationSpeed();
+		m_playerModel_Sl->SetAnimationSpeed();
+	}
+	else {
+		MovePower = min(MovePower, 35.0f);
+		m_playerModel->SetAnimationSpeed(40.0f - MovePower);
+		m_playerModel_Sl->SetAnimationSpeed(40.0f - MovePower);
+	}
+
 }
 
-void Player::Move() {
+void Player::MoveClick() {
 
 	//イベント中なら強制終了
 	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
@@ -234,6 +228,20 @@ void Player::Move() {
 			m_moveEffect = EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::PlayerMove,
 				false, m_nextPos.x, m_nextPos.y, m_nextPos.z);
 		}
+	}
+
+}
+
+void Player::Move() {
+
+	//イベント中かつEventMoveしないなら強制終了
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true &&
+		SceneManager::GetInstance()->GetSystemInstance()->m_event_PlayerMoveFlag == false) {
+		return;
+	}
+	//箱の上げ下ろし中は強制終了
+	if (m_boxMoveFlag == true) {
+		return;
 	}
 
 	//移動
@@ -615,8 +623,9 @@ void Player::BoxUp() {
 
 void Player::BoxMove() {
 
-	//イベント中なら強制終了
-	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+	//イベント中かつEventMoveしないなら強制終了
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true &&
+		SceneManager::GetInstance()->GetSystemInstance()->m_event_PlayerMoveFlag == false) {
 		return;
 	}
 	//アクションモードでないなら強制終了

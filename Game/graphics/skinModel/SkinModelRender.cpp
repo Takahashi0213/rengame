@@ -137,7 +137,7 @@ void SkinModelRender::Model_Init_Anim(const wchar_t* filePath,
 	int numAnimationClips,
 	EnFbxUpAxis enFbxUpAxis)
 {
-	m_skinModel.Init(filePath);
+	m_skinModel.Init(filePath, enFbxUpAxis);
 	InitAnimation(animationClips, numAnimationClips);
 }
 
@@ -162,7 +162,7 @@ void SkinModelRender::Update() {
 
 	if (m_animationClips != nullptr &&
 		m_isUpdateAnimation == true) {
-		m_animation.Update(1.0f / 20.0f);
+		m_animation.Update(1.0f / m_animationSpeed);
 	}
 
 	m_skinModel.UpdateWorldMatrix(m_position, m_rotation, m_scale);

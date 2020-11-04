@@ -25,19 +25,25 @@ BoxMaker::~BoxMaker()
 
 void BoxMaker::Update() {
 
+	//箱生成不可なら強制終了
+	if (GameData::GetInstance()->GetBoxMakerFlag() == false) {
+		return;
+	}
+
 	//中クリックの状態を判定
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Center_Key);
 	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
 
+	//モードチェンジ
 	ModeChange();
-	bool result = false;
 
+	//箱の追加処理
+	bool result = false;
 	CVector3 boxPoint[4] = { CVector3::Zero() };
 	CVector3 boxPoint_Stock[4] = { CVector3::Zero() };
 	m_box_N_Now = CVector3::Zero();
 	m_planeScaleNow = CVector3::Zero();
 
-	//箱の追加処理
 	key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
 	if (key == MouseSupporter::New_Push && NowGameMode == SceneManager::CreateMode
 		&& m_boxMakerMode == NomalMode) {	//左クリックされた瞬間かつクリエイトモードかつ箱拡大中でない
@@ -294,6 +300,7 @@ void BoxMaker::Update() {
 		GameData::GetInstance()->SetMagicPower(m_startMana - m_downMana);
 	}
 
+	//箱の更新
 	BoxUpdate();
 
 }
@@ -340,6 +347,11 @@ void BoxMaker::Render() {
 }
 
 void BoxMaker::ModeChange() {
+
+	//イベント中なら強制終了
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+		return;
+	}
 
 	//中クリックの状態を判定
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Center_Key);

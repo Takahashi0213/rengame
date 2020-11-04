@@ -8,6 +8,8 @@
 #include "OP.h"
 #include "GameScene/GameOver.h"
 #include "DamageSystem.h"
+#include "TutorialSupporter.h"
+#include "UI_Supporter.h"
 
 /// <summary>
 /// ゲーム！
@@ -63,5 +65,8 @@ private:
 	DamageSystem* m_damageSystem = nullptr;		//ダメージの付与やゲームオーバーの管理
 	OP* m_op = nullptr;							//OPが終わったら削除される
 	GameOver* m_gameOver = nullptr;				//ゲームオーバーになったら生成される
+	TutorialSupporter* m_tutorialSupporter = nullptr;	//チュートリアルの下部文字
+	UI_Supporter* m_ui_Supporter = nullptr;		//操作方法を表示する
+
 };
 

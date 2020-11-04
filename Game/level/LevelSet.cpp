@@ -156,6 +156,11 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 		StaticBox* pt = NewObjCommon<StaticBox>(data);
 		pt->CreateStaticBox();
 	}
+	if (tag == LevelData::Obj_Tag::Tag_EventObject) {	//イベントオブジェクト
+		EventObject* pt = NewObjCommon<EventObject>(data);
+		int ObjNo = Level_Data.ObjName_Search(m_levelNo, data.name);
+		pt->SetEventName(Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo));
+	}
 
 }
 
@@ -176,34 +181,39 @@ void LevelSet::LinkObj(const int levelNo, const int i) {
 			int ObjNo = Level_Data.ObjName_Search(levelNo, linkObjName);
 			LevelData::Obj_Tag LinkObjTag = Level_Data.GetObjectTag(levelNo, ObjNo);
 
+			//今見てるオブジェクト
+			int now_hash = m_Obj_Data[ii].nameKey;
+			ObjectClass* now_objClass;
+
+			//ここに追加するオブジェクトは他のオブジェクトに「干渉する側」です
+			if (NowObjTag == LevelData::Obj_Tag::Tag_Switch) {
+				Switch* NowObj = CGameObjectManager::GetInstance()->FindGO<Switch>(now_hash);
+				now_objClass = NowObj->GetInstance();
+			}
+			if (NowObjTag == LevelData::Obj_Tag::Tag_Door) {
+				Door* NowObj = CGameObjectManager::GetInstance()->FindGO<Door>(now_hash);
+				now_objClass = NowObj->GetInstance();
+			}
+			if (NowObjTag == LevelData::Obj_Tag::Tag_Test_Enemy) {
+				TestEnemy* NowObj = CGameObjectManager::GetInstance()->FindGO<TestEnemy>(now_hash);
+				now_objClass = NowObj->GetInstance();
+			}
+			if (NowObjTag == LevelData::Obj_Tag::Tag_Mannequin) {
+				Mannequin* NowObj = CGameObjectManager::GetInstance()->FindGO<Mannequin>(now_hash);
+				now_objClass = NowObj->GetInstance();
+			}
+			//リンクオブジェクト
+			int link_hash = Hash::MakeHash(linkObjName);
+
 			//オブジェクトタグで分岐
 			if (LinkObjTag == LevelData::Obj_Tag::Tag_Door) {	//ドア
-
-				//今見てるオブジェクト
-				int now_hash = m_Obj_Data[ii].nameKey;
-				ObjectClass* now_objClass;
-
-				//ここに追加するオブジェクトは他のオブジェクトに「干渉する側」です
-				if (NowObjTag == LevelData::Obj_Tag::Tag_Switch) {
-					Switch* NowObj = CGameObjectManager::GetInstance()->FindGO<Switch>(now_hash);
-					now_objClass = NowObj->GetInstance();
-				}
-				if (NowObjTag == LevelData::Obj_Tag::Tag_Test_Enemy) {
-					TestEnemy* NowObj = CGameObjectManager::GetInstance()->FindGO<TestEnemy>(now_hash);
-					now_objClass = NowObj->GetInstance();
-				}
-				if (NowObjTag == LevelData::Obj_Tag::Tag_Mannequin) {
-					Mannequin* NowObj = CGameObjectManager::GetInstance()->FindGO<Mannequin>(now_hash);
-					now_objClass = NowObj->GetInstance();
-				}
-
-				//リンクオブジェクト
-				int link_hash = Hash::MakeHash(linkObjName);
-				Door* door = CGameObjectManager::GetInstance()->FindGO<Door>(link_hash);
-				//ObjectClass* link_objClass = door->GetInstance();
-				door->SetLinkObj(now_objClass);
+				Door* obj = CGameObjectManager::GetInstance()->FindGO<Door>(link_hash);
+				obj->SetLinkObj(now_objClass);
 			}
-
+			if (LinkObjTag == LevelData::Obj_Tag::Tag_EventObject) {	//イベントオブジェクト
+				EventObject* obj = CGameObjectManager::GetInstance()->FindGO<EventObject>(link_hash);
+				obj->SetLinkObj(now_objClass);
+			}
 		}
 
 	}

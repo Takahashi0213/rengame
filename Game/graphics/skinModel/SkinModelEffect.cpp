@@ -8,6 +8,7 @@ ModelEffect::ModelEffect()
 	m_psSilhouette.Load("Assets/shader/model.fx", "PSMain_Silhouette", Shader::EnType::PS);
 	m_psMonochrome.Load("Assets/shader/model.fx", "PSMain_Monochrome", Shader::EnType::PS);
 	//シャドウマップ
+	m_vsShadowMapSkin.Load("Assets/shader/model.fx", "VSMainSkin_ShadowMap", Shader::EnType::VS);
 	m_psShadowMap.Load("Assets/shader/model.fx", "PSMain_ShadowMap", Shader::EnType::PS);
 	m_vsShadowMap.Load("Assets/shader/model.fx", "VSMain_ShadowMap", Shader::EnType::VS);
 	//箱用シェーダー
@@ -18,7 +19,7 @@ ModelEffect::ModelEffect()
 	m_pPSShader = &m_psShader;
 	m_pPSSilhouetteShader = &m_psSilhouette;
 	m_pPSMonochromeShader = &m_psMonochrome;
-	m_vsShadowMapShader = &m_vsShadowMap;
+	
 	m_psShadowMapShader = &m_psShadowMap;
 	m_pPSShaderBox = &m_psShader_Box;
 	m_pPSKiramekiShader = &m_psShader_Kirameki;

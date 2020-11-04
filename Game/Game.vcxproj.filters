@@ -485,6 +485,15 @@
     <ClCompile Include="graphics\Transition\TransitionGenerator.cpp">
       <Filter>graphics\Transition</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\EventObject.cpp">
+      <Filter>object\SystemObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialSupporter.cpp">
+      <Filter>system\GameSystem\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Supporter.cpp">
+      <Filter>system\GameSystem\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -824,6 +833,15 @@
     </ClInclude>
     <ClInclude Include="graphics\Transition\TransitionSprite.h">
       <Filter>graphics\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\EventObject.h">
+      <Filter>object\SystemObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TutorialSupporter.h">
+      <Filter>system\GameSystem\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Supporter.h">
+      <Filter>system\GameSystem\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

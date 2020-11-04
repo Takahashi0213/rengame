@@ -10,5 +10,4 @@ public:
 	//イベントの起動フラグ
 	bool m_eventFlag[MAX_EVENT_OBJ] = { false };
 
-
 };

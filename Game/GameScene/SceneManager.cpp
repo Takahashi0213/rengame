@@ -32,6 +32,7 @@ SceneManager::SceneManager()
 	//{
 	//	m_game = CGameObjectManager::GetInstance()->NewGO<Game>("Main_Game");
 	//	m_nowScene = Game_Sence;
+	//  GameData::GetInstance()->SetBoxMakerFlag(true);
 
 	//	//‰¹Šy‚ª‚¢‚ç‚È‚¢Žž—p
 	//	GameData::GetInstance()->Set_BGMVolume(0.0f);

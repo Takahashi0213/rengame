@@ -22,6 +22,7 @@ public:
 		Tag_GhostBox_Event,			//イベント用ゴースト→obj_Memoに接触時呼ばれるイベントの名前を書く
 		Tag_GhostBox_Damage,		//落下用ゴースト 触れるとダメージを受けて直前の座標に戻される
 		Tag_StaticBox,				//壁
+		Tag_EventObject,			//イベント起動 信号を受け取った場合移動する→obj_Memoにイベントの名前を書く
 		Tag_Key1,					//鍵1
 	};
 
@@ -157,12 +158,15 @@ private:
 				{ L"Switch1",Tag_Switch,L"Door1" },
 				{ L"Switch2",Tag_Switch,L"Door3" },
 				{ L"Switch3",Tag_Switch,L"Door3" },
-				{ L"Door1",Tag_Door,L"" },
+				{ L"Door1",Tag_Door,L"EventObject1" },
 				{ L"Door2",Tag_Door,L"" },
 				{ L"Door3",Tag_Door,L"" },
 				{ L"Mannequin1",Tag_Mannequin,L"Door2" },
 				{ L"GhostBox",Tag_GhostBox_MapMove,L"",L"Sougen1",{ 700.0f,110.0f,-950.0f }, false ,180.0f,-50.0f },	//移動先マップ名＆移動先座標
-		}
+				{ L"EventBox1",Tag_GhostBox_Event,L"",L"Tutorial_1" },
+				{ L"EventBox2",Tag_GhostBox_Event,L"",L"Tutorial_2" },
+				{ L"EventObject1",Tag_EventObject,L"",L"Tutorial_3" },
+			}
 		},
 		//草原1
 		{
@@ -182,7 +186,7 @@ private:
 				{ L"StaticBox4",Tag_StaticBox,L"" },
 				{ L"StaticBox5",Tag_StaticBox,L"" },
 				{ L"StaticBox6",Tag_StaticBox,L"" },
-				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen2",{ 500.0f,100.0f,-950.0f }, false ,180.0f,-750.0f },	//移動先マップ名＆移動先座標
+				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen2",{ 0.0f,100.0f,-950.0f }, false ,180.0f,-750.0f },	//移動先マップ名＆移動先座標
 				{ L"GhostBox2",Tag_GhostBox_MapMove,L"",L"Sougen3",{ 1022.0f,100.0f,-88.0f }, false ,180.0f,-750.0f },	//移動先マップ名＆移動先座標
 				{ L"GhostBox3",Tag_GhostBox_MapMove,L"",L"Tutorial",{ -393.0f,50.0f,2145.0f }, false ,180.0f,-50.0f },	//移動先マップ名＆移動先座標
 			}
@@ -200,7 +204,7 @@ private:
 				{ L"StaticBox3",Tag_StaticBox,L"" },
 				{ L"StaticBox4",Tag_StaticBox,L"" },
 				{ L"StaticBox5",Tag_StaticBox,L"" },
-				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ 1000.0f,100.0f,1000.0f }, true ,-90.0f,-100.0f },	//移動先マップ名＆移動先座標
+				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ -900.0f,100.0f,1000.0f }, true ,-90.0f,-100.0f },	//移動先マップ名＆移動先座標
 			}
 		},
 		//草原3

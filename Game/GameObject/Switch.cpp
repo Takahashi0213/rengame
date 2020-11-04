@@ -118,11 +118,6 @@ void SwitchObj::SwitchUpdate() {
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	m_physicsStaticObject.SetPositionAndRotation(m_position, m_rotation);
 
-	//イベント中なら強制終了
-	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
-		return;
-	}
-
 	//アクションモードだけ実行
 	if (SceneManager::GetInstance()->GetGameMode() == SceneManager::ActionMode ) {
 		GhostCheck();
@@ -175,8 +170,12 @@ void SwitchObj::GhostCheck() {
 
 		//スイッチの赤い部分を動かす
 		m_position.y = m_position.y + SwitchMove;
-		//SE
-		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/switch.wav");
+
+		//イベント中でないならSE再生
+		if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == false) {
+			//SE
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/switch.wav");	
+		}
 	}
 	else if (OnFlag == true && m_switchState == Off){	//現在オフだけど、なんか乗ってた！！
 
@@ -184,8 +183,11 @@ void SwitchObj::GhostCheck() {
 
 		//スイッチの赤い部分を動かす
 		m_position.y = m_position.y - SwitchMove;
-		//SE
-		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/switch.wav");
+		//イベント中でないならSE再生
+		if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == false) {
+			//SE
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/switch.wav");
+		}
 	}
 
 }

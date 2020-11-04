@@ -21,6 +21,10 @@ public:
 	bool GetEventSaveFlag(const int& evNo) {
 		return m_eventSave.m_eventFlag[evNo];
 	}
+	//イベントを実行済みにする
+	void SetEventSaveFlag(const int& evNo) {
+		m_eventSave.m_eventFlag[evNo] = true;
+	}
 
 private:
 
@@ -29,15 +33,15 @@ private:
 	//イベントデータ構造体
 	struct EventData_Struct
 	{
-		const wchar_t* EventName;
-		const int EventEndProgress = -1;
+		const wchar_t* EventName;			//検索用の名前
+		const int EventEndProgress = -1;	//イベントが終了する会話番号
 	};
 
 	//イベント一覧
 	const EventData_Struct Event_Data[MAX_EVENT_OBJ]{
-		{ L"Tutorial_1", 5 },	//チュートリアル…スイッチと箱
+		{ L"Tutorial_1", 2 },	//チュートリアル…スイッチ
 		{ L"Tutorial_2", 5 },	//チュートリアル…箱を投げる
-		{ L"Tutorial_3", 5 },	//チュートリアル…ダブルスイッチ
+		{ L"Tutorial_3", 11 },	//チュートリアル…箱の生成
 	};
 
 };

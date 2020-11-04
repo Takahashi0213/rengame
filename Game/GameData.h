@@ -173,7 +173,19 @@ public:
 		return m_hp_MAX;
 	}
 
-	//レベルシリーズ
+	//進行制限
+
+	/// <summary>
+	/// 箱生成可能フラグ
+	/// </summary>
+	void SetBoxMakerFlag(const bool& flag) {
+		m_boxMakerFlag = flag;
+	}
+	const bool GetBoxMakerFlag()const {
+		return m_boxMakerFlag;
+	}
+
+	//プレイヤーレベルシリーズ
 
 	/// <summary>
 	/// レベルの取得と加算
@@ -298,38 +310,35 @@ private:
 	int m_nowMapLevel = -1;					//現在ロード中のレベル
 
 	//解放要素
-	struct GameFlag {
-		bool m_boxMakerFlag;	//箱生成能力
-		bool m_equipmentFlag;	//装備変更
-		bool m_teleportFlag;	//メニューからのテレポート
-	};
-	GameFlag m_gameFlag;		//要素解放フラグ
+	bool m_boxMakerFlag = false;			//箱生成能力
+	bool m_equipmentFlag = false;			//装備変更
+	bool m_teleportFlag = false;			//メニューからのテレポート
 
 	//スターマネー
 	int m_starMoney = 0;
-	const int MAX_STAR_MONEY = 99999;	//最大所持金
+	const int MAX_STAR_MONEY = 99999;		//最大所持金
 
 	//プレイヤーステータス
-	int m_level = 1;			//レベル
-	const int MAX_LEVEL = 99;	//最大レベル
-	int m_nextExp = 10;			//次のレベルに必要な経験値
-	int m_nowExp = 0;			//現在の経験値
-	int m_totalExp = 0;			//累計経験値
-	const float NextEXP_Hosei = 1.4f;	//レベルアップした時、NextEXPに乗算する（次回必要になるEXPが上昇する）
+	int m_level = 1;						//レベル
+	const int MAX_LEVEL = 99;				//最大レベル
+	int m_nextExp = 10;						//次のレベルに必要な経験値
+	int m_nowExp = 0;						//現在の経験値
+	int m_totalExp = 0;						//累計経験値
+	const float NextEXP_Hosei = 1.4f;		//レベルアップした時、NextEXPに乗算する（次回必要になるEXPが上昇する）
 	//
-	int m_magicPower = 20;		//現在マナ
-	int m_magicPower_MAX = 20;	//マナ最大値
-	int m_hp = 200;				//現在体力
-	int m_hp_MAX = 200;			//最大体力
+	int m_magicPower = 20;					//現在マナ
+	int m_magicPower_MAX = 20;				//マナ最大値
+	int m_hp = 200;							//現在体力
+	int m_hp_MAX = 200;						//最大体力
 
 	//コンフィグ
-	int m_messageSpeed = 2;		//会話のメッセージ送りスピード
-	float m_cameraSpeed = 3.0f;	//カメラの感度
-	char m_boxCatchKey = 'C';	//箱を持ち上げるキー
-	char m_boxPutKey = 'X';		//箱を置くキー
-	char m_boxDeleteKey = 'D';	//箱を削除するキー
-	float m_bgmVolume = 100.0f;	//BGMのボリューム補正（/100してBGMのボリュームに乗算される）
-	float m_seVolume = 100.0f;	//SEのボリューム補正（/100してBGMのボリュームに乗算される）
+	int m_messageSpeed = 2;					//会話のメッセージ送りスピード
+	float m_cameraSpeed = 3.0f;				//カメラの感度
+	char m_boxCatchKey = 'C';				//箱を持ち上げるキー
+	char m_boxPutKey = 'X';					//箱を置くキー
+	char m_boxDeleteKey = 'D';				//箱を削除するキー
+	float m_bgmVolume = 100.0f;				//BGMのボリューム補正（/100してBGMのボリュームに乗算される）
+	float m_seVolume = 100.0f;				//SEのボリューム補正（/100してBGMのボリュームに乗算される）
 
 };
 

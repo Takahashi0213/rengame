@@ -136,7 +136,8 @@ void CameraSupporter::CameraMove_Zoom(const float& angle, const float& moveTime,
 /// <param name="move">移動する分のベクトル</param>
 /// <param name="moveTime">移動時間</param>
 /// <param name="moveDelay">移動ディレイ</param>
-void CameraSupporter::CameraTargetMove(const CVector3& move, const float& moveTime, const float& moveDelay) {
+/// <param name="posMoveFlag">trueなら同時にカメラの座標も移動する</param>
+void CameraSupporter::CameraTargetMove(const CVector3& move, const float& moveTime, const float& moveDelay, const bool& posMoveFlag) {
 
 	//メンバ変数リセット
 	m_cameraTargetMoveFlag = true;
@@ -146,6 +147,7 @@ void CameraSupporter::CameraTargetMove(const CVector3& move, const float& moveTi
 	m_cameraTargetMoveSpeed = move;
 	m_cameraTargetMoveTime = moveTime;
 	m_cameraTargetMoveDelay = moveDelay;
+	m_cameraTargetMove_PosMove = posMoveFlag;
 
 }
 
@@ -337,7 +339,13 @@ void CameraSupporter::CameraTargetMoveUpdate() {
 		CVector3 move = m_cameraTargetMoveSpeed / m_cameraTargetMoveTime;
 		CVector3 cameraPos = g_camera3D.GetTarget();
 		cameraPos += move;
-		g_camera3D.SetPosition(cameraPos);
+		g_camera3D.SetTarget(cameraPos);
+		//フラグがtrueならカメラの座標も移動させる
+		if (m_cameraTargetMove_PosMove == true) {
+			cameraPos = g_camera3D.GetPosition();
+			cameraPos += move;
+			g_camera3D.SetPosition(cameraPos);
+		}
 
 		if (m_cameraTargetMoveTimer >= m_cameraTargetMoveTime + m_cameraTargetMoveDelay) {
 			//処理終了

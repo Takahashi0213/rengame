@@ -13,11 +13,11 @@ class EffekseerSupporter
 public:
 	//エフェクトの種類
 	enum EffectData {
-		TestData,			//テストデータ
+		TestData,			//テストデータ（サンプルに入っていた適当なエフェクト）
 		EnemyDeath,			//敵が倒れる
 		PlayerMove,			//プレイヤーの移動先
 		EnemyScope,			//箱を飛ばす先（敵）
-		EffectNum,
+		EffectNum,			//エフェクトの数
 	};
 
 	//

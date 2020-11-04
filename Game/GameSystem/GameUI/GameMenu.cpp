@@ -193,6 +193,11 @@ GameMenu::~GameMenu()
 
 void GameMenu::GameMenuUpdate() {
 
+	//イベント中なら強制終了
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+		return;
+	}
+
 	//取得
 	SceneManager::GameMode GameMode = SceneManager::GetInstance()->GetGameMode();
 	CVector2 MousePos = MouseSupporter::GetInstance()->GetMousePos_Sprite();

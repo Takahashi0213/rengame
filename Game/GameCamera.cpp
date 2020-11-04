@@ -45,25 +45,25 @@ void GameCamera::Update() {
 
 	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
 
-	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == false) {	//イベント中はどれも実行しない
-
-		if (NowGameMode == SceneManager::ActionMode || NowGameMode == SceneManager::CreateMode) {
+	if ((NowGameMode == SceneManager::ActionMode || NowGameMode == SceneManager::CreateMode) &&
+		SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == false) {
 			//共通のカメラ処理
 			CommonMove();
-		}
+	}
 
-		if (NowGameMode == SceneManager::ActionMode) {
-			ActionMode();
-		}
-		else if (NowGameMode == SceneManager::CreateMode) {
-			CreateMode();
-		}
-
+	//移動する
+	if (NowGameMode == SceneManager::ActionMode) {
+		ActionMode();
+	}
+	else if (NowGameMode == SceneManager::CreateMode) {
+		CreateMode();
 	}
 
 	//注視点をカメラに伝える
-	g_camera3D.SetTarget(m_cameraTarget);
-	g_camera3D.SetPosition(m_cameraPos);
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_event_CameraStop == false) {
+		g_camera3D.SetTarget(m_cameraTarget);
+		g_camera3D.SetPosition(m_cameraPos);
+	}
 
 	g_camera3D.Update();
 }
@@ -75,8 +75,6 @@ void GameCamera::Render() {
 void GameCamera::ActionMode() {
 
 	CVector3 P_Position = m_player->GetPosition();
-	CQuaternion P_qRot = m_player->GetRotation();
-	CVector3 vBase = { 0.0f,0.0f,1.0f };
 	CVector3 Camera_Position = g_camera3D.GetTarget();
 
 	if (m_camera_BoxToPlayer_MoveFlag == true) {

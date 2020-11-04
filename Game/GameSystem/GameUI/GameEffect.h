@@ -127,6 +127,15 @@ public:
 		return m_messageClickFlag;
 	}
 
+	/// <summary>
+	/// イベントフラグ自動オフフラグを変更する
+	/// false→メッセージウィンドウが消えたらイベントフラグもfalseにする
+	/// true→メッセージウィンドウが消えてもイベントフラグは変わらない
+	/// </summary>
+	void SetEventFlagAutoOff(const bool& flag) {
+		m_eventFlagAutoOff = flag;
+	}
+
 private:
 
 	//ログ関数
@@ -205,6 +214,7 @@ private:
 
 	//UIフラグ
 	bool m_uiMoveFlag = false;									//UIを動かしてないのに動かすの防止
+	bool m_eventFlagAutoOff = false;							//trueの間は自動でイベントフラグを切らない
 
 };
 

@@ -41,15 +41,13 @@ public:
 	/// <summary>
 	/// 座標を設定
 	/// </summary>
-	/// <param name="pos">座標</param>
-	void SetPosition(const CVector3 pos)
+	void SetPosition(const CVector3& pos)
 	{
 		m_position = pos;
 	}
 	/// <summary>
 	/// 座標を取得
 	/// </summary>
-	/// <returns>座標</returns>
 	const CVector3 GetPosition() const
 	{
 		return m_position;
@@ -57,15 +55,13 @@ public:
 	/// <summary>
 	/// 回転を設定
 	/// </summary>
-	/// <param name="rot">回転</param>
-	void SetRotation(const CQuaternion rot)
+	void SetRotation(const CQuaternion& rot)
 	{
 		m_rotation = rot;
 	}
 	/// <summary>
 	/// 回転を取得
 	/// </summary>
-	/// <returns>回転</returns>
 	const CQuaternion GetRotation() const
 	{
 		return m_rotation;
@@ -73,12 +69,11 @@ public:
 	/// <summary>
 	/// 拡大率を設定
 	/// </summary>
-	/// <param name="scr">拡大率</param>
-	void SetScale(const CVector3 scr)
+	void SetScale(const CVector3& scr)
 	{
 		m_scale = scr;
 	}
-	void SetScale(const float scr)
+	void SetScale(const float& scr)
 	{
 		CVector3 Scr = { scr,scr,scr };
 		m_scale = Scr;
@@ -86,7 +81,6 @@ public:
 	/// <summary>
 	/// 拡大率を取得
 	/// </summary>
-	/// <returns>拡大率</returns>
 	const CVector3 GetScale() const
 	{
 		return m_scale;
@@ -95,7 +89,7 @@ public:
 	/// <summary>
 	/// まとめてセット
 	/// </summary>
-	void SetUp(CVector3 pos, CQuaternion rot, CVector3 scl) {
+	void SetUp(const CVector3& pos, const CQuaternion& rot, const CVector3& scl) {
 		SetPosition(pos);
 		SetRotation(rot);
 		SetScale(scl);
@@ -105,14 +99,13 @@ public:
 	/// レンダーモードを設定する
 	/// </summary>
 	/// <param name="mode">モードです。</param>
-	void SetRenderMode(RenderMode mode) {
+	void SetRenderMode(const RenderMode mode) {
 		m_renderMode = mode;
 		m_skinModel.SetRenderMode(mode);
 	}
 	/// <summary>
 	/// レンダーモードを返す
 	/// </summary>
-	/// <returns>こいつに設定されてるレンダーモードだ</returns>
 	RenderMode GetRenderMode() {
 		return m_renderMode;
 	}
@@ -135,10 +128,18 @@ public:
 	/// </summary>
 	/// <param name="animNo">アニメーションクリップの番号。コンストラクタに渡したanimClipListの並びとなる。</param>
 	/// <param name="interpolateTime">補完時間(単位：秒)</param>
-	void PlayAnimation(int animNo, float interpolateTime = 0.0f)
+	void PlayAnimation(const int& animNo, const float& interpolateTime = 0.0f)
 	{
 		m_animation.Play(animNo, interpolateTime);
 	}
+
+	/// <summary>
+	/// アニメーションスピードの変更
+	/// </summary>
+	void SetAnimationSpeed(const float& speed = 20.0f) {
+		m_animationSpeed = speed;
+	}
+
 	/// <summary>
 	/// アニメーションの再生中？
 	/// </summary>
@@ -199,6 +200,7 @@ private:
 	int							m_numAnimationClips = 0;			//!<アニメーションクリップの数。
 	Animation					m_animation;						//!<アニメーション。
 	bool						m_isUpdateAnimation = true;			//!<アニメーションを更新する？
+	float						m_animationSpeed = 20.0f;			//!<アニメーションを更新するスピード。
 
 	bool m_shadowCasterFlag = false;								//!<シャドウキャスターに登録する？
 };

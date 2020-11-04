@@ -12,6 +12,7 @@ Door::Door()
 		m_scale
 	);
 	m_physicsStaticObject.CreateBox(m_position, m_rotation, StaticSize);
+	m_actionFlag = false;
 
 	//É^ÉOê›íË
 	m_object = ObjectClass::ObjectClass_Tag::GimmickObj;

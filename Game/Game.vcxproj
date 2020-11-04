@@ -119,6 +119,7 @@
     <ClCompile Include="GameObject\Board.cpp" />
     <ClCompile Include="GameObject\Door.cpp" />
     <ClCompile Include="GameObject\EnemySystem.cpp" />
+    <ClCompile Include="GameObject\EventObject.cpp" />
     <ClCompile Include="GameObject\Mannequin.cpp" />
     <ClCompile Include="GameObject\ObjectClass.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
@@ -208,6 +209,8 @@
     <ClCompile Include="system\CGameObjectManager.cpp" />
     <ClCompile Include="system\IGameObject.cpp" />
     <ClCompile Include="system\system.cpp" />
+    <ClCompile Include="TutorialSupporter.cpp" />
+    <ClCompile Include="UI_Supporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoxMaker.h" />
@@ -230,6 +233,7 @@
     <ClInclude Include="GameObject\Board.h" />
     <ClInclude Include="GameObject\Door.h" />
     <ClInclude Include="GameObject\EnemySystem.h" />
+    <ClInclude Include="GameObject\EventObject.h" />
     <ClInclude Include="GameObject\Mannequin.h" />
     <ClInclude Include="GameObject\ObjectClass.h" />
     <ClInclude Include="GameObject\Player.h" />
@@ -324,6 +328,8 @@
     <ClInclude Include="system\CGameObjectManager.h" />
     <ClInclude Include="system\IGameObject.h" />
     <ClInclude Include="system\system.h" />
+    <ClInclude Include="TutorialSupporter.h" />
+    <ClInclude Include="UI_Supporter.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\0_0.fbx" />

@@ -20,8 +20,9 @@ public:
 	void Render()override;
 
 	enum NowScene {
-		Title_Scene,
-		Game_Sence
+		Title_Scene,	//タイトル
+		Game_Sence,		//ゲーム
+		Load_Sence,		//ロード
 	};
 	enum GameMode {	//ゲーム中です
 		Null_Mode,	//ダミーモード（初期用）
@@ -30,6 +31,7 @@ public:
 		CreateMode,
 		MenuMode,
 		GameOver,
+		LoadMode,
 	};
 
 	/// <summary>

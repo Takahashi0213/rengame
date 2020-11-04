@@ -41,12 +41,26 @@ public:
 	}
 	//プレイヤーの座標を設定
 	void SetPosition(const CVector3& pos);
+	//移動先を設定
+	void SetMoveTarget(const CVector3& pos) {
+		m_nextPos = pos;
+	}
 
 	/// <summary>
 	/// プレイヤーの回転を返す
 	/// </summary>
 	CQuaternion GetRotation() {
 		return m_rotation;
+	}
+
+	/// <summary>
+	/// スキンモデルレンダーを返す
+	/// </summary>
+	SkinModelRender* GetSkinModelRender() {
+		return m_playerModel;
+	}
+	SkinModelRender* GetSkinModelRender_SL() {
+		return m_playerModel_Sl;
 	}
 
 	/// <summary>
@@ -58,19 +72,13 @@ public:
 
 private:
 
-	//常時呼ばれる
-	void BoxUp();
-
-	SkinModel m_model;					//スキンモデル。
-	SkinModel m_model_Sl;				//スキンモデル（シルエット）
+	SkinModelRender* m_playerModel;		//プレイヤーのモデル
+	SkinModelRender* m_playerModel_Sl;	//プレイヤーのモデル（シルエット）
 	CharacterController m_charaCon;		//キャラクターコントローラー。
-	Game* m_gameObj;
 	LightMaker* m_lightMaker;
 	GameUI* m_ui = nullptr;
 
 	//アニメーション
-	Animation m_playerAnimation;								//アニメーション。
-	Animation m_playerAnimationSL;								//アニメーション。
 	AnimationClip m_playerAnimationClips[enAnimationClip_Num];	//アニメーションクリップ。
 
 	//モノクロフラグ
@@ -79,10 +87,12 @@ private:
 	//アニメーション
 	void PlayerAnimation();
 	//行動 移動
+	void MoveClick();
 	void Move();
 	void MoveSE();		//足音再生
 	void Jump();
 	//行動 箱関連
+	void BoxUp();
 	void BoxCatch();
 	void BoxPut();
 	void BoxSearch();
@@ -91,7 +101,7 @@ private:
 	CVector3 BoxThrowSearch();
 
 	//プレイヤー
-	CVector3 m_position = { 0.0f,50.0f,-800.0f };
+	CVector3 m_position = { 0.0f,50.0f,-1900.0f };
 	CQuaternion m_rotation = CQuaternion::Identity();
 	CVector3 m_scale = CVector3::One();					//拡大率
 	CVector3 m_moveSpeed = CVector3::Zero();
@@ -99,16 +109,16 @@ private:
 	CVector3 m_posBackup = CVector3::Zero();
 
 	//移動
-	const float m_moveMax = 30.0f;
+	const float m_moveMax = 30.0f;			//最大移動速度
 	const float MoveHosei = 20.0f;			//移動力への補正（大きいほど遅くなる）
 	Effekseer::Handle m_moveEffect = -1;	//移動エフェクト
 
 	//キャラコン
-	const float Radius = 25.0f;		//半径
-	const float Height = 30.0f;		//高さ
+	const float Radius = 25.0f;				//半径
+	const float Height = 30.0f;				//高さ
 
 	//ジャンプ
-	bool m_jumpNow = false;
+	bool m_jumpNow = false;					//ジャンプフラグ
 	const float m_jumpPower = 26.0f;		//ジャンプﾊﾟｩﾜｧ
 	const float m_gravity = 2.0f;			//重力ﾊﾟｩﾜｧ
 
@@ -147,5 +157,6 @@ private:
 	float m_stepSE_Timer = 0.0f;				//足音用タイマー
 	const float StepSE_Limit = 1.0f;			//足音制限時間
 	bool m_stepSE_LeftRight = false;			//左足と右足
+
 };
 
