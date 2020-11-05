@@ -331,6 +331,9 @@ void GameMenu::GameMenuUpdate() {
 				if (m_menu_BoxAllDelete != nullptr) {
 					m_menu_BoxAllDelete->CommandEnd();
 				}
+				if (m_menu_Save != nullptr) {
+					m_menu_Save->CommandEnd();
+				}
 
 				//移動
 				MenuButton->Init(L"Assets/sprite/MenuButton.dds", MenuButtonSize, MenuButtonSize, SpriteNo);
@@ -824,7 +827,7 @@ void GameMenu::Update_MenuEnter(const int& leftKey) {
 
 			break;
 		case GameMenu::Save:
-
+			m_menu_Save = new Menu_Save;
 			break;
 		}
 
@@ -874,7 +877,12 @@ void GameMenu::Update_CommandNow() {
 
 		break;
 	case GameMenu::Save:
-
+		m_menu_Save->SaveUpdate();
+		if (m_menu_Save->GetDeleteFlag() == true) {
+			//コマンド終了
+			DeleteMenuCommand();
+			m_commandEndFlag = true;
+		}
 		break;
 	}
 
@@ -905,6 +913,10 @@ void GameMenu::DeleteMenuCommand() {
 	if (m_menu_BoxAllDelete != nullptr) {
 		delete m_menu_BoxAllDelete;
 		m_menu_BoxAllDelete = nullptr;
+	}
+	if (m_menu_Save != nullptr) {
+		delete m_menu_Save;
+		m_menu_Save = nullptr;
 	}
 
 }

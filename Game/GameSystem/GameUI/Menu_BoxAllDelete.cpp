@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Menu_BoxAllDelete.h"
-#include "BoxMaker.h"
+#include "GameSystem/Box/BoxMaker.h"
 
 Menu_BoxAllDelete::Menu_BoxAllDelete()
 {

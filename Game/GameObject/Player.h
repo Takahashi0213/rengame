@@ -3,7 +3,7 @@
 #include "system/CGameObjectManager.h"
 #include "physics/PhysicsStaticObject.h"
 #include "GameSystem/Mouse/MouseOver.h"
-#include "GameBox.h"
+#include "GameSystem/Box/GameBox.h"
 
 /// <summary>
 /// ÉvÉåÉCÉÑÅ[

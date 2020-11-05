@@ -101,18 +101,15 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BoxMaker.cpp" />
-    <ClCompile Include="CGOM_Graphics.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="DamageSystem.cpp" />
     <ClCompile Include="Debug\DebugLog.cpp" />
     <ClCompile Include="Debug\PhysicsDebugDraw.cpp" />
     <ClCompile Include="EffekseerSupporter.cpp" />
-    <ClCompile Include="EventData.cpp" />
-    <ClCompile Include="GameBox.cpp" />
+    <ClCompile Include="Event\EventData.cpp" />
+    <ClCompile Include="Event\GameEvent.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameData.cpp" />
-    <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="GameObject\BackGround.cpp" />
     <ClCompile Include="GameObject\Benite.cpp" />
     <ClCompile Include="GameObject\BigDoor.cpp" />
@@ -130,17 +127,23 @@
     <ClCompile Include="GameScene\Game.cpp" />
     <ClCompile Include="GameScene\GameOver.cpp" />
     <ClCompile Include="GameScene\OP.cpp" />
+    <ClCompile Include="GameScene\SaveLoad.cpp" />
     <ClCompile Include="GameScene\SceneManager.cpp" />
     <ClCompile Include="GameScene\Title.cpp" />
     <ClCompile Include="GameScene\Tutorial.cpp" />
+    <ClCompile Include="GameSystem\Box\BoxMaker.cpp" />
+    <ClCompile Include="GameSystem\Box\GameBox.cpp" />
     <ClCompile Include="GameSystem\GameUI\GameEffect.cpp" />
     <ClCompile Include="GameSystem\GameUI\GameMenu.cpp" />
     <ClCompile Include="GameSystem\GameUI\GameStatusUI.cpp" />
     <ClCompile Include="GameSystem\GameUI\GameUI.cpp" />
     <ClCompile Include="GameSystem\GameUI\Menu_BoxAllDelete.cpp" />
     <ClCompile Include="GameSystem\GameUI\Menu_Create.cpp" />
+    <ClCompile Include="GameSystem\GameUI\Menu_Save.cpp" />
     <ClCompile Include="GameSystem\Mouse\MouseOver.cpp" />
     <ClCompile Include="GameSystem\Mouse\MouseSupporter.cpp" />
+    <ClCompile Include="GameSystem\PlayerSupporter\TutorialSupporter.cpp" />
+    <ClCompile Include="GameSystem\PlayerSupporter\UI_Supporter.cpp" />
     <ClCompile Include="GameSystem\StageSet\StageSet.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp" />
     <ClCompile Include="graphics\animation\AnimationClip.cpp" />
@@ -148,6 +151,7 @@
     <ClCompile Include="graphics\camera\Camera.cpp" />
     <ClCompile Include="graphics\camera\CameraSupporter.cpp" />
     <ClCompile Include="graphics\camera\CCamera2D.cpp" />
+    <ClCompile Include="graphics\CGOM_Graphics.cpp" />
     <ClCompile Include="graphics\font\FontRender.cpp" />
     <ClCompile Include="graphics\font\FontSupporter.cpp" />
     <ClCompile Include="graphics\font\GameFont.cpp" />
@@ -209,23 +213,18 @@
     <ClCompile Include="system\CGameObjectManager.cpp" />
     <ClCompile Include="system\IGameObject.cpp" />
     <ClCompile Include="system\system.cpp" />
-    <ClCompile Include="TutorialSupporter.cpp" />
-    <ClCompile Include="UI_Supporter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BoxMaker.h" />
-    <ClInclude Include="CGOM_Graphics.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="DamageSystem.h" />
     <ClInclude Include="Debug\DebugLog.h" />
     <ClInclude Include="Debug\PhysicsDebugDraw.h" />
     <ClInclude Include="EffekseerSupporter.h" />
-    <ClInclude Include="EventData.h" />
-    <ClInclude Include="EventSave.h" />
-    <ClInclude Include="GameBox.h" />
+    <ClInclude Include="Event\EventData.h" />
+    <ClInclude Include="Event\EventSave.h" />
+    <ClInclude Include="Event\GameEvent.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameData.h" />
-    <ClInclude Include="GameEvent.h" />
     <ClInclude Include="GameGraphic.h" />
     <ClInclude Include="GameObject\BackGround.h" />
     <ClInclude Include="GameObject\Benite.h" />
@@ -244,17 +243,23 @@
     <ClInclude Include="GameScene\Game.h" />
     <ClInclude Include="GameScene\GameOver.h" />
     <ClInclude Include="GameScene\OP.h" />
+    <ClInclude Include="GameScene\SaveLoad.h" />
     <ClInclude Include="GameScene\SceneManager.h" />
     <ClInclude Include="GameScene\Title.h" />
     <ClInclude Include="GameScene\Tutorial.h" />
+    <ClInclude Include="GameSystem\Box\BoxMaker.h" />
+    <ClInclude Include="GameSystem\Box\GameBox.h" />
     <ClInclude Include="GameSystem\GameUI\GameEffect.h" />
     <ClInclude Include="GameSystem\GameUI\GameMenu.h" />
     <ClInclude Include="GameSystem\GameUI\GameStatusUI.h" />
     <ClInclude Include="GameSystem\GameUI\GameUI.h" />
     <ClInclude Include="GameSystem\GameUI\Menu_BoxAllDelete.h" />
     <ClInclude Include="GameSystem\GameUI\Menu_Create.h" />
+    <ClInclude Include="GameSystem\GameUI\Menu_Save.h" />
     <ClInclude Include="GameSystem\Mouse\MouseOver.h" />
     <ClInclude Include="GameSystem\Mouse\MouseSupporter.h" />
+    <ClInclude Include="GameSystem\PlayerSupporter\TutorialSupporter.h" />
+    <ClInclude Include="GameSystem\PlayerSupporter\UI_Supporter.h" />
     <ClInclude Include="GameSystem\StageSet\StageData.h" />
     <ClInclude Include="GameSystem\StageSet\StageSet.h" />
     <ClInclude Include="GameTime.h" />
@@ -264,6 +269,7 @@
     <ClInclude Include="graphics\camera\Camera.h" />
     <ClInclude Include="graphics\camera\CameraSupporter.h" />
     <ClInclude Include="graphics\camera\CCamera2D.h" />
+    <ClInclude Include="graphics\CGOM_Graphics.h" />
     <ClInclude Include="graphics\font\FontRender.h" />
     <ClInclude Include="graphics\font\FontSupporter.h" />
     <ClInclude Include="graphics\font\GameFont.h" />
@@ -328,8 +334,6 @@
     <ClInclude Include="system\CGameObjectManager.h" />
     <ClInclude Include="system\IGameObject.h" />
     <ClInclude Include="system\system.h" />
-    <ClInclude Include="TutorialSupporter.h" />
-    <ClInclude Include="UI_Supporter.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\0_0.fbx" />
@@ -616,6 +620,17 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Sky.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\MapIC\MapIC0.png" />
+    <ImageContentTask Include="Assets\sprite\MapIC\MapIC1.png" />
+    <ImageContentTask Include="Assets\sprite\MapIC\MapIC_Nodata.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\Menu_SaveCursor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\effect\saveEffect.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

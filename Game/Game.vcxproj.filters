@@ -175,6 +175,9 @@
     <Filter Include="system\GameEvent">
       <UniqueIdentifier>{67d6bdb4-6957-474b-9197-5a50bee39f8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\sprite\MapIC">
+      <UniqueIdentifier>{feefac56-bdfe-467c-9b27-39dd78db95b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -233,9 +236,6 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="GameBox.cpp">
-      <Filter>system\GameBox</Filter>
-    </ClCompile>
     <ClCompile Include="ShadowMap.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
@@ -244,9 +244,6 @@
     </ClCompile>
     <ClCompile Include="GameData.cpp">
       <Filter>system\GameSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="CGOM_Graphics.cpp">
-      <Filter>graphics</Filter>
     </ClCompile>
     <ClCompile Include="sound\SoundEngine.cpp">
       <Filter>sound</Filter>
@@ -265,9 +262,6 @@
     </ClCompile>
     <ClCompile Include="GameCamera.cpp">
       <Filter>system\GameSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxMaker.cpp">
-      <Filter>system\GameBox</Filter>
     </ClCompile>
     <ClCompile Include="system\CGameObjectManager.cpp">
       <Filter>system\GameObject</Filter>
@@ -458,12 +452,6 @@
     <ClCompile Include="level\LevelData.cpp">
       <Filter>level</Filter>
     </ClCompile>
-    <ClCompile Include="GameEvent.cpp">
-      <Filter>system\GameEvent</Filter>
-    </ClCompile>
-    <ClCompile Include="EventData.cpp">
-      <Filter>system\GameEvent</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject\Benite.cpp">
       <Filter>object\Enemy</Filter>
     </ClCompile>
@@ -488,11 +476,32 @@
     <ClCompile Include="GameObject\EventObject.cpp">
       <Filter>object\SystemObject</Filter>
     </ClCompile>
-    <ClCompile Include="TutorialSupporter.cpp">
+    <ClCompile Include="GameSystem\Box\GameBox.cpp">
+      <Filter>system\GameBox</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\Box\BoxMaker.cpp">
+      <Filter>system\GameBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Event\GameEvent.cpp">
+      <Filter>system\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="Event\EventData.cpp">
+      <Filter>system\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\PlayerSupporter\TutorialSupporter.cpp">
       <Filter>system\GameSystem\UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI_Supporter.cpp">
+    <ClCompile Include="GameSystem\PlayerSupporter\UI_Supporter.cpp">
       <Filter>system\GameSystem\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\CGOM_Graphics.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\GameUI\Menu_Save.cpp">
+      <Filter>system\GameSystem\UI\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\SaveLoad.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -560,9 +569,6 @@
     <ClInclude Include="GameTime.h">
       <Filter>system</Filter>
     </ClInclude>
-    <ClInclude Include="GameBox.h">
-      <Filter>system\GameBox</Filter>
-    </ClInclude>
     <ClInclude Include="ShadowMap.h">
       <Filter>graphics</Filter>
     </ClInclude>
@@ -575,9 +581,6 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="GameCamera.h">
       <Filter>system\GameSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="CGOM_Graphics.h">
-      <Filter>graphics</Filter>
     </ClInclude>
     <ClInclude Include="SystemData.h">
       <Filter>system\GameSystem</Filter>
@@ -602,9 +605,6 @@
     </ClInclude>
     <ClInclude Include="IncludeHeader.h">
       <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="BoxMaker.h">
-      <Filter>system\GameBox</Filter>
     </ClInclude>
     <ClInclude Include="system\CGameObjectManager.h">
       <Filter>system\GameObject</Filter>
@@ -801,15 +801,6 @@
     <ClInclude Include="level\LevelSet.h">
       <Filter>level</Filter>
     </ClInclude>
-    <ClInclude Include="GameEvent.h">
-      <Filter>system\GameEvent</Filter>
-    </ClInclude>
-    <ClInclude Include="EventData.h">
-      <Filter>system\GameEvent</Filter>
-    </ClInclude>
-    <ClInclude Include="EventSave.h">
-      <Filter>system\GameEvent</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject\Benite.h">
       <Filter>object\Enemy</Filter>
     </ClInclude>
@@ -837,11 +828,35 @@
     <ClInclude Include="GameObject\EventObject.h">
       <Filter>object\SystemObject</Filter>
     </ClInclude>
-    <ClInclude Include="TutorialSupporter.h">
+    <ClInclude Include="GameSystem\Box\GameBox.h">
+      <Filter>system\GameBox</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\Box\BoxMaker.h">
+      <Filter>system\GameBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Event\GameEvent.h">
+      <Filter>system\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="Event\EventData.h">
+      <Filter>system\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="Event\EventSave.h">
+      <Filter>system\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\PlayerSupporter\TutorialSupporter.h">
       <Filter>system\GameSystem\UI</Filter>
     </ClInclude>
-    <ClInclude Include="UI_Supporter.h">
+    <ClInclude Include="GameSystem\PlayerSupporter\UI_Supporter.h">
       <Filter>system\GameSystem\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\CGOM_Graphics.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\GameUI\Menu_Save.h">
+      <Filter>system\GameSystem\UI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\SaveLoad.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1129,8 +1144,25 @@
     <ImageContentTask Include="Assets\sprite\Sky.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\MapIC\MapIC0.png">
+      <Filter>Assets\sprite\MapIC</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\MapIC\MapIC1.png">
+      <Filter>Assets\sprite\MapIC</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\MapIC\MapIC_Nodata.png">
+      <Filter>Assets\sprite\MapIC</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\sprite\menu_sprite\Menu_SaveCursor.png">
+      <Filter>Assets\sprite\Menu</Filter>
+    </Image>
+    <Image Include="Assets\sprite\effect\saveEffect.png">
+      <Filter>Assets\sprite\effect</Filter>
+    </Image>
   </ItemGroup>
 </Project>

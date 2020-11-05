@@ -4,12 +4,12 @@
 #include "GameSystem/GameUI/GameUI.h"
 #include "GameSystem/GameUI/GameStatusUI.h"
 #include "system/CGameObjectManager.h"
-#include "GameEvent.h"
+#include "Event/GameEvent.h"
 #include "OP.h"
 #include "GameScene/GameOver.h"
 #include "DamageSystem.h"
-#include "TutorialSupporter.h"
-#include "UI_Supporter.h"
+#include "GameSystem/PlayerSupporter/TutorialSupporter.h"
+#include "GameSystem/PlayerSupporter/UI_Supporter.h"
 
 /// <summary>
 /// ÉQÅ[ÉÄÅI

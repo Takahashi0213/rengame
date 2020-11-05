@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "EnemySystem.h"
 
-#include "BoxMaker.h"
+#include "GameSystem/Box/BoxMaker.h"
 
 bool EnemySystem::BoxAttackSearch(const CVector3& position, const float& range) {
 

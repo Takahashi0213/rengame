@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "StageSet.h"
-#include "BoxMaker.h"
+#include "GameSystem/Box/BoxMaker.h"
 
 StageSet* StageSet::m_instance = nullptr;
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "system/CGameObjectManager.h"
 #include "GameObject/Player.h"
-#include "GameBox.h"
+#include "GameSystem/Box/GameBox.h"
 
 /// <summary>
 /// ゲームカメラと操作色々

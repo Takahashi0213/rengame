@@ -21,40 +21,48 @@ public:
 	struct Stage_BGM {
 		wchar_t* BGM_Name;					//BGMの名前
 	};
-	
+	//アイコンデータ構造体
+	struct Stage_Icon {
+		wchar_t* Icon_Name;					//アイコンの名前
+	};
+
 	//取得ゾーン
 
 	/// <summary>
 	/// ステージ名を取得
 	/// </summary>
 	/// <param name="stageNo">ステージ番号</param>
-	const wchar_t* GetStageName(const int stageNo) {
+	const wchar_t* GetStageName(const int& stageNo) {
 		return StageList[stageNo].Stage_Name;
 	}
 	//表示名
-	const wchar_t* GetHyouziName(const int stageNo) {
+	const wchar_t* GetHyouziName(const int& stageNo) {
 		return StageList[stageNo].Stage_HyouziName;
 	}
 	//ステージモデルのファイルパス
-	const wchar_t* GetStageModel(const int stageNo) {
+	const wchar_t* GetStageModel(const int& stageNo) {
 		return StageList[stageNo].LoadStageModel;
 	}
 	//レベルのファイルパス
-	const wchar_t* GetStageLevel(const int stageNo) {
+	const wchar_t* GetStageLevel(const int& stageNo) {
 		return StageList[stageNo].LoadStageLevel;
 	}
 	//ステージの場所データ
-	const GameData::Place_Data GetStagePlace(const int stageNo) {
+	const GameData::Place_Data GetStagePlace(const int& stageNo) {
 		return StageList[stageNo].ThisPlace;
 	}
 	//ステージの環境光
-	const CVector3 GetStageAmbientColor(const int stageNo) {
+	const CVector3 GetStageAmbientColor(const int& stageNo) {
 		return StageList[stageNo].AmbientColor;
 	}
 
 	//ステージのBGM名
 	wchar_t* GetStageBGM(const GameData::Place_Data place) {
 		return StageBGM[place].BGM_Name;
+	}
+	//ステージのアイコン名
+	wchar_t* GetStageIC(const GameData::Place_Data place) {
+		return StageIC[place].Icon_Name;
 	}
 
 	//計算ゾーン
@@ -67,7 +75,7 @@ public:
 	}
 
 private:
-	const Stage_Srtuct StageList[5]{
+	const Stage_Srtuct StageList[MAX_STAGE_NOM]{
 		//チュートリアルステージ
 		{
 			L"Tutorial",
@@ -108,10 +116,15 @@ private:
 
 	};
 
-	const Stage_BGM StageBGM[5]{
-		L"Assets/sound/BGM/Title.wav",		//無
-		L"Assets/sound/BGM/Tutorial.wav",	//チュートリアル
-		L"Assets/sound/BGM/Stage1.wav",		//草原
+	const Stage_BGM StageBGM[MAX_STAGE_NOM]{
+		L"Assets/sound/BGM/Title.wav",			//無
+		L"Assets/sound/BGM/Tutorial.wav",		//チュートリアル
+		L"Assets/sound/BGM/Stage1.wav",			//草原
+	};
+	const Stage_Icon StageIC[MAX_STAGE_NOM]{
+		L"Assets/sprite/MapIC_Nodata.dds",		//無
+		L"Assets/sprite/MapIC0.dds",			//チュートリアル
+		L"Assets/sprite/MapIC1.dds",			//草原
 	};
 
 };

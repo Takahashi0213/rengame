@@ -225,6 +225,7 @@ public:
 	enum Anime_Name {
 		Anime_LevelUp,		//レベルアップ
 		Anime_Loading,		//ローディング
+		Anime_Save,			//セーブ
 		Anime_NameNom,		//アニメの数
 	};
 
@@ -235,9 +236,9 @@ public:
 	/// <param name="pos">座標</param>
 	/// <param name="m_scale">大きさ</param>
 	void NewAnimationSprite(const Anime_Name m_animeName,
-		const CVector3& pos, const CVector3& m_scale, const int& priority = 0);
+		const CVector3& pos, const CVector3& m_scale, const int& priority = 0, const int& overLimit = 6);
 	SpriteRender* NewAnimationSprite_pt(const Anime_Name m_animeName,
-		const CVector3& pos, const CVector3& m_scale, const int& priority = 0);
+		const CVector3& pos, const CVector3& m_scale, const int& priority = 0, const int& overLimit = 6);
 
 	/// <summary>
 	/// 強引に削除
@@ -278,6 +279,7 @@ private:
 	const SpriteAnime_Data Game_SpriteAnime_Data[Anime_NameNom]{
 		{ L"Assets/sprite/levelUp_8F.dds", 450.0f, 2000.0f, 8,false },		//レベルアップ
 		{ L"Assets/sprite/Loading_6F.dds", 65.0f, 240.0f, 6,true },			//ローディングアニメーション
+		{ L"Assets/sprite/saveEffect.dds", 640.0f, 2160.0f, 9,false },		//セーブアニメーション
 
 	};
 

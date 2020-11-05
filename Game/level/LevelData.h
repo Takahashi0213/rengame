@@ -204,7 +204,7 @@ private:
 				{ L"StaticBox3",Tag_StaticBox,L"" },
 				{ L"StaticBox4",Tag_StaticBox,L"" },
 				{ L"StaticBox5",Tag_StaticBox,L"" },
-				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ -900.0f,100.0f,1000.0f }, true ,-90.0f,-100.0f },	//移動先マップ名＆移動先座標
+				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ -800.0f,100.0f,1000.0f }, true ,-90.0f,-100.0f },	//移動先マップ名＆移動先座標
 			}
 		},
 		//草原3

@@ -3,7 +3,7 @@
 #include "BulletCollision/CollisionDispatch/btCollisionWorld.h"
 
 #include "GameSystem/GameUI/GameUI.h"
-#include "BoxMaker.h"
+#include "GameSystem/Box/BoxMaker.h"
 #include "GameCamera.h"
 
 Player::Player()

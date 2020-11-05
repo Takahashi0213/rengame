@@ -2,7 +2,7 @@
 #include <vector>
 #include "IGameObject.h"
 
-#include "CGOM_Graphics.h"
+#include "graphics/CGOM_Graphics.h"
 
 /// <summary>
 /// ゲームオブジェクトマネージャーです…

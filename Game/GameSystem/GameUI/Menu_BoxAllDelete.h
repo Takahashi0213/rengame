@@ -38,26 +38,26 @@ private:
 	const wchar_t* NoText = L"やめる";
 
 	//スプライトレンダー
-	SpriteRender* MenuWindow;									//ウィンドウ
+	SpriteRender* MenuWindow = nullptr;							//ウィンドウ
 	const CVector3 MenuDefPos = { -200.0f,-50.0f,0.0f };		//座標
 	const CVector2 DefMenuWindowSize = { 600.0f,400.0f };		//サイズ
 
-	SpriteRender* ButtonWindow_Left;							//左ウィンドウ
-	SpriteRender* ButtonWindow_Right;							//右ウィンドウ
+	SpriteRender* ButtonWindow_Left = nullptr;					//左ウィンドウ
+	SpriteRender* ButtonWindow_Right = nullptr;					//右ウィンドウ
 	const CVector3 MenuButtonDefSize = { 200.0f,60.0f,0.0f };	//大きさ
 	const CVector2 MenuButtonPosHosei = { 150.0f,-200.0f };		//座標補正（ウィンドウ基準）
 
 	//フォント
-	FontRender* Header_Font;									//ウィンドウのヘッダー
+	FontRender* Header_Font = nullptr;							//ウィンドウのヘッダー
 	const float Header_FontSize = 0.6f;							//ヘッダーテキストの大きさ
 	const CVector2 Header_Font_Hosei = { -80.0f,190.0f };		//ヘッダーテキストの座標補正
 
-	FontRender* Check_Font;										//消しますか？のテキスト
+	FontRender* Check_Font = nullptr;							//消しますか？のテキスト
 	const CVector2 Check_Font_Hosei = { -180.0f,20.0f };		//消しますか？の座標補正
 
-	FontRender* Yes_Font;										//はいのテキスト
+	FontRender* Yes_Font = nullptr;								//はいのテキスト
 	const float YesFont_XHosei = 5.0f;							//はいのテキストX補正
-	FontRender* No_Font;										//いいえのテキスト
+	FontRender* No_Font = nullptr;								//いいえのテキスト
 	const float NoFont_XHosei = -5.0f;							//いいえのテキストX補正
 	const CVector2 YesNo_Font_Hosei = { -40.0f,23.0f };			//↑テキストの座標補正
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Switch.h"
 
-#include "BoxMaker.h"
+#include "GameSystem/Box/BoxMaker.h"
 
 Switch::Switch()
 {

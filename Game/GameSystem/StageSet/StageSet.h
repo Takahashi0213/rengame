@@ -56,9 +56,17 @@ public:
 	}
 	//ステージの場所データ
 	const GameData::Place_Data GetStagePlace(const wchar_t* stage_name);
+	//ステージの表示名
+	const wchar_t* GetStage_HyouziName(const int& levelNo) {
+		return m_stageData.GetHyouziName(levelNo);
+	}
 	//ステージのBGM名
 	wchar_t* GetStageBGM_Name(const GameData::Place_Data place) {
 		return m_stageData.GetStageBGM(place);
+	}
+	//ステージのアイコン名
+	wchar_t* GetStageIC_Name(const GameData::Place_Data place) {
+		return m_stageData.GetStageIC(place);
 	}
 
 private:

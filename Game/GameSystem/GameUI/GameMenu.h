@@ -4,6 +4,7 @@
 //項目内容
 #include "Menu_Create.h"
 #include "Menu_BoxAllDelete.h"
+#include "Menu_Save.h"
 
 /// <summary>
 /// メニューのアレコレを総括する
@@ -74,6 +75,7 @@ private:
 	//各コマンドのポインタ保存用 実行中だけ保存される
 	Menu_Create* m_menu_Create = nullptr;
 	Menu_BoxAllDelete* m_menu_BoxAllDelete = nullptr;
+	Menu_Save* m_menu_Save = nullptr;
 
 	//メニュー枠関連
 	const CVector2 DefMenuWindowSize = { 600.0f,742.0f };
@@ -177,29 +179,29 @@ private:
 	//↓ここから↓スプライト↓
 
 	//全体
-	SpriteRender* MenuWindow;
-	SpriteRender* MenuWindow2;		//説明欄
-	SpriteRender* MenuButton;
+	SpriteRender* MenuWindow = nullptr;
+	SpriteRender* MenuWindow2 = nullptr;		//説明欄
+	SpriteRender* MenuButton = nullptr;
 	//アクセサリー
-	SpriteRender* MenuLogo_Under;
-	SpriteRender* MenuLogo;
-	SpriteRender* MenuLogo_Up;
-	SpriteRender* Menu_Mahojin;		//魔法陣
+	SpriteRender* MenuLogo_Under = nullptr;
+	SpriteRender* MenuLogo = nullptr;
+	SpriteRender* MenuLogo_Up = nullptr;
+	SpriteRender* Menu_Mahojin = nullptr;		//魔法陣
 	//コマンド
-	SpriteRender* MenuCommand_Sprite1;		//くりえいと
-	FontRender* MenuCommand_Font1;
-	SpriteRender* MenuCommand_Sprite2;		//全箱解放
-	FontRender* MenuCommand_Font2;
-	SpriteRender* MenuCommand_Sprite3;		//ライブラリー
-	FontRender* MenuCommand_Font3;
-	SpriteRender* MenuCommand_Sprite4;		//セーブ
-	FontRender* MenuCommand_Font4;
+	SpriteRender* MenuCommand_Sprite1 = nullptr;		//くりえいと
+	FontRender* MenuCommand_Font1 = nullptr;
+	SpriteRender* MenuCommand_Sprite2 = nullptr;		//全箱解放
+	FontRender* MenuCommand_Font2 = nullptr;
+	SpriteRender* MenuCommand_Sprite3 = nullptr;		//ライブラリー
+	FontRender* MenuCommand_Font3 = nullptr;
+	SpriteRender* MenuCommand_Sprite4 = nullptr;		//セーブ
+	FontRender* MenuCommand_Font4 = nullptr;
 	//コマンドアクセサリー
 
 	//説明文
-	FontRender* MenuSetumeiFont;
+	FontRender* MenuSetumeiFont = nullptr;
 	//カーソル
-	SpriteRender* MenuCommand_Cursor;		//選択カーソル
+	SpriteRender* MenuCommand_Cursor = nullptr;		//選択カーソル
 
 };
 

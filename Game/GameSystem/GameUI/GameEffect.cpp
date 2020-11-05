@@ -403,7 +403,7 @@ void GameEffect_Message::LogUpdate() {
 //ここからGameEffect_AnimationSprite
 
 void GameEffect_AnimationSprite::NewAnimationSprite(const Anime_Name m_animeName, 
-	const CVector3& pos, const CVector3& m_scale, const int& priority){
+	const CVector3& pos, const CVector3& m_scale, const int& priority, const int& overLimit){
 
 	char RenderName[MAX_PATH];
 	//インスタンスの名前を作成。
@@ -416,7 +416,7 @@ void GameEffect_AnimationSprite::NewAnimationSprite(const Anime_Name m_animeName
 	sr->Init(Game_SpriteAnime_Data[m_animeName].SpriteName,
 		Game_SpriteAnime_Data[m_animeName].High, Game_SpriteAnime_Data[m_animeName].Wide, priority);
 	sr->SetHighPattern(Game_SpriteAnime_Data[m_animeName].Pattern, 0);
-	sr->m_spriteSupporter.SpritePattern(1, Game_SpriteAnime_Data[m_animeName].Loop, 6);
+	sr->m_spriteSupporter.SpritePattern(1, Game_SpriteAnime_Data[m_animeName].Loop, overLimit);
 
 	SpriteRenderList srl;
 	srl.SpriteRender_pt = sr;
@@ -425,7 +425,7 @@ void GameEffect_AnimationSprite::NewAnimationSprite(const Anime_Name m_animeName
 }
 
 SpriteRender* GameEffect_AnimationSprite::NewAnimationSprite_pt(const Anime_Name m_animeName,
-	const CVector3& pos, const CVector3& m_scale, const int& priority) {
+	const CVector3& pos, const CVector3& m_scale, const int& priority, const int& overLimit) {
 
 	char RenderName[MAX_PATH];
 	//インスタンスの名前を作成。
@@ -438,7 +438,7 @@ SpriteRender* GameEffect_AnimationSprite::NewAnimationSprite_pt(const Anime_Name
 	sr->Init(Game_SpriteAnime_Data[m_animeName].SpriteName,
 		Game_SpriteAnime_Data[m_animeName].High, Game_SpriteAnime_Data[m_animeName].Wide, priority);
 	sr->SetHighPattern(Game_SpriteAnime_Data[m_animeName].Pattern, 0);
-	sr->m_spriteSupporter.SpritePattern(1, Game_SpriteAnime_Data[m_animeName].Loop, 6);
+	sr->m_spriteSupporter.SpritePattern(1, Game_SpriteAnime_Data[m_animeName].Loop, overLimit);
 
 	SpriteRenderList srl;
 	srl.SpriteRender_pt = sr;
