@@ -187,8 +187,8 @@ private:
 				{ L"StaticBox5",Tag_StaticBox,L"" },
 				{ L"StaticBox6",Tag_StaticBox,L"" },
 				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen2",{ 0.0f,100.0f,-950.0f }, false ,180.0f,-750.0f },	//移動先マップ名＆移動先座標
-				{ L"GhostBox2",Tag_GhostBox_MapMove,L"",L"Sougen3",{ 1022.0f,100.0f,-88.0f }, false ,180.0f,-750.0f },	//移動先マップ名＆移動先座標
-				{ L"GhostBox3",Tag_GhostBox_MapMove,L"",L"Tutorial",{ -393.0f,50.0f,2145.0f }, false ,180.0f,-50.0f },	//移動先マップ名＆移動先座標
+				{ L"GhostBox2",Tag_GhostBox_MapMove,L"",L"Sougen3",{ 922.0f,100.0f,-428.0f }, false ,180.0f,-750.0f },	//移動先マップ名＆移動先座標
+				{ L"GhostBox3",Tag_GhostBox_MapMove,L"",L"Tutorial",{ 0.0f,50.0f,2145.0f }, false ,180.0f,-50.0f },		//移動先マップ名＆移動先座標
 			}
 		},
 		//草原2
@@ -199,11 +199,13 @@ private:
 				{ L"jewel2",Tag_Jewel,L"" },
 				{ L"BigDoor",Tag_BigDoor1,L"" },
 				{ L"BigDoor_",Tag_BigDoor2,L"" },
+				{ L"Benite1",Tag_Benite,L"" },
 				{ L"StaticBox1",Tag_StaticBox,L"" },
 				{ L"StaticBox2",Tag_StaticBox,L"" },
 				{ L"StaticBox3",Tag_StaticBox,L"" },
 				{ L"StaticBox4",Tag_StaticBox,L"" },
 				{ L"StaticBox5",Tag_StaticBox,L"" },
+				{ L"DamageZone",Tag_GhostBox_Damage,L"" },
 				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ -800.0f,100.0f,1000.0f }, true ,-90.0f,-100.0f },	//移動先マップ名＆移動先座標
 			}
 		},
@@ -213,12 +215,17 @@ private:
 			{
 				{ L"jewel1",Tag_Jewel,L"" },
 				{ L"jewel2",Tag_Jewel,L"" },
+				{ L"jewel3",Tag_Jewel,L"" },
+				{ L"Switch1",Tag_Switch,L"Key1" },
+				{ L"Switch2",Tag_Switch,L"Key1" },
 				{ L"StaticBox1",Tag_StaticBox,L"" },
 				{ L"StaticBox2",Tag_StaticBox,L"" },
 				{ L"StaticBox3",Tag_StaticBox,L"" },
 				{ L"StaticBox4",Tag_StaticBox,L"" },
 				{ L"StaticBox5",Tag_StaticBox,L"" },
-				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ 700.0f,110.0f,-950.0f }, false ,180.0f,-250.0f },	//移動先マップ名＆移動先座標
+				{ L"DamageZone",Tag_GhostBox_Damage,L"" },
+				{ L"Key1",Tag_Key1,L"" },
+				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ -700.0f,110.0f,-500.0f }, false ,180.0f,-280.0f },	//移動先マップ名＆移動先座標
 			}
 		}
 

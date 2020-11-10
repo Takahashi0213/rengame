@@ -178,6 +178,9 @@
     <Filter Include="Assets\sprite\MapIC">
       <UniqueIdentifier>{feefac56-bdfe-467c-9b27-39dd78db95b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="system\Item">
+      <UniqueIdentifier>{142b44d6-2ec5-4f7c-a93f-9263be5abd08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -458,9 +461,6 @@
     <ClCompile Include="GameObject\Mannequin.cpp">
       <Filter>object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="DamageSystem.cpp">
-      <Filter>system\GameSystem</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene\GameOver.cpp">
       <Filter>Scene\GameScene</Filter>
     </ClCompile>
@@ -502,6 +502,15 @@
     </ClCompile>
     <ClCompile Include="GameScene\SaveLoad.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem\GameUI\DamageSystem.cpp">
+      <Filter>system\GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Key.cpp">
+      <Filter>object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\ItemSystem.cpp">
+      <Filter>object\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -807,9 +816,6 @@
     <ClInclude Include="GameObject\Mannequin.h">
       <Filter>object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="DamageSystem.h">
-      <Filter>system\GameSystem</Filter>
-    </ClInclude>
     <ClInclude Include="GameScene\GameOver.h">
       <Filter>Scene\GameScene</Filter>
     </ClInclude>
@@ -857,6 +863,21 @@
     </ClInclude>
     <ClInclude Include="GameScene\SaveLoad.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemData.h">
+      <Filter>system\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemSave.h">
+      <Filter>system\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem\GameUI\DamageSystem.h">
+      <Filter>system\GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Key.h">
+      <Filter>object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\ItemSystem.h">
+      <Filter>object\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1153,16 +1174,17 @@
     <ImageContentTask Include="Assets\sprite\MapIC\MapIC_Nodata.png">
       <Filter>Assets\sprite\MapIC</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\effect\saveEffect.png">
+      <Filter>Assets\sprite\effect</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\menu_sprite\Menu_SaveCursor.png">
+      <Filter>Assets\sprite\Menu</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Title\Load_BG.png">
+      <Filter>Assets\sprite\system</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\sprite\menu_sprite\Menu_SaveCursor.png">
-      <Filter>Assets\sprite\Menu</Filter>
-    </Image>
-    <Image Include="Assets\sprite\effect\saveEffect.png">
-      <Filter>Assets\sprite\effect</Filter>
-    </Image>
   </ItemGroup>
 </Project>

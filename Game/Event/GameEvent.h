@@ -31,6 +31,13 @@ public:
 
 	void GameEventUpdate();
 
+	/// <summary>
+	/// イベントセーブを返す
+	/// </summary>
+	EventSave* GetEventSave() {
+		return m_eventData.GetEventSave();
+	}
+
 private:
 	//イベント一覧
 	void Event_Tutorial1();

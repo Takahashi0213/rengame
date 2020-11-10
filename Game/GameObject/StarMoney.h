@@ -1,11 +1,11 @@
 #pragma once
 #include "system/CGameObjectManager.h"
-#include "Player.h"
+#include "GameObject/ItemSystem.h"
 
 /// <summary>
 /// 触れると手に入るお金
 /// </summary>
-class StarMoney : public ObjectClass
+class StarMoney : public ItemSystem
 {
 public:
 	StarMoney();
@@ -24,7 +24,6 @@ private:
 
 	SkinModel m_model;			//スキンモデル。
 	SkinModel m_model_Kirameki;	//キラメキラリ
-	Player* m_pl = nullptr;
 	ID3D11ShaderResourceView* m_kiramekiSRV = nullptr;
 
 	//シェイク

@@ -75,6 +75,7 @@ public:
 	}
 
 private:
+	//ステージ情報
 	const Stage_Srtuct StageList[MAX_STAGE_NOM]{
 		//チュートリアルステージ
 		{
@@ -116,11 +117,13 @@ private:
 
 	};
 
+	//ステージごとのメインBGM
 	const Stage_BGM StageBGM[MAX_STAGE_NOM]{
 		L"Assets/sound/BGM/Title.wav",			//無
 		L"Assets/sound/BGM/Tutorial.wav",		//チュートリアル
 		L"Assets/sound/BGM/Stage1.wav",			//草原
 	};
+	//ステージごとのアイコン（セーブ＆ロードで使用）
 	const Stage_Icon StageIC[MAX_STAGE_NOM]{
 		L"Assets/sprite/MapIC_Nodata.dds",		//無
 		L"Assets/sprite/MapIC0.dds",			//チュートリアル

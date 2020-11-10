@@ -12,6 +12,7 @@ BackGround::BackGround()
 	m_sprite->Init(L"Assets/sprite/Sky.dds", 1280.0f, 855.0f, 0);
 	m_sprite->SetObjectTag(objectTag::t_BackSprite);
 	m_sprite->SetPosition(CVector3::Zero());
+
 }
 
 BackGround::~BackGround()
@@ -30,8 +31,14 @@ void BackGround::Init(const wchar_t* filePath) {
 	//シャドウレシーバーにする。
 	m_model.SetShadowReciever(true);
 
+	//背景はディザリングする。
+	m_model.SetDithering(true);
+	//地面はディザリングしない。
+	m_model.SetGround_NoDithering(true);
+
 	//Initしたよ！
 	m_initFlag = true;
+
 }
 
 void BackGround::Update() {
@@ -45,19 +52,21 @@ void BackGround::Update() {
 			m_model.SetRenderMode(RenderMode::Monochrome);
 			m_sprite->SetRenderMode(Sprite_RenderMode::Sprite_Monochrome);
 			m_monochromeFlag = true;
+			m_model.SetGround_NoDithering(false);
 		}
 		else if (SceneManager::GetInstance()->GetGameMode() != SceneManager::CreateMode && m_monochromeFlag == true) {
 			m_model.SetRenderMode(RenderMode::Default);
 			m_sprite->SetRenderMode(Sprite_RenderMode::Normal);
 			m_monochromeFlag = false;
+			m_model.SetGround_NoDithering(true);
 		}
 	}
 
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 
 	//シャドウキャスターを登録。
-	//ShadowMap::GetInstance()->RegistShadowCaster(&m_model);
-	//ShadowMap::GetInstance()->Update(m_lightMaker->GetLightCameraPosition(), m_lightMaker->GetLightCameraTarget());
+	ShadowMap::GetInstance()->RegistShadowCaster(&m_model);
+	ShadowMap::GetInstance()->Update(m_lightMaker->GetLightCameraPosition(), m_lightMaker->GetLightCameraTarget());
 
 }
 

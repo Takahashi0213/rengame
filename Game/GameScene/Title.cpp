@@ -80,6 +80,11 @@ void Title::Update() {
 	m_player.UpdateWorldMatrix(m_p_pos, m_p_rot, m_p_scl);
 	m_playerAnimation.Play(0);
 	m_playerAnimation.Update(1.0f / 20.0f);
+	//箱の上下
+	if (m_dummyBox->m_skinModelSupporter.GetSkinModelMoveListLen() == 0) {
+		m_dummyBox->m_skinModelSupporter.SkinModelMove({ 0.0f,UpDownY,0.0f }, UpDownTime, 0, true);
+		m_dummyBox->m_skinModelSupporter.SkinModelMove({ 0.0f,-UpDownY,0.0f }, UpDownTime, UpDownTime, true);
+	}
 
 	//カメラ
 	g_camera3D.Update();
@@ -371,6 +376,19 @@ void Title::EffectUpdate_TitleEffect() {
 void Title::EffectUpdate_CommandWait() {
 
 	//選択待ち
+
+	//ロゴエフェクト
+	if (Rogo.TitleRogo_Mozi["Mozi5"]->m_spriteSupporter.GetSpriteScaleListLen() == 0) {
+		int Delay = 0;
+		for (auto iter = Rogo.TitleRogo_Mozi.begin(); iter != Rogo.TitleRogo_Mozi.end(); iter++) {
+			iter->second->m_spriteSupporter.SpriteScale(LogoEffectScale, LogoEffectTime, Delay);
+			Delay += LogoEffectTime;
+			iter->second->m_spriteSupporter.SpriteScale(TitleRogoScale, LogoEffectTime, Delay);
+			Delay += LogoEffectTime + LogoEffectInterval;
+		}
+		Delay += LogoEffectIntervalHosei;
+		Rogo.TitleRogo_Mozi["Mozi5"]->m_spriteSupporter.SpriteScale(TitleRogoScale, 1, Delay);
+	}
 
 }
 

@@ -123,6 +123,7 @@ private:
 
 	//セーブ処理関連
 	FILE* fp = nullptr;											//セーブファイル
+	bool m_fifeFlag = false;									//ファイル存在する？
 	GameData* m_gameData_Load = nullptr;						//旧データ用臨時
 
 	//削除フラグ

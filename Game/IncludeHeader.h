@@ -6,6 +6,7 @@
 
 //アイテム
 #include "GameObject/StarMoney.h"
+#include "GameObject/Key.h"
 
 //ギミック
 #include "GameObject/Switch.h"

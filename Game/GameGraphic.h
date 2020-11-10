@@ -14,4 +14,6 @@ public:
 
 	const CVector3 LoadingAnimePos = { 480.0f,-220.0f,0.0f };	//ローディングアニメーションの座標
 
+	CVector3 m_playerPos = CVector3::Zero();	//ディザリングに使う
+
 };

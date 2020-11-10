@@ -11,6 +11,7 @@ public:
 	bool m_event_PlayerMoveFlag = false;//イベント中でもプレイヤーを動かせるフラグ
 	bool m_event_CameraStop = false;	//カメラの移動を停止
 	bool m_menuStopFlag = false;		//メニューの操作フラグ	
+	bool m_loadDataFlag = false;		//ロードしたデータである
 
 
 };

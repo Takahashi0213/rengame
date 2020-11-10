@@ -16,12 +16,11 @@ StarMoney::StarMoney()
 		false, nullptr, &m_kiramekiSRV);
 	m_model_Kirameki.SetKirameki(m_kiramekiSRV);
 
-	//プレイヤーの検索
-	m_pl = CGameObjectManager::GetInstance()->FindGO<Player>(Hash::MakeHash("Player"));
-
 	//タグ設定
 	m_object = ObjectClass::ObjectClass_Tag::ItemObj;
 
+	//取得範囲を設定
+	ItemGetRange = GetRange;
 }
 
 
@@ -50,8 +49,7 @@ void StarMoney::Update() {
 	StarMoneyMove();
 
 	//取得チェック
-	float length = (m_position - m_pl->GetPosition()).Length();
-	if (length < GetRange) {
+	if (ItemGetCheck() == true) {
 		//取得する
 		GameStatus_UISystem::GetInstance()->AddStarMoney(GetStarMoney);
 		//SE

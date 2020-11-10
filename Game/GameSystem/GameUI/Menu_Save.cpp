@@ -1,14 +1,13 @@
 #include "stdafx.h"
 #include "Menu_Save.h"
 
-
 Menu_Save::Menu_Save()
 {	
 	//臨時ゲームデータの生成
 	m_gameData_Load = new GameData;
 
 	//メニューのメイン部分
-	MenuWindow = NewGO<SpriteRender>("MenuWindow_BAD", SpriteNo);
+	MenuWindow = NewGO<SpriteRender>("MenuWindow_Save", SpriteNo);
 	MenuWindow->ChangeSliceSprite({ 120.0f,120.0f });
 	MenuWindow->Init(L"Assets/sprite/window7.dds",
 		DefMenuWindowSize.x,
@@ -16,17 +15,18 @@ Menu_Save::Menu_Save()
 		SpriteNo);
 	MenuWindow->SetPosition(MenuDefPos);
 	//ヘッダー
-	Header_Font = NewGO<FontRender>("MenuHeaderFont_BAD", SpriteNo);
+	Header_Font = NewGO<FontRender>("MenuHeaderFont_Save", SpriteNo);
 	Header_Font->SetText(HeaderText);
 	Header_Font->SetColor(CVector4::White());
 	Header_Font->SetScale(Header_FontSize);
 	Header_Font->SetPosition({ MenuDefPos.x + Header_Font_Hosei.x,MenuDefPos.y + Header_Font_Hosei.y });
 
 	//旧セーブ
-	FILE* fp = fopen("save.bin", "r");
+	FILE* fp = fopen("save.bin", "rb");
 	if (fp != NULL) {
 		fread(m_gameData_Load, sizeof(GameData), 1, fp);
 		fclose(fp);
+		m_fifeFlag = true;
 	}
 	{	//セーブ情報部分-旧
 		OldSaveWindow = NewGO<SpriteRender>("SaveWindow_Old", SpriteNo);
@@ -39,7 +39,7 @@ Menu_Save::Menu_Save()
 		//マップアイコン-旧
 		OldMapIC = NewGO<SpriteRender>("SaveMapIC_Old", SpriteNo);
 		const wchar_t* IC_FilePath;
-		if (fp != NULL) {
+		if (m_fifeFlag == true) {
 			IC_FilePath = StageSet::GetInstance()->GetStageIC_Name(m_gameData_Load->GetPlace());
 		}
 		else {
@@ -54,7 +54,7 @@ Menu_Save::Menu_Save()
 		OldSave_PlayerLevel = NewGO<FontRender>("PlayerLevel_Old", SpriteNo);
 		OldSave_PlayerLevel->SetPivot({ 0.0f,0.5f });	//左
 		int oldPlayerLevel = 0;
-		if (fp != NULL) {
+		if (m_fifeFlag == true) {
 			oldPlayerLevel = m_gameData_Load->GetLevel();
 			wchar_t text[MAX_PATH];
 			swprintf(text, MAX_PATH - 1, L"Ｌｖ. %d", oldPlayerLevel);
@@ -71,7 +71,7 @@ Menu_Save::Menu_Save()
 		OldSave_PlayerHP->SetPivot({ 0.0f,0.5f });	//左
 		int oldPlayerMaxHP = 0;
 		int oldPlayerNowHP = 0;
-		if (fp != NULL) {
+		if (m_fifeFlag == true) {
 			oldPlayerMaxHP = m_gameData_Load->GetMaxHP();
 			oldPlayerNowHP = m_gameData_Load->GetHP();
 			wchar_t text[MAX_PATH];
@@ -87,7 +87,7 @@ Menu_Save::Menu_Save()
 		//プレイヤー場所-旧
 		OldSave_PlayerPlace = NewGO<FontRender>("PlayerPlace_Old", SpriteNo);
 		OldSave_PlayerPlace->SetPivot({ 0.0f,0.5f });	//左
-		if (fp != NULL) {
+		if (m_fifeFlag == true) {
 			const wchar_t* StageName;
 			StageName = StageSet::GetInstance()->GetStage_HyouziName(m_gameData_Load->GetNowMapLevel());
 			OldSave_PlayerPlace->SetText(StageName);
@@ -175,14 +175,14 @@ Menu_Save::Menu_Save()
 	SaveCursor->SetPosition(SaveCursorPos);
 
 	//確認メッセージ
-	Check_Font = NewGO<FontRender>("MenuCheckFont_BAD", SpriteNo);
+	Check_Font = NewGO<FontRender>("MenuCheckFont_Save", SpriteNo);
 	Check_Font->SetText(SaveCheckText);
 	Check_Font->SetColor(CVector4::White());
 	Check_Font->SetScale(Check_FontSize);
 	Check_Font->SetPosition({ MenuDefPos.x + Check_Font_Hosei.x,MenuDefPos.y + Check_Font_Hosei.y });
 
 	//Yes/Noボタン
-	ButtonWindow_Left = NewGO<SpriteRender>("MenuCommand_BAD_Left", SpriteNo);
+	ButtonWindow_Left = NewGO<SpriteRender>("MenuCommand_Save_Left", SpriteNo);
 	ButtonWindow_Left->ChangeSliceSprite({ 200.0f,60.0f });
 	ButtonWindow_Left->Set3Slice(MenuButtonDefSize.x);
 	ButtonWindow_Left->Init(L"Assets/sprite/window8.dds",
@@ -191,7 +191,7 @@ Menu_Save::Menu_Save()
 		SpriteNo);
 	ButtonWindow_Left->SetPosition({ MenuDefPos.x - MenuButtonPosHosei.x,
 		MenuDefPos.y + MenuButtonPosHosei.y, MenuDefPos.z });
-	ButtonWindow_Right = NewGO<SpriteRender>("MenuCommand_BAD_Right", SpriteNo);
+	ButtonWindow_Right = NewGO<SpriteRender>("MenuCommand_Save_Right", SpriteNo);
 	ButtonWindow_Right->ChangeSliceSprite({ 200.0f,60.0f });
 	ButtonWindow_Right->Set3Slice(MenuButtonDefSize.x);
 	ButtonWindow_Right->Init(L"Assets/sprite/window8.dds",
@@ -201,13 +201,13 @@ Menu_Save::Menu_Save()
 	ButtonWindow_Right->SetPosition({ MenuDefPos.x + MenuButtonPosHosei.x,
 		MenuDefPos.y + MenuButtonPosHosei.y, MenuDefPos.z });
 	//Yes/Noテキスト
-	Yes_Font = NewGO<FontRender>("MenuButtonFont_BAD_Yes", SpriteNo);
+	Yes_Font = NewGO<FontRender>("MenuButtonFont_Save_Yes", SpriteNo);
 	Yes_Font->SetText(YesText);
 	Yes_Font->SetColor(CVector4::White());
 	Yes_Font->SetScale(Header_FontSize);
 	Yes_Font->SetPosition({ MenuDefPos.x - MenuButtonPosHosei.x + YesNo_Font_Hosei.x + YesFont_XHosei,
 		MenuDefPos.y + MenuButtonPosHosei.y + YesNo_Font_Hosei.y });
-	No_Font = NewGO<FontRender>("MenuButtonFont_BAD_No", SpriteNo);
+	No_Font = NewGO<FontRender>("MenuButtonFont_Save_No", SpriteNo);
 	No_Font->SetText(NoText);
 	No_Font->SetColor(CVector4::White());
 	No_Font->SetScale(Header_FontSize);
@@ -288,19 +288,24 @@ void Menu_Save::SaveUpdate() {
 		//決定処理
 		int Left_Key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
 		if (Left_Key == MouseSupporter::Release_Push) {
+			//プレイヤー検索→座標と回転を保存
+			Player* m_pl = CGameObjectManager::GetInstance()->FindGO<Player>(Hash::MakeHash("Player"));
+			GameData::GetInstance()->GameSave(m_pl->GetPosition(), m_pl->GetRotation());
 			switch (m_nowCommand)
 			{
 			case Menu_Save::Yes_Command:
 				//ここでセーブ処理
 				{
-					FILE* fp = fopen("save.bin", "w");
+					FILE* fp = fopen("save.bin", "wb");
 					fwrite(GameData::GetInstance(), sizeof(GameData), 1, fp);
+					fwrite(Game::GetInstance()->GetGameEvent()->GetEventSave(), sizeof(EventSave), 1, fp);
 					fclose(fp);
 				}
 				SaveEffect();
 				m_saveFlag = true;	//演出が終わるまで待つ
 				break;
 			case Menu_Save::No_Command:
+				SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Cancel.wav", 3.0f);	//SE
 				CommandEnd();
 				break;
 			}
@@ -311,13 +316,13 @@ void Menu_Save::SaveUpdate() {
 			SaveCursor->m_spriteSupporter.SpriteMove({ 0.0f,-SaveCursorMove }, SaveCursorMoveTime, 0, true);
 			SaveCursor->m_spriteSupporter.SpriteMove({ 0.0f,SaveCursorMove }, SaveCursorMoveTime, SaveCursorMoveTime, true);
 		}
-
 	}
 
 	//このコマンドを終了
 	if (m_saveFlag == true) {
 		m_saveTimer++;
 		if (m_saveTimer == 6) {
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Save.wav");	//SE
 			GameEffect::GetInstance()->GetInstance_SpriteAnime()->
 				NewAnimationSprite(GameEffect_AnimationSprite::Anime_Name::Anime_Save,
 					EffectPos, CVector3::One(), SpriteNo, 0);

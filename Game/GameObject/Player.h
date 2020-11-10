@@ -52,6 +52,9 @@ public:
 	CQuaternion GetRotation() {
 		return m_rotation;
 	}
+	void SetRotation(const CQuaternion& rot) {
+		m_rotation = rot;
+	}
 
 	/// <summary>
 	/// スキンモデルレンダーを返す

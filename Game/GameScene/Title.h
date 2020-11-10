@@ -85,7 +85,7 @@ private:
 	TitleCommand m_memberCommand = No_Select;	//内部用
 
 	//ライトメーカー
-	LightMaker* lm = nullptr;
+	//LightMaker* lm = nullptr;
 
 	//表示状態
 	enum TitleEffect {	//エフェクトの状況
@@ -117,6 +117,8 @@ private:
 	SkinModelRender* m_dummyBox;								//ダミーボックス
 	const CVector3 DummyBoxHosei = { -25.0f ,55.0f ,-40.0f };	//箱の座標補正
 	const float DummyBoxScale = 40.0f;							//箱の大きさ
+	const float UpDownY = 2.0f;									//箱の上下スピード
+	const int UpDownTime = 10;									//箱の上下時間
 
 	//スプライト
 	SpriteRender* m_black;					//土台
@@ -166,9 +168,11 @@ private:
 	float m_commandStartEffectTimer = 0.0f;						//コマンドエフェクト用タイマー
 	const int CommandAlphaTime = 12;							//選択外のコマンドが消去される時間
 	const float CommandStartEffectRimit = 1.0f;					//コマンドが決定されてゲームマネージャーへ返却されるまでの時間
-
-	//定数
-
+	//ロゴエフェクト
+	const int LogoEffectInterval = 10;							//ロゴ文字ごとの拡大縮小インターバル
+	const int LogoEffectIntervalHosei = 60;						//ロゴ文字ごとの拡大縮小インターバル+アルファ
+	const float LogoEffectScale = 0.55f;						//ロゴの演出スケール
+	const int LogoEffectTime = 3;								//ロゴの拡大縮小時間（片道）
 
 };
 

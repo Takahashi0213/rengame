@@ -11,6 +11,7 @@ class GameData
 {
 	static GameData* m_instance;
 public:
+
 	enum Place_Data {		//場所データ
 		Null_Place,		//空白
 		Warehouse,		//倉庫的牢屋
@@ -277,6 +278,21 @@ public:
 		return m_seVolume;
 	}
 
+	//セーブ
+
+	//現在の座標と回転を保存する ロード時に再現する
+	void GameSave(const CVector3& pos, const CQuaternion& rot) {
+		m_loadPlayerPos = pos;
+		m_loadPlayerRot = rot;
+	}
+	//保存しておいた座標と回転を返す
+	CVector3 GetSavePosition() {
+		return m_loadPlayerPos;
+	}
+	CQuaternion GetSaveRotation() {
+		return m_loadPlayerRot;
+	}
+
 	/// <summary>
 	/// インスタンスを取得！
 	/// </summary>
@@ -342,6 +358,10 @@ private:
 	char m_boxDeleteKey = 'D';				//箱を削除するキー
 	float m_bgmVolume = 100.0f;				//BGMのボリューム補正（/100してBGMのボリュームに乗算される）
 	float m_seVolume = 100.0f;				//SEのボリューム補正（/100してBGMのボリュームに乗算される）
+
+	//セーブ用
+	CVector3 m_loadPlayerPos = CVector3::Zero();			//セーブ時のプレイヤー座標
+	CQuaternion m_loadPlayerRot = CQuaternion::Identity();	//セーブ時のプレイヤー回転
 
 };
 

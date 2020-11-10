@@ -15,9 +15,9 @@ public:
 	void Render()override;
 
 	enum EnAnimationClip {
-		enAnimationClip_walk,	//待機
-		enAnimationClip_attack, //攻撃
-		enAnimationClip_Num,	 //アニメーションクリップ
+		enAnimationClip_walk,		//待機
+		enAnimationClip_attack,		//攻撃
+		enAnimationClip_Num,		//アニメーションクリップ
 	};
 
 	enum State {

@@ -131,6 +131,8 @@ void Player::Update()
 	LC_Pos = LightMaker::GetInstance()->GetLightCameraTarget();
 	LC_Pos = m_position;
 	LightMaker::GetInstance()->SetLightCameraTarget(LC_Pos);
+	//グラフィック座標を更新（ディザリング用）
+	SceneManager::GetInstance()->GetGameGraphicInstance()->m_playerPos = m_position;
 }
 
 void Player::Render()
@@ -227,6 +229,10 @@ void Player::MoveClick() {
 			EffekseerSupporter::GetInstance()->EffectDelete(m_moveEffect);
 			m_moveEffect = EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::PlayerMove,
 				false, m_nextPos.x, m_nextPos.y, m_nextPos.z);
+			//現在位置のバックアップ
+			if (m_jumpNow == false) {
+				m_posBackup = m_position;
+			}
 		}
 	}
 
@@ -270,11 +276,6 @@ void Player::Move() {
 	if (m_damage_Flag == false) {
 		float angle = atan2(m_moveSpeed.x, m_moveSpeed.z);
 		m_rotation.SetRotation(CVector3().AxisY(), angle);
-	}
-
-	//現在位置のバックアップ
-	if (m_jumpNow == false) {
-		m_posBackup = m_position;
 	}
 
 	//移動している時はSEを再生する

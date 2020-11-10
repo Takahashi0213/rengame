@@ -126,6 +126,9 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 	if (tag == LevelData::Obj_Tag::Tag_Jewel) {			//ジュエル
 		NewObjCommon<StarMoney>(data);
 	}
+	if (tag == LevelData::Obj_Tag::Tag_Key1) {			//鍵
+		NewObjCommon<Key>(data);
+	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Board) {			//看板
 		Board* pt = NewObjCommon<Board>(data);
@@ -151,7 +154,11 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 		pt->SetGhostBox_System(GhostBox::MapEvent);
 		pt->CreateGhost();
 	}
-
+	if (tag == LevelData::Obj_Tag::Tag_GhostBox_Damage) {	//ゴーストボックス…ダメージ
+		GhostBox* pt = NewObjCommon<GhostBox>(data);
+		pt->SetGhostBox_System(GhostBox::DamageZone);
+		pt->CreateGhost();
+	}
 	if (tag == LevelData::Obj_Tag::Tag_StaticBox) {			//スタティックボックス
 		StaticBox* pt = NewObjCommon<StaticBox>(data);
 		pt->CreateStaticBox();
@@ -212,6 +219,10 @@ void LevelSet::LinkObj(const int levelNo, const int i) {
 			}
 			if (LinkObjTag == LevelData::Obj_Tag::Tag_EventObject) {	//イベントオブジェクト
 				EventObject* obj = CGameObjectManager::GetInstance()->FindGO<EventObject>(link_hash);
+				obj->SetLinkObj(now_objClass);
+			}
+			if (LinkObjTag == LevelData::Obj_Tag::Tag_Key1) {	//鍵
+				Key* obj = CGameObjectManager::GetInstance()->FindGO<Key>(link_hash);
 				obj->SetLinkObj(now_objClass);
 			}
 		}

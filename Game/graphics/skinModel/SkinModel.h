@@ -1,6 +1,7 @@
 #pragma once
 
 #include "graphics/Skeleton.h"
+#include "graphics/skinModel/SkinModelEffect.h"
 
 #include "graphics/light/DirectionLight.h"
 #include "graphics/light/PointLight.h"
@@ -13,11 +14,12 @@ enum EnFbxUpAxis {
 	enFbxUpAxisZ,		//Z-up
 };
 enum RenderMode {
-	Default = 0,		//普通
-	Silhouette = 1,		//シルエット
-	Monochrome = 2,		//モノクロ
-	Box = 3,			//箱です。	
-	Kirameki = 4,		//宝石の輝き
+	Default = 0,				//普通
+	Silhouette = 1,				//シルエット
+	Monochrome = 2,				//モノクロ
+	Box = 3,					//箱です。	
+	Kirameki = 4,				//宝石の輝き
+	Default_NoDithering = 5,	//基本的には普通の描画、ディザリングは絶対しない
 };
 /*!
 *@brief	スキンモデルクラス。
@@ -82,6 +84,17 @@ public:
 			}
 		}
 	}
+	/*!
+	*@brief	モデルマテリアルの検索。
+	*@param[in]	findEffect		マテリアルを見つけた時に呼ばれるコールバック関数
+	*/
+	void FindMaterial(std::function<void(ModelEffect*)> findMaterial) const
+	{
+		FindMesh([&](auto& mesh) {
+			ModelEffect* effect = reinterpret_cast<ModelEffect*>(mesh->effect.get());
+			findMaterial(effect);
+			});
+	}
 	/// <summary>
 	/// 自己発光色を設定
 	/// </summary>
@@ -124,9 +137,23 @@ public:
 	/// オブジェクトがシャドウレシーバーかつシャドウキャスターになっている場合は
 	/// セルフシャドウ(自分の影が自分に落ちる)を行うことができます。
 	/// </remarks>
-	void SetShadowReciever(bool flag)
+	void SetShadowReciever(const bool& flag)
 	{
 		m_isShadowReciever = flag;
+	}
+	/// <summary>
+	/// ディザリングのフラグを設定する。
+	/// </summary>
+	/// <param name="flag">trueを渡すとディザリングをするようになる</param>
+	void SetDithering(const bool& flag) {
+		m_isDithering = flag;
+	}
+	/// <summary>
+	/// 「Ground」という名前をマテリアルは絶対ディザリングしないよフラグ
+	/// </summary>
+	/// <param name="flag">trueで実行</param>
+	void SetGround_NoDithering(const bool& flag) {
+		m_isGround = flag;
 	}
 	/// <summary>
 	/// World行列を取得。
@@ -221,6 +248,14 @@ private:
 		CVector4			eyePos;				//視点の座標。
 		float				specPow;			//鏡面反射の絞り。
 	};
+	/*!
+	*@brief	ディザリング。
+	*/
+	struct SDithering {
+		int isDithering;						//ディザリングフラグ
+		int pad[3];								//パディング
+		CVector4			playerPos;			//プレイヤーの座標。
+	};
 
 	/// <summary>
 	/// 環境光の初期化
@@ -241,8 +276,10 @@ private:
 	ID3D11Buffer*		m_cb = nullptr;					//!<定数バッファ。
 	ID3D11Buffer*		m_lightCb = nullptr;			//!<ライト用の定数バッファ。
 	ID3D11Buffer*		m_ambientlightCb = nullptr;		//!<ライト用の定数バッファ。
+	ID3D11Buffer*		m_positionCb = nullptr;			//!<ポジション用の定数バッファ。
 	AmbientLight		m_AmbientLight;					//!<ライト構造体。
 	SLight				m_light;						//!<ライト構造体。
+	SDithering			m_dithering;					//!<ディザリング構造体。
 	Skeleton			m_skeleton;						//!<スケルトン。
 	CMatrix				m_worldMatrix;					//!<ワールド行列。
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
@@ -250,7 +287,9 @@ private:
 	CVector3 m_emissionColor = CVector3().Zero();		//!<自己発光カラー。
 	ID3D11ShaderResourceView* m_albedoTextureSRV = nullptr;	//!<アルベドテクスチャのSRV
 	int					m_renderMode = 0;				//!<レンダーモード
-	bool m_isShadowReciever = false;						//シャドウレシーバーのフラグ。
+	bool m_isShadowReciever = false;					//シャドウレシーバーのフラグ。
+	bool m_isDithering = false;							//ディザリングのフラグ。
+	bool m_isGround = false;							//
 
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;		//法線マップのSRV
 	ID3D11ShaderResourceView* m_specMapSRV = nullptr;		//スペキュラマップのSRV

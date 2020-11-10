@@ -38,9 +38,9 @@ cbuffer VSPSCb : register(b0){
 	float4x4 mLightView;	//ライトビュー行列。
 	float4x4 mLightProj;	//ライトプロジェクション行列。
 	int isShadowReciever;	//シャドウレシーバーフラグ。
-	int isHasNormalMap;	//法線マップある？
-	int isHasSpecMap;	//スペキュラマップある？
-	int isHasAOMap;		//アンビエントオクリュージョンマップある？
+	int isHasNormalMap;		//法線マップある？
+	int isHasSpecMap;		//スペキュラマップある？
+	int isHasAOMap;			//アンビエントオクリュージョンマップある？
 	int isHasKirameki;		//きらめきを保持している？
 	float mHigh;
 	float mWide;			//画面の縦横
@@ -87,6 +87,14 @@ cbuffer LightCb : register(b3) {
 	float				specPow;			//スペキュラライトの絞り。
 };
 
+/// <summary>
+/// ディザリング用の定数バッファ。
+/// </summary>
+cbuffer DitheringCb : register(b4) {
+	int isDithering;						//ディザリングフラグ。
+	float4				playerPos;			//プレイヤーの座標。
+}
+
 /// /////////////////////////////////////////////////////////////
 //各種構造体
 /////////////////////////////////////////////////////////////
@@ -124,6 +132,7 @@ struct PSInput{
 	float3 worldPos		: TEXCOORD1;
 	float4 posInLVP		: TEXCOORD2;	//ライトビュープロジェクション空間での座標。
 	float4 posInView	: TEXCOORD3;	//カメラ空間での座標。
+	float4 posInProj	: TEXCOORD4;	//正規化スクリーン座標系の座標
 };
 /// <summary>
 /// シャドウマップ用のピクセルシェーダへの入力構造体。
@@ -170,6 +179,7 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 	psInput.posInView = pos;
 
 	pos = mul(mProj, pos);
+	psInput.posInProj = pos;
 	psInput.Position = pos;
 
 	float4 worldPos_ = mul(mWorld, In.Position);
@@ -228,6 +238,7 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	psInput.posInView = pos;
 
 	pos = mul(mProj, pos);
+	psInput.posInProj = pos;
 	psInput.Position = pos;
 
 	psInput.TexCoord = In.TexCoord;
@@ -291,6 +302,18 @@ float3 CalcPointLight(float3 normal, float3 worldpos) {
 	return lig;
 }
 
+//ディザパターン
+static const int pattern[] = {
+	0, 32,  8, 40,  2, 34, 10, 42,   /* 8x8 Bayer ordered dithering  */
+	48, 16, 56, 24, 50, 18, 58, 26,  /* pattern.  Each input pixel   */
+	12, 44,  4, 36, 14, 46,  6, 38,  /* is scaled to the 0..63 range */
+	60, 28, 52, 20, 62, 30, 54, 22,  /* before looking in this table */
+	3, 35, 11, 43,  1, 33,  9, 41,   /* to determine the action.     */
+	51, 19, 59, 27, 49, 17, 57, 25,
+	15, 47,  7, 39, 13, 45,  5, 37,
+	63, 31, 55, 23, 61, 29, 53, 21
+};
+
 //--------------------------------------------------------------------------------------
 // ピクセルシェーダーのエントリ関数。
 //--------------------------------------------------------------------------------------
@@ -298,15 +321,32 @@ PSOutput PSMain(PSInput In)
 {
 	PSOutput psOut = (PSOutput)0;
 
+	if (isDithering == 1) {
+		//ディザリングを行う。
+		//書き込もうとしているピクセルの座標(0.0～1.0の範囲)で求める。
+		uint2 index = (uint2)In.Position.xy;
+		index = fmod(index, 8.0f);
+		//プレイヤーの座標をカメラ空間に変換
+		float4 player_pos = mul(mView, playerPos);
+
+		float4 origin = (0.0f, 0.0f, 0.0f, 0.0f);
+		float dis = length(In.posInProj.xy/In.posInProj.w);
+
+		if (player_pos.z > In.posInView.z
+			&& 
+			dis < 0.5f) {
+			if (pattern[index.y * 8 + index.x] < 30) {
+				clip(-1);
+			}
+		}
+	}
+
 	//albedoテクスチャからカラーをフェッチする。
 	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 
 	//法線を計算する。
 	float3 normal = CalcNormal(In.Normal, In.Tangent, In.TexCoord);
-
-	//float hoge = In.TexCoord.x % 2;
-	//if ( hoge > 0.2f && hoge < 0.3f )discard;
 
 	//ディレクションライトの拡散反射光を計算する。
 	float3 lig = 0;
@@ -370,6 +410,94 @@ PSOutput PSMain(PSInput In)
 	finalColor.xyz += albedoColor.xyz * lig;
 	//return finalColor;
 	
+	//カラーを出力。
+	psOut.color = finalColor;
+	//カメラ座標系でのZ値を出力。
+	psOut.depthInView = In.posInView.z;
+
+	//色変更
+	psOut.color.r += emissionColor_R;
+	psOut.color.g += emissionColor_G;
+	psOut.color.b += emissionColor_B;
+
+	return psOut;
+
+}
+
+//ディザリングをしないVer
+PSOutput PSMain_NoDithering(PSInput In)
+{
+	PSOutput psOut = (PSOutput)0;
+
+	//albedoテクスチャからカラーをフェッチする。
+	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
+	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
+
+	//法線を計算する。
+	float3 normal = CalcNormal(In.Normal, In.Tangent, In.TexCoord);
+
+	//ディレクションライトの拡散反射光を計算する。
+	float3 lig = 0;
+
+	for (int i = 0; i < MAX_DIRECTION_LIGHT; i++) {
+
+		//lig += max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) * dligColor[i];
+		//lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction[i])) * directionLight.color[i].xyz;
+		lig = max(0.0f, dot(normal * -1.0f, directionLight.direction[i])) * directionLight.color[i].xyz;
+
+		//ディレクションライトの鏡面反射光を計算する。
+		{
+			float3 R = directionLight.direction[i] + (2 * dot(In.Normal, -directionLight.direction[i]))*In.Normal;
+
+			float3 E = normalize(In.worldPos - eyePos);
+
+			float specPower = max(0, dot(R, -E));
+			if (isHasSpecMap) {
+				specPower = g_specMap.Sample(Sampler, In.TexCoord).r;
+				//specPower *= 1.2f;
+			}
+
+			finalColor = float4(directionLight.color[i].xyz*pow(specPower, specPow), 1);
+
+		}
+
+	}
+
+	//ポイントライトの拡散反射光を計算する。
+	lig += CalcPointLight(normal, In.worldPos);
+
+	//環境光をあてる。
+	//lig += float3(Ambient_R, Ambient_G, Ambient_B);
+	lig += CalcAmbientLight(albedoColor, In.TexCoord);
+
+	if (isShadowReciever == 1) {	//シャドウレシーバー。
+
+									//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。
+		float2 shadowMapUV = In.posInLVP.xy / In.posInLVP.w;
+		shadowMapUV *= float2(0.5f, -0.5f);
+		shadowMapUV += 0.5f;
+		//シャドウマップの範囲内かどうかを判定する。
+
+		///LVP空間での深度値を計算。
+		float zInLVP = In.posInLVP.z / In.posInLVP.w;
+		//シャドウマップに書き込まれている深度値を取得。
+		float zInShadowMap = g_shadowMap.Sample(Sampler, shadowMapUV);
+
+		if (shadowMapUV.x > 0.0f &&
+			shadowMapUV.x < 1.0f &&
+			shadowMapUV.y > 0.0f &&
+			shadowMapUV.y < 1.0f &&
+			zInLVP > zInShadowMap + 0.0001f) {
+			//影が落ちているので、光を弱くする
+			float2 tmp = (shadowMapUV - 0.5f) * 2.0f;
+			float t = pow(min(1.0f, length(tmp)), 0.7f);
+			lig = lerp(lig * 0.5f, lig, t);
+		}
+	}
+
+	finalColor.xyz += albedoColor.xyz * lig;
+	//return finalColor;
+
 	//カラーを出力。
 	psOut.color = finalColor;
 	//カメラ座標系でのZ値を出力。

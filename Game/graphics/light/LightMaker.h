@@ -32,7 +32,7 @@ public:
 	void LightMaker::D_Light_SetDirection(const int& lightNo, const CVector4& dir) {
 		m_light.direction[lightNo] = dir;
 	}
-	CVector4 LightMaker::D_Light_GetDirection(const int lightNo) {
+	CVector4 LightMaker::D_Light_GetDirection(const int& lightNo) {
 		return m_light.direction[lightNo];
 	}
 

@@ -2,6 +2,8 @@
 
 #include "Title.h"
 #include "Game.h"
+#include "SaveLoad.h"
+
 #include "system/CGameObjectManager.h"
 #include "GameSystem/StageSet/StageSet.h"
 #include "sound/SoundManager.h"
@@ -10,7 +12,7 @@
 /// シーン切り替えをがんばるクラス
 /// ・シングルトン
 /// </summary>
-class SceneManager : public IGameObject
+class SceneManager final : public IGameObject
 {
 	static SceneManager* m_instance;
 public:
@@ -83,6 +85,7 @@ private:
 
 	void TitleUpdate();
 	void GameUpdate();
+	void LoadUpdate();
 
 	void TitleCommand(const Title::TitleCommand command);
 
@@ -100,6 +103,7 @@ private:
 	//シーン
 	Title* m_title = nullptr;
 	Game* m_game = nullptr;
+	SaveLoad* m_saveLoad = nullptr;
 
 };
 

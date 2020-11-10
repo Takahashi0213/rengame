@@ -26,6 +26,13 @@ public:
 		m_eventSave.m_eventFlag[evNo] = true;
 	}
 
+	/// <summary>
+	/// イベントセーブを返す
+	/// </summary>
+	EventSave* GetEventSave() {
+		return &m_eventSave;
+	}
+
 private:
 
 	EventSave m_eventSave;		//イベントセーブ

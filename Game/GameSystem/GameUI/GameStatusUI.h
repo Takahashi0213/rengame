@@ -107,7 +107,7 @@ private:
 
 	const CVector2 EXP_SizeHosei = { 3.0f, 2.0f };			//EXPステータスの補正
 
-	const int SpritePriority = 9;							//優先度
+	const int SpritePriority = 6;							//優先度
 
 	//レベルアップスプライト スターマネー座標を基準にする
 	FontRender* m_text_Level = nullptr;						//テキスト！

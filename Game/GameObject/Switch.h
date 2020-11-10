@@ -2,7 +2,7 @@
 #include "system/CGameObjectManager.h"
 #include "graphics/skinModel/SkinModelRender.h"
 #include "physics/PhysicsGhostObject.h"
-#include "Player.h"
+#include "GameObject/Player.h"
 
 /// <summary>
 /// スイッチの赤いやつ

@@ -102,7 +102,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="character\CharacterController.cpp" />
-    <ClCompile Include="DamageSystem.cpp" />
     <ClCompile Include="Debug\DebugLog.cpp" />
     <ClCompile Include="Debug\PhysicsDebugDraw.cpp" />
     <ClCompile Include="EffekseerSupporter.cpp" />
@@ -117,6 +116,8 @@
     <ClCompile Include="GameObject\Door.cpp" />
     <ClCompile Include="GameObject\EnemySystem.cpp" />
     <ClCompile Include="GameObject\EventObject.cpp" />
+    <ClCompile Include="GameObject\ItemSystem.cpp" />
+    <ClCompile Include="GameObject\Key.cpp" />
     <ClCompile Include="GameObject\Mannequin.cpp" />
     <ClCompile Include="GameObject\ObjectClass.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
@@ -133,6 +134,7 @@
     <ClCompile Include="GameScene\Tutorial.cpp" />
     <ClCompile Include="GameSystem\Box\BoxMaker.cpp" />
     <ClCompile Include="GameSystem\Box\GameBox.cpp" />
+    <ClCompile Include="GameSystem\GameUI\DamageSystem.cpp" />
     <ClCompile Include="GameSystem\GameUI\GameEffect.cpp" />
     <ClCompile Include="GameSystem\GameUI\GameMenu.cpp" />
     <ClCompile Include="GameSystem\GameUI\GameStatusUI.cpp" />
@@ -216,7 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character\CharacterController.h" />
-    <ClInclude Include="DamageSystem.h" />
     <ClInclude Include="Debug\DebugLog.h" />
     <ClInclude Include="Debug\PhysicsDebugDraw.h" />
     <ClInclude Include="EffekseerSupporter.h" />
@@ -233,6 +234,8 @@
     <ClInclude Include="GameObject\Door.h" />
     <ClInclude Include="GameObject\EnemySystem.h" />
     <ClInclude Include="GameObject\EventObject.h" />
+    <ClInclude Include="GameObject\ItemSystem.h" />
+    <ClInclude Include="GameObject\Key.h" />
     <ClInclude Include="GameObject\Mannequin.h" />
     <ClInclude Include="GameObject\ObjectClass.h" />
     <ClInclude Include="GameObject\Player.h" />
@@ -249,6 +252,7 @@
     <ClInclude Include="GameScene\Tutorial.h" />
     <ClInclude Include="GameSystem\Box\BoxMaker.h" />
     <ClInclude Include="GameSystem\Box\GameBox.h" />
+    <ClInclude Include="GameSystem\GameUI\DamageSystem.h" />
     <ClInclude Include="GameSystem\GameUI\GameEffect.h" />
     <ClInclude Include="GameSystem\GameUI\GameMenu.h" />
     <ClInclude Include="GameSystem\GameUI\GameStatusUI.h" />
@@ -303,6 +307,8 @@
     <ClInclude Include="Hash.h" />
     <ClInclude Include="HID\Pad.h" />
     <ClInclude Include="IncludeHeader.h" />
+    <ClInclude Include="ItemData.h" />
+    <ClInclude Include="ItemSave.h" />
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\LevelData.h" />
     <ClInclude Include="level\LevelSet.h" />
@@ -631,6 +637,9 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\effect\saveEffect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\Title\Load_BG.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

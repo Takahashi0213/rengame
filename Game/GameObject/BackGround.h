@@ -14,6 +14,7 @@ public:
 	void Update()override;
 	void Render()override;
 
+	//ステージの設定
 	void Init(const wchar_t* filePath);
 
 private:

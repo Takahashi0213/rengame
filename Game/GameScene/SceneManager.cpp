@@ -63,6 +63,10 @@ void SceneManager::Update() {
 		//ゲームなう
 		GameUpdate();
 		break;
+	case SceneManager::Load_Sence:
+		//ロード画面
+		LoadUpdate();
+		break;
 	}
 
 	//共通アップデート
@@ -76,16 +80,37 @@ void SceneManager::Render() {
 }
 
 void SceneManager::TitleUpdate() {
-
 	const Title::TitleCommand& m_command = m_title->GetCommand();
 	if (m_command != Title::TitleCommand::No_Select) {
 		TitleCommand(m_command);	//シーン切り替え
 	}
-
 }
 
 void SceneManager::GameUpdate() {
 
+}
+
+void SceneManager::LoadUpdate() {
+
+	if (m_saveLoad->GetEndFlag() == true) {
+		const SaveLoad::SaveLoadEnd& m_command = m_saveLoad->Get_SaveLoadEnd();
+		if (m_command == SaveLoad::SaveLoadEnd::LoadSuccess) {
+			//ロード成功
+			CGameObjectManager::GetInstance()->DeleteGO(m_saveLoad);
+			m_saveLoad = nullptr;
+			m_nowScene = Game_Sence;
+			m_game = CGameObjectManager::GetInstance()->NewGO<Game>("Main_Game");
+		}
+		if (m_command == SaveLoad::SaveLoadEnd::NoLoad) {
+			//タイトルに戻る
+			CGameObjectManager::GetInstance()->DeleteGO(m_saveLoad);
+			m_saveLoad = nullptr;
+			m_nowScene = Title_Scene;
+			m_title = CGameObjectManager::GetInstance()->NewGO<Title>("Game_Title");
+			TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::NanameBox,
+				0, true);
+		}
+	}
 }
 
 void SceneManager::TitleCommand(const Title::TitleCommand command) {
@@ -105,7 +130,10 @@ void SceneManager::TitleCommand(const Title::TitleCommand command) {
 		break;
 	case Title::Game_Continue:
 		//ロード画面へ
-
+		CGameObjectManager::GetInstance()->DeleteGO(m_title);
+		m_title = nullptr;
+		m_nowScene = Load_Sence;
+		m_saveLoad = CGameObjectManager::GetInstance()->NewGO<SaveLoad>("SaveLoad");
 		break;
 	case Title::Game_End:
 		//おしまいん

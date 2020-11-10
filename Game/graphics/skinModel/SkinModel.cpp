@@ -5,8 +5,8 @@
 
 SkinModel::~SkinModel()
 {
+	//定数バッファを解放。
 	if (m_cb != nullptr) {
-		//定数バッファを解放。
 		m_cb->Release();
 	}
 	//ライト用の定数バッファの解放。
@@ -17,8 +17,12 @@ SkinModel::~SkinModel()
 	if (m_ambientlightCb != nullptr) {
 		m_ambientlightCb->Release();
 	}
+	//ポジション用の定数バッファの解放。
+	if (m_positionCb != nullptr) {
+		m_positionCb->Release();
+	}
+	//サンプラステートを解放。
 	if (m_samplerState != nullptr) {
-		//サンプラステートを解放。
 		m_samplerState->Release();
 	}
 }
@@ -131,6 +135,10 @@ void SkinModel::InitConstantBuffer()
 	bufferDesc.ByteWidth = Raundup16(sizeof(AmbientLight));
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_ambientlightCb);
 
+	//ポジション用の定数バッファを作成。
+	bufferDesc.ByteWidth = Raundup16(sizeof(SDithering));
+	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_positionCb);
+
 }
 void SkinModel::InitSamplerState()
 {
@@ -237,8 +245,15 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix ,EnRenderMode render
 	m_light.eyePos = g_camera3D.GetPosition();
 	m_light.specPow = 1.0f;
 
+	//プレイヤーの座標を取得
+	m_dithering.playerPos = SceneManager::GetInstance()->GetGameGraphicInstance()->m_playerPos;
+	m_dithering.playerPos.w = 1.0f;
+	//ディザリングフラグ
+	m_dithering.isDithering = m_isDithering;
+
 	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
 	d3dDeviceContext->UpdateSubresource(m_ambientlightCb, 0, nullptr, &m_AmbientLight, 0, 0);
+	d3dDeviceContext->UpdateSubresource(m_positionCb, 0, nullptr, &m_dithering, 0, 0);
 
 	//定数バッファをGPUに転送。
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
@@ -248,6 +263,7 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix ,EnRenderMode render
 	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
 	d3dDeviceContext->PSSetConstantBuffers(2, 1, &m_ambientlightCb);
 	d3dDeviceContext->PSSetConstantBuffers(3, 1, &m_lightCb);
+	d3dDeviceContext->PSSetConstantBuffers(4, 1, &m_positionCb);
 
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
@@ -255,7 +271,17 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix ,EnRenderMode render
 	//エフェクトにクエリを行う。
 		m_modelDx->UpdateEffects([&](DirectX::IEffect* material) {
 			auto modelMaterial = reinterpret_cast<SkinModelEffect*>(material);
-			modelMaterial->SetRenderMode(m_renderMode, renderMode);
+			//マテリアルの名前が「Ground」ならディザリングを絶対しない
+			if (m_isGround == true &&
+				( modelMaterial->EqualMaterialName(L"Ground") ||
+					modelMaterial->EqualMaterialName(L"Ground2") || 
+					modelMaterial->EqualMaterialName(L"Ground3")))
+			{
+				modelMaterial->SetRenderMode(RenderMode::Default_NoDithering, EnRenderMode::enRenderMode_Normal);
+			}
+			else {
+				modelMaterial->SetRenderMode(m_renderMode, renderMode);
+			}
 			});
 
 		if (m_normalMapSRV != nullptr) {

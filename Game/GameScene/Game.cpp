@@ -23,8 +23,14 @@ Game::Game()
 	m_gameData = new GameData;
 	m_gameEffect = new GameEffect;
 
-	//OPを生成
-	m_op = new OP;
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_loadDataFlag == false) {
+		//OPを生成
+		m_op = new OP;
+	}
+	else {
+		//OPスキップ
+		GameSetUp();
+	}
 
 #ifdef _DEBUG
 	//ワイヤーフレームを表示します
@@ -104,10 +110,31 @@ void Game::GameSetUp() {
 	m_gameEvent = new GameEvent;
 	//ダメージシステム
 	m_damageSystem = new DamageSystem;
-	//ステージ
-	StageSet::GetInstance()->InitStage(L"Tutorial");
-	//チュートリアルBGMの再生
-	SceneManager::GetInstance()->GetSoundManagerInstance()->InitBGM(L"Assets/sound/BGM/Tutorial.wav");
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_loadDataFlag == false) {
+		//ステージ
+		StageSet::GetInstance()->InitStage(L"Tutorial");
+		//チュートリアルBGMの再生
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitBGM(L"Assets/sound/BGM/Tutorial.wav");
+	}
+	else {
+		//ステージ
+		StageSet::GetInstance()->InitStage(GameData::GetInstance()->GetNowStageNo());
+		//プレイヤーの座標を設定
+		pl->SetPosition(GameData::GetInstance()->GetSavePosition());
+		pl->SetRotation(GameData::GetInstance()->GetSaveRotation());
+		//BGMの再生
+		wchar_t* bgmName = StageSet::GetInstance()->GetStageBGM_Name(GameData::GetInstance()->GetPlace());
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitBGM(bgmName);
+		//トランジション
+		TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::NanameBox,
+			SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime, true);
+		//ロードする
+		FILE* fp = fopen("save.bin", "rb");
+		if (fp != NULL) {
+			fread(m_gameEvent->GetEventSave(), sizeof(EventSave), 1, fp);
+			fclose(fp);
+		}
+	}
 	//処理変更
 	m_gameState = GamaState_Game;
 }

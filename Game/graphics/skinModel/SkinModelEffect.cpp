@@ -15,6 +15,8 @@ ModelEffect::ModelEffect()
 	m_psShader_Box.Load("Assets/shader/box_model.fx", "PSMain", Shader::EnType::PS);
 	//きらめき
 	m_psShader_Kirameki.Load("Assets/shader/model.fx", "PSMain_Kirameki", Shader::EnType::PS);
+	//ディザリングをしないVer
+	m_psShader_NoDithering.Load("Assets/shader/model.fx", "PSMain_NoDithering", Shader::EnType::PS);
 
 	m_pPSShader = &m_psShader;
 	m_pPSSilhouetteShader = &m_psSilhouette;
@@ -23,6 +25,7 @@ ModelEffect::ModelEffect()
 	m_psShadowMapShader = &m_psShadowMap;
 	m_pPSShaderBox = &m_psShader_Box;
 	m_pPSKiramekiShader = &m_psShader_Kirameki;
+	m_pPSShader_NoDithering = &m_psShader_NoDithering;
 
 	//デプスステンシルの初期化。
 	InitSilhouettoDepthStepsilState();
@@ -70,7 +73,6 @@ void __cdecl ModelEffect::Apply(ID3D11DeviceContext* deviceContext)
 	switch (m_renderMode_Shadow) {
 	case enRenderMode_Normal:
 		//通常描画。
-
 		deviceContext->VSSetShader((ID3D11VertexShader*)m_vsShader.GetBody(), NULL, 0);
 		switch (m_renderMode) {
 		case 0:
@@ -92,6 +94,11 @@ void __cdecl ModelEffect::Apply(ID3D11DeviceContext* deviceContext)
 		case 3:
 			//箱用描画。
 			deviceContext->PSSetShader((ID3D11PixelShader*)m_pPSShaderBox->GetBody(), NULL, 0);
+			deviceContext->PSSetShaderResources(0, 1, &m_albedoTex);
+			break;
+		case 5:
+			//通常描画（ディザリングなし）
+			deviceContext->PSSetShader((ID3D11PixelShader*)m_psShader_NoDithering.GetBody(), NULL, 0);
 			deviceContext->PSSetShaderResources(0, 1, &m_albedoTex);
 			break;
 		case 4:

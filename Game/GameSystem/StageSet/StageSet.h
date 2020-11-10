@@ -19,9 +19,12 @@ public:
 	/// <summary>
 	/// 名前を入れると現在のステージを破棄して新しいステージが生成される
 	/// 対応する名前はStageDataのStage_Name参照
+	/// 
+	/// ステージ番号版もあるよ
 	/// </summary>
 	/// <param name="stage_name"></param>
 	void InitStage(const wchar_t* stage_name);
+	void InitStage(const int& stage_nom);
 
 	/// <summary>
 	/// ステージを削除する

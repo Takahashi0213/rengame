@@ -7,7 +7,7 @@
 #include "Event/GameEvent.h"
 #include "OP.h"
 #include "GameScene/GameOver.h"
-#include "DamageSystem.h"
+#include "GameSystem/GameUI/DamageSystem.h"
 #include "GameSystem/PlayerSupporter/TutorialSupporter.h"
 #include "GameSystem/PlayerSupporter/UI_Supporter.h"
 

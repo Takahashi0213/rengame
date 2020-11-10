@@ -13,6 +13,10 @@ GameData::GameData()
 
 GameData::~GameData()
 {
+	if (m_instance == this) {
+		//インスタンスが破棄されたので、nullptrを代入
+		m_instance = nullptr;
+	}
 }
 
 void GameData::LevelUpCheck() {
@@ -39,7 +43,7 @@ void GameData::LevelUpStatus() {
 	//レベルアップした時のステータス上昇量を個別に決める
 	switch (m_level)
 	{
-	case 2:
+	case 2:			//レベル2になった時のステータス上昇量
 		LevelUp_Mana(10);
 		break;
 	case 3:
@@ -63,7 +67,7 @@ void GameData::LevelUpStatus() {
 	case 9:
 		LevelUp_Mana(5);
 		break;
-	case 10:
+	case 10:		//ここがレベル10になった時の上昇量！
 		LevelUp_Mana(10);
 		break;
 

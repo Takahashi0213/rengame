@@ -57,6 +57,33 @@ void StageSet::InitStage(const wchar_t* stage_name) {
 		m_stageData.GetStageLevel(m_stageNo));
 }
 
+void StageSet::InitStage(const int& stage_nom) {
+
+	//最初にステージとレベルを削除
+	DeleteStage();
+
+	//エラーチェック
+	if (stage_nom == -1) {
+		//どれにも引っかかっていないためエラー
+		std::abort();
+	}
+
+	//ここから生成処理
+
+	//ステージ番号をセット
+	GameData::GetInstance()->SetNowStageNo(stage_nom);
+	//ステージ場所をセット
+	GameData::GetInstance()->SetPlace(m_stageData.GetStagePlace(stage_nom));
+	//環境光を設定
+	LightMaker::GetInstance()->SetAmbientColor(m_stageData.GetStageAmbientColor(stage_nom));
+	//箱の全削除
+	BoxMaker::GetInstance()->BoxAllDelete();
+
+	//生成タイム
+	CreateStage(m_stageData.GetStageModel(stage_nom),
+		m_stageData.GetStageLevel(stage_nom));
+}
+
 void StageSet::CreateStage(const wchar_t* stage_filePath, const wchar_t* level_filePath) {
 
 	//ステージの生成

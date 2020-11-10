@@ -187,7 +187,7 @@ void Benite::Attack_Wait() {
 		m_moveSpeed.Normalize();
 		m_moveSpeed *= BackSpeed;
 
-		CVector3 front = { 0.0f, 0.0f,1.0f };
+		CVector3 front = { 0.0f, 0.0f,-1.0f };
 		//ƒvƒŒƒCƒ„[‚ÌŒü‚«‚É‰ñ“]
 		m_moveSpeed.y = 0.0f;
 		diff = m_moveSpeed;
