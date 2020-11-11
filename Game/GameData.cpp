@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GameData.h"
+#include "LevelUpData.h"
 
 GameData* GameData::m_instance = nullptr;
 
@@ -13,10 +14,6 @@ GameData::GameData()
 
 GameData::~GameData()
 {
-	if (m_instance == this) {
-		//インスタンスが破棄されたので、nullptrを代入
-		m_instance = nullptr;
-	}
 }
 
 void GameData::LevelUpCheck() {
@@ -38,10 +35,18 @@ void GameData::LevelUpCheck() {
 
 }
 
-void GameData::LevelUpStatus() {
+void GameData::LevelUpStatus()
+{
+	LevelUpData data = LEVEL_UP_DATA_TABLE[m_level];
+	if (data.levelUpEvent & Up_Mana) {
+		LevelUp_Mana(data.manaUp);
+	}
+	if (data.levelUpEvent & Up_Hp) {
+		LevelUp_HP();
+	}
 
 	//レベルアップした時のステータス上昇量を個別に決める
-	switch (m_level)
+/*	switch (m_level)
 	{
 	case 2:			//レベル2になった時のステータス上昇量
 		LevelUp_Mana(10);
@@ -71,6 +76,6 @@ void GameData::LevelUpStatus() {
 		LevelUp_Mana(10);
 		break;
 
-	}
+	}*/
 
 }

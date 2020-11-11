@@ -140,18 +140,18 @@ void GameEvent::Event_Tutorial3() {
 		m_eventWaitLimit = 60;
 		m_nextEventConditions = TimeLimit;
 	}
-	if (m_eventProgress == 2) {
+	if (m_eventProgress == 2) {	//移動終了
 		CameraSupporter::GetInstance()->CameraBackup();
 		SceneManager::GetInstance()->GetSystemInstance()->m_event_PlayerMoveFlag = false;	//イベントムーヴ
 		SceneManager::GetInstance()->GetSystemInstance()->m_event_CameraStop = true;
 		m_eventWaitLimit = 1;
 	}
-	if (m_eventProgress == 3) {
+	if (m_eventProgress == 3) {	//カメラ移動
 		CameraSupporter::GetInstance()->CameraMove({ 0.0f,0.0f,400.0f }, 30, 0);
 		CameraSupporter::GetInstance()->CameraTargetMove({ 0.0f,0.0f,400.0f }, 30, 0);
 		m_eventWaitLimit = 60;
 	}
-	if (m_eventProgress == 4) {
+	if (m_eventProgress == 4) {	//カメラ戻す
 		CameraSupporter::GetInstance()->CameraBackup_Restore(30);
 		m_eventWaitLimit = 40;
 	}

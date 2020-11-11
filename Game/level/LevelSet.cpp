@@ -127,7 +127,9 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 		NewObjCommon<StarMoney>(data);
 	}
 	if (tag == LevelData::Obj_Tag::Tag_Key1) {			//Œ®
-		NewObjCommon<Key>(data);
+		Key* pt = NewObjCommon<Key>(data);
+		pt->SetItemNo(Game::GetInstance()->GetItemSave()->GetItemData()->ItemNoSearch(L"‘Œ´‚ÌŒ®"));
+		pt->DataSet();
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Board) {			//ŠÅ”Â

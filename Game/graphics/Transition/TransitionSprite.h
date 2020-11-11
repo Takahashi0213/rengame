@@ -23,7 +23,7 @@ public:
 		CVector3 Scale = CVector3().One();
 		CVector2 Pivot = { 0.5f, 0.5f };
 		CMatrix	World = CMatrix::Identity();		//ワールド行列
-		CVector2 Size = CVector2::Zero();		//画像のサイズ
+		CVector2 Size = CVector2::Zero();			//画像のサイズ
 	};
 
 	//メンバ変数
@@ -32,7 +32,7 @@ public:
 
 	//シェーダー
 	Shader	m_ps;			//!<ピクセルシェーダー。
-	Shader	m_vs;		//!<頂点シェーダー。
+	Shader	m_vs;			//!<頂点シェーダー。
 	ID3D11SamplerState* m_samplerState = NULL;	//サンプラステート
 
 	//スプライトである。
@@ -40,7 +40,7 @@ public:
 	float m_alpha = 0.0f;	//トランジションの基準
 
 	ID3D11Buffer* m_cb = nullptr;		//定数バッファ
-	bool m_isInited = false;	//!<初期化フラグ。
+	bool m_isInited = false;			//!<初期化フラグ。
 
 private:
 	/// <summary>
@@ -53,7 +53,14 @@ private:
 		return (((n - 1) / 16) + 1) * 16;
 	}
 
+	/// <summary>
+	/// 定数バッファの初期化
+	/// </summary>
 	void TransitionSprite::InitConstantBuffer();
+
+	/// <summary>
+	/// 初期化の共通処理。
+	/// </summary>
 	void TransitionSprite::InitCommon(
 		const float& w, 
 		const float& h, 

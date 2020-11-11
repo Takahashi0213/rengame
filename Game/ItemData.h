@@ -16,16 +16,33 @@ public:
 		wchar_t Item_FilaPath_Model[MAX_PATH];		//アイテム3Dモデル
 	};
 
+	//名前からアイテム番号を検索
+	const int ItemNoSearch(const wchar_t* name) {
+		for (int i = 0; i < MAX_ITEM_NOM; i++) {
+			if (wcscmp(name, GameItem[i].Item_Name) == 0) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	/// <summary>
 	/// アイテム
 	/// </summary>
-	Item_Data GameItem[MAX_ITEM_NOM]{
+	const Item_Data GameItem[MAX_ITEM_NOM]{
 		//回復薬
 		{
 			L"回復薬",
 			L"ハートを１つ回復する",
 			L"",
 			L""
+		},
+		//鍵1
+		{
+			L"草原の鍵",
+			L"どこかの扉を開けられる",
+			L"",
+			L"Assets/modelData/Key1.cmo",
 		},
 	};
 

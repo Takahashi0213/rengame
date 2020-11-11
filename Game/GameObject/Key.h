@@ -1,14 +1,21 @@
 #pragma once
 #include "system/CGameObjectManager.h"
 #include "GameObject/Player.h"
+#include "GameObject/ItemSystem.h"
 
-class Key : public ObjectClass
+class Key : public ItemSystem
 {
 public:
 	Key();
 	~Key();
+	void DataSet();
 	void Update()override;
 	void Render()override;
+
+	//設定用（レベル生成時に同時に呼ぶのが基本）
+	void SetItemNo(const int& itemNo) {
+		m_itemNo = itemNo;
+	}
 
 	//リンクオブジェクトの設定
 	//基本的にレベルロード時に呼ぶ
@@ -20,11 +27,30 @@ public:
 
 private:
 
+	//アクションフラグの変更
+	//毎フレーム呼ばれて、どうするべきか判断する
+	void UpdateActionFlag() {
+
+		//アクション済みなら終わり
+		if (m_actionFlag == true) {
+			return;
+		}
+
+		bool CheckFlag = true;		//通過確認
+
+		for (int i = 0; i < 10; i++) {
+			if (m_LinkPt[i] != nullptr && m_LinkPt[i]->m_actionFlag == false) {
+				CheckFlag = false;
+			}
+		}
+		m_actionFlag = CheckFlag;	//trueのままならｵｹ
+	}
+
 	SkinModelRender * m_skinModelRender = nullptr;
-	
-	//アイテムデータ
-	const wchar_t* m_ModelName = nullptr;			//モデルの名前
-	const int m_itemNo = -1;
+
+	bool m_setFlag = false;
+
+	const float DefScale = 5.0f;					//拡大率
 
 	//リンクオブジェクト
 	ObjectClass* m_LinkPt[10] = { nullptr };		//出現トリガー

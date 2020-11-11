@@ -41,6 +41,7 @@ const int MAX_EVENT_OBJ = 100;						//!<イベントの数。
 const int MAX_STAGE_NOM = 5;						//!<ステージの最大数。
 const int MAX_ITEM_NOM = 10;						//!<アイテムの種類数。
 
+using namespace Microsoft::WRL;
 #include "HID/Pad.h"
 
 #include "math/Vector.h"

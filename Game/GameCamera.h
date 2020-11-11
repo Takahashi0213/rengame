@@ -38,7 +38,13 @@ public:
 		return m_instance;
 	}
 
-	//外部からの強制カメラ移動実行
+	/// <summary>
+	/// 外部からの強制カメラ実行
+	/// </summary>
+	/// <remarks>
+	/// 例えば…
+	///		カメラは停止しているけど更新だけ無理矢理させたい時に！
+	/// </remarks>
 	void ActionModeCameraMove() {
 		ActionMode();
 	}

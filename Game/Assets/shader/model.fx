@@ -330,12 +330,12 @@ PSOutput PSMain(PSInput In)
 		float4 player_pos = mul(mView, playerPos);
 
 		float4 origin = (0.0f, 0.0f, 0.0f, 0.0f);
-		float dis = length(In.posInProj.xy/In.posInProj.w);
-
-		if (player_pos.z > In.posInView.z
-			&& 
-			dis < 0.5f) {
-			if (pattern[index.y * 8 + index.x] < 30) {
+		float2 t = In.posInProj.xy / In.posInProj.w;
+		t.y /= 16.0f / 9.0f;
+		float dis = length(t);
+		int disThreshold = lerp (40, 0, pow( min( dis / 0.8f, 1.0f), 5.0f));
+		if (player_pos.z > In.posInView.z) {
+			if (pattern[index.y * 8 + index.x] < disThreshold) {
 				clip(-1);
 			}
 		}

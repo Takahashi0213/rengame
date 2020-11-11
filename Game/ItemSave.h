@@ -22,6 +22,11 @@ public:
 	const bool& GetItemGetFlag(const int& itemNo) {
 		return Item_Save[itemNo].m_getFlag;
 	}
+	//アイテムデータの取得
+	ItemData* GetItemData() {
+		return &m_itemData;
+	}
+
 	//設定用
 	void SetItemHave(const int& itemNo, const int itemHave) {
 		Item_Save[itemNo].m_itemHave = itemHave;
@@ -34,5 +39,7 @@ private:
 
 	//アイテムセーブ
 	Item_SaveData Item_Save[MAX_ITEM_NOM];
+	//アイテムデータ
+	ItemData m_itemData;
 
 };

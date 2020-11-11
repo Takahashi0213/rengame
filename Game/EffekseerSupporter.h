@@ -17,6 +17,8 @@ public:
 		EnemyDeath,			//敵が倒れる
 		PlayerMove,			//プレイヤーの移動先
 		EnemyScope,			//箱を飛ばす先（敵）
+		EnemyDiscovery,		//敵に発見された！
+		PlayerDeath,		//プレイヤー消滅…
 		EffectNum,			//エフェクトの数
 	};
 
@@ -45,7 +47,7 @@ public:
 		const Effekseer::Vector3D& DefPos = { 0.0f,0.0f,0.0f });
 	Effekseer::Handle NewEffect_Vector(const EffectData EffectFileName,
 		const bool& PostFlag = false, const float& X = 0.0f, const float& Y = 0.0f, const float& Z = 0.0f,
-		const float& rotX=0.0f, const float& rotY = 0.0f, const float& rotZ = 0.0f);
+		const float& rotX = 0.0f, const float& rotY = 0.0f, const float& rotZ = 0.0f);
 
 	/// <summary>
 	/// ここからエフェクト調整
@@ -83,6 +85,8 @@ private:
 	{ L"Assets/effect/EnemyDeath.efk" },
 	{ L"Assets/effect/PlayerMove.efk" },
 	{ L"Assets/effect/EnemyScope.efk" },
+	{ L"Assets/effect/EnemyDiscovery.efk" },
+	{ L"Assets/effect/PlayerDeath.efk" },
 	};
 
 	std::list<Effect> m_effectList;		//エフェクトリスト

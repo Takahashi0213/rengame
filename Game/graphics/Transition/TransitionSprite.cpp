@@ -6,7 +6,6 @@ TransitionSprite::TransitionSprite()
 {
 }
 
-
 TransitionSprite::~TransitionSprite()
 {
 	//削除するときにメモリを解放する
@@ -24,9 +23,6 @@ TransitionSprite::~TransitionSprite()
 	}
 }
 
-/// <summary>
-/// 初期化の共通処理。
-/// </summary>
 void TransitionSprite::InitCommon(
 	const float& w,
 	const float& h,
@@ -175,9 +171,6 @@ void TransitionSprite::Sprite_Draw() {
 
 }
 
-/// <summary>
-/// 定数バッファの初期化
-/// </summary>
 void TransitionSprite::InitConstantBuffer() {
 
 	D3D11_BUFFER_DESC desc;

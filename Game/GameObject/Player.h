@@ -22,6 +22,8 @@ public:
 		enAnimationClip_Run,		//走る
 		enAnimationClip_Jump,		//ジャンプ
 		enAnimationClip_Damage,		//ダメージ
+		enAnimationClip_GameOver,	//ゲームオーバー
+		enAnimationClip_Clear,		//クリア
 		enAnimationClip_Num,		//アニメーションクリップ
 	};
 
@@ -54,6 +56,14 @@ public:
 	}
 	void SetRotation(const CQuaternion& rot) {
 		m_rotation = rot;
+	}
+
+	/// <summary>
+	/// ゲームオーバーになった
+	/// </summary>
+	void GemaOverFlag() {
+		m_gameOverFlag = true;
+		SetMoveTarget(m_position);
 	}
 
 	/// <summary>
@@ -160,6 +170,9 @@ private:
 	float m_stepSE_Timer = 0.0f;				//足音用タイマー
 	const float StepSE_Limit = 1.0f;			//足音制限時間
 	bool m_stepSE_LeftRight = false;			//左足と右足
+	//ゲームオーバー
+	bool m_gameOverFlag = false;				//ゲームオーバーになっている！
+
 
 };
 

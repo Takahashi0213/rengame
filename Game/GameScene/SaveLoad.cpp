@@ -172,7 +172,7 @@ SaveLoad::~SaveLoad()
 void SaveLoad::Update() {
 
 	//コマンド受付
-	if (m_loadFlag == false && m_noLoadFlag == false) {
+	if (m_loadFlag == false && m_noLoadFlag == false && m_endFlag == true) {
 
 		//マウスオーバー演出
 		m_nowCommand = NullSelect_Command;

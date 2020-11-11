@@ -10,6 +10,7 @@
 #include "GameSystem/GameUI/DamageSystem.h"
 #include "GameSystem/PlayerSupporter/TutorialSupporter.h"
 #include "GameSystem/PlayerSupporter/UI_Supporter.h"
+#include "ItemSave.h"
 
 /// <summary>
 /// ゲーム！
@@ -47,26 +48,30 @@ public:
 	DamageSystem* GetDamageSystem() {
 		return m_damageSystem;
 	}
+	ItemSave* GetItemSave() {
+		return m_itemSave;
+	}
 
 private:
 
 	//OPが終わってゲームが始まるときのやーつ
 	void GameSetUp();
 
-	GameState m_gameState = GameState_OP;		//最初はOPから入ります
+	GameState m_gameState = GameState_OP;				//最初はOPから入ります
 
 	//ここからゲーム用
 
-	GameData* m_gameData = nullptr;				//保存するデータ色々
-	GameEffect* m_gameEffect = nullptr;			//ここでアップデートする
-	GameUI* m_ui = nullptr;						//UI
-	GameStatus_UISystem* m_statusUI = nullptr;	//UI
-	GameEvent* m_gameEvent = nullptr;			//ゲームイベント
-	DamageSystem* m_damageSystem = nullptr;		//ダメージの付与やゲームオーバーの管理
-	OP* m_op = nullptr;							//OPが終わったら削除される
-	GameOver* m_gameOver = nullptr;				//ゲームオーバーになったら生成される
+	GameData* m_gameData = nullptr;						//保存するデータ色々
+	GameEffect* m_gameEffect = nullptr;					//ここでアップデートする
+	GameUI* m_ui = nullptr;								//UI
+	GameStatus_UISystem* m_statusUI = nullptr;			//UI
+	GameEvent* m_gameEvent = nullptr;					//ゲームイベント
+	DamageSystem* m_damageSystem = nullptr;				//ダメージの付与やゲームオーバーの管理
+	OP* m_op = nullptr;									//OPが終わったら削除される
+	GameOver* m_gameOver = nullptr;						//ゲームオーバーになったら生成される
 	TutorialSupporter* m_tutorialSupporter = nullptr;	//チュートリアルの下部文字
-	UI_Supporter* m_ui_Supporter = nullptr;		//操作方法を表示する
+	UI_Supporter* m_ui_Supporter = nullptr;				//操作方法を表示する
+	ItemSave* m_itemSave = nullptr;						//アイテムセーブ
 
 };
 

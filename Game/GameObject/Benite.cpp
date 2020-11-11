@@ -195,10 +195,17 @@ void Benite::Attack_Wait() {
 		CQuaternion qRot;
 		qRot.SetRotation(front, diff);
 		m_rotation = qRot;
+
+		//エフェクト
+		m_effect = EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::EnemyDiscovery,
+			false, m_position.x, m_position.y + EnemyEffect_YHosei, m_position.z);
 	}
 
 	//タイマー加算
 	m_moveTimer += CGameTime::GetFrameDeltaTime();
+
+	//エフェクトの座標更新
+	CGameObjectManager::GetInstance()->GetEffekseerManager()->SetLocation(m_effect, m_position.x, m_position.y + EnemyEffect_YHosei, m_position.z);
 
 	if (m_moveTimer >= AttackWaitLimit) {
 		//攻撃へ移行

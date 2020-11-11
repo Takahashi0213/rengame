@@ -110,6 +110,8 @@ void Game::GameSetUp() {
 	m_gameEvent = new GameEvent;
 	//ダメージシステム
 	m_damageSystem = new DamageSystem;
+	//アイテムセーブ
+	m_itemSave = new ItemSave;
 	if (SceneManager::GetInstance()->GetSystemInstance()->m_loadDataFlag == false) {
 		//ステージ
 		StageSet::GetInstance()->InitStage(L"Tutorial");

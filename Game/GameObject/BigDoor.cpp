@@ -4,7 +4,7 @@
 
 BigDoor::BigDoor()
 {
-	m_model = NewGO<SkinModelRender>("BigDoor_Render", 0);
+	m_model = NewGO<SkinModelRender>("BigDoor_Render", 1);
 	m_physicsStaticObject.CreateBox(m_position, m_rotation, StaticSize);
 
 	//É^ÉOê›íË

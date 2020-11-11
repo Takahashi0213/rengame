@@ -309,6 +309,7 @@
     <ClInclude Include="IncludeHeader.h" />
     <ClInclude Include="ItemData.h" />
     <ClInclude Include="ItemSave.h" />
+    <ClInclude Include="LevelUpData.h" />
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\LevelData.h" />
     <ClInclude Include="level\LevelSet.h" />

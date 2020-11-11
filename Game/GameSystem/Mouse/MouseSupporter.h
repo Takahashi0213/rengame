@@ -76,9 +76,29 @@ public:
 		return m_mouseMove;
 	}
 
+	/// <summary>
+	/// 現在のマウス座標を取得
+	/// </summary>
+	/// <returns>マウス座標</returns>
 	const CVector2 MouseSupporter::GetMousePos();
+
+	/// <summary>
+	/// 現在のマウス座標を3D座標に変換して取得
+	/// </summary>
+	/// <returns>3Dマウス座標</returns>
 	CVector3 MouseSupporter::GetMousePos_3D();
+
+	/// <summary>
+	/// マウス座標を画面座標に変換する
+	/// </summary>
+	/// <returns>座標</returns>
 	const CVector2 MouseSupporter::GetMousePos_Sprite();
+
+	/// <summary>
+	/// 実行する度に前回の座標と今回の座標の差（ベクトル）を返す
+	/// </summary>
+	/// <param name="p">取得する位置（0は常時実行、1はｶﾒﾗ）</param>
+	/// <returns>差</returns>
 	CVector2 MouseSupporter::GetBeforeMouse(const int p = 0);
 
 	/// <summary>

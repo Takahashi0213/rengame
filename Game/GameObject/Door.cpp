@@ -4,7 +4,7 @@
 
 Door::Door()
 {
-	m_model = NewGO<SkinModelRender>("Door_Render", 0);
+	m_model = NewGO<SkinModelRender>("Door_Render", 1);
 	m_model->Model_Init(
 		L"Assets/modelData/Door.cmo",
 		m_position, 

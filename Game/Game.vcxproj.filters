@@ -879,6 +879,9 @@
     <ClInclude Include="GameObject\ItemSystem.h">
       <Filter>object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="LevelUpData.h">
+      <Filter>system\GameSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Titan.fbx">

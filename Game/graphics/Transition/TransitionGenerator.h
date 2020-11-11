@@ -32,16 +32,30 @@ public:
 		return m_instance;
 	}
 
-	//トランジションの実行
+	/// <summary>
+	/// トランジションの開始
+	/// </summary>
+	/// <remarks>
+	/// 
+	/// ※サンプルコード
+	/// 
+	/// //斜めボックス、60フレームかけて表示
+	/// TransitionInit(TransitionName::NanameBox, 60, false);
+	/// 
+	/// </remarks>
+	/// <param name="name">トランジションの名前（TransitionName）</param>
+	/// <param name="MoveTime">動作時間</param>
+	/// <param name="mode">動作モード falseなら表示、trueなら消去</param>
+	/// <param name="loadingFlag">trueにするとローディングアニメーションも同時に表示される</param>
 	void TransitionInit(
 		const TransitionName& name,
 		const int& MoveTime,
 		const bool& mode,
-		const bool& loadingFlag = false		//trueにするとローディングアニメーションも同時に表示される
+		const bool& loadingFlag = false
 	);
 
 private:
-	TransitionSprite m_transitionSprite;
+	TransitionSprite m_transitionSprite;	
 	SpriteRender* m_loadingSprite = nullptr;	//ローディングアニメーション
 
 	struct Transition_Data {		//スプライトパターンデータ構造体

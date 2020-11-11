@@ -21,6 +21,10 @@ Player::Player()
 	m_playerAnimationClips[enAnimationClip_Jump].SetLoopFlag(false);
 	m_playerAnimationClips[enAnimationClip_Damage].Load(L"Assets/animData/damage.tka");
 	m_playerAnimationClips[enAnimationClip_Damage].SetLoopFlag(false);
+	m_playerAnimationClips[enAnimationClip_GameOver].Load(L"Assets/animData/KneelDown.tka");
+	m_playerAnimationClips[enAnimationClip_GameOver].SetLoopFlag(false);
+	m_playerAnimationClips[enAnimationClip_Clear].Load(L"Assets/animData/clear.tka");
+	m_playerAnimationClips[enAnimationClip_Clear].SetLoopFlag(false);
 
 	//cmoファイルの読み込み。
 	m_playerModel->Model_Init_Anim(L"Assets/modelData/unityChan.cmo",

@@ -53,18 +53,6 @@ void TransitionGenerator::Render() {
 	}
 }
 
-/// <summary>
-/// トランジションの開始
-/// falseなら表示、trueなら消去
-/// </summary>
-/// <remarks>
-/// 
-/// ※サンプルコード
-/// 
-/// //斜めボックス、60フレームかけて表示
-/// TransitionInit(TransitionName::NanameBox, 60, false);
-/// 
-/// </remarks>
 void TransitionGenerator::TransitionInit(
 	const TransitionName& name, 
 	const int& MoveTime,

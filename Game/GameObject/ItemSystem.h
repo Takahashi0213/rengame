@@ -25,6 +25,7 @@ public:
 	Player* m_player;				//プレイヤー
 
 	float ItemGetRange = 150.0f;	//取得範囲
-
+	int m_itemNo = -1;				//アイテム番号
+	
 };
 
