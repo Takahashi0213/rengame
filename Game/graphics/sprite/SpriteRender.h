@@ -15,13 +15,54 @@ public:
 
 	SpriteRender();
 	~SpriteRender();
+	/// <summary>
+	/// スプライトの情報をアップデート
+	/// </summary>
 	void Update()override;
+	/// <summary>
+	/// スプライトを描画する
+	/// </summary>
 	void Render()override;
 
+	/// <summary>
+	/// スプライトを初期化する
+	/// </summary>
+	/// <remarks>
+	/// ☆サンプルコード☆
+	/// 
+	/// 	SpriteRender* r = NewGO<SpriteRender>(名前);
+	///		r->Init(L"ファイルパス", 100.0f, 100.0f);
+	/// 
+	/// </remarks>
+	/// <param name="texFilePath">ファイルパス</param>
+	/// <param name="w">幅</param>
+	/// <param name="h">高さ</param>
+	/// <param name="priority">優先度（大きい方が上に表示される）
+	/// 指定しなかった場合は0</param>
 	void Init(const wchar_t* texFilePath, const float& w, const float& h, const int& priority = 0);
+
+	/// <summary>
+	/// スプライトを初期化する（便利Ver）
+	/// </summary>
+	/// <remarks>
+	/// ☆サンプルコード☆
+	/// 
+	/// 	SpriteRender* r = NewGO<SpriteRender>(名前);
+	///		r->Init(L"ファイルパス", 100.0f, 100.0f);
+	/// 
+	/// </remarks>
+	/// <param name="texFilePath">ファイルパス</param>
+	/// <param name="w">幅</param>
+	/// <param name="h">高さ</param>
+	/// <param name="pos">初期座標</param>
+	/// <param name="priority">優先度（大きい方が上に表示される）
+	/// 指定しなかった場合は0</param>
 	void Init(const wchar_t* texFilePath, const float& w, const float& h, const CVector3& pos = CVector3().Zero(),
 		const CVector4& color = CVector4().White(), const int& priority = 0);
 
+	/// <summary>
+	/// サブスプライト用の設定
+	/// </summary>
 	void InitSub(const wchar_t* texFilePath, const float& w, const float& h, const int& priority = 0);
 	void InitSub(const wchar_t* texFilePath, const float& w, const float& h, const CVector3& pos = CVector3().Zero(),
 		const CVector4& color = CVector4().White(), const int& priority = 0);

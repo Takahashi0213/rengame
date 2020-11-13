@@ -46,9 +46,10 @@ private:
 
 	//イベント一覧
 	const EventData_Struct Event_Data[MAX_EVENT_OBJ]{
-		{ L"Tutorial_1", 2 },	//チュートリアル…スイッチ
-		{ L"Tutorial_2", 5 },	//チュートリアル…箱を投げる
-		{ L"Tutorial_3", 11 },	//チュートリアル…箱の生成
+		{ L"Tutorial_1"	,	2	},	//チュートリアル…スイッチ
+		{ L"Tutorial_2"	,	5	},	//チュートリアル…箱を投げる
+		{ L"Tutorial_3"	,	11	},	//チュートリアル…箱の生成
+		{ L"Sougen_Key"	,	4	},	//草原鍵の出現
 	};
 
 };

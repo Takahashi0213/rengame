@@ -64,7 +64,8 @@ public:
 	bool m_monochromeFlag = false;		//クリエイトモード時にモノクロにするフラグ
 
 	//反応フラグ
-	//なんかアクションさせたいとき用
+	//なんかアクションさせたいとき用（臨時で2つ）
 	bool m_actionFlag = false;
+	bool m_actionFlag_2 = false;
 
 };

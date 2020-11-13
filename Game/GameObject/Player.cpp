@@ -102,6 +102,14 @@ void Player::Update()
 	//アニメーション
 	PlayerAnimation();
 
+	//ゲームオーバー演出
+	if (m_gameOverFlag == true) {
+		m_gameOvetTimer++;
+		if (m_gameOvetTimer == GameOverLimit) {
+			m_playerModel->SetDrawFlag(false);
+		}
+	}
+
 	//モデルの更新。
 	m_playerModel->SetUp(m_position, m_rotation, m_scale);
 	m_playerModel_Sl->SetUp(m_position, m_rotation, m_scale);
@@ -305,10 +313,6 @@ void Player::Jump() {
 		if (m_jumpNow == false && OnG_Flag == true) {
 			m_moveSpeed.y = m_jumpPower;
 			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Jump.wav", 1.5f);
-			//EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::TestData, false, 100.0f, 100.0f, 0.0f);
-			//EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::TestData, true,
-			//	300.0f, 100.0f, 0.0f,
-			//	180.0f, 180.0f, 180.0f);
 		}
 		m_jumpNow = true;
 	}
@@ -835,4 +839,18 @@ void Player::SetPosition(const CVector3& pos) {
 	m_charaCon.SetPosition(pos);
 	GameCamera::GetInstance()->ActionModeCameraMove();	//カメラも動かす
 
+}
+
+void Player::GemaOverFlag() {
+	m_gameOverFlag = true;
+	SetMoveTarget(m_position);
+	//エフェクト
+	CVector3 pos = m_position;
+	CVector3 hosei = g_camera3D.GetPosition() - m_position;
+	hosei.Normalize();
+	hosei *= 50.0f;
+	pos += hosei;
+
+	EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::PlayerDeath,
+		false, pos.x, pos.y, pos.z);
 }

@@ -13,6 +13,7 @@
 #include "GameObject/Door.h"
 #include "GameObject/BigDoor.h"
 #include "GameObject/Board.h"
+#include "GameObject/Torch.h"
 
 //“G
 #include "GameObject/TestEnemy.h"

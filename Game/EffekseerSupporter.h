@@ -19,6 +19,7 @@ public:
 		EnemyScope,			//箱を飛ばす先（敵）
 		EnemyDiscovery,		//敵に発見された！
 		PlayerDeath,		//プレイヤー消滅…
+		TorchFire,			//トーチの炎（ループ）
 		EffectNum,			//エフェクトの数
 	};
 
@@ -61,11 +62,18 @@ public:
 	/// <summary>
 	/// エフェクトの強制削除
 	/// </summary>
+	/// <remarks>
+	/// 
+	/// ループするエフェクトの場合、生成時にハンドルを保存しておいて
+	/// 任意のタイミングでこの関数を呼び出して削除してください
+	/// （削除しないと永遠に残り続けます）
+	/// 
+	/// </remarks>
 	/// <param name="effect">削除するエフェクトのハンドル</param>
 	void EffectDelete(const Effekseer::Handle& effect);
 
 	/// <summary>
-	/// エフェクトデータの削除（毎フレーム呼んでね）
+	/// エフェクトデータの自動削除（毎フレーム呼んでね）
 	/// </summary>
 	void EffectClear();
 
@@ -87,6 +95,7 @@ private:
 	{ L"Assets/effect/EnemyScope.efk" },
 	{ L"Assets/effect/EnemyDiscovery.efk" },
 	{ L"Assets/effect/PlayerDeath.efk" },
+	{ L"Assets/effect/Torch.efk" },
 	};
 
 	std::list<Effect> m_effectList;		//エフェクトリスト

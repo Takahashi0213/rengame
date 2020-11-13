@@ -35,6 +35,7 @@ public:
 
 private:
 
+	void CommandWait();
 	void LoadData();
 
 	SaveLoadEnd m_saveLoadEnd = NULL_LoadEnd;					//ロード終了
@@ -56,7 +57,19 @@ private:
 
 	//スプライトレンダー
 	SpriteRender* m_BG = nullptr;								//背景
-	const CVector2 BG_Size = { 1920.0f,1358.0f };				//サイズ
+	SpriteRender* m_BG_Acc = nullptr;							//背景アクセサリー
+
+	SpriteRender* m_keis = nullptr;								//ケイスちゃん
+	const CVector3 Keis_DefPos = { 240.0f,-90.0f,0.0f };		//座標
+	const CVector2 Keis_Size = { 400.0f,400.0f };				//サイズ
+
+	SpriteRender* m_loadBanner = nullptr;						//ロードバナー
+	const CVector3 LoadBanner_DefPos = { -500.0f,250.0f,0.0f };	//座標
+	const CVector2 LoadBanner_Size = { 600.0f,100.0f };			//サイズ
+
+	SpriteRender* m_BGWindow = nullptr;							//背景ウィンドウ
+	const CVector3 BGWindow_DefPos = { -300.0f,-80.0f,0.0f };	//座標
+	const CVector2 BGWindow_Size = { 540.0f,300.0f };			//サイズ
 
 	SpriteRender* ButtonWindow_Left = nullptr;					//左ウィンドウ
 	SpriteRender* ButtonWindow_Right = nullptr;					//右ウィンドウ
@@ -112,6 +125,11 @@ private:
 	bool m_noLoadFlag = false;									//ロードしないフラグ
 	bool m_endFlag = false;										//これをtrueにしたら終了
 	bool m_loadDataFlag = false;								//ゲームデータを1回だけロードする
+
+	//ケイスアニメーション
+	int m_keisTimer = 0;										//ケイス用タイマー
+	const int KeisAnimeLimit = 60;								//ケイス用アニメーションリミット
+	bool m_keisAnimePattern = false;							//ケイス用アニメーションパターン
 
 	//効果音
 	bool m_seFlag = false;										//効果音フラグ

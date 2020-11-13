@@ -47,12 +47,6 @@ void CameraSupporter::Render() {
 	//描画はしない
 }
 
-/// <summary>
-/// カメラの場所を移動する準備
-/// </summary>
-/// <param name="move">移動する分のベクトル</param>
-/// <param name="moveTime">移動時間</param>
-/// <param name="moveDelay">移動ディレイ</param>
 void CameraSupporter::CameraMove(const CVector3& move, const float& moveTime, const float& moveDelay) {
 
 	//メンバ変数リセット
@@ -66,11 +60,6 @@ void CameraSupporter::CameraMove(const CVector3& move, const float& moveTime, co
 
 }
 
-/// <summary>
-/// 視点を中心にカメラを回転させる準備
-/// </summary>
-/// <param name="moveTime">移動時間</param>
-/// <param name="moveDelay">移動ディレイ</param>
 void CameraSupporter::CameraMove_Rot(const float& move, const float& moveTime, const float& moveDelay) {
 
 	//メンバ変数リセット
@@ -84,13 +73,6 @@ void CameraSupporter::CameraMove_Rot(const float& move, const float& moveTime, c
 
 }
 
-/// <summary>
-/// カメラをシェイクさせる準備
-/// </summary>
-/// <param name="bure">ブレる大きさ（最大値）</param>
-/// <param name="speed">ブレる速さ</param>
-/// <param name="moveTime">動作時間 ※-1.0fを設定すると停止するまで続けます</param>
-/// <param name="moveDelay">動作ディレイ</param>
 void CameraSupporter::CameraMove_Bure(const CVector2& bure, const float& speed, const float& moveTime, const float& moveDelay) {
 
 	//メンバ変数リセット
@@ -108,13 +90,6 @@ void CameraSupporter::CameraMove_Bure(const CVector2& bure, const float& speed, 
 
 }
 
-/// <summary>
-/// カメラをズームさせる準備
-/// </summary>
-/// <param name="angle">目標画角</param>
-/// <param name="moveTime">ズーム時間</param>
-/// <param name="moveDelay">ズームウェイト</param>
-/// <param name="boundFlag">trueにすると目標を少し通り過ぎてバウンドします</param>
 void CameraSupporter::CameraMove_Zoom(const float& angle, const float& moveTime, const float& moveDelay, const bool& boundFlag) {
 
 	//メンバ変数リセット
@@ -130,13 +105,6 @@ void CameraSupporter::CameraMove_Zoom(const float& angle, const float& moveTime,
 
 }
 
-/// <summary>
-/// カメラの注視点を移動する準備
-/// </summary>
-/// <param name="move">移動する分のベクトル</param>
-/// <param name="moveTime">移動時間</param>
-/// <param name="moveDelay">移動ディレイ</param>
-/// <param name="posMoveFlag">trueなら同時にカメラの座標も移動する</param>
 void CameraSupporter::CameraTargetMove(const CVector3& move, const float& moveTime, const float& moveDelay, const bool& posMoveFlag) {
 
 	//メンバ変数リセット

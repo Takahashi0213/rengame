@@ -13,6 +13,15 @@ EventObject::~EventObject()
 
 void EventObject::Update() {
 	
+	//イベント中なら強制終了
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+		return;
+	}
+	//アクションモードでないなら強制終了
+	if (SceneManager::GetInstance()->GetGameMode() != SceneManager::ActionMode) {
+		return;
+	}
+
 	//フラグの更新
 	UpdateActionFlag();
 
@@ -20,7 +29,7 @@ void EventObject::Update() {
 	if (m_actionFlag == true) {
 
 		//イベントの実行
-		Game::GetInstance()->GetGameEvent()->EvemtStart(m_eventName);
+		Game::GetInstance()->GetGameEvent()->EvemtStart(m_eventName, m_LinkPt);
 
 		//削除される
 		DeleteGO(this);

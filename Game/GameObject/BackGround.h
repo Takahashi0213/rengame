@@ -16,6 +16,10 @@ public:
 
 	//ステージの設定
 	void Init(const wchar_t* filePath);
+	//シャドウキャスターフラグの設定
+	void SetShadowCasterFlag(const bool& flag) {
+		m_shadowCasterFlag = flag;
+	}
 
 private:
 	bool m_initFlag = false;
@@ -31,6 +35,6 @@ private:
 	CQuaternion m_rotation = CQuaternion().Identity();
 	CVector3 m_scale = { 10.0f,10.0f,10.0f };				//拡大率
 
-
+	bool m_shadowCasterFlag = false;						//シャドウキャスターにする
 };
 

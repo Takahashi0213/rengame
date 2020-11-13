@@ -138,6 +138,13 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 		pt->SetBoardMessage(Level_Data.GetObject_ObjMemo(m_levelNo, ObjNo));
 	}
 
+	if (tag == LevelData::Obj_Tag::Tag_Torch) {			//松明
+		Torch* pt = NewObjCommon<Torch>(data);
+		int ObjNo = Level_Data.ObjName_Search(m_levelNo, data.name);
+		pt->SetTorch(Level_Data.GetObject_BoolMemo(m_levelNo, ObjNo));
+		pt->SetHosei(Level_Data.GetObject_Vector3Memo(m_levelNo, ObjNo));
+	}
+
 	if (tag == LevelData::Obj_Tag::Tag_GhostBox_MapMove) {	//ゴーストボックス…移動
 		GhostBox* pt = NewObjCommon<GhostBox>(data);
 		int ObjNo = Level_Data.ObjName_Search(m_levelNo, data.name);
@@ -194,28 +201,15 @@ void LevelSet::LinkObj(const int levelNo, const int i) {
 			int now_hash = m_Obj_Data[ii].nameKey;
 			ObjectClass* now_objClass;
 
-			//ここに追加するオブジェクトは他のオブジェクトに「干渉する側」です
-			if (NowObjTag == LevelData::Obj_Tag::Tag_Switch) {
-				Switch* NowObj = CGameObjectManager::GetInstance()->FindGO<Switch>(now_hash);
-				now_objClass = NowObj->GetInstance();
-			}
-			if (NowObjTag == LevelData::Obj_Tag::Tag_Door) {
-				Door* NowObj = CGameObjectManager::GetInstance()->FindGO<Door>(now_hash);
-				now_objClass = NowObj->GetInstance();
-			}
-			if (NowObjTag == LevelData::Obj_Tag::Tag_Test_Enemy) {
-				TestEnemy* NowObj = CGameObjectManager::GetInstance()->FindGO<TestEnemy>(now_hash);
-				now_objClass = NowObj->GetInstance();
-			}
-			if (NowObjTag == LevelData::Obj_Tag::Tag_Mannequin) {
-				Mannequin* NowObj = CGameObjectManager::GetInstance()->FindGO<Mannequin>(now_hash);
-				now_objClass = NowObj->GetInstance();
-			}
-			//リンクオブジェクト
+			//ここで取得するオブジェクトは他のオブジェクトに「干渉する側」です
+			ObjectClass* NowObj = CGameObjectManager::GetInstance()->FindGO<ObjectClass>(now_hash);
+			now_objClass = NowObj->GetInstance();
+
+			//ハッシュ値を作成
 			int link_hash = Hash::MakeHash(linkObjName);
 
 			//オブジェクトタグで分岐
-			if (LinkObjTag == LevelData::Obj_Tag::Tag_Door) {	//ドア
+			if (LinkObjTag == LevelData::Obj_Tag::Tag_Door) {			//ドア
 				Door* obj = CGameObjectManager::GetInstance()->FindGO<Door>(link_hash);
 				obj->SetLinkObj(now_objClass);
 			}
@@ -223,7 +217,7 @@ void LevelSet::LinkObj(const int levelNo, const int i) {
 				EventObject* obj = CGameObjectManager::GetInstance()->FindGO<EventObject>(link_hash);
 				obj->SetLinkObj(now_objClass);
 			}
-			if (LinkObjTag == LevelData::Obj_Tag::Tag_Key1) {	//鍵
+			if (LinkObjTag == LevelData::Obj_Tag::Tag_Key1) {			//鍵
 				Key* obj = CGameObjectManager::GetInstance()->FindGO<Key>(link_hash);
 				obj->SetLinkObj(now_objClass);
 			}

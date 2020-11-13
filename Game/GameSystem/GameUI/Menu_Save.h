@@ -13,7 +13,7 @@ public:
 	void SaveUpdate();
 	//コマンドのフェードアウト
 	void CommandEnd();
-
+	//デリートフラグを返す
 	bool GetDeleteFlag() {
 		return m_deleteFlag;
 	}

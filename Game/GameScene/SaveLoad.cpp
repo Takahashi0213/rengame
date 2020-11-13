@@ -18,12 +18,45 @@ SaveLoad::SaveLoad()
 	//グラフィック設定
 
 	//背景
-	m_BG = NewGO<SpriteRender>("Load_PlayerStand", SpriteNo);
-	m_BG->Init(L"Assets/sprite/Load_BG.dds",
-		BG_Size.x,
-		BG_Size.y,
+	m_BG = NewGO<SpriteRender>("Load_BG", SpriteNo);
+	m_BG->Init(L"Assets/sprite/LoadBG.dds",
+		FRAME_BUFFER_W,
+		FRAME_BUFFER_H,
 		SpriteNo);
 
+	//セーブ情報部分
+	m_BGWindow = NewGO<SpriteRender>("SaveWindow2", SpriteNo);
+	m_BGWindow->ChangeSliceSprite({ 150.0f,150.0f });
+	m_BGWindow->Init(L"Assets/sprite/window1.dds",
+		BGWindow_Size.x,
+		BGWindow_Size.y,
+		SpriteNo);
+	m_BGWindow->SetPosition(BGWindow_DefPos);
+
+	//ケイス
+	m_keis = NewGO<SpriteRender>("Keis", SpriteNo);
+	m_keis->Init(L"Assets/sprite/Keis_Sleep.dds",
+		Keis_Size.x,
+		Keis_Size.y,
+		SpriteNo);
+	m_keis->SetPosition(Keis_DefPos);
+
+	//背景アクセサリー
+	m_BG_Acc = NewGO<SpriteRender>("Load_BG_Acc", SpriteNo);
+	m_BG_Acc->Init(L"Assets/sprite/LoadBG_Acc.dds",
+		FRAME_BUFFER_W,
+		FRAME_BUFFER_H,
+		SpriteNo);
+
+	//ロードバナー
+	m_loadBanner = NewGO<SpriteRender>("LoadBanner", SpriteNo);
+	m_loadBanner->Init(L"Assets/sprite/LoadBanner.dds",
+		LoadBanner_Size.x,
+		LoadBanner_Size.y,
+		SpriteNo);
+	m_loadBanner->SetPosition(LoadBanner_DefPos);
+
+	//セーブチェック
 	FILE* fp = fopen("save.bin", "rb");
 	if (fp != NULL) {
 		fread(m_gameData_Load, sizeof(GameData), 1, fp);
@@ -157,6 +190,10 @@ SaveLoad::~SaveLoad()
 	//削除
 	delete m_gameData_Load;
 	DeleteGO(m_BG);
+	DeleteGO(m_BG_Acc);
+	DeleteGO(m_keis);
+	DeleteGO(m_BGWindow);
+	DeleteGO(m_loadBanner);
 	DeleteGO(ButtonWindow_Left);
 	DeleteGO(ButtonWindow_Right);
 	DeleteGO(m_saveWindow);
@@ -172,64 +209,29 @@ SaveLoad::~SaveLoad()
 void SaveLoad::Update() {
 
 	//コマンド受付
-	if (m_loadFlag == false && m_noLoadFlag == false && m_endFlag == true) {
+	if (m_loadFlag == false && m_noLoadFlag == false) {
+		CommandWait();
 
-		//マウスオーバー演出
-		m_nowCommand = NullSelect_Command;
-		if (m_fifeFlag == true) {
-			if (ButtonWindow_Left->MouseOverMouse() == true) {
-				m_nowCommand = Yes_Command;
-				ButtonWindow_Left->SetAlpha(1.0f);
-				Yes_Font->SetAlpha(1.0f);
-				if (m_seFlag == false) {
-					SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Cursor.wav");	//SE
-					m_seFlag = true;
-				}
+		//ケイス用アニメーション
+		m_keisTimer++;
+		if (m_keisTimer >= KeisAnimeLimit) {
+			m_keisTimer = 0;
+			if (m_keisAnimePattern == false) {
+				m_keis->Init(L"Assets/sprite/Keis_Sleep2.dds",
+					Keis_Size.x,
+					Keis_Size.y,
+					SpriteNo);
+				m_keisAnimePattern = true;
 			}
 			else {
-				ButtonWindow_Left->SetAlpha(NoActiveAlpha);
-				Yes_Font->SetAlpha(NoActiveAlpha);
+				m_keis->Init(L"Assets/sprite/Keis_Sleep.dds",
+					Keis_Size.x,
+					Keis_Size.y,
+					SpriteNo);
+				m_keisAnimePattern = false;
 			}
-		}
-		else {
-			ButtonWindow_Left->SetMulColor(CanNotSelect);
-			Yes_Font->SetColor(CanNotSelect);
-		}
-		if (ButtonWindow_Right->MouseOverMouse() == true) {
-			m_nowCommand = No_Command;
-			ButtonWindow_Right->SetAlpha(1.0f);
-			No_Font->SetAlpha(1.0f);
-			if (m_seFlag == false) {
-				SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Cursor.wav");	//SE
-				m_seFlag = true;
-			}
-		}
-		else {
-			ButtonWindow_Right->SetAlpha(NoActiveAlpha);
-			No_Font->SetAlpha(NoActiveAlpha);
-		}
-		//SEフラグの初期化
-		if (m_nowCommand == NullSelect_Command) {
-			m_seFlag = false;
 		}
 
-		//決定処理
-		int Left_Key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
-		if (Left_Key == MouseSupporter::Release_Push) {
-			switch (m_nowCommand)
-			{
-			case SaveLoad::Yes_Command:
-				SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Load.wav");	//SE
-				m_loadFlag = true;
-				m_saveLoadEnd = LoadSuccess;
-			break;
-			case SaveLoad::No_Command:
-				SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Cancel.wav", 3.0f);	//SE
-				m_noLoadFlag = true;
-				m_saveLoadEnd = NoLoad;
-			break;
-			}
-		}
 	}
 	else {
 		m_fadeinTimer++;	//閉じるタイマー
@@ -270,6 +272,66 @@ void SaveLoad::Render() {
 
 }
 
+void SaveLoad::CommandWait() {
+
+	//マウスオーバー演出
+	m_nowCommand = NullSelect_Command;
+	if (m_fifeFlag == true) {
+		if (ButtonWindow_Left->MouseOverMouse() == true) {
+			m_nowCommand = Yes_Command;
+			ButtonWindow_Left->SetAlpha(1.0f);
+			Yes_Font->SetAlpha(1.0f);
+			if (m_seFlag == false) {
+				SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Cursor.wav");	//SE
+				m_seFlag = true;
+			}
+		}
+		else {
+			ButtonWindow_Left->SetAlpha(NoActiveAlpha);
+			Yes_Font->SetAlpha(NoActiveAlpha);
+		}
+	}
+	else {
+		ButtonWindow_Left->SetMulColor(CanNotSelect);
+		Yes_Font->SetColor(CanNotSelect);
+	}
+	if (ButtonWindow_Right->MouseOverMouse() == true) {
+		m_nowCommand = No_Command;
+		ButtonWindow_Right->SetAlpha(1.0f);
+		No_Font->SetAlpha(1.0f);
+		if (m_seFlag == false) {
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Cursor.wav");	//SE
+			m_seFlag = true;
+		}
+	}
+	else {
+		ButtonWindow_Right->SetAlpha(NoActiveAlpha);
+		No_Font->SetAlpha(NoActiveAlpha);
+	}
+	//SEフラグの初期化
+	if (m_nowCommand == NullSelect_Command) {
+		m_seFlag = false;
+	}
+
+	//決定処理
+	int Left_Key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
+	if (Left_Key == MouseSupporter::Release_Push) {
+		switch (m_nowCommand)
+		{
+		case SaveLoad::Yes_Command:
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Load.wav");	//SE
+			m_loadFlag = true;
+			m_saveLoadEnd = LoadSuccess;
+			break;
+		case SaveLoad::No_Command:
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Cancel.wav", 3.0f);	//SE
+			m_noLoadFlag = true;
+			m_saveLoadEnd = NoLoad;
+			break;
+		}
+	}
+}
+
 void SaveLoad::LoadData() {
 
 	//ロードする
@@ -283,6 +345,11 @@ void SaveLoad::LoadData() {
 	//ロード演出
 	m_loadChackText->SetText(LoadNowText);
 	m_loadChackText->SetPosition({ LoadChackTextPos.x + LoadX_Hosei,LoadChackTextPos.y });
+
+	m_keis->Init(L"Assets/sprite/Keis_Up.dds",
+		Keis_Size.x,
+		Keis_Size.y,
+		SpriteNo);
 
 	m_loadDataFlag = true;
 }

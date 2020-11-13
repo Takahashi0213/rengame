@@ -64,6 +64,10 @@ public:
 	wchar_t* GetStageIC(const GameData::Place_Data place) {
 		return StageIC[place].Icon_Name;
 	}
+	//ステージのシャドウキャスターフラグ
+	bool GetStageShadowFlag(const GameData::Place_Data place) {
+		return StageShadowFlag[place];
+	}
 
 	//計算ゾーン
 
@@ -129,5 +133,10 @@ private:
 		L"Assets/sprite/MapIC0.dds",			//チュートリアル
 		L"Assets/sprite/MapIC1.dds",			//草原
 	};
-
+	//ステージごとのシャドウキャスターフラグ
+	const bool StageShadowFlag[MAX_STAGE_NOM]{
+		false,
+		false,
+		true,
+	};
 };

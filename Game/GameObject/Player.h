@@ -61,10 +61,7 @@ public:
 	/// <summary>
 	/// ゲームオーバーになった
 	/// </summary>
-	void GemaOverFlag() {
-		m_gameOverFlag = true;
-		SetMoveTarget(m_position);
-	}
+	void GemaOverFlag();
 
 	/// <summary>
 	/// スキンモデルレンダーを返す
@@ -172,7 +169,8 @@ private:
 	bool m_stepSE_LeftRight = false;			//左足と右足
 	//ゲームオーバー
 	bool m_gameOverFlag = false;				//ゲームオーバーになっている！
-
+	int m_gameOvetTimer = 0;					//ゲームオーバータイマー
+	const int GameOverLimit = 20;				//ゲームオーバーリミット
 
 };
 

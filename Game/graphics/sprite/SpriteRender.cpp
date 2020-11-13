@@ -14,21 +14,6 @@ SpriteRender::~SpriteRender()
 {
 }
 
-/// <summary>
-/// スプライトを初期化する
-/// </summary>
-/// <remarks>
-/// ☆サンプルコード☆
-/// 
-/// 	SpriteRender* r = NewGO<SpriteRender>(名前);
-///		r->Init(L"ファイルパス", 100.0f, 100.0f);
-/// 
-/// </remarks>
-/// <param name="texFilePath">ファイルパス</param>
-/// <param name="w">幅</param>
-/// <param name="h">高さ</param>
-/// <param name="priority">優先度（大きい方が上に表示される）
-/// 指定しなかった場合は0</param>
 void SpriteRender::Init(const wchar_t* texFilePath, const float& w, const float& h, const int& priority)
 {
 	m_mainSprite.Wide = w;
@@ -47,6 +32,7 @@ void SpriteRender::Init(const wchar_t* texFilePath, const float& w, const float&
 		m_maskSprite->GetMainSprite()->SetMulColor(m_mainSprite.MulColor);
 	}
 }
+
 void SpriteRender::InitSub(const wchar_t* texFilePath, const float& w, const float& h, const int& priority)
 {
 	SpriteData data;
@@ -57,22 +43,6 @@ void SpriteRender::InitSub(const wchar_t* texFilePath, const float& w, const flo
 	m_maskSprite->AddSubSprite(texFilePath, w, h);
 }
 
-/// <summary>
-/// スプライトを初期化する（便利Ver）
-/// </summary>
-/// <remarks>
-/// ☆サンプルコード☆
-/// 
-/// 	SpriteRender* r = NewGO<SpriteRender>(名前);
-///		r->Init(L"ファイルパス", 100.0f, 100.0f);
-/// 
-/// </remarks>
-/// <param name="texFilePath">ファイルパス</param>
-/// <param name="w">幅</param>
-/// <param name="h">高さ</param>
-/// <param name="pos">初期座標</param>
-/// <param name="priority">優先度（大きい方が上に表示される）
-/// 指定しなかった場合は0</param>
 void SpriteRender::Init(const wchar_t* texFilePath, const float& w, const float& h,
 	const CVector3& pos, const CVector4& color, const int& priority) {
 
@@ -111,9 +81,6 @@ void SpriteRender::InitSub(const wchar_t* texFilePath, const float& w, const flo
 	newSp->SetMulColor(data.MulColor);
 }
 
-/// <summary>
-/// スプライトの情報をアップデート
-/// </summary>
 void SpriteRender::Update() {
 
 	SpriteSp_Update();
@@ -142,9 +109,6 @@ void SpriteRender::Update() {
 	}
 }
 
-/// <summary>
-/// スプライトを描画する
-/// </summary>
 void SpriteRender::Render() {
 
 	if (m_subSpriteFlag == false && m_sliceSpriteFlag == false) {

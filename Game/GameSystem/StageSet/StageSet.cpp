@@ -82,6 +82,7 @@ void StageSet::InitStage(const int& stage_nom) {
 	//生成タイム
 	CreateStage(m_stageData.GetStageModel(stage_nom),
 		m_stageData.GetStageLevel(stage_nom));
+
 }
 
 void StageSet::CreateStage(const wchar_t* stage_filePath, const wchar_t* level_filePath) {
@@ -89,6 +90,7 @@ void StageSet::CreateStage(const wchar_t* stage_filePath, const wchar_t* level_f
 	//ステージの生成
 	m_bg = CGameObjectManager::GetInstance()->NewGO<BackGround>("BackGround", 0);
 	m_bg->Init(stage_filePath);
+	m_bg->SetShadowCasterFlag(m_stageData.GetStageShadowFlag(GameData::GetInstance()->GetPlace()));
 
 	//レベルの生成
 	m_levelSet.Init(level_filePath);

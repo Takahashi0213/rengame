@@ -132,6 +132,15 @@ void GhostBox::CreateGhost() {
 
 void GhostBox::GhostAction() {
 
+	//イベント中なら強制終了
+	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
+		return;
+	}
+	//アクションモードでないなら強制終了
+	if (SceneManager::GetInstance()->GetGameMode() != SceneManager::ActionMode) {
+		return;
+	}
+
 	//マップ移動
 	if (m_boxSystem == MapMove && m_mapMoveFlag == false) {
 		//トランジション
@@ -161,8 +170,11 @@ void GhostBox::GhostAction() {
 	}
 	//落下ダメージ
 	if (m_boxSystem == DamageZone) {
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/PlayerDamage.wav");
 		Game::GetInstance()->GetDamageSystem()->Damage(-FallDamage);	//ダメージを受ける
-		m_player->SetPosition(m_player->GetPositionBackup());			//座標を戻す
+		CVector3 pos = m_player->GetPositionBackup();
+		pos.y += PlayerMiss_Y_Hosei;
+		m_player->SetPosition(pos);			//座標を戻す
 	}
 }
 

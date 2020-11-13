@@ -200,6 +200,9 @@ public:
 	void AddLevel(const int& add) {
 		m_level += add;
 	}
+	const int GetMaxLevel() {
+		return MAX_LEVEL;
+	}
 
 	/// <summary>
 	/// 現在経験値の取得と加算

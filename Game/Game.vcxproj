@@ -125,6 +125,7 @@
     <ClCompile Include="GameObject\Switch.cpp" />
     <ClCompile Include="GameObject\SystemBox.cpp" />
     <ClCompile Include="GameObject\TestEnemy.cpp" />
+    <ClCompile Include="GameObject\Torch.cpp" />
     <ClCompile Include="GameScene\Game.cpp" />
     <ClCompile Include="GameScene\GameOver.cpp" />
     <ClCompile Include="GameScene\OP.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="GameObject\Switch.h" />
     <ClInclude Include="GameObject\SystemBox.h" />
     <ClInclude Include="GameObject\TestEnemy.h" />
+    <ClInclude Include="GameObject\Torch.h" />
     <ClInclude Include="GameScene\Game.h" />
     <ClInclude Include="GameScene\GameOver.h" />
     <ClInclude Include="GameScene\OP.h" />
@@ -360,6 +362,7 @@
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Base.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch_Coli.fbx" />
+    <MeshContentTask Include="Assets\modelData\Gimmick\Torch\Torch.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Yazirushi.fbx" />
     <MeshContentTask Include="Assets\modelData\Mannequin.fbx" />
     <MeshContentTask Include="Assets\modelData\map.fbx">
@@ -641,6 +644,16 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Title\Load_BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\Load\Keis_Sleep.png" />
+    <ImageContentTask Include="Assets\sprite\Load\Keis_Sleep2.png" />
+    <ImageContentTask Include="Assets\sprite\Load\Keis_Up.png" />
+    <ImageContentTask Include="Assets\sprite\Load\LoadBG.png" />
+    <ImageContentTask Include="Assets\sprite\Load\LoadBG_Acc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\Load\LoadBanner.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

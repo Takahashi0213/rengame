@@ -181,6 +181,9 @@
     <Filter Include="system\Item">
       <UniqueIdentifier>{142b44d6-2ec5-4f7c-a93f-9263be5abd08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\sprite\Load">
+      <UniqueIdentifier>{ae62739f-6189-46fb-bb6c-93e6a0ef7981}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -262,9 +265,6 @@
     </ClCompile>
     <ClCompile Include="EffekseerSupporter.cpp">
       <Filter>system\GameSystem\Effekseer</Filter>
-    </ClCompile>
-    <ClCompile Include="GameCamera.cpp">
-      <Filter>system\GameSystem</Filter>
     </ClCompile>
     <ClCompile Include="system\CGameObjectManager.cpp">
       <Filter>system\GameObject</Filter>
@@ -512,6 +512,12 @@
     <ClCompile Include="GameObject\ItemSystem.cpp">
       <Filter>object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Torch.cpp">
+      <Filter>object\Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCamera.cpp">
+      <Filter>graphics\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -588,9 +594,6 @@
       <Filter>system\GameSystem</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="GameCamera.h">
-      <Filter>system\GameSystem</Filter>
-    </ClInclude>
     <ClInclude Include="SystemData.h">
       <Filter>system\GameSystem</Filter>
     </ClInclude>
@@ -882,6 +885,12 @@
     <ClInclude Include="LevelUpData.h">
       <Filter>system\GameSystem</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject\Torch.h">
+      <Filter>object\Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCamera.h">
+      <Filter>graphics\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Titan.fbx">
@@ -958,6 +967,9 @@
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Mannequin.fbx">
       <Filter>Assets\modelData\Enemy</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Torch\Torch.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
@@ -1186,8 +1198,28 @@
     <ImageContentTask Include="Assets\sprite\Title\Load_BG.png">
       <Filter>Assets\sprite\system</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Load\Keis_Sleep.png">
+      <Filter>Assets\sprite\Load</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Load\Keis_Sleep2.png">
+      <Filter>Assets\sprite\Load</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Load\Keis_Up.png">
+      <Filter>Assets\sprite\Load</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Load\LoadBG.png">
+      <Filter>Assets\sprite\Load</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Load\LoadBG_Acc.png">
+      <Filter>Assets\sprite\Load</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\sprite\Load\LoadBanner.png">
+      <Filter>Assets\sprite\Load</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -19,15 +19,44 @@ public:
 	void Update()override;
 	void Render()override;
 
+	/// <summary>
+	/// ディレクションライトを設定する
+	/// </summary>
+	/// <param name="lightNo">ライトの番号</param>
+	/// <param name="dir">ライトの方向</param>
+	/// <param name="col">ライトの色</param>
+	/// <param name="spec">スペキュラ</param>
+	/// <returns>作成したライトのポインタ</returns>
 	void LightMaker::D_LightMake(const int& lightNo, const CVector4& dir, const CVector4& col, const float& spec);
+
+	/// <summary>
+	/// ディレクションライトを消去する
+	/// </summary>
+	/// <param name="lightNo">削除するディレクションライトの番号</param>
 	void LightMaker::D_LightDelete(const int& lightNo);
 
+	/// <summary>
+	/// ポイントライトを作成する
+	/// </summary>
+	/// <param name="lightNo">ライト番号</param>
+	/// <param name="pos">座標</param>
+	/// <param name="col">カラー</param>
+	/// <param name="range">範囲</param>
 	void LightMaker::P_LightMake(const int& lightNo, const CVector3& pos, const CVector3& col, const float& range);
+
+	/// <summary>
+	/// ポイントライトを全て削除
+	/// </summary>
 	void LightMaker::P_LightDeleteAll();
+
+	/// <summary>
+	/// ポイントライトを消去する
+	/// </summary>
+	/// <param name="lightNo">ライト番号</param>
 	void LightMaker::P_LightDelete(const int& lightNo);
 
 	/// <summary>
-	/// 引数に設定したライトの方向を変更する
+	/// 引数に設定したライトの方向を取得・変更する
 	/// </summary>
 	void LightMaker::D_Light_SetDirection(const int& lightNo, const CVector4& dir) {
 		m_light.direction[lightNo] = dir;
@@ -37,7 +66,7 @@ public:
 	}
 
 	/// <summary>
-	/// 引数に設定したライトの色を変更する
+	/// 引数に設定したライトの色を取得・変更する
 	/// </summary>
 	void LightMaker::D_Light_SetColer(const int& lightNo, const CVector4& col) {
 		m_light.color[lightNo] = col;
@@ -47,7 +76,7 @@ public:
 	}
 
 	/// <summary>
-	/// スペキュラの絞りを変更する
+	/// スペキュラの絞りを取得・変更する
 	/// </summary>
 	void LightMaker::D_Light_SetSpec(const int& lightNo, const float& spec) {
 		m_light.color[lightNo].w = spec;
@@ -187,6 +216,31 @@ public:
 	}
 
 	/// <summary>
+	/// ディレクションライトの空きNoを検索
+	/// </summary>
+	/// <returns>全て使用中なら-1を返す</returns>
+	int GetDirectionLight_MakeNo() {
+		for (int i = 0; i < MAX_DIRECTION_LIGHT; i++) {
+			if (m_directionLightSetFlag[i] == false) {
+				return i;
+			}
+		}
+		return - 1;		//どこも空いてなかった
+	}
+	/// <summary>
+	/// ポイントライトの空きNoを検索
+	/// </summary>
+	/// <returns>全て使用中なら-1を返す</returns>
+	int GetPointLight_MakeNo() {
+		for (int i = 0; i < MAX_POINT_LIGHT; i++) {
+			if (m_pointLightSetFlag[i] == false) {
+				return i;
+			}
+		}
+		return -1;		//どこも空いてなかった
+	}
+
+	/// <summary>
 	/// インスタンスを取得！
 	/// </summary>
 	/// <returns>インスタンスです</returns>
@@ -200,14 +254,17 @@ private:
 	SPointLight m_pointLight;
 
 	//有効フラグ
-	bool m_lightFlag_D = false;	//ディレクションライト有効フラグ
-	bool m_lightFlag_P = false;	//ポイントライト有効フラグ
+	bool m_lightFlag_D = false;		//ディレクションライト有効フラグ
+	bool m_lightFlag_P = false;		//ポイントライト有効フラグ
 
 	const CVector3 AmbientDefColor = { 0.5f,0.5f,0.5f };	//環境光デフォルトカラー
-	CVector3 m_ambientColor = AmbientDefColor;	//環境光の色
+	CVector3 m_ambientColor = AmbientDefColor;				//環境光の色
 
 	CVector3 m_lightCameraPosition;				//ライトカメラの視点。
 	CVector3 m_lightCameraTarget;				//ライトカメラの注視点。
+
+	bool m_directionLightSetFlag[MAX_DIRECTION_LIGHT] = { false };		//ディレクションライトの設定フラグ
+	bool m_pointLightSetFlag[MAX_POINT_LIGHT] = { false };				//ポイントライトの設定フラグ
 
 	//定数
 	const CVector4 DirectionLight_Direction_Def = { 0.0f, -1.0f, 0.0f, 0.0f };	//ディレクションライトの初期化で使う

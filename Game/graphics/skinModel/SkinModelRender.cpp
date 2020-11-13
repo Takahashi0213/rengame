@@ -178,6 +178,11 @@ void SkinModelRender::Update() {
 /// •`‰æ
 /// </summary>
 void SkinModelRender::Render() {
+
+	if (m_isDraw == false) {
+		return;
+	}
+
 	m_skinModel.Draw(
 		g_camera3D.GetViewMatrix(),
 		g_camera3D.GetProjectionMatrix()

@@ -61,12 +61,15 @@ private:
 	CVector3 m_playerMoveTarget;					//プレイヤーの移動先
 	float m_yazirushiRotAngle = 0.0f;				//矢印の回転
 	float m_yazirushiYHosei = 0.0f;					//矢印のY補正
+
 	bool m_mapMoveFlag = false;						//マップ移動フラグ
 	int m_mapMoveTimer = 0;							//マップ移動タイマー
 	const float YazirushiMoveHosei = 30.0f;			//矢印の移動量補正
 	const int YazirushiMoveTime = 10;				//矢印の移動時間
 	bool YazirushiRotFlag = false;					//矢印の回転フラグ（Y_UP）
 	const int FallDamage = 50;						//落下ダメージ
+	const float PlayerMiss_Y_Hosei = 100.0f;		//落下した後の復帰地点Y補正
+
 
 };
 

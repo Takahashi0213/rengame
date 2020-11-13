@@ -9,9 +9,6 @@ SpriteSupporter::~SpriteSupporter()
 {
 }
 
-/// <summary>
-/// スプライトサポーターをまとめてアップデート
-/// </summary>
 void SpriteSupporter::SpriteSupporter_Update() {
 
 	//まずはデータ更新
@@ -39,9 +36,6 @@ void SpriteSupporter::SpriteSupporter_Update() {
 	SpriteDataReturn();
 }
 
-/// <summary>
-/// スプライトの情報を最初にアップデート！
-/// </summary>
 void SpriteSupporter::SpriteDataUpdate() {
 
 	m_position = m_spriteRender->GetPosition(m_spriteNo);
@@ -53,9 +47,6 @@ void SpriteSupporter::SpriteDataUpdate() {
 
 }
 
-/// <summary>
-/// スプライトの情報を返す 最後に実行しよう
-/// </summary>
 void SpriteSupporter::SpriteDataReturn() {
 
 	m_spriteRender->SetPosition(m_position, m_spriteNo);
@@ -98,13 +89,6 @@ void SpriteSupporter::SpriteDelayReset() {
 
 }
 
-/// <summary>
-/// 画像移動をセットする
-/// </summary>
-/// <param name="move">移動先の座標</param>
-/// <param name="moveTime">移動時間</param>
-/// <param name="moveDelay">移動ディレイ</param>
-/// <param name="relative">相対移動フラグ trueにするとmoveに設定した値を相対座標として扱うぞ</param>
 void SpriteSupporter::SpriteMove(const CVector2& move, const int& moveTime,
 	const int& moveDelay, const bool& relative) {
 
@@ -114,19 +98,6 @@ void SpriteSupporter::SpriteMove(const CVector2& move, const int& moveTime,
 
 }
 
-/// <summary>
-/// 回転移動をセットする
-/// </summary>
-/// <remarks>
-/// 
-/// 永久回転をセットしていて停止したい場合のサンプルコード
-/// SpriteRotation(0.0f, 0,0);
-/// 
-/// </remarks>
-/// <param name="rot">1フレームの回転量（float）</param>
-/// <param name="moveTime">回転時間（loopflagがtrueなら無効）</param>
-/// <param name="moveDelay">回転ディレイ</param>
-/// <param name="loopflag">trueにすると停止命令までずっと回転</param>
 void SpriteSupporter::SpriteRotation(const float& rot, const int& moveTime,
 	const int& moveDelay, const bool& loopflag) {
 
@@ -140,12 +111,6 @@ void SpriteSupporter::SpriteRotation(const float& rot, const int& moveTime,
 	m_spriteRotationTimer = 0;
 }
 
-/// <summary>
-/// スムーズに拡大縮小するやつをセットする
-/// </summary>
-/// <param name="scale">目標の大きさ</param>
-/// <param name="moveTime">動作時間</param>
-/// <param name="moveDelay">動作ディレイ</param>
 void SpriteSupporter::SpriteScale(const CVector3& scale, const int& moveTime, const int& moveDelay) {
 
 	//リストに追加や
@@ -162,12 +127,6 @@ void SpriteSupporter::SpriteScale(const float& scale, const int& moveTime, const
 
 }
 
-/// <summary>
-/// スプライトの乗算カラー変更をセットする
-/// </summary>
-/// <param name="color">目標のカラー</param>
-/// <param name="moveTime">動作時間</param>
-/// <param name="moveDelay">動作ディレイ</param>
 void SpriteSupporter::SpriteColor(const CVector4& color, const int& moveTime, const int& moveDelay) {
 	m_spriteColor = color;
 	m_spriteColorLimit = moveTime;
@@ -175,12 +134,6 @@ void SpriteSupporter::SpriteColor(const CVector4& color, const int& moveTime, co
 	m_spriteColorTimer = 0;
 }
 
-/// <summary>
-/// スプライトのシェイクをセットする
-/// </summary>
-/// <param name="move">1回のシェイクにおける移動距離</param>
-/// <param name="moveTime">動作時間</param>
-/// <param name="moveCount">動作回数（0を指定するとループ）</param>
 void SpriteSupporter::SpriteShake(const CVector2& move, const int& moveTime, const int& moveCount) {
 	m_spriteShakeMove.x = move.x;
 	m_spriteShakeMove.y = move.y;
@@ -194,11 +147,6 @@ void SpriteSupporter::SpriteShake(const CVector2& move, const int& moveTime, con
 
 }
 
-/// <summary>
-/// スプライトのパラパラパターンを設定する
-/// </summary>
-/// <param name="moveTime">1枚の経過時間</param>
-/// <param name="loopflag">ループするかどうか（falseの場合終了時自動でアルファが0になるぞ）</param>
 void SpriteSupporter::SpritePattern(const int& moveTime, const bool& loopflag, const int& overLimit) {
 	m_patternLimit = moveTime;
 	m_patternTimer = 0;

@@ -24,7 +24,22 @@ public:
 	void FontDelayReset();
 
 	//ここから演出セット用
+
+	/// <summary>
+	/// フォントの移動を予約
+	/// </summary>
+	/// <param name="move">移動先または移動量</param>
+	/// <param name="movespeed">移動時間</param>
+	/// <param name="delay">ディレイ</param>
+	/// <param name="relative">相対移動フラグ</param>
 	void FontMoveSet(const CVector2& move, const int& movespeed, const int& delay, const bool& relative = false);
+
+	/// <summary>
+	/// カラーの変更
+	/// </summary>
+	/// <param name="color">変更先のカラー</param>
+	/// <param name="moveTime">変更時間</param>
+	/// <param name="moveDelay">ディレイ</param>
 	void FontColorSet(const CVector4& color, const int& moveTime, const int& moveDelay);
 
 	//状態取得用

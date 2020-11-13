@@ -55,63 +55,45 @@ void LightMaker::Update() {
 }
 
 void LightMaker::Render() {
-
 }
 
-/// <summary>
-/// ディレクションライトを設定する
-/// </summary>
-/// <param name="lightNo">ライトの番号</param>
-/// <param name="dir">ライトの方向</param>
-/// <param name="col">ライトの色</param>
-/// <param name="spec">スペキュラ</param>
-/// <returns>作成したライトのポインタ</returns>
+//ディレクションライト
+
 void LightMaker::D_LightMake(const int& lightNo, const CVector4& dir, const CVector4& col, const float& spec) {
 
 	m_light.direction[lightNo] = dir;
 	m_light.color[lightNo] = col;
 	m_light.color[lightNo].w = spec;
-
+	m_directionLightSetFlag[lightNo] = true;
 }
 
-/// <summary>
-/// ディレクションライトを消去する
-/// </summary>
-/// <param name="lightNo">削除するディレクションライトの場所</param>
 void LightMaker::D_LightDelete(const int& lightNo) {
 
 	m_light.direction[lightNo] = DirectionLight_Direction_Def;
 	m_light.color[lightNo] = DirectionLight_Color_Def;
-
+	m_directionLightSetFlag[lightNo] = false;
 }
 
-/// <summary>
-/// ポイントライトを作成する
-/// </summary>
-/// <param name="lightNo">ライト番号</param>
-/// <param name="pos">座標</param>
-/// <param name="col">カラー</param>
-/// <param name="range">範囲</param>
+//ポイントライト
+
 void LightMaker::P_LightMake(const int& lightNo, const CVector3& pos, const CVector3& col, const float& range) {
 	m_pointLight.position[lightNo] = pos;
 	m_pointLight.color[lightNo] = col;
 	m_pointLight.color[lightNo].w = range;
+	m_pointLightSetFlag[lightNo] = true;
 }
 
-/// <summary>
-/// ポイントライトを消去する
-/// </summary>
-/// <param name="lightNo">ライト番号</param>
 void LightMaker::P_LightDelete(const int& lightNo) {
 	m_pointLight.position[lightNo] = CVector3::Zero();
 	m_pointLight.color[lightNo] = CVector3::Zero();
 	m_pointLight.color[lightNo].w = 0.0f;
+	m_pointLightSetFlag[lightNo] = false;
 }
 
-//ポイントライトを全部初期化
 void LightMaker::P_LightDeleteAll() {
 	//みんな きえる
 	for (int i = 0; i < MAX_POINT_LIGHT; i++) {
 		P_LightDelete(i);
+		m_pointLightSetFlag[i] = false;
 	}
 }

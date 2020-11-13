@@ -17,10 +17,47 @@ public:
 	void Render()override;
 
 	//カメラ操作関数
+
+	/// <summary>
+	/// カメラの場所を移動する準備
+	/// </summary>
+	/// <param name="move">移動する分のベクトル</param>
+	/// <param name="moveTime">移動時間</param>
+	/// <param name="moveDelay">移動ディレイ</param>
 	void CameraMove(const CVector3& move, const float& moveTime, const float& moveDelay);
+
+	/// <summary>
+	/// 視点を中心にカメラを回転させる準備
+	/// </summary>
+	/// <param name="moveTime">移動時間</param>
+	/// <param name="moveDelay">移動ディレイ</param>
 	void CameraMove_Rot(const float& move, const float& moveTime, const float& moveDelay);
+
+	/// <summary>
+	/// カメラをシェイクさせる準備
+	/// </summary>
+	/// <param name="bure">ブレる大きさ（最大値）</param>
+	/// <param name="speed">ブレる速さ</param>
+	/// <param name="moveTime">動作時間 ※-1.0fを設定すると停止するまで続けます</param>
+	/// <param name="moveDelay">動作ディレイ</param>
 	void CameraMove_Bure(const CVector2& bure, const float& speed, const float& moveTime, const float& moveDelay);
+
+	/// <summary>
+	/// カメラをズームさせる準備
+	/// </summary>
+	/// <param name="angle">目標画角</param>
+	/// <param name="moveTime">ズーム時間</param>
+	/// <param name="moveDelay">ズームウェイト</param>
+	/// <param name="boundFlag">trueにすると目標を少し通り過ぎてバウンドします</param>
 	void CameraMove_Zoom(const float& angle, const float& moveTime, const float& moveDelay, const bool& boundFlag = false);
+
+	/// <summary>
+	/// カメラの注視点を移動する準備
+	/// </summary>
+	/// <param name="move">移動する分のベクトル</param>
+	/// <param name="moveTime">移動時間</param>
+	/// <param name="moveDelay">移動ディレイ</param>
+	/// <param name="posMoveFlag">trueなら同時にカメラの座標も移動する</param>
 	void CameraTargetMove(const CVector3& move, const float& moveTime, const float& moveDelay, const bool& posMoveFlag = false);
 
 	/// <summary>

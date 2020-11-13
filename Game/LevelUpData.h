@@ -21,14 +21,15 @@ struct LevelUpData {
 /// レベルアップデータテーブル。
 /// </summary>
 static LevelUpData LEVEL_UP_DATA_TABLE[] = {
+	{ None				,	0 },		//レベル0。イベントは何もない
 	{ None				,	0 },		//レベル1。イベントは何もない
-{ Up_Mana			,	10 },		//レベル2。
-{ Up_Hp				,	0 },		//レベル3。
-{ Up_Mana			,	10 },		//レベル4。
-{ Up_Mana			,	5 },		//レベル5。
-{ Up_Mana			,	5 },		//レベル6。
-{ Up_Mana | Up_Hp	,	5 },		//レベル7。
-{ Up_Mana			,	5 },		//レベル8。
-{ Up_Mana			,	5 },		//レベル9。
-{ Up_Mana			,	10 },		//レベル10。
+	{ Up_Mana			,	10 },		//レベル2。
+	{ Up_Hp				,	0 },		//レベル3。
+	{ Up_Mana			,	10 },		//レベル4。
+	{ Up_Mana			,	5 },		//レベル5。
+	{ Up_Mana			,	5 },		//レベル6。
+	{ Up_Mana | Up_Hp	,	5 },		//レベル7。
+	{ Up_Mana			,	5 },		//レベル8。
+	{ Up_Mana			,	5 },		//レベル9。
+	{ Up_Mana			,	10 },		//レベル10。
 };

@@ -46,16 +46,20 @@ private:
 		m_actionFlag = CheckFlag;	//trueのままならｵｹ
 	}
 
+	void KeySpawn();				//鍵出現演出
+
 	SkinModelRender * m_skinModelRender = nullptr;
 
 	bool m_setFlag = false;
+	bool m_drawFlag = false;
+	bool m_spawnFlag = false;
 
 	const float DefScale = 5.0f;					//拡大率
+	const float AutoRotation = 5.0f;				//自動回転量
 
 	//リンクオブジェクト
-	ObjectClass* m_LinkPt[10] = { nullptr };		//出現トリガー
-	int m_setNom = 0;								//いまどこにいる？
-
+	ObjectClass* m_LinkPt[MAX_LINK_OBJECT] = { nullptr };		//出現トリガー
+	int m_setNom = 0;											//いまどこにいる？
 
 };
 

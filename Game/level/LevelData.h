@@ -24,6 +24,7 @@ public:
 		Tag_StaticBox,				//壁
 		Tag_EventObject,			//イベント起動 信号を受け取った場合移動する→obj_Memoにイベントの名前を書く
 		Tag_Key1,					//鍵1
+		Tag_Torch,					//トーチ（ポイントライト）→BoolMemoで松明の初期点灯状態を設定 falseならオフ、trueならオン
 	};
 
 	//レベルごとにこいつがオブジェクトの数だけ必要
@@ -161,6 +162,14 @@ private:
 				{ L"Door1",Tag_Door,L"EventObject1" },
 				{ L"Door2",Tag_Door,L"" },
 				{ L"Door3",Tag_Door,L"" },
+				{ L"Torch1",Tag_Torch,L"",L"",{ -50.0f,0.0f,0.0f },true },
+				{ L"Torch2",Tag_Torch,L"",L"",{ -50.0f,0.0f,0.0f },true },
+				{ L"Torch3",Tag_Torch,L"",L"",{ -50.0f,0.0f,0.0f },true },
+				{ L"Torch4",Tag_Torch,L"",L"",{ -50.0f,0.0f,0.0f },true },
+				{ L"Torch5",Tag_Torch,L"",L"",{ 50.0f,0.0f,0.0f },true },
+				{ L"Torch6",Tag_Torch,L"",L"",{ 50.0f,0.0f,0.0f },true },
+				{ L"Torch7",Tag_Torch,L"",L"",{ 50.0f,0.0f,0.0f },true },
+				{ L"Torch8",Tag_Torch,L"",L"",{ 50.0f,0.0f,0.0f },true },
 				{ L"Mannequin1",Tag_Mannequin,L"Door2" },
 				{ L"GhostBox",Tag_GhostBox_MapMove,L"",L"Sougen1",{ 700.0f,110.0f,-950.0f }, false ,180.0f,-50.0f },	//移動先マップ名＆移動先座標
 				{ L"EventBox1",Tag_GhostBox_Event,L"",L"Tutorial_1" },
@@ -224,7 +233,8 @@ private:
 				{ L"StaticBox4",Tag_StaticBox,L"" },
 				{ L"StaticBox5",Tag_StaticBox,L"" },
 				{ L"DamageZone",Tag_GhostBox_Damage,L"" },
-				{ L"Key1",Tag_Key1,L"" },
+				{ L"Key1",Tag_Key1,L"EventObject1" },
+				{ L"EventObject1",Tag_EventObject,L"",L"Sougen_Key" },
 				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ -700.0f,110.0f,-500.0f }, false ,180.0f,-280.0f },	//移動先マップ名＆移動先座標
 			}
 		}

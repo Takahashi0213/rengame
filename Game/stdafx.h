@@ -40,6 +40,7 @@ const int MAX_LEVEL_OBJ = 100;						//!<レベルに設定できる最大オブジェクト数。
 const int MAX_EVENT_OBJ = 100;						//!<イベントの数。
 const int MAX_STAGE_NOM = 5;						//!<ステージの最大数。
 const int MAX_ITEM_NOM = 10;						//!<アイテムの種類数。
+const int MAX_LINK_OBJECT = 10;						//!<リンクオブジェクトの最大数。
 
 using namespace Microsoft::WRL;
 #include "HID/Pad.h"

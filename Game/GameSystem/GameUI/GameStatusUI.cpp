@@ -249,11 +249,15 @@ void GameStatusUI::Status_EffectUpdate() {
 		EXP_Stock--;
 		GameData::GetInstance()->AddEXP(1);
 
-		//経験値バーの更新
-		Status_EXPBarUpdate();
+		//最大なら演出をスキップする
+		if (GameData::GetInstance()->GetLevel() < GameData::GetInstance()->GetMaxLevel())
+		{
+			//経験値バーの更新
+			Status_EXPBarUpdate();
 
-		//レベルアップエフェクトチェック
-		Status_LevelUpEffect();
+			//レベルアップエフェクトチェック
+			Status_LevelUpEffect();
+		}
 
 		//終了チェック
 		if (EXP_Stock <= 0) {

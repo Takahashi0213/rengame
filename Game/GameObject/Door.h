@@ -50,16 +50,16 @@ private:
 		m_actionFlag = CheckFlag;	//trueのままならｵｹ
 	}
 
-	SkinModelRender* m_model;						//土台モデル
+	SkinModelRender* m_model;									//土台モデル
 
-	PhysicsStaticObject m_physicsStaticObject;		//静的物理オブジェクト
+	PhysicsStaticObject m_physicsStaticObject;					//静的物理オブジェクト
 
-	void DoorUpDowmUpdate();						//ドアの上下移動アップデート
+	void DoorUpDowmUpdate();									//ドアの上下移動アップデート
 
-	ObjectClass* m_LinkPt[10] = { nullptr };		//ドア上下トリガー
-	int m_setNom = 0;								//いまどこにいる？
-	bool m_upDownFlag = false;						//上下フラグ（1回だけ実行するためのbool）
-	bool m_monochromeFlag = false;					//モノクロフラグ
+	ObjectClass* m_LinkPt[MAX_LINK_OBJECT] = { nullptr };		//ドア上下トリガー
+	int m_setNom = 0;											//いまどこにいる？
+	bool m_upDownFlag = false;									//上下フラグ（1回だけ実行するためのbool）
+	bool m_monochromeFlag = false;								//モノクロフラグ
 
 	//反応の仕様を決める
 	//ギミック系→オフになったら閉じる

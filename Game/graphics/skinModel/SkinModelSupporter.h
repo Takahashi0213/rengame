@@ -19,15 +19,42 @@ public:
 	}
 
 	//実行するコマンド
+
+	/// <summary>
+	/// 移動をセットする
+	/// </summary>
+	/// <param name="move">移動先の座標</param>
+	/// <param name="moveTime">移動時間</param>
+	/// <param name="moveDelay">移動ディレイ</param>
+	/// <param name="relative">相対移動フラグ trueにするとmoveに設定した値を相対座標として扱う</param>
 	void SkinModelMove(const CVector3& move, const int& moveTime,
 		const int& moveDelay, const bool& relative = false);
+
+	/// <summary>
+	/// 回転移動をセットする
+	/// </summary>
+	/// <remarks>
+	/// 
+	/// 永久回転をセットしていて停止したい場合のサンプルコード
+	/// SkinModelRotation(0.0f, 0,0);
+	/// 
+	/// </remarks>
+	/// <param name="rot">1フレームの回転量（float）</param>
+	/// <param name="axis">回転軸（CVector3::AxisY()など）</param>
+	/// <param name="moveTime">回転時間（loopflagがtrueなら無効）</param>
+	/// <param name="moveDelay">回転ディレイ</param>
+	/// <param name="loopflag">trueにすると停止命令までずっと回転</param>
 	void SkinModelRotation(const float& rot, CVector3 axis , const int& moveTime, 
 		const int& moveDelay, const bool& loopflag = false);
+
 	//初期化
 	void SkinModelMoveClear() {
 		m_skinModelMoveList.clear();
 	}
 
+	/// <summary>
+	/// まとめてアップデート
+	/// </summary>
 	void SkinModelSupporterUpdate();
 
 	//状態取得用

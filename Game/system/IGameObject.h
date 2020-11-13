@@ -52,7 +52,7 @@
 		/// アクティブフラグをセットする
 		/// </summary>
 		/// <param name="flag">設定するフラグ</param>
-		void SetActiveFlag(bool flag) {
+		void SetActiveFlag(const bool& flag) {
 			m_activeFlag = flag;
 		}
 
@@ -84,7 +84,7 @@
 		/// オブジェクトタグを設定する
 		/// </summary>
 		/// <param name="tag">タグ</param>
-		void SetObjectTag(objectTag tag) {
+		void SetObjectTag(const objectTag tag) {
 			m_tag = tag;
 		}
 

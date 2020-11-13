@@ -43,8 +43,8 @@ private:
 
 	const wchar_t* m_eventName = nullptr;			//イベントの名前
 
-	ObjectClass* m_LinkPt[10] = { nullptr };		//イベントトリガー
-	int m_setNom = 0;								//イベントトリガー参照位置
+	ObjectClass* m_LinkPt[MAX_LINK_OBJECT] = { nullptr };		//イベントトリガー
+	int m_setNom = 0;											//イベントトリガー参照位置
 
 };
 

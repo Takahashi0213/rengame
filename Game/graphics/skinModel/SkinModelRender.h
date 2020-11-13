@@ -111,15 +111,23 @@ public:
 	}
 	
 	/// <summary>
+	/// 描画フラグの変更
+	/// </summary>
+	void SetDrawFlag(const bool& flag) {
+		m_isDraw = flag;
+	}
+
+	/// <summary>
 	/// シャドウレシーバーフラグの変更
 	/// </summary>
-	void SetShadowReciever(bool flag) {
+	void SetShadowReciever(const bool& flag) {
 		m_skinModel.SetShadowReciever(flag);
 	}
+
 	/// <summary>
 	/// シャドウキャスターフラグの変更
 	/// </summary>
-	void SetShadowCasterFlag(bool flag) {
+	void SetShadowCasterFlag(const bool& flag) {
 		m_shadowCasterFlag = flag;
 	}
 
@@ -187,6 +195,8 @@ private:
 		CVector3 normal;		//法線。
 	};
 	std::vector<Polygon> m_polygonList;
+
+	bool m_isDraw = true;											//!<描画する？
 
 	SkinModel m_skinModel;											//!<スキンモデル
 	CVector3 m_position = CVector3::Zero();							//!<座標。
