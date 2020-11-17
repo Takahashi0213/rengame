@@ -28,11 +28,15 @@ public:
 	}
 
 	//ê›íËóp
-	void SetItemHave(const int& itemNo, const int itemHave) {
-		Item_Save[itemNo].m_itemHave = itemHave;
+	void SetItemHave(const int& itemNo) {
+		Item_Save[itemNo].m_itemHave++;
 	}
 	void SetItemGetFlag(const int& itemNo) {
 		Item_Save[itemNo].m_itemHave = true;
+	}
+	void SetItemSave(const int& itemNo) {
+		SetItemHave(itemNo);
+		SetItemGetFlag(itemNo);
 	}
 
 private:

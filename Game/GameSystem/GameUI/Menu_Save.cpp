@@ -298,7 +298,8 @@ void Menu_Save::SaveUpdate() {
 				{
 					FILE* fp = fopen("save.bin", "wb");
 					fwrite(GameData::GetInstance(), sizeof(GameData), 1, fp);
-					fwrite(Game::GetInstance()->GetGameEvent()->GetEventSave(), sizeof(EventSave), 1, fp);
+					fwrite(SceneManager::GetInstance()->GetGameEvent()->GetEventSave(), sizeof(EventSave), 1, fp);
+					fwrite(SceneManager::GetInstance()->GetItemSave(), sizeof(ItemSave), 1, fp);
 					fclose(fp);
 				}
 				SaveEffect();

@@ -7,6 +7,8 @@
 #include "system/CGameObjectManager.h"
 #include "GameSystem/StageSet/StageSet.h"
 #include "sound/SoundManager.h"
+#include "ItemSave.h"
+#include "Event/GameEvent.h"
 
 /// <summary>
 /// シーン切り替えをがんばるクラス
@@ -80,6 +82,12 @@ public:
 	SoundManager* GetSoundManagerInstance() {
 		return &m_soundManager;
 	}
+	GameEvent* GetGameEvent() {
+		return m_gameEvent;
+	}
+	ItemSave* GetItemSave() {
+		return m_itemSave;
+	}
 
 private:
 
@@ -99,11 +107,13 @@ private:
 	CSoundEngine m_soundEngine;				//サウンドエンジン。
 	StageSet m_stageSet;
 	SoundManager m_soundManager;
+	GameEvent* m_gameEvent = nullptr;					//ゲームイベント
+	ItemSave* m_itemSave = nullptr;						//アイテムセーブ
 
 	//シーン
 	Title* m_title = nullptr;
 	Game* m_game = nullptr;
 	SaveLoad* m_saveLoad = nullptr;
-	
+
 };
 

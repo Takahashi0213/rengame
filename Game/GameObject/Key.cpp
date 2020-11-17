@@ -18,15 +18,15 @@ void Key::DataSet() {
 	//—lX‚È•â³
 	m_scale.Set(DefScale, DefScale, DefScale);
 	m_drawFlag = true;
-	if (Game::GetInstance()->GetItemSave()->GetItemData()->ItemNoSearch(L"‘Œ´‚ÌŒ®") == m_itemNo &&
-		Game::GetInstance()->GetGameEvent()->GetEventSave()->m_eventFlag[3] == false) {
+	if (SceneManager::GetInstance()->GetItemSave()->GetItemData()->ItemNoSearch(L"‘Œ´‚ÌŒ®") == m_itemNo &&
+		SceneManager::GetInstance()->GetGameEvent()->GetEventSave()->m_eventFlag[3] == false) {
 		m_position.y -= DownHosei;
 		m_moveFlag = true;
 		m_drawFlag = false;
 	}
 
 	m_modelRender = CGameObjectManager::GetInstance()->NewGO<SkinModelRender>("Key", 1);
-	m_modelRender->Model_Init(Game::GetInstance()->GetItemSave()->GetItemData()->GameItem[m_itemNo].Item_FilaPath_Model);
+	m_modelRender->Model_Init(SceneManager::GetInstance()->GetItemSave()->GetItemData()->GameItem[m_itemNo].Item_FilaPath_Model);
 	m_modelRender->SetUp(m_position, m_rotation, m_scale);
 	//Ž©“®‰ñ“]
 	m_modelRender->m_skinModelSupporter.SkinModelRotation(AutoRotation, CVector3::AxisY(), 1, 0, true);

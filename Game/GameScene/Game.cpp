@@ -64,7 +64,7 @@ void Game::Update() {
 		break;
 	case Game::GamaState_Game:
 		//ゲーム中専用
-		m_gameEvent->GameEventUpdate();		//ゲームイベントアップデート
+		SceneManager::GetInstance()->GetGameEvent()->GameEventUpdate();		//ゲームイベントアップデート
 		m_damageSystem->DamageUpdate();		//ダメージシステムアップデート
 		m_itemGet->ItemGetUpdate();			//アイテムゲットアップデート
 		break;
@@ -107,12 +107,8 @@ void Game::GameSetUp() {
 	m_statusUI = CGameObjectManager::GetInstance()->NewGO<GameStatus_UISystem>("GameStatus_UISystem", 8);
 	//カメラ
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
-	//ゲームイベント
-	m_gameEvent = new GameEvent;
 	//ダメージシステム
 	m_damageSystem = new DamageSystem;
-	//アイテムセーブ
-	m_itemSave = new ItemSave;
 	//アイテムゲット
 	m_itemGet = new ItemGet;
 	if (SceneManager::GetInstance()->GetSystemInstance()->m_loadDataFlag == false) {
@@ -133,12 +129,6 @@ void Game::GameSetUp() {
 		//トランジション
 		TransitionGenerator::GetInstance()->TransitionInit(TransitionGenerator::TransitionName::NanameBox,
 			SceneManager::GetInstance()->GetGameGraphicInstance()->TransitionTime, true);
-		//ロードする
-		FILE* fp = fopen("save.bin", "rb");
-		if (fp != NULL) {
-			fread(m_gameEvent->GetEventSave(), sizeof(EventSave), 1, fp);
-			fclose(fp);
-		}
 	}
 	//処理変更
 	m_gameState = GamaState_Game;

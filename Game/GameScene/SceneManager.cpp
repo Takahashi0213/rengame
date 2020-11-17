@@ -25,6 +25,10 @@ SceneManager::SceneManager()
 	CGameObjectManager::GetInstance()->NewGO<CameraSupporter>("CameraSupporter");
 	//ライトメーカーの生成
 	CGameObjectManager::GetInstance()->NewGO<LightMaker>("LightMaker");
+	//ゲームイベント
+	m_gameEvent = new GameEvent;
+	//アイテムセーブ
+	m_itemSave = new ItemSave;
 
 	//最初はタイトル！
 	m_title = CGameObjectManager::GetInstance()->NewGO<Title>("Game_Title");

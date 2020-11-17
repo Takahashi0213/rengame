@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ItemGet.h"
-
+#include "GameScene/SceneManager.h"
 
 ItemGet::ItemGet()
 {
@@ -78,16 +78,16 @@ void ItemGet::ItemGetUpdate() {
 			m_itemSprite = NewGO<SpriteRender>("ItemGet_ItemSprite", SpritePriority);
 			m_itemSprite->SetAlpha(0.0f);
 			m_itemSprite->SetPosition(ItemSpriteDefPos);
-			m_itemSprite->Init(Game::GetInstance()->GetItemSave()->GetItemData()->GameItem[m_nowItemNo].Item_FilaPath_Sprite, 
+			m_itemSprite->Init(SceneManager::GetInstance()->GetItemSave()->GetItemData()->GameItem[m_nowItemNo].Item_FilaPath_Sprite,
 				100.0f, 100.0f, 0);
 			m_itemSprite->SetAlpha(1.0f);
 			//ウィンドウ表示
 			m_itemWindow->m_spriteSupporter.SpriteColor({ 1.0f, 1.0f, 1.0f, 1.0f }, FadeSpeed, 0);
 			//アイテム名表示
-			m_itemName->SetText(Game::GetInstance()->GetItemSave()->GetItemData()->GameItem[m_nowItemNo].Item_Name);
+			m_itemName->SetText(SceneManager::GetInstance()->GetItemSave()->GetItemData()->GameItem[m_nowItemNo].Item_Name);
 			m_itemName->m_fontSupporter.FontColorSet(ItemNameColor, FadeSpeed, 0);
 			//説明文表示
-			m_itemSetumei->SetText(Game::GetInstance()->GetItemSave()->GetItemData()->GameItem[m_nowItemNo].Item_Explanation);
+			m_itemSetumei->SetText(SceneManager::GetInstance()->GetItemSave()->GetItemData()->GameItem[m_nowItemNo].Item_Explanation);
 			m_itemSetumei->m_fontSupporter.FontColorSet(ItemSetumeiColor, FadeSpeed, 0);
 
 			m_effectLightFlag = true;
@@ -114,6 +114,7 @@ void ItemGet::ItemGetUpdate() {
 			SceneManager::GetInstance()->GetSystemInstance()->m_event_PlayerMoveFlag = false;	//イベントムーヴ
 			m_player->SetRotFlag(true);
 			m_player->SetClearAnimationFlag(false);
+			ItemGet_NoEffect(m_nowItemNo);		//アイテムを取得
 		}
 
 		//時間加算
@@ -138,4 +139,8 @@ void ItemGet::ItemGetEffect(const int& itemNo) {
 		m_player->SetMoveTarget(m_player->GetPosition());
 		m_player->SetRotFlag(false);
 	}
+}
+
+void ItemGet::ItemGet_NoEffect(const int& itemNo) {
+	SceneManager::GetInstance()->GetItemSave()->SetItemSave(itemNo);
 }

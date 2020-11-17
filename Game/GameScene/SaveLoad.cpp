@@ -338,6 +338,8 @@ void SaveLoad::LoadData() {
 	FILE* fp = fopen("save.bin", "rb");
 	if (fp != NULL) {
 		fread(GameData::GetInstance(), sizeof(GameData), 1, fp);
+		fread(SceneManager::GetInstance()->GetGameEvent()->GetEventSave(), sizeof(EventSave), 1, fp);
+		fread(SceneManager::GetInstance()->GetItemSave(), sizeof(ItemSave), 1, fp);
 		fclose(fp);
 		SceneManager::GetInstance()->GetSystemInstance()->m_loadDataFlag = true;
 	}

@@ -128,7 +128,7 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 	}
 	if (tag == LevelData::Obj_Tag::Tag_Key1) {			//Œ®
 		Key* pt = NewObjCommon<Key>(data);
-		pt->SetItemNo(Game::GetInstance()->GetItemSave()->GetItemData()->ItemNoSearch(L"‘Œ´‚ÌŒ®"));
+		pt->SetItemNo(SceneManager::GetInstance()->GetItemSave()->GetItemData()->ItemNoSearch(L"‘Œ´‚ÌŒ®"));
 		pt->DataSet();
 	}
 

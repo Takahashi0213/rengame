@@ -163,7 +163,7 @@ void GhostBox::GhostAction() {
 	if (m_boxSystem == MapEvent) {
 	
 		//イベントの実行
-		Game::GetInstance()->GetGameEvent()->EvemtStart(m_LoadName);
+		SceneManager::GetInstance()->GetGameEvent()->EvemtStart(m_LoadName);
 
 		//この箱は削除される
 		DeleteGO(this);

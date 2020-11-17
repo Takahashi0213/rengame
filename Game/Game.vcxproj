@@ -332,6 +332,7 @@
     <ClInclude Include="physics\RigidBody.h" />
     <ClInclude Include="physics\CollisionAttr.h" />
     <ClInclude Include="physics\PhysicsStaticObject.h" />
+    <ClInclude Include="RayResultCallback.h" />
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShadowMap.h" />

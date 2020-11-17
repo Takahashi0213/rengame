@@ -23,6 +23,12 @@ public:
 	/// <param name="itemNo">アイテム番号</param>
 	void ItemGetEffect(const int& itemNo);
 
+	/// <summary>
+	/// アイテムをサイレント取得する
+	/// </summary>
+	/// <param name="itemNo">アイテム番号</param>
+	void ItemGet_NoEffect(const int& itemNo);
+
 private:
 	int m_nowItemNo = -1;											//現在演出中のアイテムNo
 	Player* m_player = nullptr;										//プレイヤー（演出用）

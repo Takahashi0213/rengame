@@ -4,8 +4,6 @@
 
 GameEvent::GameEvent()
 {
-	//プレイヤーの検索
-	m_player = CGameObjectManager::GetInstance()->FindGO<Player>(Hash::MakeHash("Player"), false);
 }
 
 GameEvent::~GameEvent()
@@ -13,6 +11,11 @@ GameEvent::~GameEvent()
 }
 
 void GameEvent::GameEventUpdate() {
+
+	//プレイヤーの検索
+	if (m_player == nullptr) {
+		m_player = CGameObjectManager::GetInstance()->FindGO<Player>(Hash::MakeHash("Player"), false);
+	}
 
 	//イベント実行
 	if (m_eventWaitFlag == false) {

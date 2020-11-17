@@ -43,14 +43,8 @@ public:
 	GameUI* GetUI() {
 		return m_ui;
 	}
-	GameEvent* GetGameEvent() {
-		return m_gameEvent;
-	}
 	DamageSystem* GetDamageSystem() {
 		return m_damageSystem;
-	}
-	ItemSave* GetItemSave() {
-		return m_itemSave;
 	}
 	ItemGet* GetItemGet() {
 		return m_itemGet;
@@ -69,13 +63,11 @@ private:
 	GameEffect* m_gameEffect = nullptr;					//ここでアップデートする
 	GameUI* m_ui = nullptr;								//UI
 	GameStatus_UISystem* m_statusUI = nullptr;			//UI
-	GameEvent* m_gameEvent = nullptr;					//ゲームイベント
 	DamageSystem* m_damageSystem = nullptr;				//ダメージの付与やゲームオーバーの管理
 	OP* m_op = nullptr;									//OPが終わったら削除される
 	GameOver* m_gameOver = nullptr;						//ゲームオーバーになったら生成される
 	TutorialSupporter* m_tutorialSupporter = nullptr;	//チュートリアルの下部文字
 	UI_Supporter* m_ui_Supporter = nullptr;				//操作方法を表示する
-	ItemSave* m_itemSave = nullptr;						//アイテムセーブ
 	ItemGet* m_itemGet = nullptr;						//アイテム取得演出
 
 };

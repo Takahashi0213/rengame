@@ -29,7 +29,7 @@ void EventObject::Update() {
 	if (m_actionFlag == true) {
 
 		//イベントの実行
-		Game::GetInstance()->GetGameEvent()->EvemtStart(m_eventName, m_LinkPt);
+		SceneManager::GetInstance()->GetGameEvent()->EvemtStart(m_eventName, m_LinkPt);
 
 		//削除される
 		DeleteGO(this);

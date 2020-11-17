@@ -2,6 +2,8 @@
 #include "BoxMaker.h"
 #include "GameSystem/GameUI/GameUI.h"
 
+#include "RayResultCallback.h"
+
 BoxMaker* BoxMaker::m_instance = nullptr;
 
 BoxMaker::BoxMaker()
@@ -366,15 +368,17 @@ void BoxMaker::ModeChange() {
 		m_boxPos = MouseSupporter::GetInstance()->GetMousePos_3D();
 
 		btDiscreteDynamicsWorld* dw = g_physics->GetDynamicWorld();
-		btCollisionWorld::ClosestRayResultCallback CRR_Callback(g_camera3D.GetPosition(), m_boxPos);
+		//btCollisionWorld::ClosestRayResultCallback CRR_Callback(g_camera3D.GetPosition(), m_boxPos);
+		MouseMoveHitCallback CRR_Callback(g_camera3D.GetPosition(), m_boxPos);
 		dw->rayTest((btVector3)g_camera3D.GetPosition(), m_boxPos, CRR_Callback);
 		if (CRR_Callback.hasHit()) {
 			m_boxPos = CRR_Callback.m_hitPointWorld;
 		}
 		else {
-			//プレイヤーのちょい上
-			m_boxPos = m_player->GetPosition();
-			m_boxPos.y += PosHoseiY;
+			////プレイヤーのちょい上
+			//m_boxPos = m_player->GetPosition();
+			//m_boxPos.y += PosHoseiY;
+			return;
 		}
 		
 		const bool flag = BoxCreateCheck();
