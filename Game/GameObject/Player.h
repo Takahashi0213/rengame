@@ -59,6 +59,19 @@ public:
 	}
 
 	/// <summary>
+	/// 回転フラグを設定
+	/// </summary>
+	void SetRotFlag(const bool& flag) {
+		m_rotFlag = flag;
+	}
+	/// <summary>
+	/// Clearアニメーションの再生
+	/// </summary>
+	void SetClearAnimationFlag(const bool& flag) {
+		m_clearAnimationFlag = flag;
+	}
+
+	/// <summary>
 	/// ゲームオーバーになった
 	/// </summary>
 	void GemaOverFlag();
@@ -87,6 +100,7 @@ private:
 	CharacterController m_charaCon;		//キャラクターコントローラー。
 	LightMaker* m_lightMaker;
 	GameUI* m_ui = nullptr;
+	ID3D11ShaderResourceView* m_specMapSRV = nullptr;
 
 	//アニメーション
 	AnimationClip m_playerAnimationClips[enAnimationClip_Num];	//アニメーションクリップ。
@@ -122,6 +136,7 @@ private:
 	const float m_moveMax = 30.0f;			//最大移動速度
 	const float MoveHosei = 20.0f;			//移動力への補正（大きいほど遅くなる）
 	Effekseer::Handle m_moveEffect = -1;	//移動エフェクト
+	bool m_rotFlag = true;					//回転するフラグ
 
 	//キャラコン
 	const float Radius = 25.0f;				//半径
@@ -171,6 +186,8 @@ private:
 	bool m_gameOverFlag = false;				//ゲームオーバーになっている！
 	int m_gameOvetTimer = 0;					//ゲームオーバータイマー
 	const int GameOverLimit = 20;				//ゲームオーバーリミット
+	//嬉しいアニメーション
+	bool m_clearAnimationFlag = false;			//クリアアニメーションフラグ
 
 };
 

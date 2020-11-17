@@ -23,9 +23,6 @@ void SkinModelSupporter::SkinModelSupporterUpdate() {
 	SkinModelDataReturn();
 }
 
-/// <summary>
-/// モデルの情報を最初にアップデート！
-/// </summary>
 void SkinModelSupporter::SkinModelDataUpdate() {
 
 	m_position = m_skinModelRender->GetPosition();
@@ -34,9 +31,6 @@ void SkinModelSupporter::SkinModelDataUpdate() {
 
 }
 
-/// <summary>
-/// モデルの情報を返す 最後に実行しよう
-/// </summary>
 void SkinModelSupporter::SkinModelDataReturn() {
 	m_skinModelRender->SetPosition(m_position);
 	m_skinModelRender->SetRotation(m_rotation);

@@ -147,11 +147,12 @@ void SpriteSupporter::SpriteShake(const CVector2& move, const int& moveTime, con
 
 }
 
-void SpriteSupporter::SpritePattern(const int& moveTime, const bool& loopflag, const int& overLimit) {
+void SpriteSupporter::SpritePattern(const int& moveTime, const bool& loopflag, const int& overLimit, const bool& stopflag) {
 	m_patternLimit = moveTime;
 	m_patternTimer = 0;
 	m_patternOverLimit = overLimit;
 	m_patternLoopFlag = loopflag;
+	m_patternStopFlag = stopflag;
 }
 
 //////////////////////////////////////
@@ -392,14 +393,17 @@ void SpriteSupporter::SpritePatternUpdate() {
 			m_nowPattern++;
 		}
 		//パターンがオーバー…
-		if (m_nowPattern > m_maxPattern-1) {
+		if (m_nowPattern > m_maxPattern - 1) {
 			//ループする？
 			if (m_patternLoopFlag == false) {
 				//アルファを0にして終了
 				m_patternLimit = -1;
 				m_nowPattern = m_maxPattern - 1;
-				SpriteColor({ m_mulColor.x,m_mulColor.y,m_mulColor.z, 0.0f }, 6, m_patternOverLimit);
-				SpriteColorUpdate();
+				//停止しないならフェードアウト
+				if (m_patternStopFlag == false) {
+					SpriteColor({ m_mulColor.x,m_mulColor.y,m_mulColor.z, 0.0f }, 6, m_patternOverLimit);
+					SpriteColorUpdate();
+				}
 			}
 			else {
 				//ループする

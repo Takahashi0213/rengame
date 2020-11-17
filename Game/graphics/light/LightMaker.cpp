@@ -40,7 +40,7 @@ LightMaker::LightMaker()
 	//}
 
 	//ライトカメラの座標
-	SetLightCameraPosition({ 0.0f, 1000.0f, 0.0f });
+	SetLightCameraPosition({ 0.0f, 1000.0f, 100.0f });
 	SetLightCameraTarget({ 0.0f, 0.0f, 0.0f });
 
 }

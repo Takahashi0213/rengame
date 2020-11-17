@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "BackGround.h"
-
+#include "physics/CollisionAttr.h"
 
 BackGround::BackGround()
 {
@@ -28,6 +28,8 @@ void BackGround::Init(const wchar_t* filePath) {
 	//PhysicsStaticObjectの初期化
 	m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation, m_scale);
 
+	auto rb = m_physicsStaticObject.GetRigidBody();
+	rb->GetBody()->setUserIndex(enCollisionAttr_MouseHit);
 	//シャドウレシーバーにする。
 	m_model.SetShadowReciever(true);
 

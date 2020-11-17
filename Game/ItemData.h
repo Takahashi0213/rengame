@@ -41,7 +41,7 @@ public:
 		{
 			L"‘Œ´‚ÌŒ®",
 			L"‚Ç‚±‚©‚Ì”à‚ğŠJ‚¯‚ç‚ê‚é",
-			L"",
+			L"Assets/sprite/Key1.dds",
 			L"Assets/modelData/Key1.cmo",
 		},
 	};

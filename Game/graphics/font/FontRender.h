@@ -106,6 +106,17 @@ public:
 		m_font.SetCut(cutUp, cutDown);
 	}
 	/*!
+	*@brief	影のパラメータを設定。
+	*@param[in]	isDrawShadow		影を描く？
+	*@param[in]	shadowOffset		影を描くときのピクセルのオフセット量。
+	*@param[in]	shadowColor			影の色。
+	*/
+	void SetShadowParam(const bool& isDrawShadow,
+		const float& shadowOffset, const CVector4& shadowColor = { 0.2f,0.2f,0.2f,1.0f }) {
+		m_font.SetShadowParam(isDrawShadow, shadowOffset, shadowColor);
+	}
+
+	/*!
 	* @brief	座標を取得。
 	*/
 	const CVector2& GetPosition() const

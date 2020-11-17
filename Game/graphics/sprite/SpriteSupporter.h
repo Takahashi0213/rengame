@@ -88,8 +88,10 @@ public:
 	/// </summary>
 	/// <param name="moveTime">1枚の経過時間</param>
 	/// <param name="loopflag">ループするかどうか（falseの場合終了時自動でアルファが0になるぞ）</param>
+	/// <param name="overLimit">パターン終了後、消滅までの時間</param>
+	/// <param name="stopflag">trueの場合、エフェクト終了後そのまま停止する</param>
 	void SpritePattern(const int& moveTime, const bool& loopflag = false,
-		const int& overLimit = 0);
+		const int& overLimit = 0 ,const bool& stopflag = false);
 
 	/// <summary>
 	/// このフラグがtrue かつ このスプライトが全く動いていない場合
@@ -179,6 +181,7 @@ private:
 	int m_patternTimer = -1;								//パターン用タイマー
 	int m_patternOverLimit = -1;							//パターン終了後の待ち時間（パターン終了時一瞬で消えたりするので）
 	bool m_patternLoopFlag = false;							//falseならパターン終了時、アルファを自動で0にする trueならループする
+	bool m_patternStopFlag = false;							//trueならパターン終了時に停止する
 	//AutoDeath
 	bool m_autoDeathFlag = false;							//何もしていない場合、親のスプライトレンダーを削除する
 

@@ -66,6 +66,7 @@ void Game::Update() {
 		//ゲーム中専用
 		m_gameEvent->GameEventUpdate();		//ゲームイベントアップデート
 		m_damageSystem->DamageUpdate();		//ダメージシステムアップデート
+		m_itemGet->ItemGetUpdate();			//アイテムゲットアップデート
 		break;
 	case Game::GamaState_GameOver:
 		m_gameOver->GameOverUpdate();		//ゲームオーバーアップデート
@@ -112,6 +113,8 @@ void Game::GameSetUp() {
 	m_damageSystem = new DamageSystem;
 	//アイテムセーブ
 	m_itemSave = new ItemSave;
+	//アイテムゲット
+	m_itemGet = new ItemGet;
 	if (SceneManager::GetInstance()->GetSystemInstance()->m_loadDataFlag == false) {
 		//ステージ
 		StageSet::GetInstance()->InitStage(L"Tutorial");

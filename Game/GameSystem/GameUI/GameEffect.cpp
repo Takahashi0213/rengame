@@ -438,7 +438,10 @@ SpriteRender* GameEffect_AnimationSprite::NewAnimationSprite_pt(const Anime_Name
 	sr->Init(Game_SpriteAnime_Data[m_animeName].SpriteName,
 		Game_SpriteAnime_Data[m_animeName].High, Game_SpriteAnime_Data[m_animeName].Wide, priority);
 	sr->SetHighPattern(Game_SpriteAnime_Data[m_animeName].Pattern, 0);
-	sr->m_spriteSupporter.SpritePattern(1, Game_SpriteAnime_Data[m_animeName].Loop, overLimit);
+	sr->m_spriteSupporter.SpritePattern(1, 
+		Game_SpriteAnime_Data[m_animeName].Loop,
+		overLimit, 
+		Game_SpriteAnime_Data[m_animeName].Stop);
 
 	SpriteRenderList srl;
 	srl.SpriteRender_pt = sr;

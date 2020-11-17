@@ -226,6 +226,8 @@ public:
 		Anime_LevelUp,		//レベルアップ
 		Anime_Loading,		//ローディング
 		Anime_Save,			//セーブ
+		Anime_ItemGet,		//アイテムゲット
+		Anime_ItemLoop,		//アイテムゲットの光（ループ）
 		Anime_NameNom,		//アニメの数
 	};
 
@@ -273,14 +275,16 @@ private:
 		float Wide;				//幅
 		int Pattern;			//縦パターン数
 		bool Loop;				//ループする？
+		bool Stop;				//停止する？
 	};
 
 	//アニメデータ
 	const SpriteAnime_Data Game_SpriteAnime_Data[Anime_NameNom]{
-		{ L"Assets/sprite/levelUp_8F.dds", 450.0f, 2000.0f, 8,false },		//レベルアップ
-		{ L"Assets/sprite/Loading_6F.dds", 65.0f, 240.0f, 6,true },			//ローディングアニメーション
-		{ L"Assets/sprite/saveEffect.dds", 640.0f, 2160.0f, 9,false },		//セーブアニメーション
-
+		{ L"Assets/sprite/levelUp_8F.dds", 450.0f, 2000.0f, 8,false,false },		//レベルアップ
+		{ L"Assets/sprite/Loading_6F.dds", 65.0f, 240.0f, 6,true,false },			//ローディングアニメーション
+		{ L"Assets/sprite/saveEffect.dds", 640.0f, 2160.0f, 9,false,false },		//セーブアニメーション
+		{ L"Assets/sprite/itemEffect.dds", 500.0f, 2400.0f, 8,false,true },			//アイテムアニメーション
+		{ L"Assets/sprite/itemGetEffectLoop.dds", 400.0f, 4000.0f, 10,true,false },	//アイテムアニメーション（光）
 	};
 
 };

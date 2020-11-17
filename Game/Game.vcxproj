@@ -140,6 +140,7 @@
     <ClCompile Include="GameSystem\GameUI\GameMenu.cpp" />
     <ClCompile Include="GameSystem\GameUI\GameStatusUI.cpp" />
     <ClCompile Include="GameSystem\GameUI\GameUI.cpp" />
+    <ClCompile Include="GameSystem\GameUI\ItemGet.cpp" />
     <ClCompile Include="GameSystem\GameUI\Menu_BoxAllDelete.cpp" />
     <ClCompile Include="GameSystem\GameUI\Menu_Create.cpp" />
     <ClCompile Include="GameSystem\GameUI\Menu_Save.cpp" />
@@ -259,6 +260,7 @@
     <ClInclude Include="GameSystem\GameUI\GameMenu.h" />
     <ClInclude Include="GameSystem\GameUI\GameStatusUI.h" />
     <ClInclude Include="GameSystem\GameUI\GameUI.h" />
+    <ClInclude Include="GameSystem\GameUI\ItemGet.h" />
     <ClInclude Include="GameSystem\GameUI\Menu_BoxAllDelete.h" />
     <ClInclude Include="GameSystem\GameUI\Menu_Create.h" />
     <ClInclude Include="GameSystem\GameUI\Menu_Save.h" />
@@ -654,6 +656,23 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Load\LoadBanner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\effect\itemEffect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\window\window9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\effect\itemGetEffectLoop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\Item\Key1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\utc_spec.tga">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\Assets\modelData\%(Filename).dds</ContentOutput>
+    </ImageContentTask>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

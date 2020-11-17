@@ -296,7 +296,7 @@ float3 CalcPointLight(float3 normal, float3 worldpos) {
 		//‚SD‰e‹¿—¦‚ğŒvZ‚·‚éB‰e‹¿—¦‚Í0.0`1.0‚Ì”ÍˆÍ‚ÅA
 		//    w’è‚µ‚½‹——£(pointsLights[i].range)‚ğ’´‚¦‚½‚çA‰e‹¿—¦‚Í0.0‚É‚È‚éB
 		float affect = 1.0f - min(1.0f, distance / pointLight.color[i].w);
-		lig += pointLight.color[i] * t * affect;
+		lig += pointLight.color[i] * t * pow( affect, 3.0f);
 
 	}
 	return lig;
@@ -365,7 +365,7 @@ PSOutput PSMain(PSInput In)
 
 			float specPower = max(0, dot(R, -E));
 			if (isHasSpecMap) {
-				specPower = g_specMap.Sample(Sampler, In.TexCoord).r;
+				specPower *= g_specMap.Sample(Sampler, In.TexCoord).r;
 				//specPower *= 1.2f;
 			}
 
@@ -453,7 +453,7 @@ PSOutput PSMain_NoDithering(PSInput In)
 
 			float specPower = max(0, dot(R, -E));
 			if (isHasSpecMap) {
-				specPower = g_specMap.Sample(Sampler, In.TexCoord).r;
+				specPower *= g_specMap.Sample(Sampler, In.TexCoord).r;
 				//specPower *= 1.2f;
 			}
 

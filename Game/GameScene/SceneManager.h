@@ -104,6 +104,6 @@ private:
 	Title* m_title = nullptr;
 	Game* m_game = nullptr;
 	SaveLoad* m_saveLoad = nullptr;
-
+	
 };
 

@@ -42,8 +42,7 @@ private:
 	int m_pointLightNo = -1;								//ポイントライト番号
 	Effekseer::Handle m_Effect = -1;						//炎エフェクト
 
-	const CVector3 PointLightColor = { 0.8f,0.2f,0.2f };	//ポイントライトの色
-	const float PointLightRange = 400.0f;					//ポイントライトの有効範囲
+	float m_yuragiSeed = 0.0f;								//炎の揺らぎの種。
 	
 };
 

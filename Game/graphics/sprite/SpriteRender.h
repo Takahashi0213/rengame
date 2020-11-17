@@ -361,7 +361,11 @@ public:
 		ChangePattern(m_nowPattern);
 	}
 
-	void ChangePattern(int pattern);
+	/// <summary>
+	/// パターンの変更と同時に座標も更新する
+	/// </summary>
+	/// <param name="pattern">現在パターン</param>
+	void ChangePattern(const int& pattern);
 
 	/// <summary>
 	/// マスクのサブスプライトのレンダーモードを変えます
@@ -394,9 +398,13 @@ public:
 	}
 
 private:
-	//マスクスプライトなら実行される
+	/// <summary>
+	/// マスクスプライトのデータを更新する
+	/// </summary>
 	void MaskSpriteDataSet();
-	//スプライトサポーターの更新
+	/// <summary>
+	/// スプライトサポーターの更新（メイン＆サブ）
+	/// </summary>
 	void SpriteSp_Update() {
 		//メイン
 		m_spriteSupporter.SpriteSupporter_Update();

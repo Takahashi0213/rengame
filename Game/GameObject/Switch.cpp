@@ -2,6 +2,7 @@
 #include "Switch.h"
 
 #include "GameSystem/Box/BoxMaker.h"
+#include "physics/CollisionAttr.h"
 
 Switch::Switch()
 {
@@ -105,6 +106,9 @@ void SwitchObj::SwitchObj_Init(const CVector3& Pos) {
 	m_pl = CGameObjectManager::GetInstance()->FindGO<Player>(Hash::MakeHash("Player"));
 
 	m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation, m_scale);
+	auto rb = m_physicsStaticObject.GetRigidBody();
+	rb->GetBody()->setUserIndex(enCollisionAttr_MouseHit);
+
 	//m_physicsStaticObject.CreateBox(m_position, m_rotation, m_scale);
 
 	//シャドウレシーバーにする。

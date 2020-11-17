@@ -2,6 +2,7 @@
 #include "GameBox.h"
 #include "GameScene/Game.h"
 #include "BoxMaker.h"
+#include "physics/CollisionAttr.h"
 
 void GameBox::GetTrianglePositionAndNormal(
 	int polyNo,
@@ -133,6 +134,8 @@ void GameBox::GameBoxUpdate_Colli() {
 			}
 			Pos.y += m_scale.y * 0.5f;	//•â³
 			m_physicsStaticObject.CreateBox(Pos, m_rotation, m_scale, 1.0f);	//d—Ê‚ðÝ’è‚·‚é
+			auto rb = m_physicsStaticObject.GetRigidBody();
+			rb->GetBody()->setUserIndex(enCollisionAttr_MouseHit);
 		}
 		else {
 			CQuaternion Rot;
@@ -143,6 +146,8 @@ void GameBox::GameBoxUpdate_Colli() {
 				Rot = m_rotation * m_originBox->GetRotation();
 			}
 			m_physicsStaticObject.CreateBox(m_position, Rot, m_scale);
+			auto rb = m_physicsStaticObject.GetRigidBody();
+			rb->GetBody()->setUserIndex(enCollisionAttr_MouseHit);
 		}
 
 		m_colli_InitFlag = true;

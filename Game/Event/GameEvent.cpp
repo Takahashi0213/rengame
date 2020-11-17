@@ -217,7 +217,7 @@ void GameEvent::Event_Sougen_Key() {
 		CameraSupporter::GetInstance()->CameraMove(pos - g_camera3D.GetPosition(), 30, 0);
 		CameraSupporter::GetInstance()->CameraMove_Zoom(60.0f, 30, 0);
 
-		m_eventWaitLimit = 40;
+		m_eventWaitLimit = 30;
 	}
 	if (m_eventProgress == 2) {	//Œ®ƒXƒ|[ƒ“
 		m_LinkPt[0]->m_actionFlag_2 = true;

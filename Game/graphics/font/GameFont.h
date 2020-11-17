@@ -61,7 +61,7 @@ public:
 
 private:
 	void InitTranslucentBlendState();
-	ID3D11Buffer* m_cb = nullptr;		//定数バッファ
+	ID3D11Buffer* m_cb = nullptr;							//定数バッファ
 	ID3D11BlendState* m_translucentBlendState = nullptr;	//半透明合成用のブレンドステート。
 
 	DirectX::SpriteBatch*	m_spriteBatch = nullptr;	//!<スプライトバッチ。

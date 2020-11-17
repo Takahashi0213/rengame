@@ -11,6 +11,7 @@
 #include "GameSystem/PlayerSupporter/TutorialSupporter.h"
 #include "GameSystem/PlayerSupporter/UI_Supporter.h"
 #include "ItemSave.h"
+#include "GameSystem/GameUI/ItemGet.h"
 
 /// <summary>
 /// ゲーム！
@@ -51,6 +52,9 @@ public:
 	ItemSave* GetItemSave() {
 		return m_itemSave;
 	}
+	ItemGet* GetItemGet() {
+		return m_itemGet;
+	}
 
 private:
 
@@ -72,6 +76,7 @@ private:
 	TutorialSupporter* m_tutorialSupporter = nullptr;	//チュートリアルの下部文字
 	UI_Supporter* m_ui_Supporter = nullptr;				//操作方法を表示する
 	ItemSave* m_itemSave = nullptr;						//アイテムセーブ
+	ItemGet* m_itemGet = nullptr;						//アイテム取得演出
 
 };
 

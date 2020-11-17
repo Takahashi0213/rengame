@@ -48,14 +48,19 @@ private:
 
 	void KeySpawn();				//鍵出現演出
 
-	SkinModelRender * m_skinModelRender = nullptr;
-
+	//演出用フラグ
 	bool m_setFlag = false;
+	bool m_moveFlag = false;
 	bool m_drawFlag = false;
 	bool m_spawnFlag = false;
-
+	//定数
 	const float DefScale = 5.0f;					//拡大率
 	const float AutoRotation = 5.0f;				//自動回転量
+	const float DownHosei = 450.0f;					//未取得時、地面に埋まる量
+	const float UpMove = 560.0f;					//出現時、上に移動する量
+	const float UpMove_Bound = 100.0f;				//出現時、下にバウンドする量
+	const int UpTime = 20;							//出現演出時間
+	const float GetRange = 150.0f;					//取得できる範囲
 
 	//リンクオブジェクト
 	ObjectClass* m_LinkPt[MAX_LINK_OBJECT] = { nullptr };		//出現トリガー

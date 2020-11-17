@@ -36,7 +36,7 @@ public:
 	/// <remarks>
 	/// 
 	/// 永久回転をセットしていて停止したい場合のサンプルコード
-	/// SkinModelRotation(0.0f, 0,0);
+	/// SkinModelRotation(0.0f, CVector3::Zero(), 0, 0);
 	/// 
 	/// </remarks>
 	/// <param name="rot">1フレームの回転量（float）</param>
@@ -65,8 +65,13 @@ public:
 	}
 
 private:
-	//準備と片付け
+	/// <summary>
+	/// モデルの情報を最初にアップデート！
+	/// </summary>
 	void SkinModelDataUpdate();
+	/// <summary>
+	/// モデルの情報を返す 最後に実行しよう
+	/// </summary>
 	void SkinModelDataReturn();
 	//アップデート用
 	void SkinModelMoveUpdate();

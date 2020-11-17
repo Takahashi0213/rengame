@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "Torch.h"
 
+namespace {
+	const CVector3 PointLightColor = { 8.0f,2.0f,2.0f };	//ポイントライトの色
+	const float PointLightRange = 900.0f;					//ポイントライトの有効範囲
+	const float YURAGI_RANGE = 50.0f;						//揺らぎ幅。
+}
 Torch::Torch()
 {
 	m_model.Init(L"Assets/modelData/Torch.cmo");
@@ -9,6 +14,7 @@ Torch::Torch()
 	m_object = ObjectClass::ObjectClass_Tag::GimmickObj;
 
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+	m_yuragiSeed = rand() % 10;
 }
 
 
@@ -22,6 +28,11 @@ Torch::~Torch()
 }
 
 void Torch::Update() {
+
+	m_yuragiSeed += 0.2f;
+
+	float range = PointLightRange + sinf(m_yuragiSeed) * YURAGI_RANGE;
+	LightMaker::GetInstance()->P_Light_SetRange(m_pointLightNo, range);
 
 	//モノクロ化
 	if (SceneManager::GetInstance()->GetGameMode() == SceneManager::CreateMode && m_monochromeFlag == false) {

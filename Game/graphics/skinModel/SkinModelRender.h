@@ -111,6 +111,14 @@ public:
 	}
 	
 	/// <summary>
+	/// スペキュラマップの設定。
+	/// </summary>
+	void SetSpecMap(ID3D11ShaderResourceView* srv)
+	{
+		m_skinModel.SetSpecMap(srv);
+	}
+
+	/// <summary>
 	/// 描画フラグの変更
 	/// </summary>
 	void SetDrawFlag(const bool& flag) {

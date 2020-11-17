@@ -122,9 +122,6 @@ void SpriteRender::Render() {
 	}
 }
 
-/// <summary>
-/// マスクスプライトのデータを更新する
-/// </summary>
 void SpriteRender::MaskSpriteDataSet() {
 
 	//メイン
@@ -149,11 +146,7 @@ void SpriteRender::MaskSpriteDataSet() {
 
 }
 
-/// <summary>
-/// パターンの変更と同時に座標も更新する
-/// </summary>
-/// <param name="pattern">現在パターン</param>
-void SpriteRender::ChangePattern(int pattern) {
+void SpriteRender::ChangePattern(const int& pattern) {
 
 	m_nowPattern = pattern;
 	m_sprite.m_nowPattern = pattern;

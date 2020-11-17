@@ -88,7 +88,7 @@ private:
 			L"Assets/modelData/0_0.cmo",
 			L"Assets/level/stage_00.tkl",
 			GameData::Place_Data::Warehouse,
-			{ 0.1f,0.1f,0.2f }
+			{ 0.2f,0.2f,0.3f }
 		},
 		//ëêå¥1
 		{
@@ -97,7 +97,7 @@ private:
 			L"Assets/modelData/Sougen_1_1.cmo",
 			L"Assets/level/stage_1_1.tkl",
 			GameData::Place_Data::Meadow,
-			{ 0.5f,0.5f,0.5f }
+			{ 0.7f,0.7f,0.7f }
 		},
 		//ëêå¥2
 		{
@@ -106,7 +106,7 @@ private:
 			L"Assets/modelData/Sougen_1_2.cmo",
 			L"Assets/level/stage_1_2.tkl",
 			GameData::Place_Data::Meadow,
-			{ 0.5f,0.5f,0.5f }
+			{ 0.7f,0.7f,0.7f }
 		},
 		//ëêå¥3
 		{
@@ -115,7 +115,7 @@ private:
 			L"Assets/modelData/Sougen_1_3.cmo",
 			L"Assets/level/stage_1_3.tkl",
 			GameData::Place_Data::Meadow,
-			{ 0.5f,0.5f,0.5f }
+			{ 0.7f,0.7f,0.7f }
 		},
 
 

@@ -5,7 +5,31 @@
 #include "GameSystem/GameUI/GameUI.h"
 #include "GameSystem/Box/BoxMaker.h"
 #include "GameCamera.h"
+#include "physics/CollisionAttr.h"
 
+
+//マウス移動での地面とのコリジョン処理のコールバック関数オブジェクト
+class MouseMoveHitCallback : public btCollisionWorld::ClosestRayResultCallback
+{
+public:
+	MouseMoveHitCallback(const btVector3&	rayFromWorld, const btVector3&	rayToWorld) :
+		btCollisionWorld::ClosestRayResultCallback(rayFromWorld, rayToWorld){}
+
+	btScalar addSingleResult(btCollisionWorld::LocalRayResult& rayResult, bool normalInWorldSpace) override
+	{
+		if (rayResult.m_collisionObject->getUserIndex() != enCollisionAttr_MouseHit) {
+			return 0.0f;
+		}
+		//衝突した面の法線と上方向との内積を計算する。
+		float angle = fabs( acos( rayResult.m_hitNormalLocal.y()) );
+		if (angle > CMath::DegToRad( 10.0f)) {
+			return 0.0f;
+		}
+
+		//
+		return btCollisionWorld::ClosestRayResultCallback::addSingleResult(rayResult, normalInWorldSpace);
+	}
+};
 Player::Player()
 {
 	//スキンモデルレンダーの生成
@@ -34,6 +58,16 @@ Player::Player()
 	m_playerModel_Sl->SetRenderMode(RenderMode::Silhouette);
 	m_playerModel->PlayAnimation(enAnimationClip_Idle);
 	m_playerModel_Sl->PlayAnimation(enAnimationClip_Idle);
+
+	//スペキュラマップをロード。
+	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
+	DirectX::CreateDDSTextureFromFileEx(
+		g_graphicsEngine->GetD3DDevice(), L"Assets/modelData/utc_spec.dds", 0,
+		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
+		false, nullptr, &m_specMapSRV);
+
+	//モデルにスペキュラマップを設定する。
+	m_playerModel->SetSpecMap(m_specMapSRV);
 
 	//ワールド行列の更新。
 	m_playerModel->SetUp(m_position, m_rotation, m_scale);
@@ -162,6 +196,13 @@ void Player::PlayerAnimation() {
 	}
 
 	//アニメーション再生
+	if (m_clearAnimationFlag == true) {
+		m_playerModel->PlayAnimation(enAnimationClip_Clear);
+		m_playerModel_Sl->PlayAnimation(enAnimationClip_Clear);
+		m_playerModel->SetAnimationSpeed();
+		m_playerModel_Sl->SetAnimationSpeed();
+		return;
+	}
 	bool RunFlag = false;
 	bool OnG_Flag = m_charaCon.IsOnGround();
 	float MovePower = m_moveSpeed.Length();
@@ -225,25 +266,25 @@ void Player::MoveClick() {
 	{
 		if (MouseSupporter::GetInstance()->GetMouseTimer(MouseSupporter::Left_Key) < 12) {
 
-			m_nextPos = MouseSupporter::GetInstance()->GetMousePos_3D();
+			CVector3 nextPos = MouseSupporter::GetInstance()->GetMousePos_3D();
 
 			//btCollisionWorld::ClosestRayResultCallback ResultCallback();
 			btDiscreteDynamicsWorld* dw = g_physics->GetDynamicWorld();
-			btCollisionWorld::ClosestRayResultCallback CRR_Callback(g_camera3D.GetPosition(), m_nextPos);
-			dw->rayTest((btVector3)g_camera3D.GetPosition(), m_nextPos, CRR_Callback);
+			MouseMoveHitCallback CRR_Callback(g_camera3D.GetPosition(), nextPos);
+			dw->rayTest((btVector3)g_camera3D.GetPosition(), nextPos, CRR_Callback);
 			if (CRR_Callback.hasHit()) {
 				m_nextPos = CRR_Callback.m_hitPointWorld;
+				//エフェクト
+				EffekseerSupporter::GetInstance()->EffectDelete(m_moveEffect);
+				m_moveEffect = EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::PlayerMove,
+					false, m_nextPos.x, m_nextPos.y, m_nextPos.z);
+				//現在位置のバックアップ
+				if (m_jumpNow == false) {
+					m_posBackup = m_position;
+				}
 			}
 			else {
-				m_nextPos = m_position + (m_moveSpeed / 1000.0f);
-			}
-			//エフェクト
-			EffekseerSupporter::GetInstance()->EffectDelete(m_moveEffect);
-			m_moveEffect = EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::PlayerMove,
-				false, m_nextPos.x, m_nextPos.y, m_nextPos.z);
-			//現在位置のバックアップ
-			if (m_jumpNow == false) {
-				m_posBackup = m_position;
+				//m_nextPos = m_position + (m_moveSpeed / 1000.0f);
 			}
 		}
 	}
@@ -285,7 +326,7 @@ void Player::Move() {
 	}
 
 	//移動方向に回転させる（ノックバック中は回転しない）
-	if (m_damage_Flag == false) {
+	if (m_damage_Flag == false && m_rotFlag == true) {
 		float angle = atan2(m_moveSpeed.x, m_moveSpeed.z);
 		m_rotation.SetRotation(CVector3().AxisY(), angle);
 	}
@@ -706,7 +747,7 @@ void Player::BoxDelete() {
 }
 
 CVector3 Player::BoxThrowSearch() {
-
+#if 0
 	CVector3 MousePos = MouseSupporter::GetInstance()->GetMousePos_3D();
 
 	btDiscreteDynamicsWorld* dw = g_physics->GetDynamicWorld();
@@ -774,6 +815,51 @@ CVector3 Player::BoxThrowSearch() {
 		MoveSpeed.y = 1.0f;		//高さ
 		return MoveSpeed;
 	}
+#else
+	LevelSet::Obj_Data* obj_data = StageSet::GetInstance()->GetObjData();
+
+	float nearLength = FLT_MAX;
+	ObjectClass* nearObj = nullptr;
+	for (int i = 0; i < MAX_LEVEL_OBJ; i++) {
+		if (wcscmp(obj_data->ObjName, L"") == 0) {
+			//名前がない！強制終了
+			break;
+		}
+		else {
+			//検索して敵なら計算する
+			ObjectClass* go = CGameObjectManager::GetInstance()->FindGO<ObjectClass>(obj_data->nameKey);
+			if (go != nullptr) {
+				if (go->m_object == ObjectClass::ObjectClass_Tag::EnemyObj) {
+					//敵なので座標を取得して距離が近いなら上書き
+					CVector3 diff = go->GetPosition() - m_position;
+					float Len = diff.Length();
+					if (Len <= nearLength && Len < 800.0f) {
+						nearLength = Len;
+						nearObj = go;
+					}
+				}
+			}
+		}
+		obj_data++;
+	}
+	if (nearObj != nullptr) {
+		//移動速度を計算して返す
+		const auto& ThrowTarget = nearObj->GetPosition();
+		CVector3 diff = ThrowTarget - m_upBox->GetPosition();
+		diff.Normalize();
+		diff *= 100.0f;		//移動パワー
+		diff.y = -3.0f;		//高さ
+							//エフェクト
+		m_moveEffect = EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::EnemyScope,
+			false, ThrowTarget.x, ThrowTarget.y + BoxThrowEffect_Y_Hosei, ThrowTarget.z);
+		return diff;
+	}
+	CVector3 MoveSpeed = m_moveSpeed;
+	MoveSpeed.Normalize();
+	MoveSpeed *= 100.0f;	//移動パワー
+	MoveSpeed.y = 1.0f;		//高さ
+	return MoveSpeed;
+#endif
 
 }
 
