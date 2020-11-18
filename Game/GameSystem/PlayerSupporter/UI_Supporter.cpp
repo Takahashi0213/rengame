@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "UI_Supporter.h"
+#include "GameSystem/Box/BoxMaker.h"
 
 //SceneManager::GameMode m_backupMode = SceneManager::GameMode::Null_Mode;	//最後のモード
 
@@ -177,6 +178,103 @@ void UI_Supporter::UI_Suppoter_Update() {
 	if (nowState != m_ui_DrawMode) {
 		m_ui_DrawMode = nowState;
 		UI_Suppoter_DrawUpdate();
+	}
+
+	//クイックアクション
+	QuickAction quickAction = NULL_Action;
+	if (m_UI_Under1->MouseOverMouse() == true && Vector4Hikaku(m_UI_Under1->GetMulColor(), UI_NullColor) == false) {
+		quickAction = Up_Action;
+	}
+	if (m_UI_Under2->MouseOverMouse() == true && Vector4Hikaku(m_UI_Under2->GetMulColor(), UI_NullColor) == false) {
+		quickAction = Left_Action;
+	}
+	if (m_UI_Under3->MouseOverMouse() == true && Vector4Hikaku(m_UI_Under3->GetMulColor(), UI_NullColor) == false) {
+		quickAction = Right_Action;
+	}
+	if (m_UI_Under4->MouseOverMouse() == true && Vector4Hikaku(m_UI_Under4->GetMulColor(), UI_NullColor) == false) {
+		quickAction = Down_Action;
+	}
+	//マウスオーバーフラグの更新
+	if (quickAction == NULL_Action) {
+		m_mouseOver_Flag = false;
+	}
+	else {
+		m_mouseOver_Flag = true;
+	}
+
+	//カーソル拡大率変更
+	if (quickAction == Up_Action) {
+		m_UI_Under1->SetScale(UI_MouseOverScale);
+	}
+	else {
+		m_UI_Under1->SetScale(1.0f);
+	}
+	if (quickAction == Left_Action) {
+		m_UI_Under2->SetScale(UI_MouseOverScale);
+	}
+	else {
+		m_UI_Under2->SetScale(1.0f);
+	}
+	if (quickAction == Right_Action) {
+		m_UI_Under3->SetScale(UI_MouseOverScale);
+	}
+	else {
+		m_UI_Under3->SetScale(1.0f);
+	}
+	if (quickAction == Down_Action) {
+		m_UI_Under4->SetScale(UI_MouseOverScale);
+	}
+	else {
+		m_UI_Under4->SetScale(1.0f);
+	}
+
+	//クリック受け付け
+	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
+	if (quickAction != NULL_Action && key == MouseSupporter::Release_Push) {
+		//動作する
+		switch (m_ui_DrawMode)
+		{
+		case UI_Supporter::ActionMode_Normal:
+			if (quickAction == Up_Action) {
+				//ジャンプ
+				m_player->PlayerJump();
+			}
+			break;
+		case UI_Supporter::ActionMode_BoxCatch:
+			if (quickAction == Up_Action) {
+				//ジャンプ
+				m_player->PlayerJump();
+			}
+			if (quickAction == Left_Action) {
+				//箱持ち上げ
+				m_player->PublicBoxCatchAndThrow();
+			}
+			break;
+		case UI_Supporter::ActionMode_BoxUp:
+			if (quickAction == Up_Action) {
+				//ジャンプ
+				m_player->PlayerJump();
+			}
+			if (quickAction == Left_Action) {
+				//箱投げ
+				m_player->PublicBoxCatchAndThrow();
+			}
+			if (quickAction == Right_Action) {
+				//箱置き
+				m_player->PublicBoxPut();
+			}
+			if (quickAction == Down_Action) {
+				//箱削除
+				m_player->PublicBoxDelete();
+			}
+			break;
+		case UI_Supporter::CreateMode_Normal:
+			if (quickAction == Up_Action) {
+				//アンドゥ
+				BoxMaker::GetInstance()->BoxUndo();
+			}
+			break;
+		}
 	}
 
 }

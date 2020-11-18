@@ -17,7 +17,7 @@ ItemGet::ItemGet()
 	//アイテム名
 	m_itemName = NewGO<FontRender>("ItemName", SpritePriority);
 	m_itemName->SetPivot({ 0.5f,0.5f });
-	m_itemName->SetText(L"テスト名");
+	m_itemName->SetText(L"テスト名");	//ダミー
 	m_itemName->SetColor(ItemNameColor);
 	m_itemName->SetScale(ItemNameScale);
 	m_itemName->SetPosition({ ItemNameDefPos.x,ItemNameDefPos.y });
@@ -25,7 +25,7 @@ ItemGet::ItemGet()
 	//説明
 	m_itemSetumei = NewGO<FontRender>("ItemSetumei", SpritePriority);
 	m_itemSetumei->SetPivot({ 0.5f,0.5f });
-	m_itemSetumei->SetText(L"アイテム説明文です");
+	m_itemSetumei->SetText(L"アイテム説明文です");	//ダミー
 	m_itemSetumei->SetColor(ItemSetumeiColor);
 	m_itemSetumei->SetScale(ItemSetumeiScale);
 	m_itemSetumei->SetPosition({ ItemSetumeiDefPos.x,ItemSetumeiDefPos.y });
@@ -58,15 +58,19 @@ void ItemGet::ItemGetUpdate() {
 			qRot.SetRotation(front, diff);
 			m_player->SetRotation(qRot);
 			m_player->SetClearAnimationFlag(true);
-			CameraSupporter::GetInstance()->CameraMove_Zoom(160.0f, 20, 0);
+			//ズームアウト
+			CameraSupporter::GetInstance()->CameraMove_Zoom(ZoomOut, 20, 0);
+			//SE
+			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/ItemGet.wav", 2.0f);
+			SceneManager::GetInstance()->GetSoundManagerInstance()->BGM_Pause();
 		}
 
-		if (m_effectTimer >= 0.3f && m_effectCameraFlag == false) {
-			CameraSupporter::GetInstance()->CameraMove_Zoom(60.0f, 10, 0, true);
+		if (m_effectTimer >= ZoomOutLimit && m_effectCameraFlag == false) {
+			CameraSupporter::GetInstance()->CameraMove_Zoom(ZoomIn, 10, 0, true);
 			m_effectCameraFlag = true;
 		}
 
-		if (m_effectTimer >= 0.4f && m_effectLightFlag == false) {
+		if (m_effectTimer >= ZoomInLimit && m_effectLightFlag == false) {
 			//エフェクト表示
 			m_itemGetEffect_Light = GameEffect::GetInstance()->GetInstance_SpriteAnime()->
 				NewAnimationSprite_pt(GameEffect_AnimationSprite::Anime_Name::Anime_ItemLoop,
@@ -82,7 +86,7 @@ void ItemGet::ItemGetUpdate() {
 				100.0f, 100.0f, 0);
 			m_itemSprite->SetAlpha(1.0f);
 			//ウィンドウ表示
-			m_itemWindow->m_spriteSupporter.SpriteColor({ 1.0f, 1.0f, 1.0f, 1.0f }, FadeSpeed, 0);
+			m_itemWindow->m_spriteSupporter.SpriteColor(CVector4::White(), FadeSpeed, 0);
 			//アイテム名表示
 			m_itemName->SetText(SceneManager::GetInstance()->GetItemSave()->GetItemData()->GameItem[m_nowItemNo].Item_Name);
 			m_itemName->m_fontSupporter.FontColorSet(ItemNameColor, FadeSpeed, 0);
@@ -107,7 +111,7 @@ void ItemGet::ItemGetUpdate() {
 			m_effectEndFlag = true;
 		}
 
-		if (m_effectEndFlag == true && m_effectTimer >= 0.2f) {
+		if (m_effectEndFlag == true && m_effectTimer >= EndLimit) {
 			//終了
 			m_nowItemNo = -1;
 			SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag = false;
@@ -115,6 +119,7 @@ void ItemGet::ItemGetUpdate() {
 			m_player->SetRotFlag(true);
 			m_player->SetClearAnimationFlag(false);
 			ItemGet_NoEffect(m_nowItemNo);		//アイテムを取得
+			SceneManager::GetInstance()->GetSoundManagerInstance()->BGM_Play();
 		}
 
 		//時間加算

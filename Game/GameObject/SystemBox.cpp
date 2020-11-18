@@ -110,6 +110,7 @@ void GhostBox::Update() {
 			}
 			m_player->SetPosition(m_playerMoveTarget);				//プレイヤー移動
 			StageSet::GetInstance()->InitStage(m_LoadName);			//ステージ読み込み
+			m_player->MapMove();									//持ち上げ状態のリセット
 		}
 	}
 

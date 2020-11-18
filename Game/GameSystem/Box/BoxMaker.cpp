@@ -274,23 +274,7 @@ void BoxMaker::Update() {
 	if (NowGameMode == SceneManager::CreateMode && m_box_Nom > 1) {
 		//CTRL+Z（臨時）
 		if (GetAsyncKeyState(VK_CONTROL) & 0x8000 && GetAsyncKeyState('Z') & 0x8000) {
-
-			if (m_undoFlag == false) {
-				//直前の箱を消す
-				auto p = m_boxList.back();
-				delete(p);
-				
-				m_boxList.pop_back();
-				m_nowBoxList.pop_back();
-				m_originBox->SetBox_Delete();
-
-				//マナも減少
-				m_downMana -= m_manaList.back();
-				m_manaList.pop_back();
-
-				m_undoFlag = true;
-				m_box_Nom--;
-			}
+			BoxUndo();
 		}
 		else {
 			m_undoFlag = false;
@@ -305,6 +289,25 @@ void BoxMaker::Update() {
 	//箱の更新
 	BoxUpdate();
 
+}
+
+void BoxMaker::BoxUndo() {
+	if (m_undoFlag == false) {
+		//直前の箱を消す
+		auto p = m_boxList.back();
+		delete(p);
+
+		m_boxList.pop_back();
+		m_nowBoxList.pop_back();
+		m_originBox->SetBox_Delete();
+
+		//マナも減少
+		m_downMana -= m_manaList.back();
+		m_manaList.pop_back();
+
+		m_undoFlag = true;
+		m_box_Nom--;
+	}
 }
 
 /// <summary>

@@ -40,6 +40,23 @@ private:
 	/// </summary>
 	void UI_Suppoter_DrawUpdate();
 
+	//比較（臨時）
+	bool Vector4Hikaku(const CVector4& hoge, const CVector4& hoge2) {
+		if (hoge.x != hoge2.x) {
+			return false;
+		}
+		if (hoge.y != hoge2.y) {
+			return false;
+		}
+		if (hoge.z != hoge2.z) {
+			return false;
+		}
+		if (hoge.w != hoge2.w) {
+			return false;
+		}
+		return true;
+	}
+
 	Player * m_player = nullptr;
 
 	bool m_mouseOver_Flag = false;						//何かしらマウスオーバーしている？
@@ -48,6 +65,8 @@ private:
 	const CVector2 UI_UnderSize = { 120.0f,120.0f };	//UIアンダーのサイズ
 	const CVector2 UI_IconSize = { 80.0f,80.0f };		//UIアイコンのサイズ
 	const CVector2 UI_MouseSize = { 25.0f,35.0f };		//マウスアイコンのサイズ
+
+	const float UI_MouseOverScale = 1.05f;				//マウスオーバー中の大きさ
 
 	const CVector4 UI_NullColor = { 0.1f,0.1f,0.1f,1.0f };	//空白の時の色
 
@@ -126,6 +145,15 @@ private:
 		CreateMode_Normal,		//クリエイトモード
 	};
 	UI_DrawState m_ui_DrawMode = NULL_Mode;		//描画状態
+
+	//クイックアクション
+	enum QuickAction {
+		NULL_Action,		//空白
+		Up_Action,			//上ボタン
+		Left_Action,		//左ボタン
+		Right_Action,		//右ボタン
+		Down_Action,		//下ボタン
+	};
 
 };
 

@@ -76,9 +76,26 @@ public:
 	void GemaOverFlag();
 
 	/// <summary>
+	/// マップ移動時に呼ぶ
+	/// </summary>
+	void MapMove();
+
+	/// <summary>
 	/// プレイヤーをジャンプさせる
 	/// </summary>
 	void PlayerJump();
+	/// <summary>
+	/// 外部からでも持ち上げ＆持っている箱を投げられるようにする
+	/// </summary>
+	void PublicBoxCatchAndThrow();
+	/// <summary>
+	/// 外部からでも持っている箱を置けるようにする
+	/// </summary>
+	void PublicBoxPut();
+	/// <summary>
+	/// 外部からでも持っている箱を消せるようにする
+	/// </summary>
+	void PublicBoxDelete();
 
 	/// <summary>
 	/// 箱持ち上げ体勢ならtrueを返す

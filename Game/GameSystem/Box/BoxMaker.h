@@ -65,6 +65,11 @@ public:
 	//箱の全消去
 	void BoxAllDelete();
 
+	/// <summary>
+	/// 外部から箱のアンドゥ
+	/// </summary>
+	void BoxUndo();
+
 private:
 	void BoxUpdate();
 	void ModeChange();

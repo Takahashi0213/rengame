@@ -49,6 +49,9 @@ public:
 	ItemGet* GetItemGet() {
 		return m_itemGet;
 	}
+	UI_Supporter* GetUI_Supporter(){
+		return m_ui_Supporter;
+	}
 
 private:
 

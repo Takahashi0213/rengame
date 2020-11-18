@@ -61,12 +61,21 @@ private:
 	const CVector4 ItemSetumeiOutLineColor = { 0.1f,0.1f,1.0f,1.0f };//アイテム説明フチの色
 	const float ItemSetumeiOutLineOffset = 1.0f;					//アイテム説明フチのオフセット
 
+	//エフェクトフラグ
 	bool m_effectCameraFlag = false;
 	bool m_effectLightFlag = false;
 	bool m_effectEndFlag = false;
 
 	const int SpritePriority = 6;									//優先度
 	const int FadeSpeed = 10;										//フェード速度
+
+	//演出定数
+	const float ZoomOut = 160.0f;			//カメラが引く
+	const float ZoomIn = 60.0f;				//カメラが迫る
+	
+	const float ZoomOutLimit = 0.3f;		//ズームアウト→ズームイン
+	const float ZoomInLimit = 0.4f;			//ズームイン→アイテム表示
+	const float EndLimit = 0.2f;			//消去終了
 
 };
 

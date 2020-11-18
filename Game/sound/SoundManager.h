@@ -20,6 +20,15 @@ public:
 	void BGM_Stop() {
 		m_bgm->Stop();
 	}
+	//一時停止
+	void BGM_Pause() {
+		m_bgm->Pause();
+	}
+	//停止から再開
+	void BGM_Play() {
+		m_bgm->Play(true);			//ループ再生
+	}
+
 	//ボリュームの設定
 	void BGM_SetVolume(const float& Volume) {
 		m_bgm->SetVolume(Volume);

@@ -225,10 +225,11 @@ void Player::MoveClick() {
 		m_ui = CGameObjectManager::GetInstance()->FindGO<GameUI>(Hash::MakeHash("GameUI"));
 	}
 
-	//左キーが離された＆現在アクションモード＆メニューボタンに被っていない＆ノックバック中でない
+	//左キーが離された＆現在アクションモード＆メニューボタンに被っていない＆UIサポーターに被っていない＆ノックバック中でない
 	if (key == MouseSupporter::Release_Push &&
 		SceneManager::GetInstance()->GetGameMode() == SceneManager::ActionMode &&
 		m_ui->GetGemeMenu()->GetSelectFlag() == false &&
+		Game::GetInstance()->GetUI_Supporter()->GetUI_MouseOver() == false &&
 		m_damage_Flag == false)
 	{
 		if (MouseSupporter::GetInstance()->GetMouseTimer(MouseSupporter::Left_Key) < 12) {
@@ -382,6 +383,12 @@ void Player::BoxCatch() {
 		return;
 	}
 
+	PublicBoxCatchAndThrow();
+
+}
+
+void Player::PublicBoxCatchAndThrow() {
+
 	//箱を持ち上げているかどうかで分岐
 	if (m_boxUpFlag == false) {
 
@@ -479,6 +486,11 @@ void Player::BoxPut() {
 	}
 
 	//箱をおろす
+	PublicBoxPut();
+
+}
+
+void Player::PublicBoxPut() {
 
 	//座標は前方床
 	{
@@ -713,10 +725,13 @@ void Player::BoxDelete() {
 	}
 
 	//箱削除
+	PublicBoxDelete();
+}
+
+void Player::PublicBoxDelete() {
 	BoxMaker::GetInstance()->BoxDelete(m_upBox);
 	m_upBox = nullptr;
 	m_boxUpFlag = false;
-
 }
 
 CVector3 Player::BoxThrowSearch() {
@@ -912,4 +927,9 @@ void Player::GemaOverFlag() {
 
 	EffekseerSupporter::GetInstance()->NewEffect_Vector(EffekseerSupporter::EffectData::PlayerDeath,
 		false, pos.x, pos.y, pos.z);
+}
+
+void Player::MapMove() {
+	m_boxUpFlag = false;
+	m_upBox = nullptr;
 }
