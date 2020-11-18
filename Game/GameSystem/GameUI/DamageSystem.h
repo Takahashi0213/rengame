@@ -23,7 +23,7 @@ public:
 
 private:
 
-	float m_damageTimer = 0.0f;
+	float m_damageTimer = 0.0f;				//ダメージタイマー
 	bool m_damageFlag = false;				//無敵時間フラグ
 	const float DamageLimit = 0.8f;			//ダメージの無敵時間
 	

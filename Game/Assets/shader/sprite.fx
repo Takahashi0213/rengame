@@ -264,9 +264,6 @@ float4 PSMain_Overlay(PSInput In) :SV_Target0{
 	}
 
 	return FinalColor;
-	//return color;
-	//return RTcolor;
-	//return RTcolor + color;
 }
 
 float4 PSMain_Add(PSInput In) :SV_Target0{

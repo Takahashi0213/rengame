@@ -60,17 +60,6 @@ Player::Player()
 
 	//シャドウレシーバーにする。
 	m_playerModel->SetShadowReciever(true);
-
-	//スプライトマスクのテスト
-
-	//SpriteRender* MainSprite = NewGO<SpriteRender>("TEST", 0);
-	//MainSprite->ChangeMaskSprite();
-	//MainSprite->Init(L"Assets/sprite/keis.dds", 588.0f, 1240.0f, 0);
-	//MainSprite->SetPosition({ 250.0f,-250.0f ,0.0f });
-	//MainSprite->InitSub(L"Assets/sprite/fukidasi.dds", 600.0f, 400.0f, 0);
-	//MainSprite->SetPosition({ 250.0f,-50.0f ,0.0f }, 0);
-	//MainSprite->GetSubSpriteSupporter(0)->SpriteRotation(10.0f, 600, 0, true);
-
 }
 
 Player::~Player()
@@ -251,6 +240,7 @@ void Player::MoveClick() {
 			MouseMoveHitCallback CRR_Callback(g_camera3D.GetPosition(), nextPos);
 			dw->rayTest((btVector3)g_camera3D.GetPosition(), nextPos, CRR_Callback);
 			if (CRR_Callback.hasHit()) {
+				//移動先をセット
 				m_nextPos = CRR_Callback.m_hitPointWorld;
 				//エフェクト
 				EffekseerSupporter::GetInstance()->EffectDelete(m_moveEffect);
@@ -262,7 +252,7 @@ void Player::MoveClick() {
 				}
 			}
 			else {
-				//m_nextPos = m_position + (m_moveSpeed / 1000.0f);
+				//どこにも引っかからなかった（とりあえず何もしない）
 			}
 		}
 	}
@@ -329,11 +319,7 @@ void Player::Jump() {
 
 	//ジャンプ処理
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
-		if (m_jumpNow == false && OnG_Flag == true) {
-			m_moveSpeed.y = m_jumpPower;
-			SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Jump.wav", 1.5f);
-		}
-		m_jumpNow = true;
+		PlayerJump();
 	}
 	else {
 		m_jumpNow = false;
@@ -354,6 +340,15 @@ void Player::Jump() {
 		}
 	}
 
+}
+
+void Player::PlayerJump() {
+	bool OnG_Flag = m_charaCon.IsOnGround();
+	if (m_jumpNow == false && OnG_Flag == true) {
+		m_moveSpeed.y = m_jumpPower;
+		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/Jump.wav", 1.5f);
+	}
+	m_jumpNow = true;
 }
 
 void Player::BoxCatch() {

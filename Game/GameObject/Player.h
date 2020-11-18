@@ -65,16 +65,42 @@ public:
 		m_rotFlag = flag;
 	}
 	/// <summary>
-	/// Clearアニメーションの再生
+	/// Clearアニメーションの再生・停止
 	/// </summary>
 	void SetClearAnimationFlag(const bool& flag) {
 		m_clearAnimationFlag = flag;
 	}
-
 	/// <summary>
-	/// ゲームオーバーになった
+	/// ゲームオーバーになったら呼ぶ
 	/// </summary>
 	void GemaOverFlag();
+
+	/// <summary>
+	/// プレイヤーをジャンプさせる
+	/// </summary>
+	void PlayerJump();
+
+	/// <summary>
+	/// 箱持ち上げ体勢ならtrueを返す
+	/// </summary>
+	bool GetBoxSearchFlag() {
+		if (m_upKouho_Box != nullptr) {
+			return true;
+		}
+		return false;
+	}
+	/// <summary>
+	/// 箱持ち上げフラグを返す
+	/// </summary>
+	bool GetBoxUpFlag() {
+		return m_boxUpFlag;
+	}
+	/// <summary>
+	/// 箱上げ下ろしフラグを返す
+	/// </summary>
+	bool GetBoxUpDownFlag() {
+		return m_boxMoveFlag;
+	}
 
 	/// <summary>
 	/// スキンモデルレンダーを返す
@@ -95,12 +121,12 @@ public:
 
 private:
 
-	SkinModelRender* m_playerModel;		//プレイヤーのモデル
-	SkinModelRender* m_playerModel_Sl;	//プレイヤーのモデル（シルエット）
-	CharacterController m_charaCon;		//キャラクターコントローラー。
+	SkinModelRender* m_playerModel;						//プレイヤーのモデル
+	SkinModelRender* m_playerModel_Sl;					//プレイヤーのモデル（シルエット）
+	CharacterController m_charaCon;						//キャラクターコントローラー。
 	LightMaker* m_lightMaker;
 	GameUI* m_ui = nullptr;
-	ID3D11ShaderResourceView* m_specMapSRV = nullptr;
+	ID3D11ShaderResourceView* m_specMapSRV = nullptr;	//スペキュラマップ
 
 	//アニメーション
 	AnimationClip m_playerAnimationClips[enAnimationClip_Num];	//アニメーションクリップ。
@@ -125,12 +151,12 @@ private:
 	CVector3 BoxThrowSearch();
 
 	//プレイヤー
-	CVector3 m_position = { 0.0f,50.0f,-1900.0f };
+	CVector3 m_position = { 0.0f,50.0f,-1900.0f };		//初期座標
 	CQuaternion m_rotation = CQuaternion::Identity();
 	CVector3 m_scale = CVector3::One();					//拡大率
 	CVector3 m_moveSpeed = CVector3::Zero();
-	CVector3 m_nextPos = CVector3::Zero();
-	CVector3 m_posBackup = CVector3::Zero();
+	CVector3 m_nextPos = CVector3::Zero();				//移動先
+	CVector3 m_posBackup = CVector3::Zero();			//現在位置バックアップ
 
 	//移動
 	const float m_moveMax = 30.0f;			//最大移動速度
@@ -164,7 +190,7 @@ private:
 	CVector3 m_point_2 = CVector3::Zero();	//始点
 	CVector3 m_point_3 = CVector3::Zero();	//終点
 	CVector3 m_point_4 = CVector3::Zero();	//始点寄り
-	float m_catmull_U = 0.0f;
+	float m_catmull_U = 0.0f;				//ベジェ曲線用
 	const float m_boxMove_Y_Hosei = 150.0f;		//箱を上げる際の最高到達点Y補正
 	const float m_boxMove_Y_Hosei_Put = 50.0f;	//箱を下ろす際の最高到達点Y補正
 	const float m_boxPos_Y_Hosei = 150.0f;		//箱を持ち上げているときのプレイヤーY補正

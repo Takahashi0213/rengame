@@ -51,25 +51,23 @@ void Game::Update() {
 	switch (m_gameState)
 	{
 	case Game::GameState_OP:
-		//OPクラスアップデート
-		m_op->OP_Update();
-		//OPが終わったら切り替える
+		m_op->OP_Update();													//OPアップデート
 		if (m_op->GetEndFlag() == true) {
-			//切り替え
+			//OPが終わったら切り替える
 			delete m_op;
 			m_op = nullptr;
 			GameSetUp();
 		}
-
 		break;
 	case Game::GamaState_Game:
 		//ゲーム中専用
 		SceneManager::GetInstance()->GetGameEvent()->GameEventUpdate();		//ゲームイベントアップデート
-		m_damageSystem->DamageUpdate();		//ダメージシステムアップデート
-		m_itemGet->ItemGetUpdate();			//アイテムゲットアップデート
+		m_damageSystem->DamageUpdate();										//ダメージシステムアップデート
+		m_itemGet->ItemGetUpdate();											//アイテムゲットアップデート
+		m_ui_Supporter->UI_Suppoter_Update();								//UIサポーターアップデート
 		break;
 	case Game::GamaState_GameOver:
-		m_gameOver->GameOverUpdate();		//ゲームオーバーアップデート
+		m_gameOver->GameOverUpdate();										//ゲームオーバーアップデート
 		break;
 	}
 
@@ -109,6 +107,9 @@ void Game::GameSetUp() {
 	CGameObjectManager::GetInstance()->NewGO<GameCamera>("GameCamera");
 	//ダメージシステム
 	m_damageSystem = new DamageSystem;
+	//UIサポーター
+	m_ui_Supporter = new UI_Supporter;
+	m_ui_Supporter->SetPlayer(pl);
 	//アイテムゲット
 	m_itemGet = new ItemGet;
 	if (SceneManager::GetInstance()->GetSystemInstance()->m_loadDataFlag == false) {

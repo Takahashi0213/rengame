@@ -14,7 +14,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
 	//乱数シードの初期化。
-	srand(time(nullptr));
+	srand(static_cast<unsigned int>(time(nullptr)));
 	//Hands-On 奥のモノを手前に描画する深度ステンシルステートを作ってみよう。
 	D3D11_DEPTH_STENCIL_DESC desc = { 0 };
 	desc.DepthEnable = true;

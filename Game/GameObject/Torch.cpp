@@ -14,7 +14,7 @@ Torch::Torch()
 	m_object = ObjectClass::ObjectClass_Tag::GimmickObj;
 
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
-	m_yuragiSeed = rand() % 10;
+	m_yuragiSeed = static_cast<float>(rand() % 10);
 }
 
 

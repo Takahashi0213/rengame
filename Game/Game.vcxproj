@@ -675,6 +675,22 @@
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\Assets\modelData\%(Filename).dds</ContentOutput>
     </ImageContentTask>
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\Mouse_Center.png" />
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\Mouse_Left.png" />
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\Mouse_Right.png" />
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\Supporter_BoxPut.png" />
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\Supporter_BoxThrow.png" />
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\Supporter_BoxUp.png" />
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\Supporter_Delete.png" />
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\Supporter_Jump.png" />
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\Supporter_Undo.png" />
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\UI_Under1.png" />
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\UI_Under2.png" />
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\UI_Under3.png" />
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\UI_Under4.png" />
+    <ImageContentTask Include="Assets\sprite\UI_Supporter\UI_Under5.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

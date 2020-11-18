@@ -250,6 +250,9 @@ public:
 	const char GetBoxCatchKey()const {
 		return m_boxCatchKey;
 	}
+	const char* GetBoxCatchKey_()const {
+		return &m_boxCatchKey;
+	}
 	//箱設置
 	void SetBoxPutKey(const char& key) {
 		m_boxPutKey = key;
@@ -257,12 +260,18 @@ public:
 	const char GetBoxPutKey()const {
 		return m_boxPutKey;
 	}
+	const char* GetBoxPutKey_()const {
+		return &m_boxPutKey;
+	}
 	//箱削除
 	void SetBoxDeleteKey(const char& key) {
 		m_boxDeleteKey = key;
 	}
 	const char GetBoxDeleteKey()const {
 		return m_boxDeleteKey;
+	}
+	const char* GetBoxDeleteKey_()const {
+		return &m_boxDeleteKey;
 	}
 	
 	//サウンドコンフィグ
@@ -337,7 +346,7 @@ private:
 	bool m_teleportFlag = false;			//メニューからのテレポート
 
 	//スターマネー
-	int m_starMoney = 0;
+	int m_starMoney = 0;					//所持金（スターマネー）s
 	const int MAX_STAR_MONEY = 99999;		//最大所持金
 
 	//プレイヤーステータス
