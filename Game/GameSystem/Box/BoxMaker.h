@@ -69,10 +69,16 @@ public:
 	/// 外部から箱のアンドゥ
 	/// </summary>
 	void BoxUndo();
+	/// <summary>
+	/// 外部からモードチェンジ
+	/// </summary>
+	void PublicModeChange() {
+		ModeChange(true);	//外部用処理に変更
+	}
 
 private:
 	void BoxUpdate();
-	void ModeChange();
+	void ModeChange(const bool& mode);
 	//作成地点とプレイヤーの距離が一定以下じゃないと作れない
 	bool BoxCreateCheck();
 
@@ -125,6 +131,7 @@ private:
 
 	//定数
 	const float PosHoseiY = 200.0f;									//レイがヒットしなかった時の補正
+	const float PlayeyFrontHosei = 150.0f;							//プレイヤー前方の補正
 	const float m_mouseMoveHosei = 0.5f;							//マウスの移動に応じた拡大率変更の補正値
 	const CVector3 m_surfaceScaleDef = { 100.0f,100.0f,100.0f };	//面のデフォルトサイズ
 	const CVector3 BoxDefScale = { 100.0f,100.0f,100.0f };			//箱の初期スケール

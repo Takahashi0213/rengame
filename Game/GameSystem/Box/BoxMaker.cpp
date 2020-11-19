@@ -37,7 +37,7 @@ void BoxMaker::Update() {
 	SceneManager::GameMode NowGameMode = SceneManager::GetInstance()->GetGameMode();		//現在のゲームモードを呼び出す
 
 	//モードチェンジ
-	ModeChange();
+	ModeChange(false);
 
 	//箱の追加処理
 	bool result = false;
@@ -351,7 +351,7 @@ void BoxMaker::Render() {
 	}
 }
 
-void BoxMaker::ModeChange() {
+void BoxMaker::ModeChange(const bool& mode) {
 
 	//イベント中なら強制終了
 	if (SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag == true) {
@@ -364,9 +364,10 @@ void BoxMaker::ModeChange() {
 	int Mana = GameData::GetInstance()->GetMagicPower();
 
 	//中クリックされた瞬間かつアクションモードかつマナが(CreateModeChangeBorder)以上ある
-	if (key == MouseSupporter::New_Push && 
+	if ((key == MouseSupporter::New_Push && 
 		NowGameMode == SceneManager::ActionMode &&
-		Mana >= CreateModeChangeBorder) {
+		Mana >= CreateModeChangeBorder) ||
+		(NowGameMode == SceneManager::ActionMode && Mana >= CreateModeChangeBorder && mode == true)) {
 
 		m_boxPos = MouseSupporter::GetInstance()->GetMousePos_3D();
 
@@ -384,7 +385,21 @@ void BoxMaker::ModeChange() {
 			return;
 		}
 		
-		const bool flag = BoxCreateCheck();
+		bool flag = BoxCreateCheck();
+
+		//外部処理
+		if (mode == true) {
+			CVector3 move = m_player->GetMoveSpeed();
+			if (move.x == CVector3::Zero().x && move.y == CVector3::Zero().y && move.z == CVector3::Zero().z) {
+				m_boxPos = m_player->GetPosition();
+				m_boxPos.y += PosHoseiY;
+			}
+			else {
+				move.Normalize();
+				m_boxPos = m_player->GetPosition() + (move * PlayeyFrontHosei);
+			}
+			flag = true;
+		}
 
 		if (flag == true) {
 
@@ -418,17 +433,19 @@ void BoxMaker::ModeChange() {
 
 	}
 	//クリエイトモードに移行したいけどマナが(CreateModeChangeBorder)に足りない場合
-	else if (key == MouseSupporter::New_Push && 
+	else if ((key == MouseSupporter::New_Push && 
 		NowGameMode == SceneManager::ActionMode && 
-		Mana < CreateModeChangeBorder) {
+		Mana < CreateModeChangeBorder) ||
+		(NowGameMode == SceneManager::ActionMode && Mana < CreateModeChangeBorder && mode == true)) {
 		//マナが足りません！のシェイクだけする
 		GameUI::GetInstance()->ManaShake();
 		//SE
 		SceneManager::GetInstance()->GetSoundManagerInstance()->InitSE(L"Assets/sound/SE/CanNotBoxCreate.wav");
 	}
 	//クリエイトモードからアクションモードへ戻ります
-	else if (key == MouseSupporter::New_Push &&
-		NowGameMode == SceneManager::CreateMode) {	//中クリックされた瞬間かつクリエイトモード
+	else if ((key == MouseSupporter::New_Push &&
+		NowGameMode == SceneManager::CreateMode) || 
+		(NowGameMode == SceneManager::CreateMode && mode == true)) {	//中クリックされた瞬間かつクリエイトモード
 
 		//魔力減少
 		m_originBox->SetManaPower(m_downMana);
@@ -443,7 +460,6 @@ void BoxMaker::ModeChange() {
 		int a = Hash::MakeHash("GameCamera");
 		GameCamera* GC = CGameObjectManager::GetInstance()->FindGO<GameCamera>(a);
 		GC->PlayerCameraMove();
-
 	}
 
 }

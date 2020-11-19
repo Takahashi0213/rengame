@@ -180,6 +180,18 @@ void UI_Supporter::UI_Suppoter_Update() {
 		UI_Suppoter_DrawUpdate();
 	}
 
+	//マウスアイコン
+	if (GameData::GetInstance()->GetBoxMakerFlag() == false && m_UI_MouseCenter->GetAlpha() != 0.0f) {
+		m_UI_MouseCenter->SetAlpha(0.0f);
+		m_UI_Text_Center->SetAlpha(0.0f);
+		m_UI_Text_Center->SetShadowParam(true, FutiOffset, { 0.0f,0.0f,0.0f,0.0f });
+	}
+	if (GameData::GetInstance()->GetBoxMakerFlag() == true && m_UI_MouseCenter->GetAlpha() != 1.0f) {
+		m_UI_MouseCenter->SetAlpha(1.0f);
+		m_UI_Text_Center->SetAlpha(1.0f);
+		m_UI_Text_Center->SetShadowParam(true, FutiOffset, UI_Futi_Color);
+	}
+
 	//クイックアクション
 	QuickAction quickAction = NULL_Action;
 	if (m_UI_Under1->MouseOverMouse() == true && Vector4Hikaku(m_UI_Under1->GetMulColor(), UI_NullColor) == false) {
@@ -193,6 +205,9 @@ void UI_Supporter::UI_Suppoter_Update() {
 	}
 	if (m_UI_Under4->MouseOverMouse() == true && Vector4Hikaku(m_UI_Under4->GetMulColor(), UI_NullColor) == false) {
 		quickAction = Down_Action;
+	}	
+	if (m_UI_MouseCenter->MouseOverMouse() == true) {
+		quickAction = Mouse_Action;
 	}
 	//マウスオーバーフラグの更新
 	if (quickAction == NULL_Action) {
@@ -227,6 +242,12 @@ void UI_Supporter::UI_Suppoter_Update() {
 	else {
 		m_UI_Under4->SetScale(1.0f);
 	}
+	if (quickAction == Mouse_Action) {
+		m_UI_MouseCenter->SetScale(UI_MouseOverScale_MouseIC);
+	}
+	else {
+		m_UI_MouseCenter->SetScale(1.0f);
+	}
 
 	//クリック受け付け
 	int key = MouseSupporter::GetInstance()->GetMouseKey(MouseSupporter::Left_Key);
@@ -239,6 +260,10 @@ void UI_Supporter::UI_Suppoter_Update() {
 				//ジャンプ
 				m_player->PlayerJump();
 			}
+			if (quickAction == Mouse_Action) {
+				//モード切替
+				BoxMaker::GetInstance()->PublicModeChange();
+			}
 			break;
 		case UI_Supporter::ActionMode_BoxCatch:
 			if (quickAction == Up_Action) {
@@ -248,6 +273,10 @@ void UI_Supporter::UI_Suppoter_Update() {
 			if (quickAction == Left_Action) {
 				//箱持ち上げ
 				m_player->PublicBoxCatchAndThrow();
+			}
+			if (quickAction == Mouse_Action) {
+				//モード切替
+				BoxMaker::GetInstance()->PublicModeChange();
 			}
 			break;
 		case UI_Supporter::ActionMode_BoxUp:
@@ -267,11 +296,19 @@ void UI_Supporter::UI_Suppoter_Update() {
 				//箱削除
 				m_player->PublicBoxDelete();
 			}
+			if (quickAction == Mouse_Action) {
+				//モード切替
+				BoxMaker::GetInstance()->PublicModeChange();
+			}
 			break;
 		case UI_Supporter::CreateMode_Normal:
 			if (quickAction == Up_Action) {
 				//アンドゥ
 				BoxMaker::GetInstance()->BoxUndo();
+			}
+			if (quickAction == Mouse_Action) {
+				//モード切替
+				BoxMaker::GetInstance()->PublicModeChange();
 			}
 			break;
 		}

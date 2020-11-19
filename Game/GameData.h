@@ -327,7 +327,7 @@ private:
 		SetMaxMagic(GetMaxMagic() + x);
 		MagicPowerPlus(x);
 	}
-	//レベルアップした時に最大HPを100上げる（ハート1つ分、固定）
+	//レベルアップした時に最大HPを100上げる（ハート1つ分 固定）
 	void LevelUp_HP() {
 		SetMaxHP(GetMaxHP() + 100);
 		HP_Plus(100);

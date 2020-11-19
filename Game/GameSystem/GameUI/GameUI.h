@@ -90,14 +90,14 @@ private:
 	//ゲージ
 	const CVector4 RedGageColor = { 5.0f,0.2f,0.2f,1.0f };	//赤いゲージ（マナゲージ）の色
 	const CVector3 GagePos = { -350.0f,280.0f,1.0f };
-	const float RedGageDownSpeed = 0.8f;
+	const float RedGageDownSpeed = 0.8f;					//ゲージの減少速度
 	struct ManaGageShakeData	//ManaShakeが呼ばれたときのステータス
 	{
-		float MoveX = 20.0f;
-		int MoveTime = 2;
-		int MoveCount = 3;
+		float MoveX = 20.0f;	//X移動量
+		int MoveTime = 2;		//移動時間
+		int MoveCount = 3;		//シェイク回数
 	};
-	const ManaGageShakeData m_manaGageShakeData;		//ManaShake呼び出し用
+	const ManaGageShakeData m_manaGageShakeData;			//ManaShake呼び出し用
 
 	//ライフ
 	const CVector3 LifeScale = { 0.15f,0.15f,1.0f };

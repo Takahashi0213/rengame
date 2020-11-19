@@ -170,12 +170,16 @@ private:
 	int m_spriteColorDelay = -1;							//スプライトの変化ディレイ
 	int m_spriteColorTimer = -1;							//スプライトの変化タイマー
 	//Shake
-	CVector2 m_spriteShakeMove = { 0.0f,0.0f };				//シェイクでの移動距離
-	CVector2 m_spriteShakeMove_OneFlame = { 0.0f,0.0f };	//シェイクの1フレーム移動距離
-	int m_spriteShakeLimit = -1;							//スプライトのシェイク間隔（-1は変化中ではない）
-	int m_spriteShakeCount = -1;							//スプライトのシェイク回数（0の場合、止めるまでループする）
-	int m_spriteShakeCounter = -1;							//スプライトのシェイク回数カウンター
-	int m_spriteShakeTimer = -1;							//スプライトのシェイクタイマー
+	struct SpriteShakeSet {
+		CVector2 m_spriteShakeMove = { 0.0f,0.0f };			//シェイクでの移動距離
+		CVector2 m_spriteShakeMove_OneFlame = { 0.0f,0.0f };	//シェイクの1フレーム移動距離
+		int m_spriteShakeLimit = -1;						//スプライトのシェイク間隔（-1は変化中ではない）
+		int m_spriteShakeCount = -1;						//スプライトのシェイク回数（0の場合、止めるまでループする）
+		int m_spriteShakeCounter = -1;						//スプライトのシェイク回数カウンター
+		int m_spriteShakeTimer = -1;						//スプライトのシェイクタイマー
+		bool m_spriteShakeDeleteFlag = false;				//削除フラグ（いじらないでね）
+	};
+	std::list<SpriteShakeSet> m_spriteShakeList;			//拡大縮小のリスト
 	//Pattern
 	int m_patternLimit = -1;								//最終パターン
 	int m_patternTimer = -1;								//パターン用タイマー

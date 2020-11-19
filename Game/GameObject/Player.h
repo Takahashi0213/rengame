@@ -47,6 +47,12 @@ public:
 	void SetMoveTarget(const CVector3& pos) {
 		m_nextPos = pos;
 	}
+	/// <summary>
+	/// 移動速度を返す
+	/// </summary>
+	CVector3 GetMoveSpeed() {
+		return m_moveSpeed;
+	}
 
 	/// <summary>
 	/// プレイヤーの回転を返す

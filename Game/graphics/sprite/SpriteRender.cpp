@@ -161,6 +161,11 @@ bool SpriteRender::MouseOverMouse() {
 
 	bool Flag = false;
 
+	//アルファが0なら強制終了
+	if (m_mainSprite.MulColor.w == 0.0f) {
+		return Flag;
+	}
+
 	CVector2 MousePos = MouseSupporter::GetInstance()->GetMousePos_Sprite();
 
 	//座標計算

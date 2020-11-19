@@ -10,6 +10,7 @@ TutorialSupporter::TutorialSupporter()
 
 TutorialSupporter::~TutorialSupporter()
 {
+	DeleteGO(m_tutorialText);
 }
 
 void TutorialSupporter::TutorialChange(const Tutorial_Progress Progress) {

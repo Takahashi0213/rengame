@@ -22,7 +22,6 @@ public:
 	/// 
 	/// ステージ番号版もあるよ
 	/// </summary>
-	/// <param name="stage_name"></param>
 	void InitStage(const wchar_t* stage_name);
 	void InitStage(const int& stage_nom);
 

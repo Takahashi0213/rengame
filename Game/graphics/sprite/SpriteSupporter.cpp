@@ -78,14 +78,7 @@ void SpriteSupporter::SpriteDelayReset() {
 	m_spriteColorDelay = -1;	//スプライトの変化ディレイ
 	m_spriteColorTimer = -1;	//スプライトの変化タイマー
 	//Shake
-	m_spriteShakeMove.x = 0.0f;
-	m_spriteShakeMove.y = 0.0f;
-	m_spriteShakeMove_OneFlame.x = 0.0f;
-	m_spriteShakeMove_OneFlame.y = 0.0f;
-	m_spriteShakeLimit = -1;	//スプライトのシェイク間隔（-1は変化中ではない）
-	m_spriteShakeCount = -1;	//スプライトのシェイク回数（0の場合、止めるまでループする）
-	m_spriteShakeCounter = -1;	//スプライトのシェイク回数カウンター
-	m_spriteShakeTimer = -1;	//スプライトのシェイクタイマー
+	m_spriteShakeList.clear();
 
 }
 
@@ -135,15 +128,20 @@ void SpriteSupporter::SpriteColor(const CVector4& color, const int& moveTime, co
 }
 
 void SpriteSupporter::SpriteShake(const CVector2& move, const int& moveTime, const int& moveCount) {
-	m_spriteShakeMove.x = move.x;
-	m_spriteShakeMove.y = move.y;
-	m_spriteShakeLimit = moveTime;
-	m_spriteShakeCount = moveCount;
-	m_spriteShakeCounter = 0;
-	m_spriteShakeTimer = 0;
-	//移動距離もここで計算
-	m_spriteShakeMove_OneFlame.x = (m_spriteShakeMove.x / (m_spriteShakeLimit * 2));
-	m_spriteShakeMove_OneFlame.y = (m_spriteShakeMove.y / (m_spriteShakeLimit * 2));
+	//m_spriteShakeMove.x = move.x;
+	//m_spriteShakeMove.y = move.y;
+	//m_spriteShakeLimit = moveTime;
+	//m_spriteShakeCount = moveCount;
+	//m_spriteShakeCounter = 0;
+	//m_spriteShakeTimer = 0;
+	////移動距離もここで計算
+	//m_spriteShakeMove_OneFlame.x = (m_spriteShakeMove.x / (m_spriteShakeLimit * 2));
+	//m_spriteShakeMove_OneFlame.y = (m_spriteShakeMove.y / (m_spriteShakeLimit * 2));
+
+	//リストに追加や
+	SpriteShakeSet set = { move ,{ (move.x / (moveTime * 2)),(move.y / (moveTime * 2)) },
+		moveTime,moveCount , 0 ,0, false };
+	m_spriteShakeList.push_back(set);
 
 }
 
@@ -344,37 +342,54 @@ void SpriteSupporter::SpriteColorUpdate() {
 /// </summary>
 void SpriteSupporter::SpriteShakeUpdate() {
 
-	if (m_spriteShakeLimit == -1) {
-		//実行中でない
-		return;
-	}
+	for (auto go = m_spriteShakeList.begin();
+		go != m_spriteShakeList.end();
+		go++) {
+		//タイマーが0以上なら実行中
+		if (go->m_spriteShakeTimer >= 0) {
 
-	//移動する
-	m_position.x += m_spriteShakeMove_OneFlame.x;
-	m_position.y += m_spriteShakeMove_OneFlame.y;
+			//移動する
+			m_position.x += go->m_spriteShakeMove_OneFlame.x;
+			m_position.y += go->m_spriteShakeMove_OneFlame.y;
 
-	//タイマーの処理
-	m_spriteShakeTimer++;
-	if (m_spriteShakeTimer == (m_spriteShakeLimit / 2)) {
-		//折り返し
-		m_spriteShakeMove_OneFlame.x *= -1.0f;
-		m_spriteShakeMove_OneFlame.y *= -1.0f;
+			go->m_spriteShakeTimer++;
 
-	}
-	if (m_spriteShakeTimer >= m_spriteShakeLimit) {
+			if (go->m_spriteShakeTimer == (go->m_spriteShakeLimit / 2)) {
+				//折り返し
+				go->m_spriteShakeMove_OneFlame.x *= -1.0f;
+				go->m_spriteShakeMove_OneFlame.y *= -1.0f;
 
-		//1シェイク完了
-		m_spriteShakeTimer = 0;
-		m_spriteShakeMove_OneFlame.x *= -1.0f;
-		m_spriteShakeMove_OneFlame.y *= -1.0f;
-
-		//無限シェイクでないならシェイク回数を加算
-		if (m_spriteShakeCount > 0) {
-			m_spriteShakeCounter++;
-			if (m_spriteShakeCount <= m_spriteShakeCounter) {
-				//シェイク終了
-				m_spriteShakeLimit = -1;
 			}
+			if (go->m_spriteShakeTimer >= go->m_spriteShakeLimit) {
+
+				//1シェイク完了
+				go->m_spriteShakeTimer = 0;
+				go->m_spriteShakeMove_OneFlame.x *= -1.0f;
+				go->m_spriteShakeMove_OneFlame.y *= -1.0f;
+
+				//無限シェイクでないならシェイク回数を加算
+				if (go->m_spriteShakeCount > 0) {
+					go->m_spriteShakeCounter++;
+					if (go->m_spriteShakeCount <= go->m_spriteShakeCounter) {
+						//シェイク終了
+						go->m_spriteShakeLimit = -1;
+						go->m_spriteShakeDeleteFlag = true;
+					}
+				}
+			}
+		}
+
+	}
+
+	//削除処理
+	std::list<SpriteShakeSet>::iterator it;
+	it = m_spriteShakeList.begin();
+	while (it != m_spriteShakeList.end()) {
+		if (it->m_spriteShakeDeleteFlag == true) {
+			it = m_spriteShakeList.erase(it); //erase関数は削除されたイテレータの次を返してくるので、eraseの戻り値を使う。
+		}
+		else {
+			it++; //それ以外は次へ。
 		}
 	}
 

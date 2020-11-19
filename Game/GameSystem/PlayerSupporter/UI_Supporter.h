@@ -3,7 +3,8 @@
 /// <summary>
 /// 操作方法を常時表示する
 /// 一部の操作はここで行えるようにもする
-/// メニュー中は非表示にする
+/// 
+/// メニュー・イベント・ゲームオーバー中は非表示にする
 /// </summary>
 class UI_Supporter
 {
@@ -67,6 +68,7 @@ private:
 	const CVector2 UI_MouseSize = { 25.0f,35.0f };		//マウスアイコンのサイズ
 
 	const float UI_MouseOverScale = 1.05f;				//マウスオーバー中の大きさ
+	const float UI_MouseOverScale_MouseIC = 1.15f;		//マウスオーバー中の大きさ（マウスアイコン）
 
 	const CVector4 UI_NullColor = { 0.1f,0.1f,0.1f,1.0f };	//空白の時の色
 
@@ -153,6 +155,7 @@ private:
 		Left_Action,		//左ボタン
 		Right_Action,		//右ボタン
 		Down_Action,		//下ボタン
+		Mouse_Action,		//マウスボタン
 	};
 
 };

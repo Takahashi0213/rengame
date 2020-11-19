@@ -18,7 +18,7 @@ public:
 	/// アイテムを取得する
 	/// 
 	/// 演出兼内部処理を全て行うため、
-	/// アイテムを取得するときはこれさえ読んでおけばOK
+	/// アイテムを取得するときはこれさえ呼んでおけばOK
 	/// </summary>
 	/// <param name="itemNo">アイテム番号</param>
 	void ItemGetEffect(const int& itemNo);
