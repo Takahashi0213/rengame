@@ -2,7 +2,6 @@
  * @brief	モデルシェーダー。
  */
 
-
 /////////////////////////////////////////////////////////////
 // Shader Resource View
 /////////////////////////////////////////////////////////////
@@ -382,7 +381,11 @@ PSOutput PSMain(PSInput In)
 	//lig += float3(Ambient_R, Ambient_G, Ambient_B);
 	lig += CalcAmbientLight(albedoColor, In.TexCoord);
 
-	if (isShadowReciever == 1) {	//シャドウレシーバー。
+	//法線が上を向いているかチェック
+	float angle = abs(acos(normal.y));
+	float PI = PI = 3.14159265358979323846f;
+
+	if (isShadowReciever == 1 && angle < 10.0f * (PI / 180.0f)) {	//シャドウレシーバー。
 		
 		//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。
 		float2 shadowMapUV = In.posInLVP.xy / In.posInLVP.w;

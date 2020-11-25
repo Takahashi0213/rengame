@@ -113,13 +113,13 @@ void ItemGet::ItemGetUpdate() {
 
 		if (m_effectEndFlag == true && m_effectTimer >= EndLimit) {
 			//終了
-			m_nowItemNo = -1;
 			SceneManager::GetInstance()->GetSystemInstance()->m_eventNowFlag = false;
 			SceneManager::GetInstance()->GetSystemInstance()->m_event_PlayerMoveFlag = false;	//イベントムーヴ
 			m_player->SetRotFlag(true);
 			m_player->SetClearAnimationFlag(false);
 			ItemGet_NoEffect(m_nowItemNo);		//アイテムを取得
 			SceneManager::GetInstance()->GetSoundManagerInstance()->BGM_Play();
+			m_nowItemNo = -1;
 		}
 
 		//時間加算

@@ -15,6 +15,11 @@ Key::~Key()
 
 void Key::DataSet() {
 
+	//入手済みならカット
+	if (SceneManager::GetInstance()->GetItemSave()->GetItemGetFlag(m_itemNo) == true) {
+		return;
+	}
+
 	//様々な補正
 	m_scale.Set(DefScale, DefScale, DefScale);
 	m_drawFlag = true;
@@ -24,7 +29,7 @@ void Key::DataSet() {
 		m_moveFlag = true;
 		m_drawFlag = false;
 	}
-
+	//生成
 	m_modelRender = CGameObjectManager::GetInstance()->NewGO<SkinModelRender>("Key", 1);
 	m_modelRender->Model_Init(SceneManager::GetInstance()->GetItemSave()->GetItemData()->GameItem[m_itemNo].Item_FilaPath_Model);
 	m_modelRender->SetUp(m_position, m_rotation, m_scale);
@@ -35,6 +40,11 @@ void Key::DataSet() {
 }
 
 void Key::Update() {
+
+	//入手済みならカット
+	if (SceneManager::GetInstance()->GetItemSave()->GetItemGetFlag(m_itemNo) == true) {
+		return;
+	}
 
 	//モノクロになる
 	if (Game::GetInstance() != nullptr) {
@@ -85,6 +95,7 @@ void Key::Render() {
 
 void Key::KeySpawn() {
 
+	//鍵を上に上げる
 	if (m_moveFlag == true) {
 		m_modelRender->m_skinModelSupporter.SkinModelMove({ 0.0f,UpMove,0.0f }, UpTime, 0, true);
 		m_modelRender->m_skinModelSupporter.SkinModelMove({ 0.0f,-UpMove_Bound,0.0f }, UpTime / 2, UpTime, true);

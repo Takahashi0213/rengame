@@ -32,7 +32,7 @@ public:
 		Item_Save[itemNo].m_itemHave++;
 	}
 	void SetItemGetFlag(const int& itemNo) {
-		Item_Save[itemNo].m_itemHave = true;
+		Item_Save[itemNo].m_getFlag = true;
 	}
 	void SetItemSave(const int& itemNo) {
 		SetItemHave(itemNo);

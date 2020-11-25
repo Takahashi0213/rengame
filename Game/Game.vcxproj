@@ -353,6 +353,7 @@
     <MeshContentTask Include="Assets\modelData\box.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Enemy\P_Robo\P_Robo.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Board\Board.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Door\BigDoor_.fbx" />
@@ -360,6 +361,8 @@
     <MeshContentTask Include="Assets\modelData\Gimmick\GhostBox.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\jewel.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Key\Key1.fbx" />
+    <MeshContentTask Include="Assets\modelData\Gimmick\Lamp\Lamp_Off.fbx" />
+    <MeshContentTask Include="Assets\modelData\Gimmick\Lamp\Lamp_On.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Scaffold\Scaffold1.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\StaticBox.fbx" />
     <MeshContentTask Include="Assets\modelData\Gimmick\Switch\Switch.fbx" />
@@ -374,6 +377,7 @@
     <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_1.fbx" />
     <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_2.fbx" />
     <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_3.fbx" />
+    <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_Boss.fbx" />
     <MeshContentTask Include="Assets\modelData\Test_Enemy.fbx" />
     <MeshContentTask Include="Assets\modelData\Titan.fbx" />
     <MeshContentTask Include="Assets\modelData\Title\Title_Ball.fbx" />

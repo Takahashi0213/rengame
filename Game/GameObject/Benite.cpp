@@ -3,7 +3,6 @@
 
 Benite::Benite()
 {
-
 	//モデル準備
 	//アニメーションクリップをロードとループフラグ。
 	m_animClips[enAnimationClip_walk].Load(L"Assets/animData/BeniteWalk.tka");

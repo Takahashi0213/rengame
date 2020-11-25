@@ -83,8 +83,6 @@ void SwitchObj::SwitchObj_Init(const CVector3& Pos) {
 
 	//おじゅんび
 	m_model.Init(L"Assets/modelData/Switch.cmo");
-	//SkinModel Coli_Model;
-	//Coli_Model.Init(L"Assets/modelData/Switch_Coli.cmo", EnFbxUpAxis::enFbxUpAxisZ);
 
 	//座標計算
 	m_position = Pos + Local;
@@ -105,11 +103,10 @@ void SwitchObj::SwitchObj_Init(const CVector3& Pos) {
 	//プレイヤー検索
 	m_pl = CGameObjectManager::GetInstance()->FindGO<Player>(Hash::MakeHash("Player"));
 
+	//メッシュコライダーの作成
 	m_physicsStaticObject.CreateMeshObject(m_model, m_position, m_rotation, m_scale);
 	auto rb = m_physicsStaticObject.GetRigidBody();
 	rb->GetBody()->setUserIndex(enCollisionAttr_MouseHit);
-
-	//m_physicsStaticObject.CreateBox(m_position, m_rotation, m_scale);
 
 	//シャドウレシーバーにする。
 	m_model.SetShadowReciever(true);

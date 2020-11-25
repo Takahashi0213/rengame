@@ -986,6 +986,18 @@
     <MeshContentTask Include="Assets\modelData\Gimmick\Torch\Torch.fbx">
       <Filter>Assets\modelData\Gimmick</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Sougen\Sougen_1_Boss.fbx">
+      <Filter>Assets\modelData\Stage\Stage1</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Lamp\Lamp_On.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Gimmick\Lamp\Lamp_Off.fbx">
+      <Filter>Assets\modelData\Gimmick</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Enemy\P_Robo\P_Robo.fbx">
+      <Filter>Assets\modelData\Enemy</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\mikyan.jpg">

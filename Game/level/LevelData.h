@@ -151,7 +151,7 @@ public:
 private:
 
 	//レベルデータ本体（手動入力）
-	const Level_Data m_levelData[5]{
+	const Level_Data m_levelData[6]{
 		//チュートリアル
 		{
 			L"Assets/level/stage_00.tkl",	//レベルファイル名
@@ -214,6 +214,8 @@ private:
 				{ L"StaticBox3",Tag_StaticBox,L"" },
 				{ L"StaticBox4",Tag_StaticBox,L"" },
 				{ L"StaticBox5",Tag_StaticBox,L"" },
+				{ L"StaticBox6",Tag_StaticBox,L"" },
+				{ L"StaticBox7",Tag_StaticBox,L"" },
 				{ L"DamageZone",Tag_GhostBox_Damage,L"" },
 				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ -800.0f,100.0f,1000.0f }, true ,-90.0f,-100.0f },	//移動先マップ名＆移動先座標
 			}
@@ -236,6 +238,18 @@ private:
 				{ L"Key1",Tag_Key1,L"EventObject1" },
 				{ L"EventObject1",Tag_EventObject,L"",L"Sougen_Key" },
 				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ -700.0f,110.0f,-500.0f }, false ,180.0f,-280.0f },	//移動先マップ名＆移動先座標
+			}
+		},
+		//草原ボス
+		{
+			L"Assets/level/stage_1_Boss.tkl",	//レベルファイル名
+			{
+				{ L"StaticBox1",Tag_StaticBox,L"" },
+				{ L"StaticBox2",Tag_StaticBox,L"" },
+				{ L"StaticBox3",Tag_StaticBox,L"" },
+				{ L"StaticBox4",Tag_StaticBox,L"" },
+				{ L"StaticBox5",Tag_StaticBox,L"" },
+				{ L"EventObject1",Tag_EventObject,L"",L"Sougen_Boss" },
 			}
 		}
 

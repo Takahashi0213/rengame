@@ -50,7 +50,7 @@ private:
 	const float MoveWaitEndLimit = 3.0f;	//停止をやめて、移動を再開するライン
 	const float RandomSpeed = 2.0f;			//ランダム移動の速度
 
-	const float FollowLength = 300.0f;		//プレイヤーを発見する範囲
+	const float FollowLength = 500.0f;		//プレイヤーを発見する範囲
 	const float EnemyAngle = 110.0f;		//視野角
 	const float EnemyEffect_YHosei = 240.0f;//「！」エフェクトのY補正
 	Effekseer::Handle m_effect = -1;		//「！」エフェクトのハンドル

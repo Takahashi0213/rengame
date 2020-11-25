@@ -107,10 +107,12 @@ void LevelSet::NewObj(LevelObjectData& data, const LevelData::Obj_Tag tag) {
 	if (tag == LevelData::Obj_Tag::Tag_BigDoor1) {		//巨大ドア1
 		BigDoor* pt = NewObjCommon<BigDoor>(data);
 		pt->ModelChange(BigDoor::DoorModel::Model_BigDoor);
+		pt->SetItemNo(SceneManager::GetInstance()->GetItemSave()->GetItemData()->ItemNoSearch(L"草原の鍵"));
 	}
 	if (tag == LevelData::Obj_Tag::Tag_BigDoor2) {		//巨大ドア2
 		BigDoor* pt = NewObjCommon<BigDoor>(data);
 		pt->ModelChange(BigDoor::DoorModel::Model_BigDoor2);
+		pt->SetItemNo(SceneManager::GetInstance()->GetItemSave()->GetItemData()->ItemNoSearch(L"草原の鍵"));
 	}
 
 	if (tag == LevelData::Obj_Tag::Tag_Test_Enemy) {	//テストエネミー
