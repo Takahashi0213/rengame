@@ -117,6 +117,15 @@ private:
 			GameData::Place_Data::Meadow,
 			{ 0.7f,0.7f,0.7f }
 		},
+		//草原ボス
+		{
+			L"SougenBoss",
+			L"草原のボス",
+			L"Assets/modelData/Sougen_1_Boss.cmo",
+			L"Assets/level/stage_1_Boss.tkl",
+			GameData::Place_Data::Meadow,
+			{ 0.7f,0.7f,0.7f }
+		},
 
 
 	};

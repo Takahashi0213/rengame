@@ -237,7 +237,8 @@ private:
 				{ L"DamageZone",Tag_GhostBox_Damage,L"" },
 				{ L"Key1",Tag_Key1,L"EventObject1" },
 				{ L"EventObject1",Tag_EventObject,L"",L"Sougen_Key" },
-				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ -700.0f,110.0f,-500.0f }, false ,180.0f,-280.0f },	//移動先マップ名＆移動先座標
+				{ L"GhostBox1",Tag_GhostBox_MapMove,L"",L"Sougen1",{ -700.0f,110.0f,-500.0f }, false ,180.0f,-280.0f },		//移動先マップ名＆移動先座標
+				{ L"GhostBox2",Tag_GhostBox_MapMove,L"",L"SougenBoss",{ -700.0f,110.0f,-500.0f }, false ,180.0f,-280.0f },	//移動先マップ名＆移動先座標
 			}
 		},
 		//草原ボス
